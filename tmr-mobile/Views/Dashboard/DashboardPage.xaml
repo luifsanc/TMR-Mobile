@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:tmr_mobile.ViewModels"
+             x:Class="tmr_mobile.Views.Dashboard.DashboardPage"
+             x:DataType="vm:DashboardViewModel"
+             Title="{Binding Title}">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="20" Padding="20">
+            
+            <Label Text="Bienvenido al Dashboard TMR"
+                   FontSize="22"
+                   FontAttributes="Bold" />
+
+            <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" ColumnSpacing="12" RowSpacing="12">
+                <Frame Grid.Row="0" Grid.Column="0" BackgroundColor="#E0F2FE" CornerRadius="12" Padding="16">
+                    <VerticalStackLayout>
+                        <Label Text="Proyectos Activos" FontSize="12" TextColor="#0369A1" />
+                        <Label Text="{Binding TotalProyectos}" FontSize="24" FontAttributes="Bold" TextColor="#0284C7" />
+                    </VerticalStackLayout>
+                </Frame>
+
+                <Frame Grid.Row="0" Grid.Column="1" BackgroundColor="#DCFCE7" CornerRadius="12" Padding="16">
+                    <VerticalStackLayout>
+                        <Label Text="Colaboradores" FontSize="12" TextColor="#15803D" />
+                        <Label Text="{Binding TotalColaboradores}" FontSize="24" FontAttributes="Bold" TextColor="#16A34A" />
+                    </VerticalStackLayout>
+                </Frame>
+
+                <Frame Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="#F3E8FF" CornerRadius="12" Padding="16">
+                    <VerticalStackLayout>
+                        <Label Text="Horas Registradas este Mes" FontSize="12" TextColor="#6B21A8" />
+                        <Label Text="{Binding HorasRegistradasMes, StringFormat='{0} hrs'}" FontSize="24" FontAttributes="Bold" TextColor="#9333EA" />
+                    </VerticalStackLayout>
+                </Frame>
+            </Grid>
+
+            <Button Text="Actualizar Datos"
+                    Command="{Binding CargarDashboardCommand}"
+                    BackgroundColor="#2563EB"
+                    TextColor="White"
+                    CornerRadius="8" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

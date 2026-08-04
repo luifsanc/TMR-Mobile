@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:tmr_mobile.ViewModels"
+             x:Class="tmr_mobile.Views.Auth.LoginPage"
+             x:DataType="vm:LoginViewModel"
+             Title="{Binding Title}"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="{AppThemeBinding Light=#F8FAFC, Dark=#0F172A}">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="24" Padding="32" VerticalOptions="Center">
+            
+            <Image Source="dotnet_bot.png"
+                   HeightRequest="120"
+                   HorizontalOptions="Center" />
+
+            <Label Text="TMR Móvil"
+                   FontSize="28"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   TextColor="{AppThemeBinding Light=#1E293B, Dark=#F8FAFC}" />
+
+            <Label Text="Inicia sesión con tu cuenta corporativa"
+                   FontSize="14"
+                   HorizontalOptions="Center"
+                   TextColor="#64748B" />
+
+            <VerticalStackLayout Spacing="16" Margin="0,16,0,0">
+                <Entry Placeholder="Usuario o Correo"
+                       Text="{Binding User}"
+                       Keyboard="Email"
+                       HeightRequest="50" />
+
+                <Entry Placeholder="Contraseña"
+                       Text="{Binding Password}"
+                       IsPassword="True"
+                       HeightRequest="50" />
+
+                <Label Text="{Binding ErrorMessage}"
+                       TextColor="#EF4444"
+                       FontSize="13"
+                       IsVisible="{Binding ErrorMessage, Converter={StaticResource IsStringNotNullOrEmptyConverter}}" />
+
+                <Button Text="INICIAR SESIÓN"
+                        Command="{Binding LoginCommand}"
+                        HeightRequest="50"
+                        CornerRadius="8"
+                        BackgroundColor="#2563EB"
+                        TextColor="White"
+                        FontAttributes="Bold"
+                        IsEnabled="{Binding IsNotBusy}" />
+                
+                <ActivityIndicator IsRunning="{Binding IsBusy}"
+                                   IsVisible="{Binding IsBusy}"
+                                   HorizontalOptions="Center"
+                                   Color="#2563EB" />
+            </VerticalStackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

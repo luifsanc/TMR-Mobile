@@ -1,0 +1,11 @@
+C:\Users\luis.sanchez\source\repos\TMR NUEVO\tmr-shared\bin\Debug\net10.0\tmr-shared.deps.json
+C:\Users\luis.sanchez\source\repos\TMR NUEVO\tmr-shared\bin\Debug\net10.0\tmr-shared.dll
+C:\Users\luis.sanchez\source\repos\TMR NUEVO\tmr-shared\bin\Debug\net10.0\tmr-shared.pdb
+C:\Users\luis.sanchez\source\repos\TMR NUEVO\tmr-shared\obj\Debug\net10.0\tmr-shared.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\luis.sanchez\source\repos\TMR NUEVO\tmr-shared\obj\Debug\net10.0\tmr-shared.AssemblyInfoInputs.cache
+C:\Users\luis.sanchez\source\repos\TMR NUEVO\tmr-shared\obj\Debug\net10.0\tmr-shared.AssemblyInfo.cs
+C:\Users\luis.sanchez\source\repos\TMR NUEVO\tmr-shared\obj\Debug\net10.0\tmr-shared.csproj.CoreCompileInputs.cache
+C:\Users\luis.sanchez\source\repos\TMR NUEVO\tmr-shared\obj\Debug\net10.0\tmr-shared.dll
+C:\Users\luis.sanchez\source\repos\TMR NUEVO\tmr-shared\obj\Debug\net10.0\refint\tmr-shared.dll
+C:\Users\luis.sanchez\source\repos\TMR NUEVO\tmr-shared\obj\Debug\net10.0\tmr-shared.pdb
+C:\Users\luis.sanchez\source\repos\TMR NUEVO\tmr-shared\obj\Debug\net10.0\ref\tmr-shared.dll
