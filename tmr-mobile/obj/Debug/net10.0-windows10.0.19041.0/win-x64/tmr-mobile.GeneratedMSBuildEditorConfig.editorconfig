@@ -22,7 +22,7 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property.EntryPointFilePath = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = tmr_mobile
-build_property.ProjectDir = C:\Users\luis.sanchez\source\repos\TMR NUEVO\tmr-mobile\
+build_property.ProjectDir = C:\Users\christopher.vera\Documents\TMR-Mobile\tmr-mobile\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.CsWinRTAotExportsEnabled = 
@@ -34,7 +34,7 @@ build_property.CsWinRTUseWindowsUIXamlProjections = false
 build_property.EffectiveAnalysisLevelStyle = 10.0
 build_property.EnableCodeStyleSeverity = 
 
-[C:/Users/luis.sanchez/source/repos/TMR NUEVO/tmr-mobile/App.xaml]
+[C:/Users/christopher.vera/Documents/TMR-Mobile/tmr-mobile/App.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = tmr_mobile.App.xaml
 build_metadata.AdditionalFiles.TargetPath = App.xaml
@@ -44,7 +44,7 @@ build_metadata.AdditionalFiles.NoWarn =
 build_metadata.AdditionalFiles.EnableDiagnostics = 
 build_metadata.AdditionalFiles.LineInfo = 
 
-[C:/Users/luis.sanchez/source/repos/TMR NUEVO/tmr-mobile/AppShell.xaml]
+[C:/Users/christopher.vera/Documents/TMR-Mobile/tmr-mobile/AppShell.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = tmr_mobile.AppShell.xaml
 build_metadata.AdditionalFiles.TargetPath = AppShell.xaml
@@ -54,7 +54,7 @@ build_metadata.AdditionalFiles.NoWarn =
 build_metadata.AdditionalFiles.EnableDiagnostics = 
 build_metadata.AdditionalFiles.LineInfo = 
 
-[C:/Users/luis.sanchez/source/repos/TMR NUEVO/tmr-mobile/MainPage.xaml]
+[C:/Users/christopher.vera/Documents/TMR-Mobile/tmr-mobile/MainPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = tmr_mobile.MainPage.xaml
 build_metadata.AdditionalFiles.TargetPath = MainPage.xaml
@@ -64,7 +64,7 @@ build_metadata.AdditionalFiles.NoWarn =
 build_metadata.AdditionalFiles.EnableDiagnostics = 
 build_metadata.AdditionalFiles.LineInfo = 
 
-[C:/Users/luis.sanchez/source/repos/TMR NUEVO/tmr-mobile/Resources/Styles/Colors.xaml]
+[C:/Users/christopher.vera/Documents/TMR-Mobile/tmr-mobile/Resources/Styles/Colors.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = tmr_mobile.Resources.Styles.Colors.xaml
 build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Colors.xaml
@@ -74,7 +74,7 @@ build_metadata.AdditionalFiles.NoWarn =
 build_metadata.AdditionalFiles.EnableDiagnostics = 
 build_metadata.AdditionalFiles.LineInfo = 
 
-[C:/Users/luis.sanchez/source/repos/TMR NUEVO/tmr-mobile/Resources/Styles/Styles.xaml]
+[C:/Users/christopher.vera/Documents/TMR-Mobile/tmr-mobile/Resources/Styles/Styles.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = tmr_mobile.Resources.Styles.Styles.xaml
 build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Styles.xaml
@@ -84,7 +84,7 @@ build_metadata.AdditionalFiles.NoWarn =
 build_metadata.AdditionalFiles.EnableDiagnostics = 
 build_metadata.AdditionalFiles.LineInfo = 
 
-[C:/Users/luis.sanchez/source/repos/TMR NUEVO/tmr-mobile/Views/Auth/LoginPage.xaml]
+[C:/Users/christopher.vera/Documents/TMR-Mobile/tmr-mobile/Views/Auth/LoginPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = tmr_mobile.Views.Auth.LoginPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\Auth\LoginPage.xaml
@@ -94,7 +94,7 @@ build_metadata.AdditionalFiles.NoWarn =
 build_metadata.AdditionalFiles.EnableDiagnostics = 
 build_metadata.AdditionalFiles.LineInfo = 
 
-[C:/Users/luis.sanchez/source/repos/TMR NUEVO/tmr-mobile/Views/Configuracion/CatalogosPage.xaml]
+[C:/Users/christopher.vera/Documents/TMR-Mobile/tmr-mobile/Views/Configuracion/CatalogosPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = tmr_mobile.Views.Configuracion.CatalogosPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\Configuracion\CatalogosPage.xaml
@@ -104,7 +104,7 @@ build_metadata.AdditionalFiles.NoWarn =
 build_metadata.AdditionalFiles.EnableDiagnostics = 
 build_metadata.AdditionalFiles.LineInfo = 
 
-[C:/Users/luis.sanchez/source/repos/TMR NUEVO/tmr-mobile/Views/Configuracion/FeriadosPage.xaml]
+[C:/Users/christopher.vera/Documents/TMR-Mobile/tmr-mobile/Views/Configuracion/FeriadosPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = tmr_mobile.Views.Configuracion.FeriadosPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\Configuracion\FeriadosPage.xaml
@@ -114,7 +114,7 @@ build_metadata.AdditionalFiles.NoWarn =
 build_metadata.AdditionalFiles.EnableDiagnostics = 
 build_metadata.AdditionalFiles.LineInfo = 
 
-[C:/Users/luis.sanchez/source/repos/TMR NUEVO/tmr-mobile/Views/Configuracion/RolesPage.xaml]
+[C:/Users/christopher.vera/Documents/TMR-Mobile/tmr-mobile/Views/Configuracion/RolesPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = tmr_mobile.Views.Configuracion.RolesPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\Configuracion\RolesPage.xaml
@@ -124,7 +124,7 @@ build_metadata.AdditionalFiles.NoWarn =
 build_metadata.AdditionalFiles.EnableDiagnostics = 
 build_metadata.AdditionalFiles.LineInfo = 
 
-[C:/Users/luis.sanchez/source/repos/TMR NUEVO/tmr-mobile/Views/Configuracion/UsuariosPage.xaml]
+[C:/Users/christopher.vera/Documents/TMR-Mobile/tmr-mobile/Views/Configuracion/UsuariosPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = tmr_mobile.Views.Configuracion.UsuariosPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\Configuracion\UsuariosPage.xaml
@@ -134,7 +134,7 @@ build_metadata.AdditionalFiles.NoWarn =
 build_metadata.AdditionalFiles.EnableDiagnostics = 
 build_metadata.AdditionalFiles.LineInfo = 
 
-[C:/Users/luis.sanchez/source/repos/TMR NUEVO/tmr-mobile/Views/Dashboard/DashboardPage.xaml]
+[C:/Users/christopher.vera/Documents/TMR-Mobile/tmr-mobile/Views/Dashboard/DashboardPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = tmr_mobile.Views.Dashboard.DashboardPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\Dashboard\DashboardPage.xaml
@@ -144,7 +144,7 @@ build_metadata.AdditionalFiles.NoWarn =
 build_metadata.AdditionalFiles.EnableDiagnostics = 
 build_metadata.AdditionalFiles.LineInfo = 
 
-[C:/Users/luis.sanchez/source/repos/TMR NUEVO/tmr-mobile/Views/Operaciones/ClientesPage.xaml]
+[C:/Users/christopher.vera/Documents/TMR-Mobile/tmr-mobile/Views/Operaciones/ClientesPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = tmr_mobile.Views.Operaciones.ClientesPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\Operaciones\ClientesPage.xaml
@@ -154,7 +154,7 @@ build_metadata.AdditionalFiles.NoWarn =
 build_metadata.AdditionalFiles.EnableDiagnostics = 
 build_metadata.AdditionalFiles.LineInfo = 
 
-[C:/Users/luis.sanchez/source/repos/TMR NUEVO/tmr-mobile/Views/Operaciones/ColaboradoresPage.xaml]
+[C:/Users/christopher.vera/Documents/TMR-Mobile/tmr-mobile/Views/Operaciones/ColaboradoresPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = tmr_mobile.Views.Operaciones.ColaboradoresPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\Operaciones\ColaboradoresPage.xaml
@@ -164,7 +164,7 @@ build_metadata.AdditionalFiles.NoWarn =
 build_metadata.AdditionalFiles.EnableDiagnostics = 
 build_metadata.AdditionalFiles.LineInfo = 
 
-[C:/Users/luis.sanchez/source/repos/TMR NUEVO/tmr-mobile/Views/Operaciones/LideresPage.xaml]
+[C:/Users/christopher.vera/Documents/TMR-Mobile/tmr-mobile/Views/Operaciones/LideresPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = tmr_mobile.Views.Operaciones.LideresPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\Operaciones\LideresPage.xaml
@@ -174,7 +174,7 @@ build_metadata.AdditionalFiles.NoWarn =
 build_metadata.AdditionalFiles.EnableDiagnostics = 
 build_metadata.AdditionalFiles.LineInfo = 
 
-[C:/Users/luis.sanchez/source/repos/TMR NUEVO/tmr-mobile/Views/Operaciones/ProyectosPage.xaml]
+[C:/Users/christopher.vera/Documents/TMR-Mobile/tmr-mobile/Views/Operaciones/ProyectosPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = tmr_mobile.Views.Operaciones.ProyectosPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\Operaciones\ProyectosPage.xaml
@@ -184,7 +184,7 @@ build_metadata.AdditionalFiles.NoWarn =
 build_metadata.AdditionalFiles.EnableDiagnostics = 
 build_metadata.AdditionalFiles.LineInfo = 
 
-[C:/Users/luis.sanchez/source/repos/TMR NUEVO/tmr-mobile/Views/Reportes/ReporteFechasPage.xaml]
+[C:/Users/christopher.vera/Documents/TMR-Mobile/tmr-mobile/Views/Reportes/ReporteFechasPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = tmr_mobile.Views.Reportes.ReporteFechasPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\Reportes\ReporteFechasPage.xaml
@@ -194,7 +194,7 @@ build_metadata.AdditionalFiles.NoWarn =
 build_metadata.AdditionalFiles.EnableDiagnostics = 
 build_metadata.AdditionalFiles.LineInfo = 
 
-[C:/Users/luis.sanchez/source/repos/TMR NUEVO/tmr-mobile/Views/Reportes/ReporteHorasPage.xaml]
+[C:/Users/christopher.vera/Documents/TMR-Mobile/tmr-mobile/Views/Reportes/ReporteHorasPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = tmr_mobile.Views.Reportes.ReporteHorasPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\Reportes\ReporteHorasPage.xaml
@@ -204,7 +204,7 @@ build_metadata.AdditionalFiles.NoWarn =
 build_metadata.AdditionalFiles.EnableDiagnostics = 
 build_metadata.AdditionalFiles.LineInfo = 
 
-[C:/Users/luis.sanchez/source/repos/TMR NUEVO/tmr-mobile/Views/TimeReport/CargaActividadesPage.xaml]
+[C:/Users/christopher.vera/Documents/TMR-Mobile/tmr-mobile/Views/TimeReport/CargaActividadesPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = tmr_mobile.Views.TimeReport.CargaActividadesPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\TimeReport\CargaActividadesPage.xaml
@@ -214,7 +214,7 @@ build_metadata.AdditionalFiles.NoWarn =
 build_metadata.AdditionalFiles.EnableDiagnostics = 
 build_metadata.AdditionalFiles.LineInfo = 
 
-[C:/Users/luis.sanchez/source/repos/TMR NUEVO/tmr-mobile/Views/TimeReport/TimeReportPage.xaml]
+[C:/Users/christopher.vera/Documents/TMR-Mobile/tmr-mobile/Views/TimeReport/TimeReportPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = tmr_mobile.Views.TimeReport.TimeReportPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\TimeReport\TimeReportPage.xaml

@@ -17,7 +17,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("tmr-mobile")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+ead8b0b93d01c0c7eab713522ef29d7bbfa16241")]
 [assembly: System.Reflection.AssemblyProductAttribute("tmr-mobile")]
 [assembly: System.Reflection.AssemblyTitleAttribute("tmr-mobile")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
