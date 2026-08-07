@@ -1,23 +1,20 @@
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using tmr_mobile.Services;
+using tmr_shared.DTOs.Clientes;
 
 namespace tmr_mobile.ViewModels;
 
-public class ClienteItem
-{
-    public int Id { get; set; }
-    public string RazónSocial { get; set; } = string.Empty;
-    public string RUC { get; set; } = string.Empty;
-    public string Contacto { get; set; } = string.Empty;
-}
-
 public partial class ClientesViewModel : BaseViewModel
 {
-    public ObservableCollection<ClienteItem> Clientes { get; } = new();
+    private readonly ApiService _apiService;
 
-    public ClientesViewModel()
+    public ObservableCollection<ClienteListaResponse> Clientes { get; } = new();
+
+    public ClientesViewModel(ApiService apiService)
     {
+        _apiService = apiService;
         Title = "Gestión de Clientes";
     }
 
@@ -25,10 +22,46 @@ public partial class ClientesViewModel : BaseViewModel
     private async Task CargarClientesAsync()
     {
         IsBusy = true;
+        ErrorMessage = string.Empty;
         try
         {
+            // GET /api/clientes  (requiere JWT)
+            var lista = await _apiService.GetAsync<List<ClienteListaResponse>>("api/clientes");
             Clientes.Clear();
-            Clientes.Add(new ClienteItem { Id = 1, RazónSocial = "Corporación Tecnológica S.A.", RUC = "20100012345", Contacto = "admin@corp.com" });
+            if (lista != null)
+                foreach (var c in lista)
+                    Clientes.Add(c);
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = $"Error al cargar clientes: {ex.Message}";
+        }
+        finally
+        {
+            IsBusy = false;
+        }
+    }
+
+    [RelayCommand]
+    private async Task BuscarAsync(string busqueda)
+    {
+        IsBusy = true;
+        ErrorMessage = string.Empty;
+        try
+        {
+            var url = string.IsNullOrWhiteSpace(busqueda)
+                ? "api/clientes"
+                : $"api/clientes?busqueda={Uri.EscapeDataString(busqueda)}";
+
+            var lista = await _apiService.GetAsync<List<ClienteListaResponse>>(url);
+            Clientes.Clear();
+            if (lista != null)
+                foreach (var c in lista)
+                    Clientes.Add(c);
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = $"Error al buscar clientes: {ex.Message}";
         }
         finally
         {

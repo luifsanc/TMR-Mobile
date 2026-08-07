@@ -6,10 +6,10 @@ namespace tmr_mobile.ViewModels;
 public partial class ReporteHorasViewModel : BaseViewModel
 {
     [ObservableProperty]
-    private DateTime _fechaInicio = DateTime.Now.AddDays(-30);
+    public partial DateTime FechaInicio { get; set; } = DateTime.Now.AddDays(-30);
 
     [ObservableProperty]
-    private DateTime _fechaFin = DateTime.Now;
+    public partial DateTime FechaFin { get; set; } = DateTime.Now;
 
     public ReporteHorasViewModel()
     {

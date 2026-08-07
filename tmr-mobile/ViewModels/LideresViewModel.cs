@@ -1,22 +1,20 @@
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using tmr_mobile.Services;
+using tmr_shared.DTOs.Lideres;
 
 namespace tmr_mobile.ViewModels;
 
-public class LiderItem
-{
-    public int Id { get; set; }
-    public string Nombre { get; set; } = string.Empty;
-    public string Area { get; set; } = string.Empty;
-}
-
 public partial class LideresViewModel : BaseViewModel
 {
-    public ObservableCollection<LiderItem> Lideres { get; } = new();
+    private readonly ApiService _apiService;
 
-    public LideresViewModel()
+    public ObservableCollection<LiderResponse> Lideres { get; } = new();
+
+    public LideresViewModel(ApiService apiService)
     {
+        _apiService = apiService;
         Title = "Líderes de Proyecto";
     }
 
@@ -24,10 +22,19 @@ public partial class LideresViewModel : BaseViewModel
     private async Task CargarLideresAsync()
     {
         IsBusy = true;
+        ErrorMessage = string.Empty;
         try
         {
+            // GET /api/lideres
+            var lista = await _apiService.GetAsync<List<LiderResponse>>("api/lideres");
             Lideres.Clear();
-            Lideres.Add(new LiderItem { Id = 1, Nombre = "Ing. Roberto Gómez", Area = "Tecnología e Innovación" });
+            if (lista != null)
+                foreach (var l in lista)
+                    Lideres.Add(l);
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = $"Error al cargar líderes: {ex.Message}";
         }
         finally
         {

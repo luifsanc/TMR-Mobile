@@ -1,23 +1,20 @@
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using tmr_mobile.Services;
+using tmr_shared.DTOs.Colaboradores;
 
 namespace tmr_mobile.ViewModels;
 
-public class ColaboradorItem
-{
-    public int Id { get; set; }
-    public string NombreCompleto { get; set; } = string.Empty;
-    public string Cargo { get; set; } = string.Empty;
-    public string Email { get; set; } = string.Empty;
-}
-
 public partial class ColaboradoresViewModel : BaseViewModel
 {
-    public ObservableCollection<ColaboradorItem> Colaboradores { get; } = new();
+    private readonly ApiService _apiService;
 
-    public ColaboradoresViewModel()
+    public ObservableCollection<ColaboradorListaResponse> Colaboradores { get; } = new();
+
+    public ColaboradoresViewModel(ApiService apiService)
     {
+        _apiService = apiService;
         Title = "Gestión de Colaboradores";
     }
 
@@ -25,11 +22,46 @@ public partial class ColaboradoresViewModel : BaseViewModel
     private async Task CargarColaboradoresAsync()
     {
         IsBusy = true;
+        ErrorMessage = string.Empty;
         try
         {
+            // GET /api/colaboradores  (requiere JWT)
+            var lista = await _apiService.GetAsync<List<ColaboradorListaResponse>>("api/colaboradores");
             Colaboradores.Clear();
-            Colaboradores.Add(new ColaboradorItem { Id = 1, NombreCompleto = "Carlos Mendoza", Cargo = "Senior .NET Developer", Email = "carlos@tmr.com" });
-            Colaboradores.Add(new ColaboradorItem { Id = 2, NombreCompleto = "Ana Torres", Cargo = "Mobile Specialist (MAUI/Angular)", Email = "ana@tmr.com" });
+            if (lista != null)
+                foreach (var c in lista)
+                    Colaboradores.Add(c);
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = $"Error al cargar colaboradores: {ex.Message}";
+        }
+        finally
+        {
+            IsBusy = false;
+        }
+    }
+
+    [RelayCommand]
+    private async Task BuscarAsync(string busqueda)
+    {
+        IsBusy = true;
+        ErrorMessage = string.Empty;
+        try
+        {
+            var url = string.IsNullOrWhiteSpace(busqueda)
+                ? "api/colaboradores"
+                : $"api/colaboradores?busqueda={Uri.EscapeDataString(busqueda)}";
+
+            var lista = await _apiService.GetAsync<List<ColaboradorListaResponse>>(url);
+            Colaboradores.Clear();
+            if (lista != null)
+                foreach (var c in lista)
+                    Colaboradores.Add(c);
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = $"Error al buscar: {ex.Message}";
         }
         finally
         {

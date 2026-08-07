@@ -18,4 +18,10 @@ public partial class DashboardPage : ContentPage
             vm.CargarDashboardCommand.Execute(null);
         }
     }
+
+    private async void OnVerReporteCompletoClicked(object sender, EventArgs e)
+    {
+        // Ajusta la ruta Shell según cómo hayas registrado la página de reportes.
+        await Shell.Current.GoToAsync("//ReportesPage");
+    }
 }
