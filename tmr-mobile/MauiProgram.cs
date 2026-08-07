@@ -23,11 +23,12 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
 
-        // ── Servicios ──
+        // ── Servicios core ────────────────────────────────────────────────────
+        // Singleton: una sola instancia de HttpClient en toda la app (best practice)
         builder.Services.AddSingleton<ApiService>();
         builder.Services.AddSingleton<IAuthService, AuthService>();
 
-        // ── ViewModels ──
+        // ── ViewModels ────────────────────────────────────────────────────────
         builder.Services.AddTransient<LoginViewModel>();
         builder.Services.AddTransient<DashboardViewModel>();
         builder.Services.AddTransient<TimeReportViewModel>();
@@ -43,7 +44,7 @@ public static class MauiProgram
         builder.Services.AddTransient<FeriadosConfigViewModel>();
         builder.Services.AddTransient<CatalogosConfigViewModel>();
 
-        // ── Vistas ──
+        // ── Vistas ────────────────────────────────────────────────────────────
         builder.Services.AddTransient<LoginPage>();
         builder.Services.AddTransient<DashboardPage>();
         builder.Services.AddTransient<TimeReportPage>();
