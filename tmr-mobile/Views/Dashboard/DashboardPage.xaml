@@ -7,95 +7,265 @@
              x:Class="tmr_mobile.Views.Dashboard.DashboardPage"
              x:DataType="vm:DashboardViewModel"
              Title="Dashboard"
-             BackgroundColor="#F5F6FA">
+             BackgroundColor="{StaticResource DashboardPageBg}">
 
     <ContentPage.Resources>
         <conv:StatusToBackgroundColorConverter x:Key="StatusBg"/>
         <conv:StatusToTextColorConverter x:Key="StatusText"/>
+        <conv:PercentToColumnsConverter x:Key="PercentToColumns"/>
+        <Color x:Key="DashboardPageBg">#F4F7FC</Color>
+        <Color x:Key="DashboardSurface">#FFFFFF</Color>
+        <Color x:Key="DashboardText">#0F172A</Color>
+        <Color x:Key="DashboardMuted">#667085</Color>
+        <Color x:Key="DashboardBorder">#E6ECF5</Color>
+        <Color x:Key="DashboardPrimary">#2347C6</Color>
+        <Color x:Key="DashboardHeroStart">#F8FBFF</Color>
+        <Color x:Key="DashboardHeroEnd">#EEF4FF</Color>
     </ContentPage.Resources>
 
     <!-- ===================== TODO EN UN SOLO SCROLL ===================== -->
     <ScrollView>
-        <VerticalStackLayout Spacing="20"
-                             Padding="16,12,16,32">
+        <VerticalStackLayout Spacing="20" Padding="16,12,16,32">
 
-            <Grid ColumnDefinitions="Auto,*,Auto,Auto"
+            <Grid ColumnDefinitions="Auto,*,Auto"
                   ColumnSpacing="12"
                   VerticalOptions="Center">
-                <ImageButton Grid.Column="0"
-                             Source="menu_icon.png"
-                             WidthRequest="24"
-                             HeightRequest="24"
-                             BackgroundColor="Transparent"/>
+
+                <Border Grid.Column="0"
+                        StrokeShape="RoundRectangle 14"
+                        BackgroundColor="White"
+                        Stroke="{StaticResource DashboardBorder}"
+                        WidthRequest="44"
+                        HeightRequest="44"
+                        Padding="0">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnMenuTapped"/>
+                    </Border.GestureRecognizers>
+                    <Label Text="☰"
+                           FontSize="20"
+                           TextColor="{StaticResource DashboardText}"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"/>
+                </Border>
+
                 <Label Grid.Column="1"
                        Text="Dashboard"
-                       FontSize="20"
+                       FontSize="22"
                        FontAttributes="Bold"
                        HorizontalOptions="Center"
-                       TextColor="#101828"/>
-                <ImageButton Grid.Column="2"
-                             Source="bell_icon.png"
-                             WidthRequest="22"
-                             HeightRequest="22"
-                             BackgroundColor="Transparent"/>
-                <Border Grid.Column="3"
-                        StrokeShape="RoundRectangle 18"
-                        WidthRequest="36"
-                        HeightRequest="36"
-                        BackgroundColor="#101828">
-                    <Image Source="avatar_icon.png"
-                           WidthRequest="18"
-                           HeightRequest="18"/>
-                </Border>
+                       TextColor="{StaticResource DashboardText}"/>
+
+                <HorizontalStackLayout Grid.Column="2"
+                                       Spacing="10"
+                                       HorizontalOptions="End"
+                                       VerticalOptions="Center">
+                    <Border StrokeShape="RoundRectangle 14"
+                            BackgroundColor="White"
+                            Stroke="{StaticResource DashboardBorder}"
+                            WidthRequest="44"
+                            HeightRequest="44"
+                            Padding="0">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnNotificationsTapped"/>
+                        </Border.GestureRecognizers>
+                        <Grid>
+                            <Label Text="🔔"
+                                   FontSize="17"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"/>
+                            <Border WidthRequest="10"
+                                    HeightRequest="10"
+                                    BackgroundColor="#F04438"
+                                    Stroke="White"
+                                    StrokeThickness="2"
+                                    StrokeShape="RoundRectangle 5"
+                                    HorizontalOptions="End"
+                                    VerticalOptions="Start"
+                                    Margin="0,6,6,0"/>
+                        </Grid>
+                    </Border>
+
+                    <Border StrokeShape="RoundRectangle 22"
+                            BackgroundColor="White"
+                            Stroke="{StaticResource DashboardBorder}"
+                            Padding="6"
+                            MinimumWidthRequest="92"
+                            HeightRequest="44">
+                        <Grid ColumnDefinitions="Auto,*"
+                              ColumnSpacing="8"
+                              VerticalOptions="Center">
+                            <Grid Grid.Column="0"
+                                  WidthRequest="32"
+                                  HeightRequest="32">
+                                <Border StrokeShape="RoundRectangle 16"
+                                        BackgroundColor="{StaticResource DashboardText}"
+                                        Stroke="Transparent"/>
+                                <Label Text="{Binding AvatarInicial}"
+                                       TextColor="White"
+                                       FontAttributes="Bold"
+                                       FontSize="13"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center"/>
+                                <Border WidthRequest="10"
+                                        HeightRequest="10"
+                                        BackgroundColor="#12B76A"
+                                        Stroke="White"
+                                        StrokeThickness="2"
+                                        StrokeShape="RoundRectangle 5"
+                                        HorizontalOptions="End"
+                                        VerticalOptions="End"/>
+                            </Grid>
+
+                            <VerticalStackLayout Grid.Column="1"
+                                                 Spacing="0"
+                                                 VerticalOptions="Center">
+                                <Label Text="{Binding NombreUsuario}"
+                                       FontSize="11"
+                                       FontAttributes="Bold"
+                                       TextColor="{StaticResource DashboardText}"
+                                       LineBreakMode="TailTruncation"/>
+                                <Label Text="En línea"
+                                       FontSize="10"
+                                       TextColor="#12B76A"/>
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Border>
+                </HorizontalStackLayout>
             </Grid>
 
+            <Border StrokeShape="RoundRectangle 26"
+                    Stroke="Transparent"
+                    Padding="18,18,18,16">
+                <Border.Background>
+                    <LinearGradientBrush EndPoint="1,1">
+                        <GradientStop Color="{StaticResource DashboardHeroStart}" Offset="0.0"/>
+                        <GradientStop Color="{StaticResource DashboardHeroEnd}" Offset="1.0"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <Grid ColumnDefinitions="*,Auto"
+                      ColumnSpacing="14">
+                    <VerticalStackLayout Grid.Column="0"
+                                         Spacing="6">
+                        <Border BackgroundColor="#FFFFFFAA"
+                                Stroke="Transparent"
+                                StrokeShape="RoundRectangle 14"
+                                Padding="10,5"
+                                HorizontalOptions="Start">
+                            <Label Text="Resumen general"
+                                   FontSize="11"
+                                   FontAttributes="Bold"
+                                   TextColor="{StaticResource DashboardPrimary}"/>
+                        </Border>
+
+                        <Label FontSize="24"
+                               FontAttributes="Bold"
+                               TextColor="{StaticResource DashboardText}">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="Hola, "/>
+                                    <Span Text="{Binding NombreUsuario}"/>
+                                    <Span Text=" 👋"/>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+
+                        <Label Text="Aquí tienes un resumen claro de tu actividad y tus métricas clave del mes."
+                               TextColor="{StaticResource DashboardMuted}"
+                               FontSize="14"
+                               LineBreakMode="WordWrap"/>
+                    </VerticalStackLayout>
+
+                    <Grid Grid.Column="1"
+                          WidthRequest="72"
+                          HeightRequest="72"
+                          VerticalOptions="Start">
+                        <Border StrokeShape="RoundRectangle 26"
+                                BackgroundColor="#DCE8FF"
+                                Stroke="Transparent"/>
+                        <Border StrokeShape="RoundRectangle 22"
+                                BackgroundColor="{StaticResource DashboardText}"
+                                Stroke="White"
+                                StrokeThickness="3"
+                                WidthRequest="44"
+                                HeightRequest="44"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center">
+                            <Label Text="{Binding AvatarInicial}"
+                                   TextColor="White"
+                                   FontAttributes="Bold"
+                                   FontSize="18"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"/>
+                        </Border>
+                        <Border WidthRequest="20"
+                                HeightRequest="20"
+                                BackgroundColor="#FFFFFF"
+                                Stroke="Transparent"
+                                StrokeShape="RoundRectangle 10"
+                                HorizontalOptions="End"
+                                VerticalOptions="End"
+                                Margin="0,0,2,2">
+                            <Label Text="✨"
+                                   FontSize="10"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"/>
+                        </Border>
+                    </Grid>
+                </Grid>
+            </Border>
 
 
-            <VerticalStackLayout Spacing="2">
-                <Label FontSize="22"
-                       FontAttributes="Bold"
-                       TextColor="#101828">
-                    <Label.FormattedText>
-                        <FormattedString>
-                            <Span Text="Hola, "/>
-                            <Span Text="{Binding NombreUsuario}"/>
-                            <Span Text=" 👋"/>
-                        </FormattedString>
-                    </Label.FormattedText>
-                </Label>
-                <Label Text="Aquí tienes un resumen de tu actividad"
-                       TextColor="#667085"
-                       FontSize="14"/>
-            </VerticalStackLayout>
-
-
-            <FlexLayout BindableLayout.ItemsSource="{Binding StatCards}"
-                        Wrap="Wrap"
-                        Direction="Row"
-                        JustifyContent="SpaceBetween">
+           <FlexLayout BindableLayout.ItemsSource="{Binding StatCards}"
+                       Wrap="Wrap"
+                       Direction="Row"
+                       JustifyContent="SpaceBetween">
                 <BindableLayout.ItemTemplate>
                     <DataTemplate x:DataType="models:StatCard">
                         <Border StrokeShape="RoundRectangle 16"
                                 BackgroundColor="White"
-                                Stroke="Transparent"
+                                Stroke="{StaticResource DashboardBorder}"
                                 Padding="14"
                                 Margin="0,0,0,10"
                                 WidthRequest="168">
-                            <VerticalStackLayout Spacing="8">
-                                <Border StrokeShape="RoundRectangle 10"
-                                        BackgroundColor="{Binding IconBackground}"
-                                        WidthRequest="34"
-                                        HeightRequest="34"
-                                        Padding="0"
-                                        Stroke="Transparent"/>
-                                <Label Text="{Binding Value}"
-                                       FontSize="20"
+                            <Grid RowDefinitions="Auto,Auto,Auto"
+                                  RowSpacing="10">
+                                <Grid Grid.Row="0"
+                                      ColumnDefinitions="Auto,*"
+                                      ColumnSpacing="8">
+                                    <Border Grid.Column="0"
+                                            StrokeShape="RoundRectangle 12"
+                                            BackgroundColor="{Binding IconBackground}"
+                                            WidthRequest="44"
+                                            HeightRequest="44"
+                                            Padding="0"
+                                            Stroke="Transparent">
+                                        <Label Text="{Binding Icon}"
+                                               FontSize="20"
+                                               TextColor="{Binding IconColor}"
+                                               HorizontalOptions="Center"
+                                               VerticalOptions="Center"/>
+                                    </Border>
+
+                                    <Border Grid.Column="1"
+                                            StrokeShape="RoundRectangle 10"
+                                            BackgroundColor="#F8FAFC"
+                                            Stroke="Transparent"
+                                            HeightRequest="26"
+                                            HorizontalOptions="End"
+                                            WidthRequest="26"/>
+                                </Grid>
+
+                                <Label Grid.Row="1"
+                                       Text="{Binding Value}"
+                                       FontSize="21"
                                        FontAttributes="Bold"
-                                       TextColor="#101828"/>
-                                <Label Text="{Binding Label}"
+                                       TextColor="{StaticResource DashboardText}"/>
+
+                                <Label Grid.Row="2"
+                                       Text="{Binding Label}"
                                        FontSize="12"
-                                       TextColor="#667085"/>
-                            </VerticalStackLayout>
+                                       TextColor="{StaticResource DashboardMuted}"/>
+                            </Grid>
                         </Border>
                     </DataTemplate>
                 </BindableLayout.ItemTemplate>
@@ -202,36 +372,45 @@
                         </Border>
                     </Grid>
 
-                    <CollectionView ItemsSource="{Binding HorasPorProyecto}"
-                                    SelectionMode="None">
+                    <CollectionView ItemsSource="{Binding HorasPorProyecto}" SelectionMode="None">
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="models:ChartPoint">
                                 <VerticalStackLayout Spacing="8">
                                     <Grid ColumnDefinitions="*,Auto">
                                         <Label Grid.Column="0"
-                                               Text="{Binding Categoria}"
-                                               FontSize="12"
-                                               TextColor="#667085"/>
+                                            Text="{Binding Categoria}"
+                                            FontSize="12"
+                                            TextColor="#667085"
+                                            LineBreakMode="TailTruncation"/>
                                         <Label Grid.Column="1"
-                                               Text="{Binding Horas, StringFormat='{0} h'}"
-                                               FontSize="13"
-                                               FontAttributes="Bold"
-                                               TextColor="#101828"/>
+                                            Text="{Binding Horas, StringFormat='{0:0} h'}"
+                                            FontSize="13"
+                                            FontAttributes="Bold"
+                                            TextColor="#101828"/>
                                     </Grid>
+
+                                    <!-- Track de fondo: siempre ocupa el 100% del ancho -->
                                     <Border BackgroundColor="#E4ECFF"
                                             Stroke="Transparent"
                                             StrokeShape="RoundRectangle 6"
                                             HeightRequest="12">
-                                        <Border BackgroundColor="#2E5BFF"
-                                                Stroke="Transparent"
-                                                StrokeShape="RoundRectangle 6"
-                                                HorizontalOptions="Fill"
-                                                VerticalOptions="Fill"/>
+                                        <!-- Grid proporcional: Columna 0 = parte llena (según %),
+                                            Columna 1 = resto vacío. Al usar columnas Star, es
+                                            responsive sin medir píxeles. -->
+                                        <Grid ColumnDefinitions="{Binding Porcentaje, Converter={StaticResource PercentToColumns}}"
+                                            HeightRequest="12">
+                                            <Border Grid.Column="0"
+                                                    BackgroundColor="#2E5BFF"
+                                                    Stroke="Transparent"
+                                                    StrokeShape="RoundRectangle 6"/>
+                                            <!-- Grid.Column="1" queda vacío/transparente: es el resto de la barra -->
+                                        </Grid>
                                     </Border>
                                 </VerticalStackLayout>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
                     </CollectionView>
+
 
 
                     <FlexLayout BindableLayout.ItemsSource="{Binding MetricasMini}"

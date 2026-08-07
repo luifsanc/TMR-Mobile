@@ -4,24 +4,59 @@
         <name>tmr-mobile</name>
     </assembly>
     <members>
+        <member name="T:tmr_mobile.Services.ApiService">
+            <summary>
+            Servicio centralizado para consumir el backend TMR.
+            - Singleton: una sola instancia de HttpClient en toda la app.
+            - Agrega Authorization header automáticamente en cada petición.
+            - Maneja 401: intenta renovar el AccessToken antes de fallar.
+            - Timeout de 30 segundos por defecto.
+            </summary>
+        </member>
+        <member name="M:tmr_mobile.Services.ApiService.SetRefreshTokenFunc(System.Func{System.Threading.Tasks.Task{System.Boolean}})">
+            <summary>
+            Registra la función de refresh token para que ApiService pueda
+            renovar automáticamente el AT al recibir un 401, sin ciclo de dependencia.
+            Llamar desde AuthService después de construirlo.
+            </summary>
+        </member>
+        <member name="M:tmr_mobile.Services.AuthService.LoginAsync(System.String,System.String)">
+            <summary>
+            Autentica al usuario contra POST /api/auth/login.
+            El backend devuelve ApiResponse&lt;AuthResponse&gt;, NO AuthResponse directamente.
+            Guarda AccessToken, RefreshToken y TokenFamilyId en SecureStorage.
+            </summary>
+        </member>
+        <member name="M:tmr_mobile.Services.AuthService.RefreshTokenAsync">
+            <summary>
+            Renueva el AccessToken usando el RefreshToken guardado.
+            POST /api/auth/refresh-token — no requiere Authorization header.
+            </summary>
+        </member>
+        <member name="M:tmr_mobile.Services.AuthService.LogoutAsync">
+            <summary>
+            Cierra sesión usando POST /api/auth/logout-rt (no requiere AT válido).
+            Limpia SecureStorage y redirige al login.
+            </summary>
+        </member>
         <member name="T:tmr_mobile.ViewModels.BaseViewModel">
             <inheritdoc/>
         </member>
         <member name="P:tmr_mobile.ViewModels.BaseViewModel.IsBusy">
-            <inheritdoc cref="F:tmr_mobile.ViewModels.BaseViewModel._isBusy"/>
+            <inheritdoc/>
         </member>
         <member name="P:tmr_mobile.ViewModels.BaseViewModel.Title">
-            <inheritdoc cref="F:tmr_mobile.ViewModels.BaseViewModel._title"/>
+            <inheritdoc/>
         </member>
         <member name="P:tmr_mobile.ViewModels.BaseViewModel.ErrorMessage">
-            <inheritdoc cref="F:tmr_mobile.ViewModels.BaseViewModel._errorMessage"/>
+            <inheritdoc/>
         </member>
         <member name="T:tmr_mobile.ViewModels.CargaActividadesViewModel">
             <inheritdoc/>
             <inheritdoc/>
         </member>
         <member name="P:tmr_mobile.ViewModels.CargaActividadesViewModel.ArchivoSeleccionado">
-            <inheritdoc cref="F:tmr_mobile.ViewModels.CargaActividadesViewModel._archivoSeleccionado"/>
+            <inheritdoc/>
         </member>
         <member name="F:tmr_mobile.ViewModels.CargaActividadesViewModel.seleccionarArchivoCommand">
             <summary>The backing field for <see cref="P:tmr_mobile.ViewModels.CargaActividadesViewModel.SeleccionarArchivoCommand"/>.</summary>
@@ -31,6 +66,7 @@
         </member>
         <member name="T:tmr_mobile.ViewModels.ClientesViewModel">
             <inheritdoc/>
+            <inheritdoc/>
         </member>
         <member name="F:tmr_mobile.ViewModels.ClientesViewModel.cargarClientesCommand">
             <summary>The backing field for <see cref="P:tmr_mobile.ViewModels.ClientesViewModel.CargarClientesCommand"/>.</summary>
@@ -38,7 +74,14 @@
         <member name="P:tmr_mobile.ViewModels.ClientesViewModel.CargarClientesCommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:tmr_mobile.ViewModels.ClientesViewModel.CargarClientesAsync"/>.</summary>
         </member>
+        <member name="F:tmr_mobile.ViewModels.ClientesViewModel.buscarCommand">
+            <summary>The backing field for <see cref="P:tmr_mobile.ViewModels.ClientesViewModel.BuscarCommand"/>.</summary>
+        </member>
+        <member name="P:tmr_mobile.ViewModels.ClientesViewModel.BuscarCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:tmr_mobile.ViewModels.ClientesViewModel.BuscarAsync(System.String)"/>.</summary>
+        </member>
         <member name="T:tmr_mobile.ViewModels.ColaboradoresViewModel">
+            <inheritdoc/>
             <inheritdoc/>
         </member>
         <member name="F:tmr_mobile.ViewModels.ColaboradoresViewModel.cargarColaboradoresCommand">
@@ -47,18 +90,30 @@
         <member name="P:tmr_mobile.ViewModels.ColaboradoresViewModel.CargarColaboradoresCommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:tmr_mobile.ViewModels.ColaboradoresViewModel.CargarColaboradoresAsync"/>.</summary>
         </member>
+        <member name="F:tmr_mobile.ViewModels.ColaboradoresViewModel.buscarCommand">
+            <summary>The backing field for <see cref="P:tmr_mobile.ViewModels.ColaboradoresViewModel.BuscarCommand"/>.</summary>
+        </member>
+        <member name="P:tmr_mobile.ViewModels.ColaboradoresViewModel.BuscarCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:tmr_mobile.ViewModels.ColaboradoresViewModel.BuscarAsync(System.String)"/>.</summary>
+        </member>
         <member name="T:tmr_mobile.ViewModels.DashboardViewModel">
             <inheritdoc/>
             <inheritdoc/>
         </member>
         <member name="P:tmr_mobile.ViewModels.DashboardViewModel.TotalProyectos">
-            <inheritdoc cref="F:tmr_mobile.ViewModels.DashboardViewModel._totalProyectos"/>
+            <inheritdoc/>
         </member>
         <member name="P:tmr_mobile.ViewModels.DashboardViewModel.TotalColaboradores">
-            <inheritdoc cref="F:tmr_mobile.ViewModels.DashboardViewModel._totalColaboradores"/>
+            <inheritdoc/>
         </member>
         <member name="P:tmr_mobile.ViewModels.DashboardViewModel.HorasRegistradasMes">
-            <inheritdoc cref="F:tmr_mobile.ViewModels.DashboardViewModel._horasRegistradasMes"/>
+            <inheritdoc/>
+        </member>
+        <member name="P:tmr_mobile.ViewModels.DashboardViewModel.ClientesActivos">
+            <inheritdoc/>
+        </member>
+        <member name="P:tmr_mobile.ViewModels.DashboardViewModel.DetalleTotalHoras">
+            <inheritdoc/>
         </member>
         <member name="F:tmr_mobile.ViewModels.DashboardViewModel.cargarDashboardCommand">
             <summary>The backing field for <see cref="P:tmr_mobile.ViewModels.DashboardViewModel.CargarDashboardCommand"/>.</summary>
@@ -80,10 +135,10 @@
             <inheritdoc/>
         </member>
         <member name="P:tmr_mobile.ViewModels.LoginViewModel.User">
-            <inheritdoc cref="F:tmr_mobile.ViewModels.LoginViewModel._user"/>
+            <inheritdoc/>
         </member>
         <member name="P:tmr_mobile.ViewModels.LoginViewModel.Password">
-            <inheritdoc cref="F:tmr_mobile.ViewModels.LoginViewModel._password"/>
+            <inheritdoc/>
         </member>
         <member name="F:tmr_mobile.ViewModels.LoginViewModel.loginCommand">
             <summary>The backing field for <see cref="P:tmr_mobile.ViewModels.LoginViewModel.LoginCommand"/>.</summary>
@@ -105,10 +160,10 @@
             <inheritdoc/>
         </member>
         <member name="P:tmr_mobile.ViewModels.ReporteHorasViewModel.FechaInicio">
-            <inheritdoc cref="F:tmr_mobile.ViewModels.ReporteHorasViewModel._fechaInicio"/>
+            <inheritdoc/>
         </member>
         <member name="P:tmr_mobile.ViewModels.ReporteHorasViewModel.FechaFin">
-            <inheritdoc cref="F:tmr_mobile.ViewModels.ReporteHorasViewModel._fechaFin"/>
+            <inheritdoc/>
         </member>
         <member name="F:tmr_mobile.ViewModels.ReporteHorasViewModel.generarReporteCommand">
             <summary>The backing field for <see cref="P:tmr_mobile.ViewModels.ReporteHorasViewModel.GenerarReporteCommand"/>.</summary>
@@ -118,12 +173,54 @@
         </member>
         <member name="T:tmr_mobile.ViewModels.TimeReportViewModel">
             <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:tmr_mobile.ViewModels.TimeReportViewModel.AnioActual">
+            <inheritdoc/>
+        </member>
+        <member name="P:tmr_mobile.ViewModels.TimeReportViewModel.MesActual">
+            <inheritdoc/>
+        </member>
+        <member name="P:tmr_mobile.ViewModels.TimeReportViewModel.TotalHorasMes">
+            <inheritdoc/>
         </member>
         <member name="F:tmr_mobile.ViewModels.TimeReportViewModel.cargarActividadesCommand">
             <summary>The backing field for <see cref="P:tmr_mobile.ViewModels.TimeReportViewModel.CargarActividadesCommand"/>.</summary>
         </member>
         <member name="P:tmr_mobile.ViewModels.TimeReportViewModel.CargarActividadesCommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:tmr_mobile.ViewModels.TimeReportViewModel.CargarActividadesAsync"/>.</summary>
+        </member>
+        <member name="F:tmr_mobile.ViewModels.TimeReportViewModel.mesAnteriorCommand">
+            <summary>The backing field for <see cref="P:tmr_mobile.ViewModels.TimeReportViewModel.MesAnteriorCommand"/>.</summary>
+        </member>
+        <member name="P:tmr_mobile.ViewModels.TimeReportViewModel.MesAnteriorCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:tmr_mobile.ViewModels.TimeReportViewModel.MesAnteriorAsync"/>.</summary>
+        </member>
+        <member name="F:tmr_mobile.ViewModels.TimeReportViewModel.mesSiguienteCommand">
+            <summary>The backing field for <see cref="P:tmr_mobile.ViewModels.TimeReportViewModel.MesSiguienteCommand"/>.</summary>
+        </member>
+        <member name="P:tmr_mobile.ViewModels.TimeReportViewModel.MesSiguienteCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:tmr_mobile.ViewModels.TimeReportViewModel.MesSiguienteAsync"/>.</summary>
+        </member>
+        <member name="F:tmr_mobile.ViewModels.TimeReportViewModel.nuevaActividadCommand">
+            <summary>The backing field for <see cref="P:tmr_mobile.ViewModels.TimeReportViewModel.NuevaActividadCommand"/>.</summary>
+        </member>
+        <member name="P:tmr_mobile.ViewModels.TimeReportViewModel.NuevaActividadCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:tmr_mobile.ViewModels.TimeReportViewModel.NuevaActividadAsync"/>.</summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "T:tmr_mobile.Views.Dashboard.Converters.PercentToColumnsConverter" -->
+        <member name="T:tmr_mobile.Views.Dashboard.Converters.StatusToBackgroundColorConverter">
+            <summary>
+            Devuelve el color de fondo del badge según el estado del proyecto.
+            </summary>
+        </member>
+        <member name="T:tmr_mobile.Views.Dashboard.Converters.StatusToTextColorConverter">
+            <summary>
+            Devuelve el color de texto del badge según el estado del proyecto.
+            </summary>
         </member>
         <member name="T:tmr_mobile.Resource">
             <summary>
@@ -158,6 +255,12 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.HorasRegistradasMes">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "HorasRegistradasMes" generated properties.</summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.ClientesActivos">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "ClientesActivos" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.DetalleTotalHoras">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "DetalleTotalHoras" generated properties.</summary>
+        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.User">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "User" generated properties.</summary>
         </member>
@@ -169,6 +272,15 @@
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.FechaFin">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "FechaFin" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.AnioActual">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "AnioActual" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.MesActual">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "MesActual" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.TotalHorasMes">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "TotalHorasMes" generated properties.</summary>
         </member>
         <member name="T:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs">
             <summary>
@@ -197,6 +309,12 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.HorasRegistradasMes">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "HorasRegistradasMes" generated properties.</summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.ClientesActivos">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "ClientesActivos" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.DetalleTotalHoras">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "DetalleTotalHoras" generated properties.</summary>
+        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.User">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "User" generated properties.</summary>
         </member>
@@ -208,6 +326,15 @@
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.FechaFin">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "FechaFin" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.AnioActual">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "AnioActual" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.MesActual">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "MesActual" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.TotalHorasMes">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "TotalHorasMes" generated properties.</summary>
         </member>
     </members>
 </doc>

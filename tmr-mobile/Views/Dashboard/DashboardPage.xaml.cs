@@ -24,4 +24,15 @@ public partial class DashboardPage : ContentPage
         // Ajusta la ruta Shell según cómo hayas registrado la página de reportes.
         await Shell.Current.GoToAsync("//ReportesPage");
     }
+
+    private void OnMenuTapped(object? sender, TappedEventArgs e)
+    {
+        // Ajusta según cómo tengas armada la navegación (Shell flyout, etc.)
+        Shell.Current.FlyoutIsPresented = !Shell.Current.FlyoutIsPresented;
+    }
+ 
+    private void OnNotificationsTapped(object? sender, TappedEventArgs e)
+    {
+        // TODO: navegar a la pantalla de notificaciones cuando exista.
+    }
 }

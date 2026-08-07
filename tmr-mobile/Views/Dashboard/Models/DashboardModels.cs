@@ -4,6 +4,7 @@ public class StatCard
 {
     public string Icon { get; set; } = string.Empty;      // ej: "icon_projects.png"
     public string IconBackground { get; set; } = "#E7EEFF";
+    public string IconColor { get; set; } = "#101828";
     public string Value { get; set; } = string.Empty;
     public string Label { get; set; } = string.Empty;
 }
@@ -22,6 +23,15 @@ public class ChartPoint
 {
     public string Categoria { get; set; } = string.Empty;   // "Proyectos de Procesos"
     public double Horas { get; set; }
+
+    // Porcentaje (0-100) de Horas respecto al máximo del set actual.
+    // Se calcula en el ViewModel al mapear la respuesta del endpoint,
+    // porque solo ahí se conoce el máximo de todo el conjunto.
+    // Se usa para dibujar la barra proporcional en el XAML vía
+    // PercentToColumnsConverter. Default 100 para que si algún día
+    // se usa este modelo sin pasar por el mapper, la barra se vea
+    // llena en vez de en 0 (comportamiento visual previo).
+    public double Porcentaje { get; set; } = 100;
 }
 
 public class MetricMini
