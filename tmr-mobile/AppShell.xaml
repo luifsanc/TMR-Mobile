@@ -26,6 +26,12 @@
         <ShellContent ContentTemplate="{DataTemplate auth:LoginPage}" />
     </ShellItem>
 
+    <ShellItem Route="ForgotPasswordPage" FlyoutItemIsVisible="False">
+        <ShellContent ContentTemplate="{DataTemplate auth:ForgotPasswordPage}" />
+    </ShellItem>
+
+    
+
     <!-- Estructura Principal de Menú y Navegación (Coincidiendo con Angular Routes) -->
     <FlyoutItem Title="Dashboard" Icon="dotnet_bot.png" Route="DashboardPage">
         <ShellContent ContentTemplate="{DataTemplate dash:DashboardPage}" />
