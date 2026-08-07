@@ -5,13 +5,13 @@ namespace tmr_mobile.ViewModels;
 public partial class BaseViewModel : ObservableObject
 {
     [ObservableProperty]
-    private bool _isBusy;
+    public partial bool IsBusy { get; set; }
 
     [ObservableProperty]
-    private string _title = string.Empty;
+    public partial string Title { get; set; } = string.Empty;
 
     [ObservableProperty]
-    private string _errorMessage = string.Empty;
+    public partial string ErrorMessage { get; set; } = string.Empty;
 
     public bool IsNotBusy => !IsBusy;
 }

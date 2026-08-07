@@ -1,23 +1,20 @@
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using tmr_mobile.Services;
+using tmr_shared.DTOs.Proyectos;
 
 namespace tmr_mobile.ViewModels;
 
-public class ProyectoItem
-{
-    public int Id { get; set; }
-    public string Nombre { get; set; } = string.Empty;
-    public string Cliente { get; set; } = string.Empty;
-    public string Estado { get; set; } = "Activo";
-}
-
 public partial class ProyectosViewModel : BaseViewModel
 {
-    public ObservableCollection<ProyectoItem> Proyectos { get; } = new();
+    private readonly ApiService _apiService;
 
-    public ProyectosViewModel()
+    public ObservableCollection<ProyectoResponse> Proyectos { get; } = new();
+
+    public ProyectosViewModel(ApiService apiService)
     {
+        _apiService = apiService;
         Title = "Gestión de Proyectos";
     }
 
@@ -25,11 +22,19 @@ public partial class ProyectosViewModel : BaseViewModel
     private async Task CargarProyectosAsync()
     {
         IsBusy = true;
+        ErrorMessage = string.Empty;
         try
         {
+            // GET /api/proyectos
+            var lista = await _apiService.GetAsync<List<ProyectoResponse>>("api/proyectos");
             Proyectos.Clear();
-            Proyectos.Add(new ProyectoItem { Id = 1, Nombre = "Transformación Digital TMR", Cliente = "Banco Central", Estado = "Activo" });
-            Proyectos.Add(new ProyectoItem { Id = 2, Nombre = "Migración .NET 10", Cliente = "Seguros Alfa", Estado = "En Proceso" });
+            if (lista != null)
+                foreach (var p in lista)
+                    Proyectos.Add(p);
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = $"Error al cargar proyectos: {ex.Message}";
         }
         finally
         {

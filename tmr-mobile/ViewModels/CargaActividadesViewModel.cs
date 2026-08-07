@@ -6,7 +6,7 @@ namespace tmr_mobile.ViewModels;
 public partial class CargaActividadesViewModel : BaseViewModel
 {
     [ObservableProperty]
-    private string _archivoSeleccionado = "Ningún archivo seleccionado";
+    public partial string ArchivoSeleccionado { get; set; } = "Ningún archivo seleccionado";
 
     public CargaActividadesViewModel()
     {

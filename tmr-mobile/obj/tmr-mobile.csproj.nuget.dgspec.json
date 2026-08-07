@@ -1,24 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\luis.sanchez\\source\\repos\\TMR NUEVO\\tmr-mobile\\tmr-mobile.csproj": {}
+    "C:\\Users\\christopher.vera\\Documents\\TMR-Mobile\\tmr-mobile\\tmr-mobile.csproj": {}
   },
   "projects": {
-    "C:\\Users\\luis.sanchez\\source\\repos\\TMR NUEVO\\tmr-mobile\\tmr-mobile.csproj": {
+    "C:\\Users\\christopher.vera\\Documents\\TMR-Mobile\\tmr-mobile\\tmr-mobile.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\luis.sanchez\\source\\repos\\TMR NUEVO\\tmr-mobile\\tmr-mobile.csproj",
+        "projectUniqueName": "C:\\Users\\christopher.vera\\Documents\\TMR-Mobile\\tmr-mobile\\tmr-mobile.csproj",
         "projectName": "tmr-mobile",
-        "projectPath": "C:\\Users\\luis.sanchez\\source\\repos\\TMR NUEVO\\tmr-mobile\\tmr-mobile.csproj",
-        "packagesPath": "C:\\Users\\luis.sanchez\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\luis.sanchez\\source\\repos\\TMR NUEVO\\tmr-mobile\\obj\\",
+        "projectPath": "C:\\Users\\christopher.vera\\Documents\\TMR-Mobile\\tmr-mobile\\tmr-mobile.csproj",
+        "packagesPath": "C:\\Users\\christopher.vera\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\christopher.vera\\Documents\\TMR-Mobile\\tmr-mobile\\obj\\",
         "projectStyle": "PackageReference",
         "crossTargeting": true,
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\luis.sanchez\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\christopher.vera\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -38,8 +38,8 @@
             "framework": "net10.0-android36.0",
             "targetAlias": "net10.0-android",
             "projectReferences": {
-              "C:\\Users\\luis.sanchez\\source\\repos\\TMR NUEVO\\tmr-shared\\tmr-shared.csproj": {
-                "projectPath": "C:\\Users\\luis.sanchez\\source\\repos\\TMR NUEVO\\tmr-shared\\tmr-shared.csproj"
+              "C:\\Users\\christopher.vera\\Documents\\TMR-Mobile\\tmr-shared\\tmr-shared.csproj": {
+                "projectPath": "C:\\Users\\christopher.vera\\Documents\\TMR-Mobile\\tmr-shared\\tmr-shared.csproj"
               }
             }
           },
@@ -47,8 +47,8 @@
             "framework": "net10.0-ios26.5",
             "targetAlias": "net10.0-ios",
             "projectReferences": {
-              "C:\\Users\\luis.sanchez\\source\\repos\\TMR NUEVO\\tmr-shared\\tmr-shared.csproj": {
-                "projectPath": "C:\\Users\\luis.sanchez\\source\\repos\\TMR NUEVO\\tmr-shared\\tmr-shared.csproj"
+              "C:\\Users\\christopher.vera\\Documents\\TMR-Mobile\\tmr-shared\\tmr-shared.csproj": {
+                "projectPath": "C:\\Users\\christopher.vera\\Documents\\TMR-Mobile\\tmr-shared\\tmr-shared.csproj"
               }
             }
           },
@@ -56,8 +56,8 @@
             "framework": "net10.0-maccatalyst26.5",
             "targetAlias": "net10.0-maccatalyst",
             "projectReferences": {
-              "C:\\Users\\luis.sanchez\\source\\repos\\TMR NUEVO\\tmr-shared\\tmr-shared.csproj": {
-                "projectPath": "C:\\Users\\luis.sanchez\\source\\repos\\TMR NUEVO\\tmr-shared\\tmr-shared.csproj"
+              "C:\\Users\\christopher.vera\\Documents\\TMR-Mobile\\tmr-shared\\tmr-shared.csproj": {
+                "projectPath": "C:\\Users\\christopher.vera\\Documents\\TMR-Mobile\\tmr-shared\\tmr-shared.csproj"
               }
             }
           },
@@ -65,8 +65,8 @@
             "framework": "net10.0-windows10.0.19041",
             "targetAlias": "net10.0-windows10.0.19041.0",
             "projectReferences": {
-              "C:\\Users\\luis.sanchez\\source\\repos\\TMR NUEVO\\tmr-shared\\tmr-shared.csproj": {
-                "projectPath": "C:\\Users\\luis.sanchez\\source\\repos\\TMR NUEVO\\tmr-shared\\tmr-shared.csproj"
+              "C:\\Users\\christopher.vera\\Documents\\TMR-Mobile\\tmr-shared\\tmr-shared.csproj": {
+                "projectPath": "C:\\Users\\christopher.vera\\Documents\\TMR-Mobile\\tmr-shared\\tmr-shared.csproj"
               }
             }
           }
@@ -103,7 +103,7 @@
             "Microsoft.NET.ILLink.Tasks": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[10.0.10, )",
+              "version": "[10.0.9, )",
               "autoReferenced": true
             }
           },
@@ -118,6 +118,12 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[10.0.10, 10.0.10]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.Android": {
               "privateAssets": "all"
@@ -129,7 +135,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.302/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.301/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",
@@ -424,7 +430,7 @@
             "Microsoft.NET.ILLink.Tasks": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[10.0.10, )",
+              "version": "[10.0.9, )",
               "autoReferenced": true
             }
           },
@@ -439,6 +445,12 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[10.0.10, 10.0.10]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.iOS": {
               "privateAssets": "all"
@@ -450,7 +462,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.302/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.301/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",
@@ -745,7 +757,7 @@
             "Microsoft.NET.ILLink.Tasks": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[10.0.10, )",
+              "version": "[10.0.9, )",
               "autoReferenced": true
             }
           },
@@ -761,6 +773,12 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[10.0.10, 10.0.10]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.MacCatalyst": {
               "privateAssets": "all"
@@ -772,7 +790,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.302/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.301/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",
@@ -1090,7 +1108,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.302/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.301/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",
@@ -1385,20 +1403,20 @@
         }
       }
     },
-    "C:\\Users\\luis.sanchez\\source\\repos\\TMR NUEVO\\tmr-shared\\tmr-shared.csproj": {
+    "C:\\Users\\christopher.vera\\Documents\\TMR-Mobile\\tmr-shared\\tmr-shared.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\luis.sanchez\\source\\repos\\TMR NUEVO\\tmr-shared\\tmr-shared.csproj",
+        "projectUniqueName": "C:\\Users\\christopher.vera\\Documents\\TMR-Mobile\\tmr-shared\\tmr-shared.csproj",
         "projectName": "tmr-shared",
-        "projectPath": "C:\\Users\\luis.sanchez\\source\\repos\\TMR NUEVO\\tmr-shared\\tmr-shared.csproj",
-        "packagesPath": "C:\\Users\\luis.sanchez\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\luis.sanchez\\source\\repos\\TMR NUEVO\\tmr-shared\\obj\\",
+        "projectPath": "C:\\Users\\christopher.vera\\Documents\\TMR-Mobile\\tmr-shared\\tmr-shared.csproj",
+        "packagesPath": "C:\\Users\\christopher.vera\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\christopher.vera\\Documents\\TMR-Mobile\\tmr-shared\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\luis.sanchez\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\christopher.vera\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -1449,7 +1467,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.302/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.301/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",

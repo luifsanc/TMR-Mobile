@@ -9,10 +9,10 @@ public partial class LoginViewModel : BaseViewModel
     private readonly IAuthService _authService;
 
     [ObservableProperty]
-    private string _user = string.Empty;
+    public partial string User { get; set; } = string.Empty;
 
     [ObservableProperty]
-    private string _password = string.Empty;
+    public partial string Password { get; set; } = string.Empty;
 
     public LoginViewModel(IAuthService authService)
     {
