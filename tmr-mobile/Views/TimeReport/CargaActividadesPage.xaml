@@ -1,133 +1,272 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:vm="clr-namespace:tmr_mobile.ViewModels"
-             xmlns:models="clr-namespace:tmr_mobile.Models"
              x:Class="tmr_mobile.Views.TimeReport.CargaActividadesPage"
-             x:DataType="vm:CargaActividadesViewModel"
-             Title="{Binding Title}"
              Shell.NavBarIsVisible="False"
              BackgroundColor="#F5F6FA">
 
-    <Grid RowDefinitions="Auto,*">
+    <ScrollView>
+        <VerticalStackLayout Spacing="18" Padding="16" BackgroundColor="#F5F6FA">
 
-        <Border Grid.Row="0"
-                StrokeShape="RoundRectangle 0,0,0,0"
-                BackgroundColor="White"
-                Stroke="#E2E8F0"
-                Padding="16"
-                HorizontalOptions="Fill">
-            <Grid ColumnDefinitions="40,*,40" ColumnSpacing="12">
-                <Label Grid.Column="0" Text="≡" FontSize="22" TextColor="#0F172A"
-                       VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="40" />
-                <Label Grid.Column="1" Text="Carga de Actividades" FontSize="18"
-                       FontAttributes="Bold" TextColor="#101828"
-                       HorizontalTextAlignment="Center" VerticalOptions="Center"
-                       LineBreakMode="TailTruncation" MaxLines="1" />
-                <Label Grid.Column="2" Text="🔔" FontSize="20" TextColor="#0F172A"
-                       VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="40" />
+            <!-- Header -->
+            <Border BackgroundColor="White"
+                    Stroke="#E2E8F0"
+                    StrokeShape="RoundRectangle 20"
+                    Padding="14"
+                    HorizontalOptions="Fill">
+                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10" VerticalOptions="Center">
+                    <ImageButton Source="menu_icon.png"
+                                 BackgroundColor="Transparent"
+                                 WidthRequest="24"
+                                 HeightRequest="24" />
+                    <Label Text="Carga de actividades"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           TextColor="#101828"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           HorizontalTextAlignment="Center"
+                           LineBreakMode="TailTruncation"
+                           MaxLines="1" />
+                    <ImageButton Source="bell_icon.png"
+                                 BackgroundColor="Transparent"
+                                 WidthRequest="22"
+                                 HeightRequest="22" />
+                </Grid>
+            </Border>
+
+            <!-- Summary -->
+            <Border BackgroundColor="White"
+                    Stroke="#E2E8F0"
+                    StrokeShape="RoundRectangle 24"
+                    Padding="18"
+                    HorizontalOptions="Fill">
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="Horas por registrar"
+                           FontSize="13"
+                           TextColor="#64748B" />
+                    <Label Text="140.005,42 h"
+                           FontSize="24"
+                           FontAttributes="Bold"
+                           TextColor="#101828" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Search + filter -->
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12" VerticalOptions="Center">
+                <Border BackgroundColor="White"
+                        Stroke="#E2E8F0"
+                        StrokeShape="RoundRectangle 16"
+                        Padding="12"
+                        HorizontalOptions="Fill"
+                        VerticalOptions="Center">
+                    <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                        <Label Text="🔍"
+                               FontSize="16"
+                               VerticalOptions="Center"
+                               TextColor="#94A3B8" />
+                        <Label Text="Buscar proyecto..."
+                               FontSize="14"
+                               TextColor="#94A3B8"
+                               VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                </Border>
+                <Border BackgroundColor="White"
+                        Stroke="#E2E8F0"
+                        StrokeShape="RoundRectangle 16"
+                        WidthRequest="56"
+                        HeightRequest="56"
+                        HorizontalOptions="End"
+                        VerticalOptions="Center">
+                    <Label Text="⚙"
+                           FontSize="18"
+                           TextColor="#101828"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center" />
+                </Border>
             </Grid>
-        </Border>
 
-        <ScrollView Grid.Row="1">
-            <VerticalStackLayout Spacing="18" Padding="16" VerticalOptions="Start">
+            <!-- Pagination / Sort -->
+            <Grid ColumnDefinitions="Auto,Auto" ColumnSpacing="8" VerticalOptions="Center">
+                <Label Text="1 al 10 de 3.780"
+                       FontSize="12"
+                       TextColor="#667085"
+                       VerticalTextAlignment="Center"
+                       HorizontalOptions="Start" />
+                <Label Text="Ordenar"
+                       FontSize="12"
+                       FontAttributes="Bold"
+                       TextColor="#0F172A"
+                       VerticalTextAlignment="Center"
+                       HorizontalOptions="End" />
+            </Grid>
 
-                <Border StrokeShape="RoundRectangle 22"
-                        BackgroundColor="#F8FAFC"
+            <!-- Cards -->
+            <VerticalStackLayout Spacing="12">
+                <Border BackgroundColor="White"
                         Stroke="#E2E8F0"
-                        Padding="14"
-                        HorizontalOptions="Fill">
-                    <VerticalStackLayout Spacing="4">
-                        <Label Text="Horas por registrar" FontSize="13" TextColor="#64748B" />
-                        <Label Text="{Binding Actividades.Count, StringFormat='{0} actividades registradas'}"
-                               FontSize="18" FontAttributes="Bold" TextColor="#0F172A" />
-                    </VerticalStackLayout>
-                </Border>
-
-                <ActivityIndicator IsRunning="{Binding IsBusy}"
-                                    IsVisible="{Binding IsBusy}"
-                                    Color="#101828"
-                                    HorizontalOptions="Center" />
-
-                <CollectionView ItemsSource="{Binding Actividades}"
-                                SelectionMode="None"
-                                EmptyView="No hay actividades para mostrar">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="models:ActividadListItem">
-                            <Border StrokeShape="RoundRectangle 18"
-                                    Stroke="#E2E8F0"
-                                    BackgroundColor="White"
-                                    Padding="16"
-                                    Margin="0,0,0,12">
-                                <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="12">
-                                    <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="4">
-                                        <Label Text="{Binding Colaborador}" FontAttributes="Bold" FontSize="16" TextColor="#0F172A" />
-                                        <Label Text="{Binding Proyecto}" FontSize="14" TextColor="#475569" />
-                                    </VerticalStackLayout>
-
-                                    <Border Grid.Row="0" Grid.Column="1" StrokeShape="RoundRectangle 12"
-                                            BackgroundColor="#E0F2FE" Stroke="#93C5FD" Padding="8,3">
-                                        <Label Text="{Binding Estado}" FontSize="12" TextColor="#2563EB" />
-                                    </Border>
-
-                                    <Label Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding Cliente}"
-                                           FontSize="12" TextColor="#2563EB" Margin="0,6,0,0" />
-
-                                    <Label Grid.Row="2" Grid.ColumnSpan="2" Margin="0,6,0,0">
-                                        <Label.FormattedText>
-                                            <FormattedString>
-                                                <Span Text="{Binding Fecha}" TextColor="#64748B" FontSize="12" />
-                                                <Span Text=" · " TextColor="#64748B" FontSize="12" />
-                                                <Span Text="{Binding NroHoras, StringFormat='{0:N1} h'}" TextColor="#64748B" FontSize="12" />
-                                            </FormattedString>
-                                        </Label.FormattedText>
-                                    </Label>
-                                </Grid>
-                            </Border>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-
-                <Border StrokeShape="RoundRectangle 24"
-                        BackgroundColor="White"
-                        Stroke="#E2E8F0"
-                        Padding="16"
-                        HorizontalOptions="Fill">
-                    <VerticalStackLayout Spacing="10">
-                        <Label Text="Carga de Actividades por Excel"
-                               FontSize="15" FontAttributes="Bold" TextColor="#101828" />
-                        <Border StrokeShape="RoundRectangle 18"
-                                BackgroundColor="White"
-                                Stroke="#E2E8F0"
-                                Padding="12"
-                                HorizontalOptions="Fill">
-                            <HorizontalStackLayout Spacing="10">
-                                <Label Text="📄" FontSize="16" VerticalOptions="Center" />
-                                <Label Text="{Binding ArchivoSeleccionado}"
-                                       FontSize="13" TextColor="#64748B" VerticalOptions="Center" />
-                            </HorizontalStackLayout>
+                        StrokeShape="RoundRectangle 20"
+                        Padding="16">
+                    <VerticalStackLayout Spacing="12">
+                        <Label Text="Aldo Gennaro Di Mattia"
+                               FontSize="16"
+                               FontAttributes="Bold"
+                               TextColor="#101828" />
+                        <Label Text="Migración de Time Report"
+                               FontSize="14"
+                               TextColor="#475569" />
+                        <Border Stroke="#E2E8F0"
+                                BackgroundColor="#EFF6FF"
+                                StrokeShape="RoundRectangle 14"
+                                Padding="10,6"
+                                HorizontalOptions="Start">
+                            <Label Text="Integrity Solutions"
+                                   FontSize="12"
+                                   TextColor="#2563EB" />
                         </Border>
-                        <Button Text="Seleccionar Archivo Excel"
-                                Command="{Binding SeleccionarArchivoCommand}"
-                                BackgroundColor="#6366F1"
-                                TextColor="White"
-                                CornerRadius="14"
-                                HeightRequest="46" />
-                        <Label Text="{Binding ResultadoMensaje}"
-                               FontSize="13"
-                               TextColor="#16A34A"
-                               HorizontalTextAlignment="Center" />
-                        <Button Text="Procesar archivo"
-                                Command="{Binding ProcesarArchivoCommand}"
-                                IsEnabled="{Binding TieneArchivoSeleccionado}"
-                                BackgroundColor="#101828"
-                                TextColor="White"
-                                CornerRadius="14"
-                                HeightRequest="48" />
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10" VerticalOptions="Center">
+                            <Label Text="06/07/2026 · 2.5 h"
+                                   FontSize="12"
+                                   TextColor="#64748B"
+                                   VerticalOptions="Center" />
+                            <Border BackgroundColor="#ECFDF5"
+                                    Stroke="#86EFAC"
+                                    StrokeShape="RoundRectangle 14"
+                                    Padding="10,6"
+                                    VerticalOptions="Center">
+                                <Label Text="Cargado"
+                                       FontSize="12"
+                                       TextColor="#16A34A" />
+                            </Border>
+                        </Grid>
                     </VerticalStackLayout>
                 </Border>
 
+                <Border BackgroundColor="White"
+                        Stroke="#E2E8F0"
+                        StrokeShape="RoundRectangle 20"
+                        Padding="16">
+                    <VerticalStackLayout Spacing="12">
+                        <Label Text="Aldo Gennaro Di Mattia"
+                               FontSize="16"
+                               FontAttributes="Bold"
+                               TextColor="#101828" />
+                        <Label Text="Migración de Time Report"
+                               FontSize="14"
+                               TextColor="#475569" />
+                        <Border Stroke="#E2E8F0"
+                                BackgroundColor="#EFF6FF"
+                                StrokeShape="RoundRectangle 14"
+                                Padding="10,6"
+                                HorizontalOptions="Start">
+                            <Label Text="Integrity Solutions"
+                                   FontSize="12"
+                                   TextColor="#2563EB" />
+                        </Border>
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10" VerticalOptions="Center">
+                            <Label Text="10/07/2026 · 2.5 h"
+                                   FontSize="12"
+                                   TextColor="#64748B"
+                                   VerticalOptions="Center" />
+                            <Border BackgroundColor="#ECFDF5"
+                                    Stroke="#86EFAC"
+                                    StrokeShape="RoundRectangle 14"
+                                    Padding="10,6"
+                                    VerticalOptions="Center">
+                                <Label Text="Cargado"
+                                       FontSize="12"
+                                       TextColor="#16A34A" />
+                            </Border>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border BackgroundColor="White"
+                        Stroke="#E2E8F0"
+                        StrokeShape="RoundRectangle 20"
+                        Padding="16">
+                    <VerticalStackLayout Spacing="12">
+                        <Label Text="Aldo Gennaro Di Mattia"
+                               FontSize="16"
+                               FontAttributes="Bold"
+                               TextColor="#101828" />
+                        <Label Text="Migración de Time Report"
+                               FontSize="14"
+                               TextColor="#475569" />
+                        <Border Stroke="#E2E8F0"
+                                BackgroundColor="#EFF6FF"
+                                StrokeShape="RoundRectangle 14"
+                                Padding="10,6"
+                                HorizontalOptions="Start">
+                            <Label Text="Integrity Solutions"
+                                   FontSize="12"
+                                   TextColor="#2563EB" />
+                        </Border>
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10" VerticalOptions="Center">
+                            <Label Text="16/07/2026 · 2.5 h"
+                                   FontSize="12"
+                                   TextColor="#64748B"
+                                   VerticalOptions="Center" />
+                            <Border BackgroundColor="#ECFDF5"
+                                    Stroke="#86EFAC"
+                                    StrokeShape="RoundRectangle 14"
+                                    Padding="10,6"
+                                    VerticalOptions="Center">
+                                <Label Text="Cargado"
+                                       FontSize="12"
+                                       TextColor="#16A34A" />
+                            </Border>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
             </VerticalStackLayout>
-        </ScrollView>
-    </Grid>
+
+            <!-- Download button -->
+            <Border BackgroundColor="White"
+                    Stroke="#E2E8F0"
+                    StrokeShape="RoundRectangle 20"
+                    Padding="14"
+                    HorizontalOptions="Fill">
+                <HorizontalStackLayout Spacing="10" HorizontalOptions="Center" VerticalOptions="Center">
+                    <Label Text="⬇"
+                           FontSize="18"
+                           TextColor="#101828"
+                           VerticalOptions="Center" />
+                    <Label Text="Descargar"
+                           FontSize="14"
+                           FontAttributes="Bold"
+                           TextColor="#101828"
+                           VerticalOptions="Center" />
+                </HorizontalStackLayout>
+            </Border>
+
+            <!-- Bottom navigation bar -->
+            <Border BackgroundColor="White"
+                    Stroke="#E2E8F0"
+                    StrokeShape="RoundRectangle 24"
+                    Padding="14"
+                    HorizontalOptions="Fill"
+                    Margin="0,0,0,12">
+                <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="6">
+                    <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                        <Label Text="🏠" FontSize="18" HorizontalOptions="Center" />
+                        <Label Text="Inicio" FontSize="10" TextColor="#64748B" HorizontalTextAlignment="Center" />
+                    </VerticalStackLayout>
+                    <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                        <Label Text="📁" FontSize="18" HorizontalOptions="Center" />
+                        <Label Text="Proyectos" FontSize="10" TextColor="#64748B" HorizontalTextAlignment="Center" />
+                    </VerticalStackLayout>
+                    <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                        <Label Text="⏱" FontSize="18" HorizontalOptions="Center" />
+                        <Label Text="Time" FontSize="10" TextColor="#64748B" HorizontalTextAlignment="Center" />
+                    </VerticalStackLayout>
+                    <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                        <Label Text="⬇" FontSize="18" HorizontalOptions="Center" />
+                        <Label Text="Carga" FontSize="10" TextColor="#101828" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+                    </VerticalStackLayout>
+                </Grid>
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

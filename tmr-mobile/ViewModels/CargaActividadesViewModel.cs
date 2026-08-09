@@ -30,25 +30,21 @@ public partial class CargaActividadesViewModel : BaseViewModel
         _ = CargarActividadesAsync();
     }
 
-   private async Task CargarActividadesAsync()
-{
-    IsBusy = true;
-    try
+    private async Task CargarActividadesAsync()
     {
-        var lista = await _cargaActividadesService.ObtenerActividadesAsync();
-
-        await MainThread.InvokeOnMainThreadAsync(() =>
+        IsBusy = true;
+        try
         {
+            var lista = await _cargaActividadesService.ObtenerActividadesAsync();
             Actividades.Clear();
             foreach (var a in lista)
                 Actividades.Add(a);
-        });
+        }
+        finally
+        {
+            IsBusy = false;
+        }
     }
-    finally
-    {
-        IsBusy = false;
-    }
-}
 
     [RelayCommand]
     private async Task SeleccionarArchivoAsync()
