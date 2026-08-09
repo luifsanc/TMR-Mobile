@@ -85,6 +85,19 @@ public class ApiService
         return await HandleResponseAsync<TResponse>(response, endpoint, "POST", data, ct);
     }
 
+    public async Task<TResponse?> PostFileAsync<TResponse>(string endpoint, byte[] fileBytes, string fileName,
+        CancellationToken ct = default)
+    {
+        await AddAuthHeaderAsync();
+        using var content = new MultipartFormDataContent();
+        var fileContent = new ByteArrayContent(fileBytes);
+        fileContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+        content.Add(fileContent, "file", fileName);
+
+        var response = await _httpClient.PostAsync(endpoint, content, ct);
+        return await HandleResponseAsync<TResponse>(response, endpoint, "POST", null, ct);
+    }
+
     public async Task<TResponse?> PutAsync<TRequest, TResponse>(string endpoint, TRequest data,
         CancellationToken ct = default)
     {
