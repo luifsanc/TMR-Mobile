@@ -13,6 +13,8 @@
         <conv:StatusToBackgroundColorConverter x:Key="StatusBg"/>
         <conv:StatusToTextColorConverter x:Key="StatusText"/>
         <conv:PercentToColumnsConverter x:Key="PercentToColumns"/>
+        <conv:SelectedBackgroundConverter x:Key="SelectedBg"/>
+        <conv:SelectedTextColorConverter x:Key="SelectedText"/>
         <Color x:Key="DashboardPageBg">#F4F7FC</Color>
         <Color x:Key="DashboardSurface">#FFFFFF</Color>
         <Color x:Key="DashboardText">#0F172A</Color>
@@ -25,7 +27,8 @@
 
     <!-- ===================== TODO EN UN SOLO SCROLL ===================== -->
     <ScrollView>
-        <VerticalStackLayout Spacing="20" Padding="16,12,16,32">
+        <VerticalStackLayout Spacing="20"
+                             Padding="16,12,16,32">
 
             <Grid ColumnDefinitions="Auto,*,Auto"
                   ColumnSpacing="12"
@@ -81,7 +84,8 @@
                                     StrokeShape="RoundRectangle 5"
                                     HorizontalOptions="End"
                                     VerticalOptions="Start"
-                                    Margin="0,6,6,0"/>
+                                    Margin="0,6,6,0"
+                                    IsVisible="{Binding TieneNotificaciones}"/>
                         </Grid>
                     </Border>
 
@@ -91,6 +95,9 @@
                             Padding="6"
                             MinimumWidthRequest="92"
                             HeightRequest="44">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnAvatarTapped"/>
+                        </Border.GestureRecognizers>
                         <Grid ColumnDefinitions="Auto,*"
                               ColumnSpacing="8"
                               VerticalOptions="Center">
@@ -133,13 +140,16 @@
                 </HorizontalStackLayout>
             </Grid>
 
+            <!-- ===================== cuadro donde saluda la usuario ===================== -->
             <Border StrokeShape="RoundRectangle 26"
                     Stroke="Transparent"
                     Padding="18,18,18,16">
                 <Border.Background>
                     <LinearGradientBrush EndPoint="1,1">
-                        <GradientStop Color="{StaticResource DashboardHeroStart}" Offset="0.0"/>
-                        <GradientStop Color="{StaticResource DashboardHeroEnd}" Offset="1.0"/>
+                        <GradientStop Color="{StaticResource DashboardHeroStart}"
+                                      Offset="0.0"/>
+                        <GradientStop Color="{StaticResource DashboardHeroEnd}"
+                                      Offset="1.0"/>
                     </LinearGradientBrush>
                 </Border.Background>
                 <Grid ColumnDefinitions="*,Auto"
@@ -174,51 +184,13 @@
                                FontSize="14"
                                LineBreakMode="WordWrap"/>
                     </VerticalStackLayout>
-
-                    <Grid Grid.Column="1"
-                          WidthRequest="72"
-                          HeightRequest="72"
-                          VerticalOptions="Start">
-                        <Border StrokeShape="RoundRectangle 26"
-                                BackgroundColor="#DCE8FF"
-                                Stroke="Transparent"/>
-                        <Border StrokeShape="RoundRectangle 22"
-                                BackgroundColor="{StaticResource DashboardText}"
-                                Stroke="White"
-                                StrokeThickness="3"
-                                WidthRequest="44"
-                                HeightRequest="44"
-                                HorizontalOptions="Center"
-                                VerticalOptions="Center">
-                            <Label Text="{Binding AvatarInicial}"
-                                   TextColor="White"
-                                   FontAttributes="Bold"
-                                   FontSize="18"
-                                   HorizontalOptions="Center"
-                                   VerticalOptions="Center"/>
-                        </Border>
-                        <Border WidthRequest="20"
-                                HeightRequest="20"
-                                BackgroundColor="#FFFFFF"
-                                Stroke="Transparent"
-                                StrokeShape="RoundRectangle 10"
-                                HorizontalOptions="End"
-                                VerticalOptions="End"
-                                Margin="0,0,2,2">
-                            <Label Text="✨"
-                                   FontSize="10"
-                                   HorizontalOptions="Center"
-                                   VerticalOptions="Center"/>
-                        </Border>
-                    </Grid>
                 </Grid>
             </Border>
 
-
-           <FlexLayout BindableLayout.ItemsSource="{Binding StatCards}"
-                       Wrap="Wrap"
-                       Direction="Row"
-                       JustifyContent="SpaceBetween">
+            <FlexLayout BindableLayout.ItemsSource="{Binding StatCards}"
+                        Wrap="Wrap"
+                        Direction="Row"
+                        JustifyContent="SpaceBetween">
                 <BindableLayout.ItemTemplate>
                     <DataTemplate x:DataType="models:StatCard">
                         <Border StrokeShape="RoundRectangle 16"
@@ -252,7 +224,14 @@
                                             Stroke="Transparent"
                                             HeightRequest="26"
                                             HorizontalOptions="End"
-                                            WidthRequest="26"/>
+                                            WidthRequest="26">
+                                        <Label Text="+"
+                                               FontSize="14"
+                                               FontAttributes="Bold"
+                                               TextColor="{StaticResource DashboardText}"
+                                               HorizontalOptions="Center"
+                                               VerticalOptions="Center"/>
+                                    </Border>
                                 </Grid>
 
                                 <Label Grid.Row="1"
@@ -271,7 +250,196 @@
                 </BindableLayout.ItemTemplate>
             </FlexLayout>
 
+            <!-- ===================== Horas reportadas por proyecto (con selector de rango) ===================== -->
+            <Grid>
+                <Border StrokeShape="RoundRectangle 16"
+                        BackgroundColor="White"
+                        Stroke="Transparent"
+                        Padding="16">
+                    <VerticalStackLayout Spacing="14">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Grid.Column="0"
+                                   Text="Horas reportadas por proyecto"
+                                   FontSize="16"
+                                   FontAttributes="Bold"
+                                   TextColor="#101828"/>
+                            <Border Grid.Column="1"
+                                    StrokeShape="RoundRectangle 20"
+                                    Stroke="#E4E7EC"
+                                    Padding="10,4">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding ToggleSelectorRangoCommand}"/>
+                                </Border.GestureRecognizers>
+                                <Label Text="{ Binding RangoLabel, StringFormat='{0} ▼  '} "
+                                       FontSize="12"
+                                       TextColor="#101828"/>
+                            </Border>
+                        </Grid>
 
+                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding HorasPorProyecto}"
+                                             Spacing="8">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="models:ChartPoint">
+                                    <VerticalStackLayout Spacing="8"
+                                                         Margin="0,0,0,10">
+                                        <Grid ColumnDefinitions="*,Auto">
+                                            <Label Grid.Column="0"
+                                                   Text="{Binding Categoria}"
+                                                   FontSize="12"
+                                                   TextColor="#667085"
+                                                   LineBreakMode="TailTruncation"/>
+                                            <Label Grid.Column="1"
+                                                   Text="{Binding Horas, StringFormat='{0:0} h'}"
+                                                   FontSize="13"
+                                                   FontAttributes="Bold"
+                                                   TextColor="#101828"/>
+                                        </Grid>
+
+                                        <Border BackgroundColor="#E4ECFF"
+                                                Stroke="Transparent"
+                                                StrokeShape="RoundRectangle 6"
+                                                HeightRequest="12">
+                                            <Grid ColumnDefinitions="{Binding Porcentaje, Converter={StaticResource PercentToColumns}}"
+                                                  HeightRequest="12">
+                                                <Border Grid.Column="0"
+                                                        BackgroundColor="#2E5BFF"
+                                                        Stroke="Transparent"
+                                                        StrokeShape="RoundRectangle 6"/>
+                                            </Grid>
+                                        </Border>
+                                    </VerticalStackLayout>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+
+                        <FlexLayout BindableLayout.ItemsSource="{Binding MetricasMini}"
+                                    Wrap="Wrap"
+                                    Direction="Row"
+                                    JustifyContent="SpaceBetween">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="models:MetricMini">
+                                    <VerticalStackLayout WidthRequest="105"
+                                                         Spacing="4">
+                                        <Label Text="{Binding Titulo}"
+                                               FontSize="10"
+                                               TextColor="#98A2B3"/>
+                                        <Label Text="{Binding Valor}"
+                                               FontSize="18"
+                                               FontAttributes="Bold"
+                                               TextColor="#101828"/>
+                                    </VerticalStackLayout>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </FlexLayout>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Dropdown flotante -->
+                <Border IsVisible="{Binding MostrarSelectorRango}"
+                        StrokeShape="RoundRectangle 12"
+                        Stroke="#2E5BFF"
+                        StrokeThickness="1.5"
+                        BackgroundColor="White"
+                        Padding="0"
+                        HorizontalOptions="End"
+                        VerticalOptions="Start"
+                        Margin="0,44,16,0"
+                        WidthRequest="170"
+                        ZIndex="10">
+                    <Border.Shadow>
+                        <Shadow Brush="Black"
+                                Opacity="0.15"
+                                Radius="12"
+                                Offset="0,4"/>
+                    </Border.Shadow>
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding OpcionesRango}"
+                                         Spacing="0">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="models:RangoOption">
+                                <Border Padding="14,12"
+                                        Stroke="Transparent"
+                                        BackgroundColor="{Binding EsSeleccionado, Converter={StaticResource SelectedBg}}">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnOpcionRangoTapped"/>
+                                    </Border.GestureRecognizers>
+                                    <Label Text="{Binding Texto}"
+                                           FontSize="14"
+                                           TextColor="{Binding EsSeleccionado, Converter={StaticResource SelectedText}}"/>
+                                </Border>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
+
+            <!-- ===================== Proyectos por cliente ===================== -->
+            <Border StrokeShape="RoundRectangle 16"
+                    BackgroundColor="White"
+                    Stroke="Transparent"
+                    Padding="16">
+                <VerticalStackLayout Spacing="14">
+                    <Label Text="Proyectos por cliente"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           TextColor="#101828"/>
+
+                    <CollectionView ItemsSource="{Binding ProyectosPorClienteVisibles}"
+                                    SelectionMode="None">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="models:ClientDistribution">
+                                <VerticalStackLayout Spacing="8"
+                                                     Margin="0,0,0,10">
+                                    <Grid ColumnDefinitions="*,Auto">
+                                        <Label Grid.Column="0"
+                                               Text="{Binding Cliente}"
+                                               FontSize="12"
+                                               TextColor="#667085"
+                                               LineBreakMode="TailTruncation"/>
+                                        <Label Grid.Column="1"
+                                               FontSize="13"
+                                               FontAttributes="Bold"
+                                               TextColor="#101828">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="{Binding Proyectos}"/>
+                                                    <Span Text=" ("/>
+                                                    <Span Text="{Binding Porcentaje, StringFormat='{0:0.#}'}"/>
+                                                    <Span Text="%)"/>
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                    </Grid>
+
+                                    <Border BackgroundColor="#E4ECFF"
+                                            Stroke="Transparent"
+                                            StrokeShape="RoundRectangle 6"
+                                            HeightRequest="12">
+                                        <Grid ColumnDefinitions="{Binding Porcentaje, Converter={StaticResource PercentToColumns}}"
+                                              HeightRequest="12">
+                                            <Border Grid.Column="0"
+                                                    BackgroundColor="#7A58D1"
+                                                    Stroke="Transparent"
+                                                    StrokeShape="RoundRectangle 6"/>
+                                        </Grid>
+                                    </Border>
+                                </VerticalStackLayout>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+
+                    <Button Text="{Binding TextoVerMasClientes}"
+                            Command="{Binding ToggleVerMasClientesCommand}"
+                            BackgroundColor="Transparent"
+                            TextColor="#7A58D1"
+                            FontAttributes="Bold"
+                            FontSize="13"
+                            HorizontalOptions="Center"
+                            Padding="0"
+                            HeightRequest="36"/>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- ===================== Próximos a cerrar ===================== -->
             <Grid ColumnDefinitions="*,Auto">
                 <Label Grid.Column="0"
                        Text="Próximos a cerrar"
@@ -349,220 +517,6 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-
-
-            <Border StrokeShape="RoundRectangle 16"
-                    BackgroundColor="White"
-                    Stroke="Transparent"
-                    Padding="16">
-                <VerticalStackLayout Spacing="14">
-                    <Grid ColumnDefinitions="*,Auto">
-                        <Label Grid.Column="0"
-                               Text="Horas reportadas por proyecto"
-                               FontSize="16"
-                               FontAttributes="Bold"
-                               TextColor="#101828"/>
-                        <Border Grid.Column="1"
-                                StrokeShape="RoundRectangle 20"
-                                Stroke="#E4E7EC"
-                                Padding="10,4">
-                            <Label Text="Este mes ⌄"
-                                   FontSize="12"
-                                   TextColor="#101828"/>
-                        </Border>
-                    </Grid>
-
-                    <CollectionView ItemsSource="{Binding HorasPorProyecto}" SelectionMode="None">
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate x:DataType="models:ChartPoint">
-                                <VerticalStackLayout Spacing="8">
-                                    <Grid ColumnDefinitions="*,Auto">
-                                        <Label Grid.Column="0"
-                                            Text="{Binding Categoria}"
-                                            FontSize="12"
-                                            TextColor="#667085"
-                                            LineBreakMode="TailTruncation"/>
-                                        <Label Grid.Column="1"
-                                            Text="{Binding Horas, StringFormat='{0:0} h'}"
-                                            FontSize="13"
-                                            FontAttributes="Bold"
-                                            TextColor="#101828"/>
-                                    </Grid>
-
-                                    <!-- Track de fondo: siempre ocupa el 100% del ancho -->
-                                    <Border BackgroundColor="#E4ECFF"
-                                            Stroke="Transparent"
-                                            StrokeShape="RoundRectangle 6"
-                                            HeightRequest="12">
-                                        <!-- Grid proporcional: Columna 0 = parte llena (según %),
-                                            Columna 1 = resto vacío. Al usar columnas Star, es
-                                            responsive sin medir píxeles. -->
-                                        <Grid ColumnDefinitions="{Binding Porcentaje, Converter={StaticResource PercentToColumns}}"
-                                            HeightRequest="12">
-                                            <Border Grid.Column="0"
-                                                    BackgroundColor="#2E5BFF"
-                                                    Stroke="Transparent"
-                                                    StrokeShape="RoundRectangle 6"/>
-                                            <!-- Grid.Column="1" queda vacío/transparente: es el resto de la barra -->
-                                        </Grid>
-                                    </Border>
-                                </VerticalStackLayout>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
-
-
-
-                    <FlexLayout BindableLayout.ItemsSource="{Binding MetricasMini}"
-                                Wrap="Wrap"
-                                Direction="Row"
-                                JustifyContent="SpaceBetween">
-                        <BindableLayout.ItemTemplate>
-                            <DataTemplate x:DataType="models:MetricMini">
-                                <VerticalStackLayout WidthRequest="105"
-                                                     Spacing="4">
-                                    <Label Text="{Binding Titulo}"
-                                           FontSize="10"
-                                           TextColor="#98A2B3"/>
-                                    <Label Text="{Binding Valor}"
-                                           FontSize="18"
-                                           FontAttributes="Bold"
-                                           TextColor="#101828"/>
-                                </VerticalStackLayout>
-                            </DataTemplate>
-                        </BindableLayout.ItemTemplate>
-                    </FlexLayout>
-
-                    <HorizontalStackLayout Spacing="6"
-                                           HorizontalOptions="Center">
-                        <Ellipse Fill="#2E5BFF"
-                                 WidthRequest="7"
-                                 HeightRequest="7"/>
-                        <Ellipse Fill="#D0D5DD"
-                                 WidthRequest="7"
-                                 HeightRequest="7"/>
-                        <Ellipse Fill="#D0D5DD"
-                                 WidthRequest="7"
-                                 HeightRequest="7"/>
-                    </HorizontalStackLayout>
-                </VerticalStackLayout>
-            </Border>
-
-
-            <Grid ColumnDefinitions="*,Auto">
-                <Label Grid.Column="0"
-                       Text="Actividad reciente"
-                       FontSize="17"
-                       FontAttributes="Bold"
-                       TextColor="#101828"/>
-                <Label Grid.Column="1"
-                       Text="Ver todas"
-                       FontSize="14"
-                       TextColor="#2E5BFF"/>
-            </Grid>
-
-            <Border StrokeShape="RoundRectangle 16"
-                    BackgroundColor="White"
-                    Stroke="Transparent"
-                    Padding="16">
-                <CollectionView ItemsSource="{Binding ActividadReciente}">
-                    <CollectionView.ItemsLayout>
-                        <LinearItemsLayout Orientation="Vertical"
-                                           ItemSpacing="16"/>
-                    </CollectionView.ItemsLayout>
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="models:ActivityItem">
-                            <Grid ColumnDefinitions="Auto,*"
-                                  ColumnSpacing="12">
-                                <Border Grid.Column="0"
-                                        StrokeShape="RoundRectangle 10"
-                                        BackgroundColor="{Binding IconBackground}"
-                                        WidthRequest="36"
-                                        HeightRequest="36"
-                                        Stroke="Transparent"/>
-                                <VerticalStackLayout Grid.Column="1"
-                                                     Spacing="2">
-                                    <Label Text="{Binding Descripcion}"
-                                           FontSize="14"
-                                           TextColor="#101828"/>
-                                    <Label Text="{Binding Tiempo}"
-                                           FontSize="12"
-                                           TextColor="#98A2B3"/>
-                                </VerticalStackLayout>
-                            </Grid>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-            </Border>
-
-
-            <Border StrokeShape="RoundRectangle 16"
-                    BackgroundColor="White"
-                    Stroke="Transparent"
-                    Padding="16">
-                <VerticalStackLayout Spacing="14">
-                    <Grid ColumnDefinitions="*,Auto">
-                        <Label Grid.Column="0"
-                               Text="{Binding DetalleTitulo}"
-                               FontSize="17"
-                               FontAttributes="Bold"
-                               TextColor="#101828"/>
-                        <Label Grid.Column="1"
-                               Text="{Binding DetalleTotalHoras}"
-                               FontSize="17"
-                               FontAttributes="Bold"
-                               TextColor="#101828"/>
-                    </Grid>
-
-                    <Label Text="Detalle de horas"
-                           FontSize="13"
-                           FontAttributes="Bold"
-                           TextColor="#667085"/>
-
-                    <CollectionView ItemsSource="{Binding DetalleHoras}">
-                        <CollectionView.ItemsLayout>
-                            <LinearItemsLayout Orientation="Vertical"
-                                               ItemSpacing="14"/>
-                        </CollectionView.ItemsLayout>
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate x:DataType="models:HourDetail">
-                                <Grid ColumnDefinitions="Auto,*,Auto"
-                                      ColumnSpacing="10">
-                                    <Ellipse Grid.Column="0"
-                                             Fill="{Binding Color}"
-                                             WidthRequest="9"
-                                             HeightRequest="9"
-                                             VerticalOptions="Center"/>
-                                    <Label Grid.Column="1"
-                                           Text="{Binding Proyecto}"
-                                           FontSize="14"
-                                           TextColor="#101828"
-                                           VerticalOptions="Center"/>
-                                    <Label Grid.Column="2"
-                                           Text="{Binding Horas, StringFormat='{0} h'}"
-                                           FontSize="14"
-                                           FontAttributes="Bold"
-                                           TextColor="#101828"
-                                           VerticalOptions="Center"/>
-                                </Grid>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
-
-                    <Border StrokeShape="RoundRectangle 12"
-                            Stroke="#2E5BFF"
-                            BackgroundColor="White"
-                            Padding="0"
-                            HeightRequest="46">
-                        <Button Text="🗓  Ver reporte completo"
-                                TextColor="#2E5BFF"
-                                BackgroundColor="Transparent"
-                                FontAttributes="Bold"
-                                FontSize="14"
-                                Clicked="OnVerReporteCompletoClicked"/>
-                    </Border>
-                </VerticalStackLayout>
-            </Border>
 
         </VerticalStackLayout>
     </ScrollView>

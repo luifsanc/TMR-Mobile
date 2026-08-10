@@ -2,34 +2,174 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:tmr_mobile.ViewModels"
+             xmlns:models="clr-namespace:tmr_mobile.Models"
              x:Class="tmr_mobile.Views.TimeReport.CargaActividadesPage"
              x:DataType="vm:CargaActividadesViewModel"
-             Title="{Binding Title}">
+             Title="{Binding Title}"
+             BackgroundColor="#F4F7FC">
 
-    <VerticalStackLayout Spacing="20" Padding="24" VerticalOptions="Center">
-        <Label Text="Carga de Actividades por Excel"
-               FontSize="20"
-               FontAttributes="Bold"
-               HorizontalOptions="Center" />
+    <Grid RowDefinitions="Auto,Auto,Auto,Auto,*"
+          Padding="16">
 
-        <Label Text="Selecciona una plantilla .xlsx para procesar masivamente los partes de horas."
-               FontSize="14"
-               TextColor="#64748B"
-               HorizontalOptions="Center"
-               HorizontalTextAlignment="Center" />
+        <!-- ===================== Carga de Excel ===================== -->
+        <VerticalStackLayout Grid.Row="0" Spacing="12" Margin="0,0,0,16">
+            <Label Text="Carga de Actividades por Excel"
+                   FontSize="20"
+                   TextColor="#FF0E0E0E"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center" />
 
-        <Button Text="📁 Seleccionar Archivo Excel"
-                Command="{Binding SeleccionarArchivoCommand}"
-                BackgroundColor="#0284C7"
-                TextColor="White"
-                HeightRequest="50"
-                CornerRadius="8" />
+            <Label Text="Selecciona una plantilla .xlsx para procesar masivamente los partes de horas."
+                   FontSize="14"
+                   TextColor="#64748B"
+                   HorizontalOptions="Center"
+                   HorizontalTextAlignment="Center" />
 
-        <Label Text="{Binding ArchivoSeleccionado}"
-               FontSize="13"
-               FontAttributes="Italic"
-               HorizontalOptions="Center"
-               TextColor="#475569" />
-    </VerticalStackLayout>
+            <Button Text="📁 Seleccionar Archivo Excel"
+                    Command="{Binding SeleccionarArchivoCommand}"
+                    BackgroundColor="#0284C7"
+                    TextColor="White"
+                    HeightRequest="50"
+                    CornerRadius="8" />
+
+            <Label Text="{Binding ArchivoSeleccionado}"
+                   FontSize="13"
+                   FontAttributes="Italic"
+                   HorizontalOptions="Center"
+                   TextColor="#475569" />
+        </VerticalStackLayout>
+
+       <!-- ===================== Recuadro de horas faltantes ===================== -->
+       <Grid Grid.Row="1" Margin="0,0,0,16">
+       <!-- Estado: tiene horas faltantes -->
+       <Border IsVisible="{Binding TieneHorasFaltantes}"
+              StrokeShape="RoundRectangle 14"
+              BackgroundColor="#FFF7ED"
+              Stroke="#FDBA74"
+              Padding="14">
+              <Grid ColumnDefinitions="Auto,*">
+              <Label Grid.Column="0"
+                     Text="⏳"
+                     FontSize="24"
+                     VerticalOptions="Center"
+                     Margin="0,0,12,0"/>
+              <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                     <Label Text="Horas faltantes este mes"
+                            FontSize="12"
+                            TextColor="#9A3412"/>
+                     <Label Text="{Binding HorasFaltantesTexto}"
+                            FontSize="20"
+                            FontAttributes="Bold"
+                            TextColor="#9A3412"/>
+              </VerticalStackLayout>
+              </Grid>
+       </Border>
+
+       <!-- Estado: al día -->
+       <Border IsVisible="{Binding NoTieneHorasFaltantes}"
+              StrokeShape="RoundRectangle 14"
+              BackgroundColor="#ECFDF5"
+              Stroke="#6EE7B7"
+              Padding="14">
+              <Grid ColumnDefinitions="Auto,*">
+              <Label Grid.Column="0"
+                     Text="✅"
+                     FontSize="24"
+                     VerticalOptions="Center"
+                     Margin="0,0,12,0"/>
+              <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                     <Label Text="Horas de este mes"
+                            FontSize="12"
+                            TextColor="#065F46"/>
+                     <Label Text="{Binding HorasFaltantesTexto}"
+                            FontSize="20"
+                            FontAttributes="Bold"
+                            TextColor="#065F46"/>
+              </VerticalStackLayout>
+              </Grid>
+       </Border>
+       </Grid>
+
+        <!-- ===================== Filtro ===================== -->
+        <Grid Grid.Row="2"
+              ColumnDefinitions="120,*"
+              ColumnSpacing="10"
+              Margin="0,0,0,12">
+            <Border Grid.Column="0"
+                    StrokeShape="RoundRectangle 10"
+                    Stroke="#E4E7EC"
+                    BackgroundColor="White"
+                    Padding="4,0">
+                <Picker ItemsSource="{Binding CamposFiltroDisponibles}"
+                        SelectedItem="{Binding CampoFiltro}"
+                        FontSize="13"/>
+            </Border>
+
+            <Border Grid.Column="1"
+                    StrokeShape="RoundRectangle 10"
+                    Stroke="#E4E7EC"
+                    BackgroundColor="White"
+                    Padding="10,0">
+                <Entry Placeholder="Buscar..."
+                       Text="{Binding TextoBusqueda}"
+                       FontSize="13"/>
+            </Border>
+        </Grid>
+
+        <!-- ===================== Indicador de carga ===================== -->
+        <ActivityIndicator Grid.Row="3"
+                            IsRunning="{Binding CargandoActividades}"
+                            IsVisible="{Binding CargandoActividades}"
+                            Color="#2E5BFF"
+                            Margin="0,0,0,8"/>
+
+        <!-- ===================== Tabla de actividades ===================== -->
+        <ScrollView Grid.Row="4"
+                    Orientation="Horizontal">
+            <VerticalStackLayout WidthRequest="890">
+
+                <!-- Encabezado fijo -->
+                <Grid ColumnDefinitions="180,160,140,160,90,70,90"
+                      BackgroundColor="#2E5BFF"
+                      Padding="10,10">
+                    <Label Grid.Column="0" Text="Colaborador" FontSize="12" FontAttributes="Bold" TextColor="White"/>
+                    <Label Grid.Column="1" Text="Proyecto" FontSize="12" FontAttributes="Bold" TextColor="White"/>
+                    <Label Grid.Column="2" Text="Cliente" FontSize="12" FontAttributes="Bold" TextColor="White"/>
+                    <Label Grid.Column="3" Text="Líder Técnico" FontSize="12" FontAttributes="Bold" TextColor="White"/>
+                    <Label Grid.Column="4" Text="Fecha" FontSize="12" FontAttributes="Bold" TextColor="White"/>
+                    <Label Grid.Column="5" Text="Horas" FontSize="12" FontAttributes="Bold" TextColor="White"/>
+                    <Label Grid.Column="6" Text="Estado" FontSize="12" FontAttributes="Bold" TextColor="White"/>
+                </Grid>
+
+                <!-- Filas -->
+                <CollectionView ItemsSource="{Binding Actividades}"
+                                HeightRequest="1000">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:ActividadCargaItem">
+                            <Grid ColumnDefinitions="180,160,140,160,90,70,90"
+                                  Padding="10,10"
+                                  BackgroundColor="White">
+                                <Grid.GestureRecognizers>
+                                    <!-- placeholder por si luego quieres detalle al tocar la fila -->
+                                </Grid.GestureRecognizers>
+                                <Label Grid.Column="0" Text="{Binding Colaborador}" FontSize="12" TextColor="#101828" LineBreakMode="TailTruncation"/>
+                                <Label Grid.Column="1" Text="{Binding Proyecto}" FontSize="12" TextColor="#101828" LineBreakMode="TailTruncation"/>
+                                <Label Grid.Column="2" Text="{Binding Cliente}" FontSize="12" TextColor="#667085" LineBreakMode="TailTruncation"/>
+                                <Label Grid.Column="3" Text="{Binding LiderTecnico}" FontSize="12" TextColor="#667085" LineBreakMode="TailTruncation"/>
+                                <Label Grid.Column="4" Text="{Binding FechaTexto}" FontSize="12" TextColor="#101828"/>
+                                <Label Grid.Column="5" Text="{Binding HorasTexto}" FontSize="12" FontAttributes="Bold" TextColor="#101828"/>
+                                <Label Grid.Column="6" Text="{Binding Estado}" FontSize="12" TextColor="#168A52"/>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical" ItemSpacing="0"/>
+                    </CollectionView.ItemsLayout>
+                </CollectionView>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+    </Grid>
 
 </ContentPage>

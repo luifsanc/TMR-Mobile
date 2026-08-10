@@ -3,12 +3,12 @@ using CommunityToolkit.Mvvm.Input;
 using tmr_mobile.Services;
 using tmr_mobile.Views.Dashboard.Models;
 using tmr_shared.DTOs.Dashboard;
-
 namespace tmr_mobile.ViewModels;
 
 public partial class DashboardViewModel : BaseViewModel
 {
-    private readonly ApiService _apiService;
+    private readonly ApiService  _apiService;
+    private readonly IAuthService _authService;
 
     // Paleta usada para "Detalle de horas" (derivado de HorasPorProyecto,
     // ya que el endpoint no trae un color por proyecto).
@@ -28,12 +28,23 @@ public partial class DashboardViewModel : BaseViewModel
     public partial int ClientesActivos { get; set; }
 
     [ObservableProperty]
+    public partial bool TieneNotificaciones { get; set; } = false;
+
+    [ObservableProperty]
     public partial string DetalleTotalHoras { get; set; } = "-";
 
-    public DashboardViewModel(ApiService apiService)
+
+
+    public DashboardViewModel(ApiService apiService, IAuthService authService)
     {
-        _apiService = apiService;
+        _apiService  = apiService;
+        _authService = authService;
         Title = "Dashboard Principal";
+
+        // Leer el nombre del usuario logueado
+        NombreUsuario = _authService.CurrentUser?.Name ?? "Usuario";
+
+        ActualizarOpcionesRango();
 
         // Carga inicial. CargarDashboardCommand es un IAsyncRelayCommand
         // generado por [RelayCommand]; Execute maneja el fire-and-forget
@@ -41,12 +52,15 @@ public partial class DashboardViewModel : BaseViewModel
         CargarDashboardCommand.Execute(null);
     }
 
-    public string NombreUsuario { get; set; } = "Teofilo";
+    [ObservableProperty]
+    public partial string NombreUsuario { get; set; } = "Usuario";
+
+    // Cuando NombreUsuario cambia, notificar también AvatarInicial (getter calculado)
+    partial void OnNombreUsuarioChanged(string value) => OnPropertyChanged(nameof(AvatarInicial));
+
     public string DetalleTitulo { get; set; } = "Detalle por proyecto";
 
-    // Inicial para el avatar circular del header (reemplaza avatar_icon.png,
-    // que no existe como recurso). NombreUsuario no es reactivo por ahora,
-    // así que basta con un getter simple.
+    // Inicial para el avatar: primera letra del nombre del usuario logueado.
     public string AvatarInicial => string.IsNullOrWhiteSpace(NombreUsuario)
         ? "?"
         : NombreUsuario.Trim()[..1].ToUpperInvariant();
@@ -64,29 +78,8 @@ public partial class DashboardViewModel : BaseViewModel
     public System.Collections.ObjectModel.ObservableCollection<ChartPoint> HorasPorProyecto { get; } = new();
     public System.Collections.ObjectModel.ObservableCollection<MetricMini> MetricasMini { get; } = new();
     public System.Collections.ObjectModel.ObservableCollection<HourDetail> DetalleHoras { get; } = new();
-
-    // TODO: reemplazar por datos reales cuando exista el endpoint de actividad.
-    public System.Collections.ObjectModel.ObservableCollection<ActivityItem> ActividadReciente { get; } = new()
-    {
-        new ActivityItem
-        {
-            IconBackground = "#F1E9FF",
-            Descripcion = "Cristopher Vera reportó 8h en Documentacion de procesos BCN",
-            Tiempo = "hace 2 horas"
-        },
-        new ActivityItem
-        {
-            IconBackground = "#E1F8E9",
-            Descripcion = "Calidad Fabrica de software fue completado",
-            Tiempo = "hace 1 día"
-        },
-        new ActivityItem
-        {
-            IconBackground = "#FFF0DE",
-            Descripcion = "Nuevo colaborador: Ana Romero",
-            Tiempo = "hace 2 días"
-        },
-    };
+    public System.Collections.ObjectModel.ObservableCollection<ClientDistribution> ProyectosPorCliente { get; } = new();
+    public System.Collections.ObjectModel.ObservableCollection<ClientDistribution> ProyectosPorClienteVisibles { get; } = new();
 
     [RelayCommand]
     private async Task CargarDashboardAsync()
@@ -95,7 +88,7 @@ public partial class DashboardViewModel : BaseViewModel
         ErrorMessage = string.Empty;
         try
         {
-            var response = await _apiService.GetAsync<DashboardDataResponse>("api/dashboard?rango=mes");
+            var response = await _apiService.GetAsync<DashboardDataResponse>($"api/dashboard?rango={RangoSeleccionado}");
 
             if (response?.Metricas == null)
             {
@@ -106,7 +99,9 @@ public partial class DashboardViewModel : BaseViewModel
             MapMetricas(response.Metricas);
             MapProximosACerrar(response.ProximosACerrar);
             MapHorasPorProyecto(response.HorasPorProyecto);
+            ActualizarMetricasMini();
             MapDetalleHoras(response.HorasPorProyecto);
+            MapProyectosPorCliente(response.ProyectosPorCliente);
         }
         catch (Exception ex)
         {
@@ -116,6 +111,24 @@ public partial class DashboardViewModel : BaseViewModel
         {
             IsBusy = false;
         }
+    }
+
+    private void ActualizarMetricasMini()
+    {
+        var totalHoras = HorasPorProyecto.Sum(h => h.Horas);
+        var cantidadProyectos = HorasPorProyecto.Count;
+        var promedio = cantidadProyectos > 0 ? totalHoras / cantidadProyectos : 0;
+
+        MetricasMini.Clear();
+        MetricasMini.Add(new MetricMini { Titulo = "TOTAL DE HORAS", Valor = $"{totalHoras:0} h" });
+        MetricasMini.Add(new MetricMini { Titulo = "PROMEDIO DE HORAS", Valor = $"{promedio:0} h" });
+        // "AVANCE DE JORNADA" sigue en 0%: el endpoint no expone
+        // horas planeadas vs. trabajadas del período actual todavía.
+        MetricasMini.Add(new MetricMini
+        {
+            Titulo = "AVANCE DE JORNADA",
+            Valor = "0%"
+        });
     }
 
     private void MapMetricas(DashboardMetricasResponse metricas)
@@ -162,7 +175,7 @@ public partial class DashboardViewModel : BaseViewModel
                 Cliente = item.Cliente,
                 Estado = item.Estado,
                 FechaCierre = item.FechaFinPlaneada ?? DateTime.MinValue,
-                HorasRestantes = (int)item.Horas
+                Horas = (int)item.Horas
             });
         }
     }
@@ -206,4 +219,115 @@ public partial class DashboardViewModel : BaseViewModel
             });
         }
     }
+
+
+    private void MapProyectosPorCliente(List<ProyectoPorClienteResponse>? proyectosPorCliente)
+    {
+        ProyectosPorCliente.Clear();
+        if (proyectosPorCliente == null || proyectosPorCliente.Count == 0) return;
+
+        // El endpoint ya trae el porcentaje calculado, así que no hace falta
+        // sacar un máximo como en MapHorasPorProyecto.
+        foreach (var item in proyectosPorCliente)
+        {
+            ProyectosPorCliente.Add(new ClientDistribution
+            {
+                Cliente = item.Cliente,
+                Proyectos = item.ProyectosAsignados,
+                Porcentaje = item.Porcentaje
+            });
+        }
+        ActualizarProyectosPorClienteVisibles();
+    }
+
+    private const int TopClientesVisible = 8;
+
+    [ObservableProperty]
+    public partial bool MostrarTodosClientes { get; set; }
+
+    public string TextoVerMasClientes => MostrarTodosClientes ? "Ver menos" : "Ver más";
+
+    partial void OnMostrarTodosClientesChanged(bool value)
+    {
+        OnPropertyChanged(nameof(TextoVerMasClientes));
+        ActualizarProyectosPorClienteVisibles();
+    }
+
+    [RelayCommand]
+    private void ToggleVerMasClientes()
+    {
+        MostrarTodosClientes = !MostrarTodosClientes;
+    }
+
+    private void ActualizarProyectosPorClienteVisibles()
+    {
+        ProyectosPorClienteVisibles.Clear();
+        var fuente = MostrarTodosClientes
+            ? ProyectosPorCliente
+            : ProyectosPorCliente.Take(TopClientesVisible);
+
+        foreach (var item in fuente)
+            ProyectosPorClienteVisibles.Add(item);
+    }
+
+
+
+    [ObservableProperty]
+    public partial bool MostrarSelectorRango { get; set; }
+
+    [ObservableProperty]
+    public partial string RangoSeleccionado { get; set; } = "mes";
+
+    [ObservableProperty]
+    public partial string RangoLabel { get; set; } = "Este mes";
+
+    private static readonly (string Valor, string Texto)[] RangosDisponibles =
+    {
+        ("mes", "Este mes"),
+        ("trimestre", "Este trimestre"),
+        ("anio", "Este año")
+    };
+
+    public System.Collections.ObjectModel.ObservableCollection<RangoOption> OpcionesRango { get; } = new();
+
+    private static readonly Dictionary<string, string> RangoLabels =
+    RangosDisponibles.ToDictionary(r => r.Valor, r => r.Texto);
+
+    [RelayCommand]
+    private void ToggleSelectorRango()
+    {
+        MostrarSelectorRango = !MostrarSelectorRango;
+    }
+
+    [RelayCommand]
+    private async Task CambiarRangoAsync(string nuevoRango)
+    {
+        // Cerrar el selector siempre, incluso si ya estaba seleccionada la misma opción
+        MostrarSelectorRango = false;
+
+        if (nuevoRango == RangoSeleccionado) return;
+
+        RangoSeleccionado = nuevoRango;
+        RangoLabel = RangoLabels.TryGetValue(nuevoRango, out var label) ? label : nuevoRango;
+
+        // Actualizar el estado visual de las opciones del dropdown
+        ActualizarOpcionesRango();
+
+        await CargarDashboardAsync();
+    }
+
+    private void ActualizarOpcionesRango()
+    {
+        OpcionesRango.Clear();
+        foreach (var (valor, texto) in RangosDisponibles)
+        {
+            OpcionesRango.Add(new RangoOption
+            {
+                Valor = valor,
+                Texto = texto,
+                EsSeleccionado = valor == RangoSeleccionado
+            });
+        }
+    }
+
 }

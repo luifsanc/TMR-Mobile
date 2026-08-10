@@ -9,16 +9,6 @@ public class StatCard
     public string Label { get; set; } = string.Empty;
 }
 
-public class ClosingProject
-{
-    public string Codigo { get; set; } = string.Empty;      // BCN_DOC_PROC
-    public string Titulo { get; set; } = string.Empty;      // Documentacion de procesos BCN
-    public string Cliente { get; set; } = string.Empty;      // BANCO COOPNACIONAL
-    public DateTime FechaCierre { get; set; }
-    public string Estado { get; set; } = string.Empty;      // Completado | En progreso | Pendiente
-    public int HorasRestantes { get; set; }
-}
-
 public class ChartPoint
 {
     public string Categoria { get; set; } = string.Empty;   // "Proyectos de Procesos"
@@ -53,4 +43,38 @@ public class HourDetail
     public string Color { get; set; } = "#2E5BFF";
     public string Proyecto { get; set; } = string.Empty;
     public double Horas { get; set; }
+}
+
+
+public class ClosingProject
+{
+    public string Codigo { get; set; } = "";
+    public string Titulo { get; set; } = "";
+    public string Cliente { get; set; } = "";
+    public string Estado { get; set; } = "";
+    public decimal Horas { get; set; }
+    public DateTime? FechaCierre { get; set; }
+}
+
+
+public class ClientShare
+{
+    public string Cliente { get; set; } = "";
+    public int ProyectosAsignados { get; set; }
+    public double Porcentaje { get; set; }
+}
+
+
+public class ClientDistribution
+{
+    public string Cliente { get; set; } = string.Empty;
+    public int Proyectos { get; set; }
+    public double Porcentaje { get; set; }
+}
+
+public class RangoOption
+{
+    public string Valor { get; set; } = string.Empty;
+    public string Texto { get; set; } = string.Empty;
+    public bool EsSeleccionado { get; set; }
 }
