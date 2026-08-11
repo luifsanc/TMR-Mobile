@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:tmr_mobile.ViewModels"
+    xmlns:model="clr-namespace:tmr_mobile.Models.Operaciones"
+    x:Class="tmr_mobile.Views.Operaciones.ClienteDetallePage"
+    x:DataType="vm:ClienteDetalleViewModel"
+    Title="Detalle de Cliente"
+    BackgroundColor="#F4F6FA">
+
+    <Grid>
+        <!-- CONTENIDO SCROLLABLE -->
+        <ScrollView IsVisible="{Binding TieneCliente}">
+            <VerticalStackLayout Padding="16" Spacing="16">
+                
+                <!-- HEADER CON BOTÓN ATRÁS Y TÍTULO -->
+                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="16" VerticalOptions="Center">
+                    <Button
+                        Grid.Column="0"
+                        Text="‹"
+                        Command="{Binding RegresarCommand}"
+                        BackgroundColor="Transparent"
+                        TextColor="#173A54"
+                        FontSize="14"
+                        Padding="0"
+                        HeightRequest="40"
+                        VerticalOptions="Center" />
+                    
+                    <Label
+                        Grid.Column="1"
+                        Text="{Binding Cliente.NombreComercial}"
+                        FontSize="20"
+                        FontAttributes="Bold"
+                        TextColor="#173A54"
+                        VerticalOptions="Center"
+                        LineBreakMode="TailTruncation"
+                        MaxLines="1" />
+                        
+                    <!-- BADGE DE ESTADO -->
+                    <Border
+                        Grid.Column="2"
+                        BackgroundColor="{Binding Cliente.ColorFondoEstado}"
+                        Stroke="Transparent"
+                        Padding="10,6"
+                        VerticalOptions="Center">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="8" />
+                        </Border.StrokeShape>
+                        <Label
+                            Text="{Binding Cliente.EstadoTexto}"
+                            FontSize="12"
+                            FontAttributes="Bold"
+                            TextColor="{Binding Cliente.ColorEstado}" />
+                    </Border>
+                </Grid>
+
+                <!-- CARD INFORMACIÓN GENERAL -->
+                <Border
+                    BackgroundColor="White"
+                    Stroke="#E2E8F0"
+                    StrokeThickness="1"
+                    Padding="16">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="12" />
+                    </Border.StrokeShape>
+                    <VerticalStackLayout Spacing="12">
+                        <Label Text="Información General" FontSize="16" FontAttributes="Bold" TextColor="#173A54" />
+                        
+                        <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" RowSpacing="12" ColumnSpacing="12">
+                            <!-- Tipo de Identificación -->
+                            <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="4">
+                                <Label Text="Tipo de Identificación" FontSize="12" TextColor="#64748B" />
+                                <Label Text="{Binding Cliente.TipoIdentificacion}" FontSize="14" TextColor="#334155" />
+                            </VerticalStackLayout>
+
+                            <!-- Número de Identificación -->
+                            <VerticalStackLayout Grid.Row="0" Grid.Column="1" Spacing="4">
+                                <Label Text="Número de Identificación" FontSize="12" TextColor="#64748B" />
+                                <Label Text="{Binding Cliente.NumeroIdentificacion}" FontSize="14" TextColor="#334155" />
+                            </VerticalStackLayout>
+
+                            <!-- Nombre Comercial -->
+                            <VerticalStackLayout Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Spacing="4">
+                                <Label Text="Nombre Comercial" FontSize="12" TextColor="#64748B" />
+                                <Label Text="{Binding Cliente.NombreComercial}" FontSize="14" TextColor="#334155" />
+                            </VerticalStackLayout>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- CARD DATOS DE CONTACTO -->
+                <Border
+                    BackgroundColor="White"
+                    Stroke="#E2E8F0"
+                    StrokeThickness="1"
+                    Padding="16">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="12" />
+                    </Border.StrokeShape>
+                    <VerticalStackLayout Spacing="12">
+                        <Label Text="Datos de Contacto" FontSize="16" FontAttributes="Bold" TextColor="#173A54" />
+                        
+                        <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto" RowSpacing="12" ColumnSpacing="12">
+                            <!-- Nombres -->
+                            <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="4">
+                                <Label Text="Nombres" FontSize="12" TextColor="#64748B" />
+                                <Label Text="{Binding Cliente.Nombres}" FontSize="14" TextColor="#334155" />
+                            </VerticalStackLayout>
+
+                            <!-- Apellidos -->
+                            <VerticalStackLayout Grid.Row="0" Grid.Column="1" Spacing="4">
+                                <Label Text="Apellidos" FontSize="12" TextColor="#64748B" />
+                                <Label Text="{Binding Cliente.Apellidos}" FontSize="14" TextColor="#334155" />
+                            </VerticalStackLayout>
+
+                            <!-- Correo Electrónico -->
+                            <VerticalStackLayout Grid.Row="1" Grid.Column="0" Spacing="4">
+                                <Label Text="Correo Electrónico" FontSize="12" TextColor="#64748B" />
+                                <Label Text="{Binding Cliente.Email}" FontSize="14" TextColor="#334155" />
+                            </VerticalStackLayout>
+
+                            <!-- Teléfono -->
+                            <VerticalStackLayout Grid.Row="1" Grid.Column="1" Spacing="4">
+                                <Label Text="Teléfono" FontSize="12" TextColor="#64748B" />
+                                <Label Text="{Binding Cliente.Telefono}" FontSize="14" TextColor="#334155" />
+                            </VerticalStackLayout>
+
+                            <!-- Dirección -->
+                            <VerticalStackLayout Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Spacing="4">
+                                <Label Text="Dirección" FontSize="12" TextColor="#64748B" />
+                                <Label Text="{Binding Cliente.Direccion}" FontSize="14" TextColor="#334155" />
+                            </VerticalStackLayout>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- CARD PROYECTOS ASIGNADOS -->
+                <Border
+                    BackgroundColor="White"
+                    Stroke="#E2E8F0"
+                    StrokeThickness="1"
+                    Padding="16">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="12" />
+                    </Border.StrokeShape>
+                    <VerticalStackLayout Spacing="12">
+                        <HorizontalStackLayout Spacing="8">
+                            <Label Text="▼ Proyectos asignados" FontSize="15" FontAttributes="Bold" TextColor="#173A54" />
+                            <Border BackgroundColor="#F1F5F9" Stroke="Transparent" Padding="8,2">
+                                <Border.StrokeShape><RoundRectangle CornerRadius="6" /></Border.StrokeShape>
+                                <Label Text="{Binding Cliente.Proyectos.Count}" FontSize="11" FontAttributes="Bold" TextColor="#173A54" />
+                            </Border>
+                        </HorizontalStackLayout>
+
+                        <!-- LISTA DE PROYECTOS -->
+                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding Cliente.Proyectos}" Spacing="8">
+                            <BindableLayout.EmptyViewTemplate>
+                                <DataTemplate>
+                                    <Label Text="No tiene proyectos asignados actualmente." FontSize="12" TextColor="#94A3B8" Margin="0,4" />
+                                </DataTemplate>
+                            </BindableLayout.EmptyViewTemplate>
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="model:ProyectoClienteModel">
+                                    <Border BackgroundColor="#F8FAFC" Stroke="#E2E8F0" StrokeThickness="1" Padding="12">
+                                        <Border.StrokeShape><RoundRectangle CornerRadius="8" /></Border.StrokeShape>
+                                        <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" RowSpacing="2">
+                                            <Label Grid.Row="0" Grid.Column="0" Text="{Binding Nombre}" FontSize="13" FontAttributes="Bold" TextColor="#173A54" />
+                                            <Label Grid.Row="1" Grid.Column="0" Text="{Binding Cliente}" FontSize="11" TextColor="#64748B" />
+                                            <Border Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" BackgroundColor="#E8F5E9" Stroke="Transparent" Padding="6,2" VerticalOptions="Center">
+                                                <Border.StrokeShape><RoundRectangle CornerRadius="6" /></Border.StrokeShape>
+                                                <Label Text="{Binding Estado}" FontSize="10" FontAttributes="Bold" TextColor="#43A047" />
+                                            </Border>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+                
+                <!-- ACCIONES (Botones abajo) -->
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="12" Margin="0,16,0,0">
+                    <Button
+                        Grid.Column="0"
+                        Text="Editar"
+                        Command="{Binding EditarCommand}"
+                        BackgroundColor="#7486AD"
+                        TextColor="White"
+                        CornerRadius="8"
+                        HeightRequest="48"
+                        FontSize="14"
+                        FontAttributes="Bold" />
+                        
+                    <Button
+                        Grid.Column="1"
+                        Text="{Binding TextoBotonEstado}"
+                        Command="{Binding CambiarEstadoCommand}"
+                        BackgroundColor="#E53935"
+                        TextColor="White"
+                        CornerRadius="8"
+                        HeightRequest="48"
+                        FontSize="14"
+                        FontAttributes="Bold">
+                        <Button.Triggers>
+                            <!-- Si está inactivo, el botón de activar debería ser verde -->
+                            <DataTrigger TargetType="Button" Binding="{Binding EsInactivo}" Value="True">
+                                <Setter Property="BackgroundColor" Value="#43A047" />
+                            </DataTrigger>
+                        </Button.Triggers>
+                    </Button>
+                </Grid>
+            </VerticalStackLayout>
+        </ScrollView>
+        
+        <!-- CARGANDO -->
+        <ActivityIndicator
+            IsVisible="{Binding IsBusy}"
+            IsRunning="{Binding IsBusy}"
+            Color="#173A54"
+            HorizontalOptions="Center"
+            VerticalOptions="Center" />
+            
+        <!-- ERROR (si no pudo cargar nada) -->
+        <VerticalStackLayout
+            IsVisible="{Binding ErrorMessage, Converter={StaticResource IsStringNotNullOrEmptyConverter}}"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            Spacing="16"
+            Padding="32">
+            <Label
+                Text="{Binding ErrorMessage}"
+                TextColor="#E53935"
+                FontSize="14"
+                HorizontalTextAlignment="Center" />
+            <Button
+                Text="Regresar"
+                Command="{Binding RegresarCommand}"
+                BackgroundColor="#173A54"
+                TextColor="White"
+                CornerRadius="8" />
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

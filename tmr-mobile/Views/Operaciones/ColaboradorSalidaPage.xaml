@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:tmr_mobile.ViewModels"
+    x:Class="tmr_mobile.Views.Operaciones.ColaboradorSalidaPage"
+    x:DataType="vm:ColaboradorSalidaViewModel"
+    Title="Registrar Salida"
+    BackgroundColor="#F4F6FA">
+
+    <Grid>
+        <ScrollView>
+            <VerticalStackLayout Padding="16" Spacing="16">
+
+                <!-- CABECERA -->
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12" VerticalOptions="Center">
+                    <Button
+                        Grid.Column="0"
+                        Text="‹"
+                        Command="{Binding RegresarCommand}"
+                        BackgroundColor="Transparent"
+                        TextColor="#173A54"
+                        FontSize="24"
+                        FontAttributes="Bold"
+                        Padding="0"
+                        WidthRequest="36"
+                        HeightRequest="36"
+                        VerticalOptions="Center" />
+
+                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="1">
+                        <Label
+                            Text="Registrar Salida"
+                            FontSize="20"
+                            FontAttributes="Bold"
+                            TextColor="#173A54" />
+                        <HorizontalStackLayout Spacing="6">
+                            <Label
+                                Text="{Binding Colaborador.NombreCompleto}"
+                                FontSize="12"
+                                TextColor="#64748B" />
+                            <Label
+                                Text="•"
+                                FontSize="12"
+                                TextColor="#64748B" />
+                            <Label
+                                Text="{Binding Colaborador.NumeroIdentificacion}"
+                                FontSize="12"
+                                TextColor="#64748B" />
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </Grid>
+
+                <!-- CARD FORMULARIO DE SALIDA -->
+                <Border BackgroundColor="White" Stroke="#E2E8F0" StrokeThickness="1" Padding="16">
+                    <Border.StrokeShape><RoundRectangle CornerRadius="12" /></Border.StrokeShape>
+                    <VerticalStackLayout Spacing="16">
+                        <Label Text="▼ Datos de salida" FontSize="15" FontAttributes="Bold" TextColor="#173A54" />
+
+                        <!-- Fecha de salida -->
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="Fecha de salida *" FontSize="12" TextColor="#64748B" />
+                            <Border Stroke="#DCE3EC" StrokeThickness="1" BackgroundColor="Transparent" Padding="12,0" HeightRequest="44">
+                                <Border.StrokeShape><RoundRectangle CornerRadius="8" /></Border.StrokeShape>
+                                <DatePicker Date="{Binding FechaSalida}" Format="dd/MM/yyyy" TextColor="#334155" VerticalOptions="Center" />
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <!-- Tipo de salida -->
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="Tipo de salida *" FontSize="12" TextColor="#64748B" />
+                            <Border Stroke="#DCE3EC" StrokeThickness="1" BackgroundColor="Transparent" Padding="8,0" HeightRequest="44">
+                                <Border.StrokeShape><RoundRectangle CornerRadius="8" /></Border.StrokeShape>
+                                <Picker
+                                    ItemsSource="{Binding TiposSalida}"
+                                    ItemDisplayBinding="{Binding Valor}"
+                                    SelectedItem="{Binding TipoSalidaSeleccionado}"
+                                    Title="Seleccione un tipo de salida"
+                                    TextColor="#334155"
+                                    TitleColor="#9CA3AF"
+                                    VerticalOptions="Center" />
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <!-- Causa de salida -->
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="Causa de salida *" FontSize="12" TextColor="#64748B" />
+                            <Border Stroke="#DCE3EC" StrokeThickness="1" BackgroundColor="Transparent" Padding="8,0" HeightRequest="44">
+                                <Border.StrokeShape><RoundRectangle CornerRadius="8" /></Border.StrokeShape>
+                                <Picker
+                                    ItemsSource="{Binding CausasSalida}"
+                                    ItemDisplayBinding="{Binding Valor}"
+                                    SelectedItem="{Binding CausaSalidaSeleccionada}"
+                                    Title="Seleccione una causa de salida"
+                                    TextColor="#334155"
+                                    TitleColor="#9CA3AF"
+                                    VerticalOptions="Center" />
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <!-- Comentario (Opcional) -->
+                        <VerticalStackLayout Spacing="4">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <Label Grid.Column="0" Text="Comentario (opcional)" FontSize="12" TextColor="#64748B" />
+                                <Label Grid.Column="1" Text="Máximo 500 caracteres" FontSize="11" TextColor="#94A3B8" />
+                            </Grid>
+                            <Border Stroke="#DCE3EC" StrokeThickness="1" BackgroundColor="Transparent" Padding="12,8" HeightRequest="100">
+                                <Border.StrokeShape><RoundRectangle CornerRadius="8" /></Border.StrokeShape>
+                                <Editor
+                                    Text="{Binding Comentario}"
+                                    Placeholder="Ingrese un comentario detallado sobre la salida..."
+                                    PlaceholderColor="#9CA3AF"
+                                    TextColor="#334155"
+                                    MaxLength="500"
+                                    AutoSize="Disabled" />
+                            </Border>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- BOTÓN GUARDAR -->
+                <Button
+                    Text="Guardar"
+                    Command="{Binding GuardarSalidaCommand}"
+                    BackgroundColor="#173A54"
+                    TextColor="White"
+                    CornerRadius="8"
+                    HeightRequest="50"
+                    FontSize="16"
+                    FontAttributes="Bold"
+                    Margin="0,8,0,24" />
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- LOADING -->
+        <ActivityIndicator
+            IsVisible="{Binding IsBusy}"
+            IsRunning="{Binding IsBusy}"
+            Color="#173A54"
+            HorizontalOptions="Center"
+            VerticalOptions="Center" />
+
+        <!-- ERROR -->
+        <ContentView
+            IsVisible="{Binding ErrorMessage, Converter={StaticResource IsStringNotNullOrEmptyConverter}}"
+            BackgroundColor="#CC000000"
+            InputTransparent="False">
+            <Border BackgroundColor="White" Padding="24" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="300">
+                <Border.StrokeShape><RoundRectangle CornerRadius="12" /></Border.StrokeShape>
+                <VerticalStackLayout Spacing="16">
+                    <Label Text="Error" FontSize="18" FontAttributes="Bold" TextColor="#E53935" HorizontalTextAlignment="Center" />
+                    <Label Text="{Binding ErrorMessage}" TextColor="#334155" HorizontalTextAlignment="Center" />
+                    <Button Text="Cerrar" Command="{Binding LimpiarErrorCommand}" BackgroundColor="#173A54" TextColor="White" CornerRadius="8" />
+                </VerticalStackLayout>
+            </Border>
+        </ContentView>
+    </Grid>
+
+</ContentPage>

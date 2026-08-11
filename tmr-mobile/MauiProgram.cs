@@ -44,6 +44,8 @@ public static class MauiProgram
         builder.Services.AddSingleton<ApiService>();
         builder.Services.AddSingleton<IAuthService, AuthService>();
         builder.Services.AddSingleton<ICatalogosService, CatalogosService>();
+        builder.Services.AddSingleton<IClientesService, ClientesService>();
+        builder.Services.AddSingleton<IColaboradoresService, ColaboradoresService>();
 
 
         // ─────────────────────────────────────────────────────────────
@@ -67,6 +69,11 @@ public static class MauiProgram
         builder.Services.AddTransient<CatalogosConfigViewModel>();
         builder.Services.AddTransient<CatalogoDetalleViewModel>();
         builder.Services.AddTransient<CatalogoFormViewModel>();
+        builder.Services.AddTransient<ClienteDetalleViewModel>();
+        builder.Services.AddTransient<ClienteFormViewModel>();
+        builder.Services.AddTransient<ColaboradorDetalleViewModel>();
+        builder.Services.AddTransient<ColaboradorSalidaViewModel>();
+        builder.Services.AddTransient<ColaboradorFormViewModel>();
 
 
         // ─────────────────────────────────────────────────────────────
@@ -91,6 +98,11 @@ public static class MauiProgram
         builder.Services.AddTransient<CatalogosPage>();
         builder.Services.AddTransient<CatalogoDetallePage>();
         builder.Services.AddTransient<CatalogoFormPage>();
+        builder.Services.AddTransient<ClienteDetallePage>();
+        builder.Services.AddTransient<ClienteFormPage>();
+        builder.Services.AddTransient<ColaboradorDetallePage>();
+        builder.Services.AddTransient<ColaboradorSalidaPage>();
+        builder.Services.AddTransient<ColaboradorFormPage>();
 
 
         // ─────────────────────────────────────────────────────────────

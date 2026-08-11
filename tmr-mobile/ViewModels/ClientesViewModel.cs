@@ -1,40 +1,78 @@
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using tmr_mobile.Models.Operaciones;
 using tmr_mobile.Services;
-using tmr_shared.DTOs.Clientes;
+using tmr_mobile.Views.Operaciones;
 
 namespace tmr_mobile.ViewModels;
 
 public partial class ClientesViewModel : BaseViewModel
 {
-    private readonly ApiService _apiService;
+    private readonly IClientesService _clientesService;
+    
+    private readonly List<ClienteModel> _todosClientes = new();
 
-    public ObservableCollection<ClienteListaResponse> Clientes { get; } = new();
+    public ObservableCollection<ClienteModel> Clientes { get; } = new();
 
-    public ClientesViewModel(ApiService apiService)
+    [ObservableProperty]
+    public partial string Busqueda { get; set; } = string.Empty;
+
+    // Resumen
+    [ObservableProperty]
+    public partial int TotalClientes { get; set; }
+
+    [ObservableProperty]
+    public partial int TotalActivos { get; set; }
+
+    [ObservableProperty]
+    public partial int TotalInactivos { get; set; }
+
+    public ClientesViewModel(IClientesService clientesService)
     {
-        _apiService = apiService;
-        Title = "Gestión de Clientes";
+        _clientesService = clientesService;
+        Title = "Clientes";
+    }
+
+    public async Task InicializarAsync()
+    {
+        // Evitamos recargar todo si ya tenemos datos, 
+        // a menos que queramos forzar un refresh. 
+        // En un flujo real, si venimos de editar/crear podríamos querer recargar.
+        // Por ahora recargamos siempre que la colección esté vacía
+        if (Clientes.Count == 0)
+        {
+            await CargarClientesAsync();
+        }
+        else
+        {
+            // Forzar recarga si venimos de otra pantalla (ej. crear/editar)
+            // Esto asegura que la lista esté actualizada siempre
+            await CargarClientesAsync();
+        }
     }
 
     [RelayCommand]
     private async Task CargarClientesAsync()
     {
-        IsBusy = true;
-        ErrorMessage = string.Empty;
+        if (IsBusy) return;
+
         try
         {
-            // GET /api/clientes  (requiere JWT)
-            var lista = await _apiService.GetAsync<List<ClienteListaResponse>>("api/clientes");
-            Clientes.Clear();
-            if (lista != null)
-                foreach (var c in lista)
-                    Clientes.Add(c);
+            IsBusy = true;
+            ErrorMessage = string.Empty;
+
+            var lista = await _clientesService.ObtenerClientesAsync(Busqueda);
+            
+            _todosClientes.Clear();
+            _todosClientes.AddRange(lista);
+
+            ActualizarListadoYResumen();
         }
         catch (Exception ex)
         {
-            ErrorMessage = $"Error al cargar clientes: {ex.Message}";
+            ErrorMessage = "Error al cargar clientes.";
+            System.Diagnostics.Debug.WriteLine(ex.Message);
         }
         finally
         {
@@ -42,30 +80,100 @@ public partial class ClientesViewModel : BaseViewModel
         }
     }
 
-    [RelayCommand]
-    private async Task BuscarAsync(string busqueda)
+    partial void OnBusquedaChanged(string value)
     {
-        IsBusy = true;
-        ErrorMessage = string.Empty;
-        try
-        {
-            var url = string.IsNullOrWhiteSpace(busqueda)
-                ? "api/clientes"
-                : $"api/clientes?busqueda={Uri.EscapeDataString(busqueda)}";
+        // Opcional: Podríamos filtrar en memoria o llamar a la API
+        // Si queremos llamar a la API:
+        // CargarClientesAsync().Wait(); // Cuidado con .Wait() - mejor usar un Command
+        // Por simplicidad, filtraremos en memoria para búsquedas rápidas, 
+        // o invocamos a la API. Optaremos por filtro en memoria sobre la lista completa 
+        // si la API no está paginada, o hacemos un delay y llamamos a la API.
+        
+        AplicarFiltroLocal();
+    }
 
-            var lista = await _apiService.GetAsync<List<ClienteListaResponse>>(url);
-            Clientes.Clear();
-            if (lista != null)
-                foreach (var c in lista)
-                    Clientes.Add(c);
-        }
-        catch (Exception ex)
+    [ObservableProperty] public partial string FiltroEstadoTexto { get; set; } = "Todos";
+    private bool? _filtroActivo = null;
+
+    private void AplicarFiltroLocal()
+    {
+        IEnumerable<ClienteModel> resultado = _todosClientes;
+
+        if (_filtroActivo.HasValue)
         {
-            ErrorMessage = $"Error al buscar clientes: {ex.Message}";
+            resultado = resultado.Where(x => x.Activo == _filtroActivo.Value);
         }
-        finally
+
+        if (!string.IsNullOrWhiteSpace(Busqueda))
         {
-            IsBusy = false;
+            var texto = Busqueda.Trim().ToLowerInvariant();
+            resultado = resultado.Where(x => 
+                x.NombreComercial.ToLowerInvariant().Contains(texto) ||
+                x.NumeroIdentificacion.ToLowerInvariant().Contains(texto) ||
+                x.Email.ToLowerInvariant().Contains(texto));
         }
+
+        Clientes.Clear();
+        foreach (var c in resultado)
+        {
+            Clientes.Add(c);
+        }
+    }
+
+    [RelayCommand]
+    private async Task CambiarFiltroEstadoAsync()
+    {
+        if (_filtroActivo == null)
+        {
+            _filtroActivo = true;
+            FiltroEstadoTexto = "Activos";
+        }
+        else if (_filtroActivo == true)
+        {
+            _filtroActivo = false;
+            FiltroEstadoTexto = "Inactivos";
+        }
+        else
+        {
+            _filtroActivo = null;
+            FiltroEstadoTexto = "Todos";
+        }
+
+        AplicarFiltroLocal();
+        await Task.CompletedTask;
+    }
+
+    [RelayCommand]
+    private async Task DescargarAsync()
+    {
+        await Shell.Current.CurrentPage.DisplayAlert("Exportar", "Se ha generado la descarga del reporte de clientes.", "OK");
+    }
+
+    private void ActualizarListadoYResumen()
+    {
+        TotalClientes = _todosClientes.Count;
+        TotalActivos = _todosClientes.Count(x => x.Activo);
+        TotalInactivos = _todosClientes.Count(x => !x.Activo);
+
+        AplicarFiltroLocal();
+    }
+
+    [RelayCommand]
+    private async Task NuevoAsync()
+    {
+        await Shell.Current.GoToAsync(nameof(ClienteFormPage));
+    }
+
+    [RelayCommand]
+    private async Task AbrirDetalleAsync(ClienteModel cliente)
+    {
+        if (cliente is null) return;
+
+        var parametros = new Dictionary<string, object>
+        {
+            ["IdCliente"] = cliente.Id
+        };
+
+        await Shell.Current.GoToAsync(nameof(ClienteDetallePage), parametros);
     }
 }

@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:tmr_mobile.ViewModels"
+    xmlns:model="clr-namespace:tmr_mobile.Models.Operaciones"
+    x:Class="tmr_mobile.Views.Operaciones.ColaboradorDetallePage"
+    x:DataType="vm:ColaboradorDetalleViewModel"
+    Title="Detalle del Colaborador"
+    BackgroundColor="#F4F6FA">
+
+    <Grid>
+        <!-- SCROLL PRINCIPAL -->
+        <ScrollView IsVisible="{Binding TieneColaborador}">
+            <VerticalStackLayout Padding="16" Spacing="16">
+
+                <!-- CABECERA -->
+                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12" VerticalOptions="Center">
+                    <Button
+                        Grid.Column="0"
+                        Text="‹"
+                        Command="{Binding RegresarCommand}"
+                        BackgroundColor="Transparent"
+                        TextColor="#173A54"
+                        FontSize="24"
+                        FontAttributes="Bold"
+                        Padding="0"
+                        WidthRequest="36"
+                        HeightRequest="36"
+                        VerticalOptions="Center" />
+
+                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="1">
+                        <Label
+                            Text="{Binding Colaborador.CodigoEmpleado}"
+                            FontSize="12"
+                            TextColor="#64748B" />
+                        <Label
+                            Text="{Binding Colaborador.NombreCompleto}"
+                            FontSize="18"
+                            FontAttributes="Bold"
+                            TextColor="#173A54"
+                            MaxLines="1"
+                            LineBreakMode="TailTruncation" />
+                    </VerticalStackLayout>
+
+                    <Border
+                        Grid.Column="2"
+                        BackgroundColor="{Binding Colaborador.ColorFondoEstado}"
+                        Stroke="Transparent"
+                        Padding="10,6"
+                        VerticalOptions="Center">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="8" />
+                        </Border.StrokeShape>
+                        <Label
+                            Text="{Binding Colaborador.EstadoTexto}"
+                            FontSize="11"
+                            FontAttributes="Bold"
+                            TextColor="{Binding Colaborador.ColorEstado}" />
+                    </Border>
+                </Grid>
+
+                <!-- CARD: DATOS LABORALES -->
+                <Border BackgroundColor="White" Stroke="#E2E8F0" StrokeThickness="1" Padding="16">
+                    <Border.StrokeShape><RoundRectangle CornerRadius="12" /></Border.StrokeShape>
+                    <VerticalStackLayout Spacing="12">
+                        <Label Text="▼ Datos laborales" FontSize="15" FontAttributes="Bold" TextColor="#173A54" />
+
+                        <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto" RowSpacing="10" ColumnSpacing="12">
+                            <!-- Departamento -->
+                            <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="2">
+                                <Label Text="Departamento" FontSize="11" TextColor="#94A3B8" />
+                                <Label Text="{Binding Colaborador.Departamento}" FontSize="13" TextColor="#334155" />
+                            </VerticalStackLayout>
+
+                            <!-- Fecha de contratación -->
+                            <VerticalStackLayout Grid.Row="0" Grid.Column="1" Spacing="2">
+                                <Label Text="Fecha de contratación" FontSize="11" TextColor="#94A3B8" />
+                                <Label Text="{Binding Colaborador.FechaContratacion}" FontSize="13" TextColor="#334155" />
+                            </VerticalStackLayout>
+
+                            <!-- Cargo -->
+                            <VerticalStackLayout Grid.Row="1" Grid.Column="0" Spacing="2">
+                                <Label Text="Cargo" FontSize="11" TextColor="#94A3B8" />
+                                <Label Text="{Binding Colaborador.Cargo}" FontSize="13" TextColor="#334155" />
+                            </VerticalStackLayout>
+
+                            <!-- Años de experiencia -->
+                            <VerticalStackLayout Grid.Row="1" Grid.Column="1" Spacing="2">
+                                <Label Text="Años de experiencia" FontSize="11" TextColor="#94A3B8" />
+                                <Label Text="{Binding Colaborador.AniosExperiencia}" FontSize="13" TextColor="#334155" />
+                            </VerticalStackLayout>
+
+                            <!-- Modalidad -->
+                            <VerticalStackLayout Grid.Row="2" Grid.Column="0" Spacing="2">
+                                <Label Text="Modalidad" FontSize="11" TextColor="#94A3B8" />
+                                <Label Text="{Binding Colaborador.Modalidad}" FontSize="13" TextColor="#334155" />
+                            </VerticalStackLayout>
+
+                            <!-- Categoría -->
+                            <VerticalStackLayout Grid.Row="2" Grid.Column="1" Spacing="2">
+                                <Label Text="Categoría" FontSize="11" TextColor="#94A3B8" />
+                                <Label Text="{Binding Colaborador.Categoria}" FontSize="13" TextColor="#334155" />
+                            </VerticalStackLayout>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- CARD: DATOS PERSONALES -->
+                <Border BackgroundColor="White" Stroke="#E2E8F0" StrokeThickness="1" Padding="16">
+                    <Border.StrokeShape><RoundRectangle CornerRadius="12" /></Border.StrokeShape>
+                    <VerticalStackLayout Spacing="12">
+                        <Label Text="▼ Datos personales" FontSize="15" FontAttributes="Bold" TextColor="#173A54" />
+
+                        <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" RowSpacing="10" ColumnSpacing="12">
+                            <!-- Identificación -->
+                            <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="2">
+                                <Label Text="Identificación" FontSize="11" TextColor="#94A3B8" />
+                                <Label Text="{Binding Colaborador.NumeroIdentificacion}" FontSize="13" TextColor="#334155" />
+                            </VerticalStackLayout>
+
+                            <!-- Fecha de nacimiento -->
+                            <VerticalStackLayout Grid.Row="0" Grid.Column="1" Spacing="2">
+                                <Label Text="Fecha de nacimiento" FontSize="11" TextColor="#94A3B8" />
+                                <Label Text="{Binding Colaborador.FechaNacimiento}" FontSize="13" TextColor="#334155" />
+                            </VerticalStackLayout>
+
+                            <!-- Género -->
+                            <VerticalStackLayout Grid.Row="1" Grid.Column="0" Spacing="2">
+                                <Label Text="Género" FontSize="11" TextColor="#94A3B8" />
+                                <Label Text="{Binding Colaborador.Genero}" FontSize="13" TextColor="#334155" />
+                            </VerticalStackLayout>
+
+                            <!-- Nacionalidad -->
+                            <VerticalStackLayout Grid.Row="1" Grid.Column="1" Spacing="2">
+                                <Label Text="Nacionalidad" FontSize="11" TextColor="#94A3B8" />
+                                <Label Text="{Binding Colaborador.Nacionalidad}" FontSize="13" TextColor="#334155" />
+                            </VerticalStackLayout>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- CARD: DATOS DE CONTACTO -->
+                <Border BackgroundColor="White" Stroke="#E2E8F0" StrokeThickness="1" Padding="16">
+                    <Border.StrokeShape><RoundRectangle CornerRadius="12" /></Border.StrokeShape>
+                    <VerticalStackLayout Spacing="12">
+                        <Label Text="▼ Datos de contacto" FontSize="15" FontAttributes="Bold" TextColor="#173A54" />
+
+                        <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" RowSpacing="10" ColumnSpacing="12">
+                            <!-- Correo electrónico -->
+                            <VerticalStackLayout Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Spacing="2">
+                                <Label Text="Correo electrónico" FontSize="11" TextColor="#94A3B8" />
+                                <Label Text="{Binding Colaborador.Email}" FontSize="13" TextColor="#334155" />
+                            </VerticalStackLayout>
+
+                            <!-- Teléfono -->
+                            <VerticalStackLayout Grid.Row="1" Grid.Column="0" Spacing="2">
+                                <Label Text="Teléfono" FontSize="11" TextColor="#94A3B8" />
+                                <Label Text="{Binding Colaborador.Telefono}" FontSize="13" TextColor="#334155" />
+                            </VerticalStackLayout>
+
+                            <!-- Dirección -->
+                            <VerticalStackLayout Grid.Row="1" Grid.Column="1" Spacing="2">
+                                <Label Text="Dirección" FontSize="11" TextColor="#94A3B8" />
+                                <Label Text="{Binding Colaborador.Direccion}" FontSize="13" TextColor="#334155" />
+                            </VerticalStackLayout>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- CARD: PROYECTOS ASIGNADOS -->
+                <Border BackgroundColor="White" Stroke="#E2E8F0" StrokeThickness="1" Padding="16">
+                    <Border.StrokeShape><RoundRectangle CornerRadius="12" /></Border.StrokeShape>
+                    <VerticalStackLayout Spacing="12">
+                        <HorizontalStackLayout Spacing="8">
+                            <Label Text="▼ Proyectos asignados" FontSize="15" FontAttributes="Bold" TextColor="#173A54" />
+                            <Border BackgroundColor="#F1F5F9" Stroke="Transparent" Padding="8,2">
+                                <Border.StrokeShape><RoundRectangle CornerRadius="6" /></Border.StrokeShape>
+                                <Label Text="{Binding Colaborador.Proyectos.Count}" FontSize="11" FontAttributes="Bold" TextColor="#173A54" />
+                            </Border>
+                        </HorizontalStackLayout>
+
+                        <!-- LISTA DE PROYECTOS -->
+                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding Colaborador.Proyectos}" Spacing="8">
+                            <BindableLayout.EmptyViewTemplate>
+                                <DataTemplate>
+                                    <Label Text="No tiene proyectos asignados actualmente." FontSize="12" TextColor="#94A3B8" Margin="0,4" />
+                                </DataTemplate>
+                            </BindableLayout.EmptyViewTemplate>
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="model:ProyectoColaboradorModel">
+                                    <Border BackgroundColor="#F8FAFC" Stroke="#E2E8F0" StrokeThickness="1" Padding="12">
+                                        <Border.StrokeShape><RoundRectangle CornerRadius="8" /></Border.StrokeShape>
+                                        <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" RowSpacing="2">
+                                            <Label Grid.Row="0" Grid.Column="0" Text="{Binding Nombre}" FontSize="13" FontAttributes="Bold" TextColor="#173A54" />
+                                            <Label Grid.Row="1" Grid.Column="0" Text="{Binding Cliente}" FontSize="11" TextColor="#64748B" />
+                                            <Border Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" BackgroundColor="{Binding ColorFondoEstado}" Stroke="Transparent" Padding="6,2" VerticalOptions="Center">
+                                                <Border.StrokeShape><RoundRectangle CornerRadius="6" /></Border.StrokeShape>
+                                                <Label Text="{Binding Estado}" FontSize="10" FontAttributes="Bold" TextColor="{Binding ColorEstado}" />
+                                            </Border>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- BOTONES DE ACCIÓN AL PIE -->
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="12" Margin="0,8,0,24">
+                    <!-- EDITAR (Siempre visible) -->
+                    <Button
+                        Grid.Column="0"
+                        Text="Editar"
+                        Command="{Binding EditarCommand}"
+                        BackgroundColor="#7486AD"
+                        TextColor="White"
+                        CornerRadius="8"
+                        HeightRequest="48"
+                        FontSize="14"
+                        FontAttributes="Bold" />
+
+                    <!-- REGISTRAR SALIDA (Solo si está ACTIVO) -->
+                    <Button
+                        Grid.Column="1"
+                        Text="Registrar Salida"
+                        Command="{Binding RegistrarSalidaCommand}"
+                        IsVisible="{Binding EsActivo}"
+                        BackgroundColor="#E53935"
+                        TextColor="White"
+                        CornerRadius="8"
+                        HeightRequest="48"
+                        FontSize="14"
+                        FontAttributes="Bold" />
+
+                    <!-- ACTIVAR (Solo si está INACTIVO) -->
+                    <Button
+                        Grid.Column="1"
+                        Text="Activar"
+                        Command="{Binding ActivarCommand}"
+                        IsVisible="{Binding EsInactivo}"
+                        BackgroundColor="#43A047"
+                        TextColor="White"
+                        CornerRadius="8"
+                        HeightRequest="48"
+                        FontSize="14"
+                        FontAttributes="Bold" />
+                </Grid>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- LOADING -->
+        <ActivityIndicator
+            IsVisible="{Binding IsBusy}"
+            IsRunning="{Binding IsBusy}"
+            Color="#173A54"
+            HorizontalOptions="Center"
+            VerticalOptions="Center" />
+
+        <!-- ERROR -->
+        <VerticalStackLayout
+            IsVisible="{Binding ErrorMessage, Converter={StaticResource IsStringNotNullOrEmptyConverter}}"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            Spacing="16"
+            Padding="32">
+            <Label Text="{Binding ErrorMessage}" TextColor="#E53935" FontSize="14" HorizontalTextAlignment="Center" />
+            <Button Text="Regresar" Command="{Binding RegresarCommand}" BackgroundColor="#173A54" TextColor="White" CornerRadius="8" />
+        </VerticalStackLayout>
+    </Grid>
+
+</ContentPage>
