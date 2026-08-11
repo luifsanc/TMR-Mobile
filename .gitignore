@@ -8,6 +8,20 @@
 *.userosscache
 *.sln.docstates
 
+# .NET
+bin/
+obj/
+
+# Visual Studio
+.vs/
+
+# Rider
+.idea/
+
+# User-specific files
+*.user
+*.suo
+
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
