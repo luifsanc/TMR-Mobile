@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:tmr_mobile.ViewModels"
@@ -7,8 +7,8 @@
              Title="{Binding Title}">
 
     <VerticalStackLayout Spacing="16" Padding="20">
-        <Label Text="Catálogos del Sistema" FontAttributes="Bold" FontSize="18" />
-        <Label Text="Gestión de maestras y catálogos generales." TextColor="#64748B" FontSize="14" />
+        <Label Text="CatÃ¡logos del Sistema" FontAttributes="Bold" FontSize="18" />
+        <Label Text="GestiÃ³n de maestras y catÃ¡logos generales." TextColor="#64748B" FontSize="14" />
     </VerticalStackLayout>
 
 </ContentPage>

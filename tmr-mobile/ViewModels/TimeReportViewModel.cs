@@ -118,12 +118,12 @@ public partial class TimeReportViewModel : BaseViewModel
             
             if (result != null)
             {
-                await Shell.Current.DisplayAlert("Éxito", $"Registro '{result.Nombre}' (ID: {result.Id}) creado en el servidor DEV.", "OK");
+                await Shell.Current.DisplayAlertAsync("Éxito", $"Registro '{result.Nombre}' (ID: {result.Id}) creado en el servidor DEV.", "OK");
             }
         }
         catch (Exception ex)
         {
-            await Shell.Current.DisplayAlert("Error", $"No se pudo crear el registro: {ex.Message}", "OK");
+            await Shell.Current.DisplayAlertAsync("Error", $"No se pudo crear el registro: {ex.Message}", "OK");
         }
         finally
         {

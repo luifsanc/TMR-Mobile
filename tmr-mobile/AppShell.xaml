@@ -4,79 +4,29 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:auth="clr-namespace:tmr_mobile.Views.Auth"
+    xmlns:home="clr-namespace:tmr_mobile.Views.Home"
     xmlns:dash="clr-namespace:tmr_mobile.Views.Dashboard"
-    xmlns:time="clr-namespace:tmr_mobile.Views.TimeReport"
-    xmlns:ops="clr-namespace:tmr_mobile.Views.Operaciones"
-    xmlns:rep="clr-namespace:tmr_mobile.Views.Reportes"
-    xmlns:cfg="clr-namespace:tmr_mobile.Views.Configuracion"
+    xmlns:shared="clr-namespace:tmr_mobile.Views.Shared"
     Title="TMR Móvil"
-    FlyoutHeaderBehavior="CollapseOnScroll">
+    FlyoutBehavior="Disabled">
 
-    <Shell.FlyoutHeader>
-        <Grid BackgroundColor="#1E293B" HeightRequest="140" Padding="20">
-            <VerticalStackLayout VerticalOptions="End">
-                <Label Text="TMR Móvil" FontSize="22" FontAttributes="Bold" TextColor="White" />
-                <Label Text="Gestión de Tiempos y Recursos" FontSize="12" TextColor="#94A3B8" />
-            </VerticalStackLayout>
-        </Grid>
-    </Shell.FlyoutHeader>
+    <Shell.Resources>
+        <ResourceDictionary>
+            <Style TargetType="ContentPage">
+                <Setter Property="Shell.NavBarIsVisible" Value="False" />
+            </Style>
+        </ResourceDictionary>
+    </Shell.Resources>
 
-    <!-- Ruta de Autenticación fuera del Flyout/TabBar -->
-    <ShellItem Route="LoginPage" FlyoutItemIsVisible="False">
+    <!-- Ruta de Autenticación -->
+    <ShellItem Route="LoginPage">
         <ShellContent ContentTemplate="{DataTemplate auth:LoginPage}" />
     </ShellItem>
 
-    <!-- Estructura Principal de Menú y Navegación (Coincidiendo con Angular Routes) -->
-    <FlyoutItem Title="Dashboard" Icon="dotnet_bot.png" Route="DashboardPage">
-        <ShellContent ContentTemplate="{DataTemplate dash:DashboardPage}" />
-    </FlyoutItem>
+    <!-- Dashboard original -->
+    <ShellContent Route="dashboard" ContentTemplate="{DataTemplate dash:DashboardPage}" />
 
-    <FlyoutItem Title="Time Report" Icon="dotnet_bot.png">
-        <Tab Title="Mis Actividades">
-            <ShellContent ContentTemplate="{DataTemplate time:TimeReportPage}" Route="TimeReportPage" />
-        </Tab>
-        <Tab Title="Carga Masiva">
-            <ShellContent ContentTemplate="{DataTemplate time:CargaActividadesPage}" Route="CargaActividadesPage" />
-        </Tab>
-    </FlyoutItem>
-
-    <FlyoutItem Title="Operaciones" Icon="dotnet_bot.png">
-        <Tab Title="Proyectos">
-            <ShellContent ContentTemplate="{DataTemplate ops:ProyectosPage}" Route="ProyectosPage" />
-        </Tab>
-        <Tab Title="Colaboradores">
-            <ShellContent ContentTemplate="{DataTemplate ops:ColaboradoresPage}" Route="ColaboradoresPage" />
-        </Tab>
-        <Tab Title="Clientes">
-            <ShellContent ContentTemplate="{DataTemplate ops:ClientesPage}" Route="ClientesPage" />
-        </Tab>
-        <Tab Title="Líderes">
-            <ShellContent ContentTemplate="{DataTemplate ops:LideresPage}" Route="LideresPage" />
-        </Tab>
-    </FlyoutItem>
-
-    <FlyoutItem Title="Reportes" Icon="dotnet_bot.png">
-        <Tab Title="Horas">
-            <ShellContent ContentTemplate="{DataTemplate rep:ReporteHorasPage}" Route="ReporteHorasPage" />
-        </Tab>
-        <Tab Title="Fechas">
-            <ShellContent ContentTemplate="{DataTemplate rep:ReporteFechasPage}" Route="ReporteFechasPage" />
-        </Tab>
-    </FlyoutItem>
-
-    <FlyoutItem Title="Configuración" Icon="dotnet_bot.png">
-        <Tab Title="Usuarios">
-            <ShellContent ContentTemplate="{DataTemplate cfg:UsuariosPage}" Route="UsuariosPage" />
-        </Tab>
-        <Tab Title="Roles">
-            <ShellContent ContentTemplate="{DataTemplate cfg:RolesPage}" Route="RolesPage" />
-        </Tab>
-        <Tab Title="Feriados">
-            <ShellContent ContentTemplate="{DataTemplate cfg:FeriadosPage}" Route="FeriadosPage" />
-        </Tab>
-        <Tab Title="Catálogos">
-            <ShellContent ContentTemplate="{DataTemplate cfg:CatalogosPage}" Route="CatalogosPage" />
-        </Tab>
-    </FlyoutItem>
-
+    <!-- Home Principal (el Grid 2x4) -->
+    <ShellContent Route="home" ContentTemplate="{DataTemplate home:HomePage}" />
+    
 </Shell>

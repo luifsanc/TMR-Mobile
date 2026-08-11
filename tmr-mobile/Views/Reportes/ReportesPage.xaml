@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:tmr_mobile.ViewModels"
+             x:Class="tmr_mobile.Views.Reportes.ReportesPage"
+             x:DataType="vm:ReportesViewModel"
+             Title="Reportes">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="icon_home.png" Text="Inicio" Clicked="OnHomeClicked" />
+    </ContentPage.ToolbarItems>
+
+    <VerticalStackLayout Padding="20">
+        <Label Text="Pantalla de Reportes"
+               FontSize="24"
+               HorizontalOptions="Center" />
+    </VerticalStackLayout>
+</ContentPage>

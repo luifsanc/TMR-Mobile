@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="tmr_mobile.Views.Shared.TopNavBar">
+
+    <Grid>
+        <!-- Dropdown Menu Overlay -->
+        <Border x:Name="DropdownMenu" 
+                IsVisible="False" 
+                BackgroundColor="White" 
+                Stroke="#E4E7EC"
+                StrokeThickness="1"
+                StrokeShape="RoundRectangle 8"
+                Padding="0"
+                WidthRequest="250"
+                HorizontalOptions="End"
+                VerticalOptions="Start"
+                Margin="0,60,10,0"
+                ZIndex="20">
+            
+            <VerticalStackLayout Spacing="0">
+                <!-- Proyectos -->
+                <Grid Padding="15" ColumnDefinitions="40,*" BackgroundColor="Transparent">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnNavigate" CommandParameter="proyectos" />
+                    </Grid.GestureRecognizers>
+                    <Image Grid.Column="0" Source="icon_proyectos.png" WidthRequest="24" HeightRequest="24" />
+                    <Label Grid.Column="1" Text="Proyectos" VerticalOptions="Center" TextColor="#101828" />
+                </Grid>
+                <BoxView HeightRequest="1" Color="#F5F6FA" />
+                
+                <!-- Time Report -->
+                <Grid Padding="15" ColumnDefinitions="40,*" BackgroundColor="Transparent">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnNavigate" CommandParameter="timereport" />
+                    </Grid.GestureRecognizers>
+                    <Image Grid.Column="0" Source="icon_timereport.png" WidthRequest="24" HeightRequest="24" />
+                    <Label Grid.Column="1" Text="Time Report" VerticalOptions="Center" TextColor="#101828" />
+                </Grid>
+                <BoxView HeightRequest="1" Color="#F5F6FA" />
+
+                <!-- Carga Actividades -->
+                <Grid Padding="15" ColumnDefinitions="40,*" BackgroundColor="Transparent">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnNavigate" CommandParameter="carga" />
+                    </Grid.GestureRecognizers>
+                    <Image Grid.Column="0" Source="icon_carga.png" WidthRequest="24" HeightRequest="24" />
+                    <Label Grid.Column="1" Text="Carga Actividades" VerticalOptions="Center" TextColor="#101828" />
+                </Grid>
+                <BoxView HeightRequest="1" Color="#F5F6FA" />
+
+                <!-- Reportes -->
+                <Grid Padding="15" ColumnDefinitions="40,*" BackgroundColor="Transparent">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnNavigate" CommandParameter="reportes" />
+                    </Grid.GestureRecognizers>
+                    <Image Grid.Column="0" Source="icon_reportes.png" WidthRequest="24" HeightRequest="24" />
+                    <Label Grid.Column="1" Text="Reportes" VerticalOptions="Center" TextColor="#101828" />
+                </Grid>
+                <BoxView HeightRequest="1" Color="#F5F6FA" />
+
+                <!-- Líderes -->
+                <Grid Padding="15" ColumnDefinitions="40,*" BackgroundColor="Transparent">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnNavigate" CommandParameter="lideres" />
+                    </Grid.GestureRecognizers>
+                    <Image Grid.Column="0" Source="icon_lideres.png" WidthRequest="24" HeightRequest="24" />
+                    <Label Grid.Column="1" Text="Líderes" VerticalOptions="Center" TextColor="#101828" />
+                </Grid>
+                <BoxView HeightRequest="1" Color="#F5F6FA" />
+
+                <!-- Colaboradores -->
+                <Grid Padding="15" ColumnDefinitions="40,*" BackgroundColor="Transparent">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnNavigate" CommandParameter="colaboradores" />
+                    </Grid.GestureRecognizers>
+                    <Image Grid.Column="0" Source="icon_colaboradores.png" WidthRequest="24" HeightRequest="24" />
+                    <Label Grid.Column="1" Text="Colaboradores" VerticalOptions="Center" TextColor="#101828" />
+                </Grid>
+                <BoxView HeightRequest="1" Color="#F5F6FA" />
+
+                <!-- Clientes -->
+                <Grid Padding="15" ColumnDefinitions="40,*" BackgroundColor="Transparent">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnNavigate" CommandParameter="clientes" />
+                    </Grid.GestureRecognizers>
+                    <Image Grid.Column="0" Source="icon_clientes.png" WidthRequest="24" HeightRequest="24" />
+                    <Label Grid.Column="1" Text="Clientes" VerticalOptions="Center" TextColor="#101828" />
+                </Grid>
+            </VerticalStackLayout>
+        </Border>
+
+        <!-- Main Top Bar -->
+        <Grid BackgroundColor="White" 
+              HeightRequest="60" 
+              VerticalOptions="Start"
+              ColumnDefinitions="60,*,60"
+              ZIndex="10">
+              
+            <!-- Columna 1: Casita (Dashboard) -->
+            <ImageButton Grid.Column="0" Source="icon_home.png" WidthRequest="24" HeightRequest="24" HorizontalOptions="Center" VerticalOptions="Center" Clicked="OnHomeClicked"/>
+
+            <!-- Columna 2: Logo y Texto -->
+            <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" Spacing="2">
+                <Image Source="logo_empresa.png" HeightRequest="20" HorizontalOptions="Center" />
+                <Label Text="INTEGRITY SOLUTIONS" FontSize="14" FontAttributes="Bold" TextColor="#101828" HorizontalOptions="Center" />
+            </VerticalStackLayout>
+            <Label Grid.Column="1" Text="12:03" FontSize="12" TextColor="#667085" HorizontalOptions="End" VerticalOptions="Center" Margin="0,0,10,0"/>
+
+            <!-- Columna 3: Boton menu -->
+            <ImageButton Grid.Column="2" Source="icon_menu.png" WidthRequest="24" HeightRequest="24" HorizontalOptions="Center" VerticalOptions="Center" Clicked="OnMenuClicked"/>
+        </Grid>
+    </Grid>
+</ContentView>

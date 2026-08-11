@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:tmr_mobile.ViewModels"
@@ -18,7 +18,7 @@
                HorizontalOptions="Center"
                HorizontalTextAlignment="Center" />
 
-        <Button Text="📁 Seleccionar Archivo Excel"
+        <Button Text="ðŸ“ Seleccionar Archivo Excel"
                 Command="{Binding SeleccionarArchivoCommand}"
                 BackgroundColor="#0284C7"
                 TextColor="White"
