@@ -35,6 +35,16 @@ public static class MauiProgram
                     "OpenSans-Semibold.ttf",
                     "OpenSansSemibold"
                 );
+
+                fonts.AddFont(
+                    "Inter-Regular.ttf",
+                    "InterRegular"
+                );
+
+                fonts.AddFont(
+                    "Inter-SemiBold.ttf",
+                    "InterSemiBold"
+                );
             });
 
         // ─────────────────────────────────────────────────────────────

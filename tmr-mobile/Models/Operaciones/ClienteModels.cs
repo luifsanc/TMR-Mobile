@@ -13,8 +13,22 @@ public class ClienteModel
     public bool Activo { get; set; }
 
     public string EstadoTexto => Activo ? "Activo" : "Inactivo";
-    public string ColorEstado => Activo ? "#43A047" : "#E53935";
-    public string ColorFondoEstado => Activo ? "#E8F5E9" : "#FFEBEE";
+    public string ColorEstado => Activo ? "#16A34A" : "#6B7280";
+    public string ColorFondoEstado => Activo ? "#E6FDEE" : "#F3F4F6";
+
+    public string Iniciales
+    {
+        get
+        {
+            if (string.IsNullOrWhiteSpace(NombreComercial)) return "CL";
+            var parts = NombreComercial.Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            if (parts.Length >= 2)
+                return $"{parts[0][0]}{parts[1][0]}".ToUpper();
+            return parts[0].Length >= 2 ? parts[0].Substring(0, 2).ToUpper() : parts[0].ToUpper();
+        }
+    }
+
+    public string RucFormateado => string.IsNullOrWhiteSpace(NumeroIdentificacion) ? "" : $"RUC - {NumeroIdentificacion}";
 }
 
 public class ClienteDetalleModel : ClienteModel
