@@ -1,6 +1,5 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.Handlers;
-
 using tmr_mobile.Services;
 using tmr_mobile.ViewModels;
 using tmr_mobile.Views.Auth;
@@ -9,6 +8,7 @@ using tmr_mobile.Views.TimeReport;
 using tmr_mobile.Views.Operaciones;
 using tmr_mobile.Views.Reportes;
 using tmr_mobile.Views.Configuracion;
+
 
 #if ANDROID
 using Android.Content.Res;
@@ -43,6 +43,7 @@ public static class MauiProgram
 
         builder.Services.AddSingleton<ApiService>();
         builder.Services.AddSingleton<IAuthService, AuthService>();
+        builder.Services.AddSingleton<ICatalogosService, CatalogosService>();
 
 
         // ─────────────────────────────────────────────────────────────
@@ -64,6 +65,8 @@ public static class MauiProgram
         builder.Services.AddTransient<RolesConfigViewModel>();
         builder.Services.AddTransient<FeriadosConfigViewModel>();
         builder.Services.AddTransient<CatalogosConfigViewModel>();
+        builder.Services.AddTransient<CatalogoDetalleViewModel>();
+        builder.Services.AddTransient<CatalogoFormViewModel>();
 
 
         // ─────────────────────────────────────────────────────────────
@@ -86,6 +89,8 @@ public static class MauiProgram
         builder.Services.AddTransient<RolesPage>();
         builder.Services.AddTransient<FeriadosPage>();
         builder.Services.AddTransient<CatalogosPage>();
+        builder.Services.AddTransient<CatalogoDetallePage>();
+        builder.Services.AddTransient<CatalogoFormPage>();
 
 
         // ─────────────────────────────────────────────────────────────
