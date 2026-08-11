@@ -12,6 +12,6 @@ public partial class ReportesPage : ContentPage
 
     private async void OnHomeClicked(object? sender, EventArgs e)
     {
-        await Shell.Current.GoToAsync("//dashboard");
+        await Shell.Current.GoToAsync("//DashboardPage");
     }
 }

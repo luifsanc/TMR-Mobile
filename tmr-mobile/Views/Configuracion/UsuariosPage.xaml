@@ -1,14 +1,18 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<ContentPage xmlns:shared="clr-namespace:tmr_mobile.Views.Shared" xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:tmr_mobile.ViewModels"
              x:Class="tmr_mobile.Views.Configuracion.UsuariosPage"
              x:DataType="vm:UsuariosConfigViewModel"
              Title="{Binding Title}">
-
-    <VerticalStackLayout Spacing="16" Padding="20">
-        <Label Text="AdministraciÃ³n de Usuarios" FontAttributes="Bold" FontSize="18" />
-        <Label Text="GestiÃ³n de accesos y perfiles del sistema." TextColor="#64748B" FontSize="14" />
+    <Grid RowDefinitions="*,80">
+        <ContentView Grid.Row="0">
+<VerticalStackLayout Spacing="16" Padding="20">
+        <Label Text="Administración de Usuarios" FontAttributes="Bold" FontSize="18" />
+        <Label Text="Gestión de accesos y perfiles del sistema." TextColor="#64748B" FontSize="14" />
     </VerticalStackLayout>
 
+
+        </ContentView>
+        <shared:BottomNavBar Grid.Row="1" />
+    </Grid>
 </ContentPage>

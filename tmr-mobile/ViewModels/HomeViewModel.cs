@@ -21,13 +21,13 @@ public partial class HomeViewModel : ObservableObject
     {
         Modulos = new ObservableCollection<ModuloItem>
         {
-            new ModuloItem { Nombre = "Proyectos", Icono = "icon_proyectos.png", Ruta = "proyectos" },
-            new ModuloItem { Nombre = "Time Report", Icono = "icon_timereport.png", Ruta = "timereport" },
-            new ModuloItem { Nombre = "Carga Actividades", Icono = "icon_carga.png", Ruta = "carga" },
-            new ModuloItem { Nombre = "Reportes", Icono = "icon_reportes.png", Ruta = "reportes" },
-            new ModuloItem { Nombre = "Líderes", Icono = "icon_lideres.png", Ruta = "lideres" },
-            new ModuloItem { Nombre = "Colaboradores", Icono = "icon_colaboradores.png", Ruta = "colaboradores" },
-            new ModuloItem { Nombre = "Clientes", Icono = "icon_clientes.png", Ruta = "clientes" }
+            new ModuloItem { Nombre = "Proyectos", Icono = "icon_proyectos.png", Ruta = "ProyectosPage" },
+            new ModuloItem { Nombre = "Time Report", Icono = "icon_timereport.png", Ruta = "TimeReportPage" },
+            new ModuloItem { Nombre = "Carga Actividades", Icono = "icon_carga.png", Ruta = "CargaActividadesPage" },
+            new ModuloItem { Nombre = "Reportes", Icono = "icon_reportes.png", Ruta = "ReportesPage" },
+            new ModuloItem { Nombre = "Líderes", Icono = "icon_lideres.png", Ruta = "LideresPage" },
+            new ModuloItem { Nombre = "Colaboradores", Icono = "icon_colaboradores.png", Ruta = "ColaboradoresPage" },
+            new ModuloItem { Nombre = "Clientes", Icono = "icon_clientes.png", Ruta = "ClientesPage" }
         };
     }
 
@@ -36,25 +36,8 @@ public partial class HomeViewModel : ObservableObject
     {
         if (!string.IsNullOrEmpty(route))
         {
-            // The original logic in HomePage was `await Shell.Current.GoToAsync($"//{route}");` for bottom nav items (like "dashboard" or "home")
-            // But for subpages (like "proyectos"), typically `await Shell.Current.GoToAsync(route)` is used.
-            // Let's try root navigation first if it is one of the bottom tabs, else regular navigation.
-            if (route == "dashboard" || route == "home")
-            {
-                await Shell.Current.GoToAsync($"//{route}");
-            }
-            else
-            {
-                try 
-                {
-                    await Shell.Current.GoToAsync(route);
-                }
-                catch
-                {
-                    // Fallback just in case
-                    await Shell.Current.GoToAsync($"//{route}");
-                }
-            }
+            // Todos los módulos principales ahora son ShellItems raíz
+            await Shell.Current.GoToAsync($"//{route}");
         }
     }
 }

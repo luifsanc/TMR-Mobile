@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:tmr_mobile.ViewModels"
+             x:Class="tmr_mobile.Views.TimeReport.CrearActividadPage"
+             x:DataType="vm:CrearActividadViewModel"
+             Title="{Binding Title}"
+             BackgroundColor="#F8FAFC">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="16">
+            
+            <Label Text="Fecha de la actividad" FontSize="14" TextColor="#475569" FontAttributes="Bold" />
+            <DatePicker Date="{Binding FechaActividad}" BackgroundColor="White" TextColor="#0F172A" />
+
+            <Label Text="Proyecto (Opcional)" FontSize="14" TextColor="#475569" FontAttributes="Bold" />
+            <Picker ItemsSource="{Binding Proyectos}" 
+                    ItemDisplayBinding="{Binding Nombre}" 
+                    SelectedItem="{Binding ProyectoSeleccionado}" 
+                    Title="Seleccionar Proyecto"
+                    BackgroundColor="White" TextColor="#0F172A" />
+
+            <Label Text="Tipo de Actividad" FontSize="14" TextColor="#475569" FontAttributes="Bold" />
+            <Picker ItemsSource="{Binding TiposActividad}" 
+                    ItemDisplayBinding="{Binding Nombre}" 
+                    SelectedItem="{Binding TipoActividadSeleccionada}" 
+                    Title="Seleccionar Tipo de Actividad"
+                    BackgroundColor="White" TextColor="#0F172A" />
+
+            <Label Text="Horas Invertidas" FontSize="14" TextColor="#475569" FontAttributes="Bold" />
+            <Grid ColumnDefinitions="*,Auto">
+                <Slider Grid.Column="0" Minimum="0.5" Maximum="24" Value="{Binding CantidadHoras}" />
+                <Label Grid.Column="1" Text="{Binding CantidadHoras, StringFormat='{0:F2} h'}" FontSize="16" FontAttributes="Bold" VerticalOptions="Center" Margin="10,0,0,0" />
+            </Grid>
+
+            <Label Text="Descripción" FontSize="14" TextColor="#475569" FontAttributes="Bold" />
+            <Editor Text="{Binding DescripcionActividad}" Placeholder="¿Qué tarea realizaste?" HeightRequest="80" BackgroundColor="White" TextColor="#0F172A" />
+
+            <Label Text="Notas adicionales" FontSize="14" TextColor="#475569" FontAttributes="Bold" />
+            <Editor Text="{Binding Notas}" Placeholder="Comentarios opcionales" HeightRequest="60" BackgroundColor="White" TextColor="#0F172A" />
+
+            <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                <Switch IsToggled="{Binding EsBillable}" />
+                <Label Text="Es Billable" VerticalOptions="Center" TextColor="#0F172A" />
+            </HorizontalStackLayout>
+
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="16" Margin="0,20,0,0">
+                <Button Grid.Column="0" Text="Cancelar" Command="{Binding CancelarCommand}" BackgroundColor="#E2E8F0" TextColor="#475569" CornerRadius="8" />
+                <Button Grid.Column="1" Text="Guardar" Command="{Binding GuardarActividadCommand}" BackgroundColor="#2563EB" TextColor="White" CornerRadius="8" />
+            </Grid>
+            
+            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="#2563EB" HorizontalOptions="Center" Margin="0,20,0,0" />
+            
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

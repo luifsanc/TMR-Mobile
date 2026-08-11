@@ -30,7 +30,7 @@
                             <FormattedString>
                                 <Span Text="Hola, "/>
                                 <Span Text="{Binding NombreUsuario}"/>
-                                <Span Text=" ðŸ‘‹"/>
+                                <Span Text=" 👋"/>
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>

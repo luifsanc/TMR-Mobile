@@ -10,15 +10,15 @@
          <!-- Home -->
          <VerticalStackLayout Grid.Column="0" VerticalOptions="Center" HorizontalOptions="Center" Spacing="2">
              <Grid.GestureRecognizers>
-                 <TapGestureRecognizer Tapped="OnNavigate" CommandParameter="dashboard" />
+                 <TapGestureRecognizer Tapped="OnNavigate" CommandParameter="DashboardPage" />
              </Grid.GestureRecognizers>
-             <Image Source="icon_home.png" WidthRequest="24" HeightRequest="24" HorizontalOptions="Center" />
+             <Image Source="direccion.png" WidthRequest="24" HeightRequest="24" HorizontalOptions="Center" />
          </VerticalStackLayout>
          
          <!-- Profile -->
          <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Center" Spacing="2">
              <Grid.GestureRecognizers>
-                 <TapGestureRecognizer Tapped="OnNavigate" CommandParameter="colaboradores" />
+                 <TapGestureRecognizer Tapped="OnNavigate" CommandParameter="ColaboradoresPage" />
              </Grid.GestureRecognizers>
              <Image Source="avatar_icon.png" WidthRequest="24" HeightRequest="24" HorizontalOptions="Center" />
          </VerticalStackLayout>
@@ -26,7 +26,7 @@
          <!-- Center FAB -->
          <Grid Grid.Column="2" WidthRequest="70" HeightRequest="70" VerticalOptions="End" Margin="0,0,0,20">
               <Grid.GestureRecognizers>
-                  <TapGestureRecognizer Tapped="OnNavigate" CommandParameter="home" />
+                  <TapGestureRecognizer Tapped="OnNavigate" CommandParameter="HomePage" />
               </Grid.GestureRecognizers>
               <Border StrokeShape="RoundRectangle 35" BackgroundColor="White" Stroke="#EEF4FF" StrokeThickness="4" WidthRequest="70" HeightRequest="70" HorizontalOptions="Center" VerticalOptions="Center">
                    <Border StrokeShape="RoundRectangle 26" BackgroundColor="Transparent" WidthRequest="52" HeightRequest="52" HorizontalOptions="Center" VerticalOptions="Center" Stroke="Transparent">

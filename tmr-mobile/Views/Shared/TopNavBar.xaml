@@ -98,7 +98,7 @@
               ZIndex="10">
               
             <!-- Columna 1: Casita (Dashboard) -->
-            <ImageButton Grid.Column="0" Source="icon_home.png" WidthRequest="24" HeightRequest="24" HorizontalOptions="Center" VerticalOptions="Center" Clicked="OnHomeClicked"/>
+            <ImageButton Grid.Column="0" Source="direccion.png" WidthRequest="24" HeightRequest="24" HorizontalOptions="Center" VerticalOptions="Center" Clicked="OnHomeClicked"/>
 
             <!-- Columna 2: Logo y Texto -->
             <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" Spacing="2">

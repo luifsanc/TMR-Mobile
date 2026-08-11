@@ -1,13 +1,13 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<ContentPage xmlns:shared="clr-namespace:tmr_mobile.Views.Shared" xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:tmr_mobile.ViewModels"
              xmlns:dto="clr-namespace:tmr_shared.DTOs.Colaboradores;assembly=tmr-shared"
              x:Class="tmr_mobile.Views.Operaciones.ColaboradoresPage"
              x:DataType="vm:ColaboradoresViewModel"
              Title="{Binding Title}">
-
-    <CollectionView ItemsSource="{Binding Colaboradores}" Margin="16">
+    <Grid RowDefinitions="*,80">
+        <ContentView Grid.Row="0">
+<CollectionView ItemsSource="{Binding Colaboradores}" Margin="16">
         <CollectionView.ItemTemplate>
             <DataTemplate x:DataType="dto:ColaboradorListaResponse">
                 <Border Margin="0,0,0,12" Padding="16"
@@ -22,4 +22,8 @@
         </CollectionView.ItemTemplate>
     </CollectionView>
 
+
+        </ContentView>
+        <shared:BottomNavBar Grid.Row="1" />
+    </Grid>
 </ContentPage>
