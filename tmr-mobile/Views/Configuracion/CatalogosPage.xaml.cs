@@ -4,9 +4,22 @@ namespace tmr_mobile.Views.Configuracion;
 
 public partial class CatalogosPage : ContentPage
 {
-    public CatalogosPage(CatalogosConfigViewModel viewModel)
+    private readonly CatalogosConfigViewModel _viewModel;
+
+    public CatalogosPage(
+        CatalogosConfigViewModel viewModel)
     {
         InitializeComponent();
-        BindingContext = viewModel;
+
+        _viewModel = viewModel;
+
+        BindingContext = _viewModel;
+    }
+
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+
+        await _viewModel.InicializarAsync();
     }
 }

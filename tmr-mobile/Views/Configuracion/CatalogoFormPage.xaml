@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:tmr_mobile.ViewModels"
+    x:Class="tmr_mobile.Views.Configuracion.CatalogoFormPage"
+    x:DataType="vm:CatalogoFormViewModel"
+    Title="{Binding TituloFormulario}"
+    BackgroundColor="#F4F6FA">
+
+    <ScrollView>
+
+        <VerticalStackLayout
+            Padding="20"
+            Spacing="18">
+
+            <!-- REGRESAR -->
+
+            <Label
+                Text="‹ Regresar"
+                FontSize="15"
+                FontAttributes="Bold"
+                TextColor="#173A54">
+
+                <Label.GestureRecognizers>
+
+                    <TapGestureRecognizer
+                        Command="{Binding RegresarCommand}" />
+
+                </Label.GestureRecognizers>
+
+            </Label>
+
+
+            <!-- ENCABEZADO -->
+
+            <VerticalStackLayout
+                Spacing="4">
+
+                <Label
+                    Text="{Binding TituloFormulario}"
+                    FontSize="26"
+                    FontAttributes="Bold"
+                    TextColor="#173A54" />
+
+                <Label
+                    Text="{Binding NombreCatalogo}"
+                    FontSize="13"
+                    TextColor="#7486AD" />
+
+            </VerticalStackLayout>
+
+
+            <!-- FORMULARIO -->
+
+            <Border
+                BackgroundColor="White"
+                Stroke="#E1E6EC"
+                StrokeThickness="1"
+                Padding="18">
+
+                <Border.StrokeShape>
+
+                    <RoundRectangle
+                        CornerRadius="16" />
+
+                </Border.StrokeShape>
+
+                <VerticalStackLayout
+                    Spacing="16">
+
+
+                    <!-- CÓDIGO -->
+
+                    <VerticalStackLayout
+                        Spacing="6">
+
+                        <Label
+                            Text="Código"
+                            FontSize="12"
+                            TextColor="#64748B" />
+
+                        <Border
+                            BackgroundColor="#F8FAFC"
+                            Stroke="#DCE3EC"
+                            StrokeThickness="1"
+                            Padding="12,0">
+
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="9" />
+                            </Border.StrokeShape>
+
+                            <Entry
+                                Text="{Binding CodigoValor}"
+                                Placeholder="Ej: CLI"
+                                TextColor="#173A54"
+                                BackgroundColor="Transparent"
+                                CharacterSpacing="1" />
+
+                        </Border>
+
+                    </VerticalStackLayout>
+
+
+                    <!-- NOMBRE -->
+
+                    <VerticalStackLayout
+                        Spacing="6">
+
+                        <Label
+                            Text="Nombre / Valor *"
+                            FontSize="12"
+                            TextColor="#64748B" />
+
+                        <Border
+                            BackgroundColor="#F8FAFC"
+                            Stroke="#DCE3EC"
+                            StrokeThickness="1"
+                            Padding="12,0">
+
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="9" />
+                            </Border.StrokeShape>
+
+                            <Entry
+                                Text="{Binding Valor}"
+                                Placeholder="Ingrese el nombre"
+                                TextColor="#173A54"
+                                BackgroundColor="Transparent" />
+
+                        </Border>
+
+                    </VerticalStackLayout>
+
+
+                    <!-- DESCRIPCIÓN -->
+
+                    <VerticalStackLayout
+                        Spacing="6">
+
+                        <Label
+                            Text="Descripción"
+                            FontSize="12"
+                            TextColor="#64748B" />
+
+                        <Border
+                            BackgroundColor="#F8FAFC"
+                            Stroke="#DCE3EC"
+                            StrokeThickness="1"
+                            Padding="10">
+
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="9" />
+                            </Border.StrokeShape>
+
+                            <Editor
+                                Text="{Binding Descripcion}"
+                                Placeholder="Descripción del registro"
+                                AutoSize="TextChanges"
+                                MinimumHeightRequest="90"
+                                TextColor="#173A54"
+                                BackgroundColor="Transparent" />
+
+                        </Border>
+
+                    </VerticalStackLayout>
+
+
+                    <!-- ORDEN -->
+
+                    <VerticalStackLayout
+                        Spacing="6">
+
+                        <Label
+                            Text="Orden"
+                            FontSize="12"
+                            TextColor="#64748B" />
+
+                        <Border
+                            BackgroundColor="#F8FAFC"
+                            Stroke="#DCE3EC"
+                            StrokeThickness="1"
+                            Padding="12,0">
+
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="9" />
+                            </Border.StrokeShape>
+
+                            <Entry
+                                Text="{Binding OrdenTexto}"
+                                Placeholder="Ej: 1"
+                                Keyboard="Numeric"
+                                TextColor="#173A54"
+                                BackgroundColor="Transparent" />
+
+                        </Border>
+
+                    </VerticalStackLayout>
+
+
+                    <!-- VALOR EXTRA -->
+
+                    <VerticalStackLayout
+                        Spacing="6">
+
+                        <Label
+                            Text="Valor extra"
+                            FontSize="12"
+                            TextColor="#64748B" />
+
+                        <Border
+                            BackgroundColor="#F8FAFC"
+                            Stroke="#DCE3EC"
+                            StrokeThickness="1"
+                            Padding="12,0">
+
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="9" />
+                            </Border.StrokeShape>
+
+                            <Entry
+                                Text="{Binding ValorExtra}"
+                                Placeholder="Opcional"
+                                TextColor="#173A54"
+                                BackgroundColor="Transparent" />
+
+                        </Border>
+
+                    </VerticalStackLayout>
+
+
+                    <!-- ESTADO, SOLO EDICIÓN -->
+
+                    <Grid
+                        IsVisible="{Binding EsEdicion}"
+                        ColumnDefinitions="*,Auto">
+
+                        <VerticalStackLayout
+                            Grid.Column="0"
+                            Spacing="2">
+
+                            <Label
+                                Text="Estado"
+                                FontSize="13"
+                                FontAttributes="Bold"
+                                TextColor="#334155" />
+
+                            <Label
+                                Text="Activar o desactivar el registro"
+                                FontSize="11"
+                                TextColor="#94A3B8" />
+
+                        </VerticalStackLayout>
+
+                        <Switch
+                            Grid.Column="1"
+                            IsToggled="{Binding Activo}"
+                            VerticalOptions="Center" />
+
+                    </Grid>
+
+
+                    <!-- ERROR -->
+
+                    <Label
+                        Text="{Binding ErrorMessage}"
+                        TextColor="#E53935"
+                        FontSize="12" />
+
+
+                    <!-- GUARDAR -->
+
+                    <Button
+                        Text="{Binding TextoBoton}"
+                        Command="{Binding GuardarCommand}"
+                        HeightRequest="48"
+                        CornerRadius="10"
+                        BackgroundColor="#173A54"
+                        TextColor="White"
+                        FontAttributes="Bold" />
+
+                    <ActivityIndicator
+                        IsRunning="{Binding IsBusy}"
+                        IsVisible="{Binding IsBusy}"
+                        Color="#173A54" />
+
+                </VerticalStackLayout>
+
+            </Border>
+
+        </VerticalStackLayout>
+
+    </ScrollView>
+
+</ContentPage>
