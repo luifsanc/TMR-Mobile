@@ -4,6 +4,12 @@
         <name>tmr-mobile</name>
     </assembly>
     <members>
+        <member name="T:tmr_mobile.Models.Configuracion.CatalogoMaster">
+            <inheritdoc/>
+        </member>
+        <member name="P:tmr_mobile.Models.Configuracion.CatalogoMaster.IsSelected">
+            <inheritdoc/>
+        </member>
         <member name="T:tmr_mobile.Services.ApiService">
             <summary>
             Servicio centralizado para consumir el backend TMR.
@@ -40,8 +46,15 @@
         <member name="T:tmr_mobile.ViewModels.CargaActividadesViewModel">
             <inheritdoc/>
             <inheritdoc/>
+            <inheritdoc/>
         </member>
         <member name="P:tmr_mobile.ViewModels.CargaActividadesViewModel.ArchivoSeleccionado">
+            <inheritdoc/>
+        </member>
+        <member name="P:tmr_mobile.ViewModels.CargaActividadesViewModel.TieneArchivoSeleccionado">
+            <inheritdoc/>
+        </member>
+        <member name="P:tmr_mobile.ViewModels.CargaActividadesViewModel.ResultadoMensaje">
             <inheritdoc/>
         </member>
         <member name="F:tmr_mobile.ViewModels.CargaActividadesViewModel.seleccionarArchivoCommand">
@@ -49,6 +62,189 @@
         </member>
         <member name="P:tmr_mobile.ViewModels.CargaActividadesViewModel.SeleccionarArchivoCommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:tmr_mobile.ViewModels.CargaActividadesViewModel.SeleccionarArchivoAsync"/>.</summary>
+        </member>
+        <member name="F:tmr_mobile.ViewModels.CargaActividadesViewModel.procesarArchivoCommand">
+            <summary>The backing field for <see cref="P:tmr_mobile.ViewModels.CargaActividadesViewModel.ProcesarArchivoCommand"/>.</summary>
+        </member>
+        <member name="P:tmr_mobile.ViewModels.CargaActividadesViewModel.ProcesarArchivoCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:tmr_mobile.ViewModels.CargaActividadesViewModel.ProcesarArchivoAsync"/>.</summary>
+        </member>
+        <member name="T:tmr_mobile.ViewModels.CatalogoDetalleViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:tmr_mobile.ViewModels.CatalogoDetalleViewModel.Detalle">
+            <inheritdoc/>
+        </member>
+        <member name="P:tmr_mobile.ViewModels.CatalogoDetalleViewModel.Catalogo">
+            <inheritdoc/>
+        </member>
+        <member name="F:tmr_mobile.ViewModels.CatalogoDetalleViewModel.editarCommand">
+            <summary>The backing field for <see cref="P:tmr_mobile.ViewModels.CatalogoDetalleViewModel.EditarCommand"/>.</summary>
+        </member>
+        <member name="P:tmr_mobile.ViewModels.CatalogoDetalleViewModel.EditarCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:tmr_mobile.ViewModels.CatalogoDetalleViewModel.EditarAsync"/>.</summary>
+        </member>
+        <member name="F:tmr_mobile.ViewModels.CatalogoDetalleViewModel.eliminarCommand">
+            <summary>The backing field for <see cref="P:tmr_mobile.ViewModels.CatalogoDetalleViewModel.EliminarCommand"/>.</summary>
+        </member>
+        <member name="P:tmr_mobile.ViewModels.CatalogoDetalleViewModel.EliminarCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:tmr_mobile.ViewModels.CatalogoDetalleViewModel.EliminarAsync"/>.</summary>
+        </member>
+        <member name="F:tmr_mobile.ViewModels.CatalogoDetalleViewModel.regresarCommand">
+            <summary>The backing field for <see cref="P:tmr_mobile.ViewModels.CatalogoDetalleViewModel.RegresarCommand"/>.</summary>
+        </member>
+        <member name="P:tmr_mobile.ViewModels.CatalogoDetalleViewModel.RegresarCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:tmr_mobile.ViewModels.CatalogoDetalleViewModel.RegresarAsync"/>.</summary>
+        </member>
+        <member name="T:tmr_mobile.ViewModels.CatalogoFormViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:tmr_mobile.ViewModels.CatalogoFormViewModel.IdCatalogo">
+            <inheritdoc/>
+        </member>
+        <member name="P:tmr_mobile.ViewModels.CatalogoFormViewModel.IdDetalle">
+            <inheritdoc/>
+        </member>
+        <member name="P:tmr_mobile.ViewModels.CatalogoFormViewModel.NombreCatalogo">
+            <inheritdoc/>
+        </member>
+        <member name="P:tmr_mobile.ViewModels.CatalogoFormViewModel.CodigoValor">
+            <inheritdoc/>
+        </member>
+        <member name="P:tmr_mobile.ViewModels.CatalogoFormViewModel.Valor">
+            <inheritdoc/>
+        </member>
+        <member name="P:tmr_mobile.ViewModels.CatalogoFormViewModel.Descripcion">
+            <inheritdoc/>
+        </member>
+        <member name="P:tmr_mobile.ViewModels.CatalogoFormViewModel.OrdenTexto">
+            <inheritdoc/>
+        </member>
+        <member name="P:tmr_mobile.ViewModels.CatalogoFormViewModel.ValorExtra">
+            <inheritdoc/>
+        </member>
+        <member name="P:tmr_mobile.ViewModels.CatalogoFormViewModel.Activo">
+            <inheritdoc/>
+        </member>
+        <member name="P:tmr_mobile.ViewModels.CatalogoFormViewModel.EsEdicion">
+            <inheritdoc/>
+        </member>
+        <member name="F:tmr_mobile.ViewModels.CatalogoFormViewModel.guardarCommand">
+            <summary>The backing field for <see cref="P:tmr_mobile.ViewModels.CatalogoFormViewModel.GuardarCommand"/>.</summary>
+        </member>
+        <member name="P:tmr_mobile.ViewModels.CatalogoFormViewModel.GuardarCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:tmr_mobile.ViewModels.CatalogoFormViewModel.GuardarAsync"/>.</summary>
+        </member>
+        <member name="F:tmr_mobile.ViewModels.CatalogoFormViewModel.regresarCommand">
+            <summary>The backing field for <see cref="P:tmr_mobile.ViewModels.CatalogoFormViewModel.RegresarCommand"/>.</summary>
+        </member>
+        <member name="P:tmr_mobile.ViewModels.CatalogoFormViewModel.RegresarCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:tmr_mobile.ViewModels.CatalogoFormViewModel.RegresarAsync"/>.</summary>
+        </member>
+        <member name="T:tmr_mobile.ViewModels.CatalogosConfigViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:tmr_mobile.ViewModels.CatalogosConfigViewModel.CatalogoSeleccionado">
+            <inheritdoc/>
+        </member>
+        <member name="P:tmr_mobile.ViewModels.CatalogosConfigViewModel.Busqueda">
+            <inheritdoc/>
+        </member>
+        <member name="P:tmr_mobile.ViewModels.CatalogosConfigViewModel.FiltroEstado">
+            <inheritdoc/>
+        </member>
+        <member name="P:tmr_mobile.ViewModels.CatalogosConfigViewModel.PaginaActual">
+            <inheritdoc/>
+        </member>
+        <member name="P:tmr_mobile.ViewModels.CatalogosConfigViewModel.TotalPaginas">
+            <inheritdoc/>
+        </member>
+        <member name="P:tmr_mobile.ViewModels.CatalogosConfigViewModel.TotalRegistros">
+            <inheritdoc/>
+        </member>
+        <member name="P:tmr_mobile.ViewModels.CatalogosConfigViewModel.TotalActivos">
+            <inheritdoc/>
+        </member>
+        <member name="P:tmr_mobile.ViewModels.CatalogosConfigViewModel.TotalInactivos">
+            <inheritdoc/>
+        </member>
+        <member name="M:tmr_mobile.ViewModels.CatalogosConfigViewModel.OnBusquedaChanged(System.String)">
+            <summary>Executes the logic for when <see cref="P:tmr_mobile.ViewModels.CatalogosConfigViewModel.Busqueda"/> just changed.</summary>
+            <param name="value">The new property value that was set.</param>
+            <remarks>This method is invoked right after the value of <see cref="P:tmr_mobile.ViewModels.CatalogosConfigViewModel.Busqueda"/> is changed.</remarks>
+        </member>
+        <member name="M:tmr_mobile.ViewModels.CatalogosConfigViewModel.OnFiltroEstadoChanged(System.String)">
+            <summary>Executes the logic for when <see cref="P:tmr_mobile.ViewModels.CatalogosConfigViewModel.FiltroEstado"/> just changed.</summary>
+            <param name="value">The new property value that was set.</param>
+            <remarks>This method is invoked right after the value of <see cref="P:tmr_mobile.ViewModels.CatalogosConfigViewModel.FiltroEstado"/> is changed.</remarks>
+        </member>
+        <member name="F:tmr_mobile.ViewModels.CatalogosConfigViewModel.seleccionarCatalogoCommand">
+            <summary>The backing field for <see cref="P:tmr_mobile.ViewModels.CatalogosConfigViewModel.SeleccionarCatalogoCommand"/>.</summary>
+        </member>
+        <member name="P:tmr_mobile.ViewModels.CatalogosConfigViewModel.SeleccionarCatalogoCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:tmr_mobile.ViewModels.CatalogosConfigViewModel.SeleccionarCatalogoAsync(tmr_mobile.Models.Configuracion.CatalogoMaster)"/>.</summary>
+        </member>
+        <member name="F:tmr_mobile.ViewModels.CatalogosConfigViewModel.nuevoCommand">
+            <summary>The backing field for <see cref="P:tmr_mobile.ViewModels.CatalogosConfigViewModel.NuevoCommand"/>.</summary>
+        </member>
+        <member name="P:tmr_mobile.ViewModels.CatalogosConfigViewModel.NuevoCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:tmr_mobile.ViewModels.CatalogosConfigViewModel.NuevoAsync"/>.</summary>
+        </member>
+        <member name="F:tmr_mobile.ViewModels.CatalogosConfigViewModel.mostrarTodosCommand">
+            <summary>The backing field for <see cref="P:tmr_mobile.ViewModels.CatalogosConfigViewModel.MostrarTodosCommand"/>.</summary>
+        </member>
+        <member name="P:tmr_mobile.ViewModels.CatalogosConfigViewModel.MostrarTodosCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand"/> instance wrapping <see cref="M:tmr_mobile.ViewModels.CatalogosConfigViewModel.MostrarTodos"/>.</summary>
+        </member>
+        <member name="F:tmr_mobile.ViewModels.CatalogosConfigViewModel.mostrarActivosCommand">
+            <summary>The backing field for <see cref="P:tmr_mobile.ViewModels.CatalogosConfigViewModel.MostrarActivosCommand"/>.</summary>
+        </member>
+        <member name="P:tmr_mobile.ViewModels.CatalogosConfigViewModel.MostrarActivosCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand"/> instance wrapping <see cref="M:tmr_mobile.ViewModels.CatalogosConfigViewModel.MostrarActivos"/>.</summary>
+        </member>
+        <member name="F:tmr_mobile.ViewModels.CatalogosConfigViewModel.mostrarInactivosCommand">
+            <summary>The backing field for <see cref="P:tmr_mobile.ViewModels.CatalogosConfigViewModel.MostrarInactivosCommand"/>.</summary>
+        </member>
+        <member name="P:tmr_mobile.ViewModels.CatalogosConfigViewModel.MostrarInactivosCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand"/> instance wrapping <see cref="M:tmr_mobile.ViewModels.CatalogosConfigViewModel.MostrarInactivos"/>.</summary>
+        </member>
+        <member name="F:tmr_mobile.ViewModels.CatalogosConfigViewModel.paginaAnteriorCommand">
+            <summary>The backing field for <see cref="P:tmr_mobile.ViewModels.CatalogosConfigViewModel.PaginaAnteriorCommand"/>.</summary>
+        </member>
+        <member name="P:tmr_mobile.ViewModels.CatalogosConfigViewModel.PaginaAnteriorCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand"/> instance wrapping <see cref="M:tmr_mobile.ViewModels.CatalogosConfigViewModel.PaginaAnterior"/>.</summary>
+        </member>
+        <member name="F:tmr_mobile.ViewModels.CatalogosConfigViewModel.paginaSiguienteCommand">
+            <summary>The backing field for <see cref="P:tmr_mobile.ViewModels.CatalogosConfigViewModel.PaginaSiguienteCommand"/>.</summary>
+        </member>
+        <member name="P:tmr_mobile.ViewModels.CatalogosConfigViewModel.PaginaSiguienteCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand"/> instance wrapping <see cref="M:tmr_mobile.ViewModels.CatalogosConfigViewModel.PaginaSiguiente"/>.</summary>
+        </member>
+        <member name="F:tmr_mobile.ViewModels.CatalogosConfigViewModel.irPaginaCommand">
+            <summary>The backing field for <see cref="P:tmr_mobile.ViewModels.CatalogosConfigViewModel.IrPaginaCommand"/>.</summary>
+        </member>
+        <member name="P:tmr_mobile.ViewModels.CatalogosConfigViewModel.IrPaginaCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand`1"/> instance wrapping <see cref="M:tmr_mobile.ViewModels.CatalogosConfigViewModel.IrPagina(System.Int32)"/>.</summary>
+        </member>
+        <member name="F:tmr_mobile.ViewModels.CatalogosConfigViewModel.abrirDetalleCommand">
+            <summary>The backing field for <see cref="P:tmr_mobile.ViewModels.CatalogosConfigViewModel.AbrirDetalleCommand"/>.</summary>
+        </member>
+        <member name="P:tmr_mobile.ViewModels.CatalogosConfigViewModel.AbrirDetalleCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:tmr_mobile.ViewModels.CatalogosConfigViewModel.AbrirDetalleAsync(tmr_mobile.Models.Configuracion.CatalogoDetalle)"/>.</summary>
         </member>
         <member name="T:tmr_mobile.ViewModels.ClientesViewModel">
             <inheritdoc/>
@@ -216,6 +412,9 @@
             for all properties generated with <see cref="T:CommunityToolkit.Mvvm.ComponentModel.ObservablePropertyAttribute"/>.
             </summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.IsSelected">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "IsSelected" generated properties.</summary>
+        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.IsBusy">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "IsBusy" generated properties.</summary>
         </member>
@@ -227,6 +426,72 @@
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.ArchivoSeleccionado">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "ArchivoSeleccionado" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.TieneArchivoSeleccionado">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "TieneArchivoSeleccionado" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.ResultadoMensaje">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "ResultadoMensaje" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Detalle">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Detalle" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Catalogo">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Catalogo" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.IdCatalogo">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "IdCatalogo" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.IdDetalle">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "IdDetalle" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.NombreCatalogo">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "NombreCatalogo" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.CodigoValor">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "CodigoValor" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Valor">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Valor" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Descripcion">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Descripcion" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.OrdenTexto">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "OrdenTexto" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.ValorExtra">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "ValorExtra" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Activo">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Activo" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.EsEdicion">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "EsEdicion" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.CatalogoSeleccionado">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "CatalogoSeleccionado" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Busqueda">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Busqueda" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.FiltroEstado">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "FiltroEstado" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.PaginaActual">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "PaginaActual" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.TotalPaginas">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "TotalPaginas" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.TotalRegistros">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "TotalRegistros" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.TotalActivos">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "TotalActivos" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.TotalInactivos">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "TotalInactivos" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.TotalProyectos">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "TotalProyectos" generated properties.</summary>
@@ -267,6 +532,9 @@
             for all properties generated with <see cref="T:CommunityToolkit.Mvvm.ComponentModel.ObservablePropertyAttribute"/>.
             </summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.IsSelected">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "IsSelected" generated properties.</summary>
+        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.IsBusy">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "IsBusy" generated properties.</summary>
         </member>
@@ -278,6 +546,72 @@
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.ArchivoSeleccionado">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "ArchivoSeleccionado" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.TieneArchivoSeleccionado">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "TieneArchivoSeleccionado" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.ResultadoMensaje">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "ResultadoMensaje" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Detalle">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Detalle" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Catalogo">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Catalogo" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.IdCatalogo">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "IdCatalogo" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.IdDetalle">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "IdDetalle" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.NombreCatalogo">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "NombreCatalogo" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.CodigoValor">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "CodigoValor" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Valor">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Valor" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Descripcion">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Descripcion" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.OrdenTexto">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "OrdenTexto" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.ValorExtra">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "ValorExtra" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Activo">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Activo" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.EsEdicion">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "EsEdicion" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.CatalogoSeleccionado">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "CatalogoSeleccionado" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Busqueda">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Busqueda" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.FiltroEstado">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "FiltroEstado" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.PaginaActual">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "PaginaActual" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.TotalPaginas">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "TotalPaginas" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.TotalRegistros">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "TotalRegistros" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.TotalActivos">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "TotalActivos" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.TotalInactivos">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "TotalInactivos" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.TotalProyectos">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "TotalProyectos" generated properties.</summary>
