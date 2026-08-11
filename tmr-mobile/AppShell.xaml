@@ -33,35 +33,25 @@
     
 
     <!-- Estructura Principal de Menú y Navegación (Coincidiendo con Angular Routes) -->
-    <FlyoutItem Title="Dashboard" Icon="dotnet_bot.png" Route="DashboardPage">
+    <FlyoutItem Title="Dashboard" Icon="logo_isc.png" Route="DashboardPage">
         <ShellContent ContentTemplate="{DataTemplate dash:DashboardPage}" />
     </FlyoutItem>
 
-    <FlyoutItem Title="Time Report" Icon="dotnet_bot.png">
+    <FlyoutItem Title="Proyectos" Icon="logo_isc.png">
+        <ShellContent ContentTemplate="{DataTemplate ops:ProyectosPage}" Route="ProyectosPage" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Time Report" Icon="logo_isc.png">
         <Tab Title="Mis Actividades">
             <ShellContent ContentTemplate="{DataTemplate time:TimeReportPage}" Route="TimeReportPage" />
         </Tab>
-        <Tab Title="Carga Masiva">
-            <ShellContent ContentTemplate="{DataTemplate time:CargaActividadesPage}" Route="CargaActividadesPage" />
-        </Tab>
     </FlyoutItem>
 
-    <FlyoutItem Title="Operaciones" Icon="dotnet_bot.png">
-        <Tab Title="Proyectos">
-            <ShellContent ContentTemplate="{DataTemplate ops:ProyectosPage}" Route="ProyectosPage" />
-        </Tab>
-        <Tab Title="Colaboradores">
-            <ShellContent ContentTemplate="{DataTemplate ops:ColaboradoresPage}" Route="ColaboradoresPage" />
-        </Tab>
-        <Tab Title="Clientes">
-            <ShellContent ContentTemplate="{DataTemplate ops:ClientesPage}" Route="ClientesPage" />
-        </Tab>
-        <Tab Title="Líderes">
-            <ShellContent ContentTemplate="{DataTemplate ops:LideresPage}" Route="LideresPage" />
-        </Tab>
+    <FlyoutItem Title="Carga de Actividades" Icon="logo_isc.png">
+        <ShellContent ContentTemplate="{DataTemplate time:CargaActividadesPage}" Route="CargaActividadesPage" />
     </FlyoutItem>
 
-    <FlyoutItem Title="Reportes" Icon="dotnet_bot.png">
+    <FlyoutItem Title="Reportes" Icon="logo_isc.png">
         <Tab Title="Horas">
             <ShellContent ContentTemplate="{DataTemplate rep:ReporteHorasPage}" Route="ReporteHorasPage" />
         </Tab>
@@ -70,7 +60,19 @@
         </Tab>
     </FlyoutItem>
 
-    <FlyoutItem Title="Configuración" Icon="dotnet_bot.png">
+    <FlyoutItem Title="Líderes" Icon="logo_isc.png">
+        <ShellContent ContentTemplate="{DataTemplate ops:LideresPage}" Route="LideresPage" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Colaboradores" Icon="logo_isc.png">
+        <ShellContent ContentTemplate="{DataTemplate ops:ColaboradoresPage}" Route="ColaboradoresPage" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Clientes" Icon="logo_isc.png">
+        <ShellContent ContentTemplate="{DataTemplate ops:ClientesPage}" Route="ClientesPage" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Configuración" Icon="logo_isc.png">
         <Tab Title="Usuarios">
             <ShellContent ContentTemplate="{DataTemplate cfg:UsuariosPage}" Route="UsuariosPage" />
         </Tab>
