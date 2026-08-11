@@ -14,4 +14,9 @@ public partial class BaseViewModel : ObservableObject
     public partial string ErrorMessage { get; set; } = string.Empty;
 
     public bool IsNotBusy => !IsBusy;
+
+    partial void OnIsBusyChanged(bool value)
+    {
+        OnPropertyChanged(nameof(IsNotBusy));
+    }
 }
