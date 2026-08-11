@@ -8,7 +8,6 @@
 *.userosscache
 *.sln.docstates
 
-
 # .NET
 bin/
 obj/
