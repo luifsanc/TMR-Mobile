@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:tmr_mobile.ViewModels"
+             xmlns:shared="clr-namespace:tmr_mobile.Views.Shared"
+             x:Class="tmr_mobile.Views.Auth.ProfilePage"
+             x:DataType="vm:ProfileViewModel"
+             BackgroundColor="#F4F6FA"
+             Title="{Binding Title}">
+
+    <Grid RowDefinitions="*,80">
+        <!-- Main Content -->
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout Padding="24,60,24,24">
+                
+                <!-- White Profile Card -->
+                <Border BackgroundColor="White"
+                        StrokeThickness="0"
+                        StrokeShape="RoundRectangle 24"
+                        Padding="24,40,24,40">
+                    <Border.Shadow>
+                        <Shadow Brush="#000000" Opacity="0.05" Radius="15" Offset="0,4" />
+                    </Border.Shadow>
+
+                    <VerticalStackLayout>
+                        
+                        <!-- User Name -->
+                        <Label Text="{Binding UserName}"
+                               FontSize="28"
+                               FontAttributes="Bold"
+                               TextColor="#101828"
+                               HorizontalOptions="Center"
+                               Margin="0,0,0,4"/>
+                        
+                        <!-- User Email -->
+                        <Label Text="{Binding Email}"
+                               FontSize="18"
+                               TextColor="#667085"
+                               HorizontalOptions="Center"
+                               Margin="0,0,0,48"/>
+                        
+                        <!-- Change Password Option -->
+                        <Border BackgroundColor="#F9FAFB"
+                                Stroke="#EAECF0"
+                                StrokeThickness="1"
+                                StrokeShape="RoundRectangle 12"
+                                Padding="16,16"
+                                Margin="0,0,0,16">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ChangePasswordCommand}" />
+                            </Border.GestureRecognizers>
+                            <Grid ColumnDefinitions="Auto, *, Auto">
+                                <Image Grid.Column="0" Source="key_icon.png" WidthRequest="22" HeightRequest="22" VerticalOptions="Center" />
+                                <Label Grid.Column="1" Text="Cambiar Contraseña" TextColor="#101828" FontSize="15" FontAttributes="Bold" VerticalOptions="Center" Margin="14,0,0,0" />
+                                <Label Grid.Column="2" Text="›" TextColor="#98A2B3" FontSize="26" FontFamily="Inter" VerticalOptions="Center" />
+                            </Grid>
+                        </Border>
+
+                        <!-- Logout Option -->
+                        <Border BackgroundColor="#F9FAFB"
+                                Stroke="#EAECF0"
+                                StrokeThickness="1"
+                                StrokeShape="RoundRectangle 12"
+                                Padding="16,16">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding LogoutCommand}" />
+                            </Border.GestureRecognizers>
+                            <Grid ColumnDefinitions="Auto, *, Auto">
+                                <Image Grid.Column="0" Source="logout_icon.png" WidthRequest="22" HeightRequest="22" VerticalOptions="Center" />
+                                <Label Grid.Column="1" Text="Cerrar Sesion" TextColor="#101828" FontSize="15" FontAttributes="Bold" VerticalOptions="Center" Margin="14,0,0,0" />
+                                <Label Grid.Column="2" Text="›" TextColor="#98A2B3" FontSize="26" FontFamily="Inter" VerticalOptions="Center" />
+                            </Grid>
+                        </Border>
+                        
+                    </VerticalStackLayout>
+                </Border>
+                
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Bottom Navigation Bar -->
+        <shared:BottomNavBar Grid.Row="1" />
+    </Grid>
+</ContentPage>

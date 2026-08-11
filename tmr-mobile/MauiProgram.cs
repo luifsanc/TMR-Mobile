@@ -75,6 +75,7 @@ public static class MauiProgram
         builder.Services.AddTransient<HomeViewModel>();
         builder.Services.AddTransient<NoticiasViewModel>();
         builder.Services.AddTransient<ReportesViewModel>();
+        builder.Services.AddTransient<ProfileViewModel>();
 
 
         // ─────────────────────────────────────────────────────────────
@@ -104,6 +105,7 @@ public static class MauiProgram
         builder.Services.AddTransient<NoticiasPage>();
         builder.Services.AddTransient<HomePage>();
         builder.Services.AddTransient<ReportesPage>();
+        builder.Services.AddTransient<ProfilePage>();
 
 
         // ─────────────────────────────────────────────────────────────

@@ -18,9 +18,9 @@
          <!-- Profile -->
          <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Center" Spacing="2">
              <Grid.GestureRecognizers>
-                 <TapGestureRecognizer Tapped="OnNavigate" CommandParameter="ColaboradoresPage" />
+                 <TapGestureRecognizer Tapped="OnNavigate" CommandParameter="ProfilePage" />
              </Grid.GestureRecognizers>
-             <Image Source="avatar_icon.png" WidthRequest="24" HeightRequest="24" HorizontalOptions="Center" />
+             <Image Source="user_profile.png" WidthRequest="24" HeightRequest="24" HorizontalOptions="Center" />
          </VerticalStackLayout>
          
          <!-- Center FAB -->
@@ -37,12 +37,12 @@
 
          <!-- Notifications -->
          <VerticalStackLayout Grid.Column="3" VerticalOptions="Center" HorizontalOptions="Center" Spacing="2">
-             <Image Source="bell_icon.png" WidthRequest="24" HeightRequest="24" HorizontalOptions="Center" />
+             <Image Source="notification_bell_alarm.png" WidthRequest="24" HeightRequest="24" HorizontalOptions="Center" />
          </VerticalStackLayout>
          
          <!-- Settings -->
          <VerticalStackLayout Grid.Column="4" VerticalOptions="Center" HorizontalOptions="Center" Spacing="2">
-             <Image Source="menu_icon.png" WidthRequest="24" HeightRequest="24" HorizontalOptions="Center" />
+             <Image Source="configura.png" WidthRequest="24" HeightRequest="24" HorizontalOptions="Center" />
          </VerticalStackLayout>
     </Grid>
 </ContentView>

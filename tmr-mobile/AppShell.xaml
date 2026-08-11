@@ -60,6 +60,10 @@
         <ShellContent ContentTemplate="{DataTemplate ops:ColaboradoresPage}" />
     </ShellItem>
 
+    <ShellItem Route="ProfilePage" Shell.TabBarIsVisible="False">
+        <ShellContent ContentTemplate="{DataTemplate auth:ProfilePage}" />
+    </ShellItem>
+
     <ShellItem Route="ClientesPage" Shell.TabBarIsVisible="False">
         <ShellContent ContentTemplate="{DataTemplate ops:ClientesPage}" />
     </ShellItem>
