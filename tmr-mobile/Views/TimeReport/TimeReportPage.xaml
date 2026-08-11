@@ -2,36 +2,193 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:tmr_mobile.ViewModels"
+             xmlns:shared="clr-namespace:tmr_mobile.Views.Shared"
              xmlns:dto="clr-namespace:tmr_shared.DTOs.TimeReport;assembly=tmr-shared"
+             xmlns:models="clr-namespace:tmr_mobile.Models"
              x:Class="tmr_mobile.Views.TimeReport.TimeReportPage"
              x:DataType="vm:TimeReportViewModel"
              Title="{Binding Title}">
 
-    <Grid RowDefinitions="Auto,*">
-        <Button Grid.Row="0"
-                Text="+ Registrar Nueva Actividad"
-                Command="{Binding NuevaActividadCommand}"
-                Margin="16,12"
-                BackgroundColor="#10B981"
-                TextColor="White"
-                CornerRadius="8" />
+    <Grid BackgroundColor="#F0F2F6">
+        <ScrollView Margin="0,60,0,80">
+            <VerticalStackLayout Padding="20,24,20,32" Spacing="24">
+                
+                <!-- Título -->
+                <Label Text="Actividades" FontAttributes="Bold" FontFamily="OpenSansSemibold" FontSize="34" TextColor="#173968" Margin="0,0,0,4" />
 
-        <CollectionView Grid.Row="1"
-                        ItemsSource="{Binding Actividades}"
-                        Margin="16,0">
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="dto:CalendarioActividadDto">
-                    <Border Margin="0,0,0,12" Padding="16"
-                            StrokeShape="RoundRectangle 10" Stroke="Transparent">
-                        <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
-                            <Label Grid.Row="0" Grid.Column="0" Text="{Binding ProyectoNombre}" FontAttributes="Bold" FontSize="16" />
-                            <Label Grid.Row="0" Grid.Column="1" Text="{Binding CantidadHoras, StringFormat='{0}h'}" FontAttributes="Bold" TextColor="#2563EB" />
-                            <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding DescripcionActividad}" TextColor="#64748B" FontSize="14" Margin="0,4,0,0" />
+                <!-- Tarjeta Resumen de Horas (2x2 Grid) -->
+                <Border StrokeShape="RoundRectangle 16" Stroke="#173968" StrokeThickness="1" BackgroundColor="White" Padding="0">
+                    <Border.Shadow>
+                        <Shadow Brush="#173968" Offset="0,4" Radius="12" Opacity="0.05" />
+                    </Border.Shadow>
+                    
+                    <Grid RowDefinitions="Auto,1,Auto" ColumnDefinitions="*,1,*">
+                        
+                        <!-- Top Left: Horas por registrar -->
+                        <Grid Grid.Row="0" Grid.Column="0" ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto" ColumnSpacing="12" Padding="16,20">
+                            <Border Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" StrokeShape="RoundRectangle 14" BackgroundColor="#DCEBFA" WidthRequest="48" HeightRequest="48" Stroke="Transparent" VerticalOptions="Center">
+                                <Image Source="icon_clock.png" WidthRequest="24" HeightRequest="24" VerticalOptions="Center" HorizontalOptions="Center" />
+                            </Border>
+                            <Label Grid.Row="0" Grid.Column="1" Text="{Binding Resumen.HorasPorRegistrar, StringFormat='{0:F2} h'}" FontAttributes="Bold" FontSize="20" TextColor="#173968" VerticalOptions="End" Margin="0,0,0,-2" />
+                            <Label Grid.Row="1" Grid.Column="1" Text="Horas por registrar" FontSize="13" TextColor="#777777" VerticalOptions="Start" LineHeight="1.1" />
                         </Grid>
-                    </Border>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-    </Grid>
+                        
+                        <!-- Vertical Divider -->
+                        <BoxView Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" WidthRequest="1" Color="#D5DCE5" Opacity="0.6" VerticalOptions="Fill" Margin="0,16" />
+                        
+                        <!-- Top Right: Horas registradas -->
+                        <Grid Grid.Row="0" Grid.Column="2" ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto" ColumnSpacing="12" Padding="16,20">
+                            <Border Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" StrokeShape="RoundRectangle 14" BackgroundColor="#D8F5DF" WidthRequest="48" HeightRequest="48" Stroke="Transparent" VerticalOptions="Center">
+                                <Image Source="icon_check_circle.png" WidthRequest="24" HeightRequest="24" VerticalOptions="Center" HorizontalOptions="Center" />
+                            </Border>
+                            <Label Grid.Row="0" Grid.Column="1" Text="{Binding Resumen.HorasRegistradas, StringFormat='{0:F2} h'}" FontAttributes="Bold" FontSize="20" TextColor="#173968" VerticalOptions="End" Margin="0,0,0,-2" />
+                            <Label Grid.Row="1" Grid.Column="1" Text="Horas registradas" FontSize="13" TextColor="#777777" VerticalOptions="Start" LineHeight="1.1" />
+                        </Grid>
 
+                        <!-- Horizontal Divider -->
+                        <BoxView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" HeightRequest="1" Color="#D5DCE5" Opacity="0.6" HorizontalOptions="Fill" Margin="16,0" />
+
+                        <!-- Bottom Left: Horas de la semana -->
+                        <Grid Grid.Row="2" Grid.Column="0" ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto" ColumnSpacing="12" Padding="16,20">
+                            <Border Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" StrokeShape="RoundRectangle 14" BackgroundColor="#E9D8FA" WidthRequest="48" HeightRequest="48" Stroke="Transparent" VerticalOptions="Center">
+                                <Image Source="icon_calendar.png" WidthRequest="24" HeightRequest="24" VerticalOptions="Center" HorizontalOptions="Center" />
+                            </Border>
+                            <Label Grid.Row="0" Grid.Column="1" Text="{Binding Resumen.HorasSemana, StringFormat='{0:F2} h'}" FontAttributes="Bold" FontSize="20" TextColor="#173968" VerticalOptions="End" Margin="0,0,0,-2" />
+                            <Label Grid.Row="1" Grid.Column="1" Text="Horas de la semana" FontSize="13" TextColor="#777777" VerticalOptions="Start" LineHeight="1.1" />
+                        </Grid>
+
+                        <!-- Bottom Right: Horas del mes -->
+                        <Grid Grid.Row="2" Grid.Column="2" ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto" ColumnSpacing="12" Padding="16,20">
+                            <Border Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" StrokeShape="RoundRectangle 14" BackgroundColor="#FFF0C2" WidthRequest="48" HeightRequest="48" Stroke="Transparent" VerticalOptions="Center">
+                                <Image Source="icon_chart.png" WidthRequest="24" HeightRequest="24" VerticalOptions="Center" HorizontalOptions="Center" />
+                            </Border>
+                            <Label Grid.Row="0" Grid.Column="1" Text="{Binding Resumen.HorasMes, StringFormat='{0:F2} h'}" FontAttributes="Bold" FontSize="20" TextColor="#173968" VerticalOptions="End" Margin="0,0,0,-2" />
+                            <Label Grid.Row="1" Grid.Column="1" Text="Horas del mes" FontSize="13" TextColor="#777777" VerticalOptions="Start" LineHeight="1.1" />
+                        </Grid>
+                    </Grid>
+                </Border>
+
+                <!-- Botón Agregar Actividad -->
+                <Button Text="＋  Agregar Actividad"
+                        Command="{Binding NuevaActividadCommand}"
+                        BackgroundColor="#4D83C7"
+                        TextColor="White"
+                        FontAttributes="Bold"
+                        FontSize="17"
+                        CornerRadius="16"
+                        HeightRequest="56"
+                        Margin="0,0,0,4" />
+
+                <!-- Tarjeta del Calendario -->
+                <Border StrokeShape="RoundRectangle 16" Stroke="Transparent" BackgroundColor="White" Padding="16,24,16,24">
+                    <Border.Shadow>
+                        <Shadow Brush="#173968" Offset="0,6" Radius="16" Opacity="0.04" />
+                    </Border.Shadow>
+                    
+                    <VerticalStackLayout Spacing="16">
+                        
+                        <!-- Cabecera < Ago > -->
+                        <Grid ColumnDefinitions="Auto,*,Auto" VerticalOptions="Center">
+                            <Button Grid.Column="0" Text="&lt;" Command="{Binding MesAnteriorCommand}" BackgroundColor="Transparent" TextColor="#173968" FontSize="20" FontAttributes="Bold" Padding="12" WidthRequest="48" HeightRequest="48" VerticalOptions="Center" />
+                            <Label Grid.Column="1" Text="{Binding FechaSeleccionada, StringFormat='{0:MMM}'}" FontSize="32" FontAttributes="Bold" TextColor="#173968" HorizontalOptions="Center" VerticalOptions="Center" TextTransform="None" Margin="0,0,0,4" />
+                            <Button Grid.Column="2" Text="&gt;" Command="{Binding MesSiguienteCommand}" BackgroundColor="Transparent" TextColor="#173968" FontSize="20" FontAttributes="Bold" Padding="12" WidthRequest="48" HeightRequest="48" VerticalOptions="Center" />
+                        </Grid>
+
+                        <!-- Subcabecera Agosto de 2026 v -->
+                        <HorizontalStackLayout HorizontalOptions="Center" Spacing="6" Margin="0,-12,0,0">
+                            <Label Text="{Binding FechaSeleccionada, StringFormat='{0:MMMM} de {0:yyyy}'}" FontSize="16" FontAttributes="Bold" TextColor="#173968" VerticalOptions="Center" />
+                            <Label Text="&#x2304;" FontSize="16" FontAttributes="Bold" TextColor="#173968" VerticalOptions="Center" Margin="0,-6,0,0" />
+                        </HorizontalStackLayout>
+                        
+                        <!-- Encabezados de Días -->
+                        <Grid ColumnDefinitions="*,*,*,*,*,*,*" Margin="0,20,0,12">
+                            <Label Grid.Column="0" Text="lun" FontSize="14" TextColor="#777777" HorizontalTextAlignment="Center" />
+                            <Label Grid.Column="1" Text="mar" FontSize="14" TextColor="#777777" HorizontalTextAlignment="Center" />
+                            <Label Grid.Column="2" Text="mié" FontSize="14" TextColor="#777777" HorizontalTextAlignment="Center" />
+                            <Label Grid.Column="3" Text="jue" FontSize="14" TextColor="#777777" HorizontalTextAlignment="Center" />
+                            <Label Grid.Column="4" Text="vie" FontSize="14" TextColor="#777777" HorizontalTextAlignment="Center" />
+                            <Label Grid.Column="5" Text="sáb" FontSize="14" TextColor="#A66F63" HorizontalTextAlignment="Center" />
+                            <Label Grid.Column="6" Text="dom" FontSize="14" TextColor="#A66F63" HorizontalTextAlignment="Center" />
+                        </Grid>
+
+                        <!-- Grid de Días -->
+                        <CollectionView ItemsSource="{Binding Days}" HeightRequest="310" SelectionMode="None">
+                            <CollectionView.ItemsLayout>
+                                <GridItemsLayout Orientation="Vertical" Span="7" VerticalItemSpacing="8" HorizontalItemSpacing="0" />
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="models:DayModel">
+                                    <Border Stroke="Transparent" 
+                                            BackgroundColor="{Binding IsSelected, Converter={x:StaticResource BoolToColorConverter}, ConverterParameter='#FFF0C2|Transparent'}"
+                                            StrokeShape="RoundRectangle 8"
+                                            HeightRequest="44" Padding="0">
+                                        <Border.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:TimeReportViewModel}}, Path=SeleccionarDiaCommand}" CommandParameter="{Binding .}" />
+                                        </Border.GestureRecognizers>
+                                        <Grid RowDefinitions="*,Auto" VerticalOptions="Center" HorizontalOptions="Center">
+                                            <Label Grid.Row="0" Text="{Binding DayNumber}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="17">
+                                                <Label.Triggers>
+                                                    <DataTrigger TargetType="Label" Binding="{Binding IsCurrentMonth}" Value="False">
+                                                        <Setter Property="TextColor" Value="#D1D5DB" />
+                                                    </DataTrigger>
+                                                    <DataTrigger TargetType="Label" Binding="{Binding IsCurrentMonth}" Value="True">
+                                                        <Setter Property="TextColor" Value="#071B3A" />
+                                                    </DataTrigger>
+                                                    <MultiTrigger TargetType="Label">
+                                                        <MultiTrigger.Conditions>
+                                                            <BindingCondition Binding="{Binding IsCurrentMonth}" Value="True" />
+                                                            <BindingCondition Binding="{Binding Date.DayOfWeek}" Value="Saturday" />
+                                                        </MultiTrigger.Conditions>
+                                                        <Setter Property="TextColor" Value="#A66F63" />
+                                                    </MultiTrigger>
+                                                    <MultiTrigger TargetType="Label">
+                                                        <MultiTrigger.Conditions>
+                                                            <BindingCondition Binding="{Binding IsCurrentMonth}" Value="True" />
+                                                            <BindingCondition Binding="{Binding Date.DayOfWeek}" Value="Sunday" />
+                                                        </MultiTrigger.Conditions>
+                                                        <Setter Property="TextColor" Value="#A66F63" />
+                                                    </MultiTrigger>
+                                                </Label.Triggers>
+                                            </Label>
+                                            <!-- Indicador de actividad -->
+                                            <Ellipse Grid.Row="1" WidthRequest="5" HeightRequest="5" Fill="#071B3A" HorizontalOptions="Center" Margin="0,3,0,0" IsVisible="{Binding HasActivities}" />
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Lista de Actividades del día -->
+                <Label Text="{Binding FechaSeleccionada, StringFormat='Actividades del {0:dd/MM/yyyy}'}" FontAttributes="Bold" FontSize="18" TextColor="#173968" Margin="0,12,0,0" />
+                
+                <Label Text="No hay actividades para este día." TextColor="#777777" HorizontalTextAlignment="Center" Margin="0,16" IsVisible="False">
+                    <Label.Triggers>
+                        <DataTrigger TargetType="Label" Binding="{Binding ActividadesDelDia.Count}" Value="0">
+                            <Setter Property="IsVisible" Value="True" />
+                        </DataTrigger>
+                    </Label.Triggers>
+                </Label>
+
+                <VerticalStackLayout BindableLayout.ItemsSource="{Binding ActividadesDelDia}" Spacing="12">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="dto:CalendarioActividadDto">
+                            <Border Padding="16" StrokeShape="RoundRectangle 12" Stroke="#D5DCE5" BackgroundColor="White">
+                                <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
+                                    <Label Grid.Row="0" Grid.Column="0" Text="{Binding ProyectoNombre}" FontAttributes="Bold" FontSize="16" TextColor="#173968" />
+                                    <Label Grid.Row="0" Grid.Column="1" Text="{Binding CantidadHoras, StringFormat='{0}h'}" FontAttributes="Bold" TextColor="#4D83C7" />
+                                    <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding DescripcionActividad}" TextColor="#777777" FontSize="14" Margin="0,4,0,0" />
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+
+            </VerticalStackLayout>
+        </ScrollView>
+        
+        <shared:TopNavBar VerticalOptions="Start" />
+        <shared:BottomNavBar VerticalOptions="End" />
+    </Grid>
 </ContentPage>
