@@ -1,3 +1,4 @@
+using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using tmr_mobile.Models;
@@ -151,7 +152,52 @@ public partial class CargaActividadesViewModel : BaseViewModel
 
         if (result != null)
         {
+            _archivoElegido = result;
             ArchivoSeleccionado = result.FileName;
+            TieneArchivoSeleccionado = true;
+            ResultadoMensaje = string.Empty;
+        }
+    }
+
+    [RelayCommand]
+    private async Task ProcesarArchivoAsync()
+    {
+        if (_archivoElegido == null) return;
+
+        IsBusy = true;
+        ResultadoMensaje = string.Empty;
+
+        try
+        {
+            using var stream = await _archivoElegido.OpenReadAsync();
+            using var memoryStream = new MemoryStream();
+            await stream.CopyToAsync(memoryStream);
+            var fileBytes = memoryStream.ToArray();
+
+            var resultado = await _cargaActividadesService.SubirExcelAsync(fileBytes, _archivoElegido.FileName);
+
+            if (resultado.IsSuccess)
+            {
+                ResultadoMensaje = $"{resultado.Message} ({resultado.RegistrosProcesados} registros procesados)";
+                ArchivoSeleccionado = "Ningún archivo seleccionado";
+                TieneArchivoSeleccionado = false;
+                _archivoElegido = null;
+                await CargarActividadesAsync();
+            }
+            else
+            {
+                ResultadoMensaje = resultado.ErroresValidacion.Count > 0
+                    ? $"{resultado.Message}: {string.Join(", ", resultado.ErroresValidacion)}"
+                    : resultado.Message;
+            }
+        }
+        catch (Exception ex)
+        {
+            ResultadoMensaje = $"Error al procesar el archivo: {ex.Message}";
+        }
+        finally
+        {
+            IsBusy = false;
         }
     }
 }
