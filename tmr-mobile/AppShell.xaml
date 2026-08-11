@@ -5,72 +5,70 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:auth="clr-namespace:tmr_mobile.Views.Auth"
     xmlns:dash="clr-namespace:tmr_mobile.Views.Dashboard"
+    xmlns:home="clr-namespace:tmr_mobile.Views.Home"
     xmlns:time="clr-namespace:tmr_mobile.Views.TimeReport"
     xmlns:ops="clr-namespace:tmr_mobile.Views.Operaciones"
     xmlns:rep="clr-namespace:tmr_mobile.Views.Reportes"
     xmlns:cfg="clr-namespace:tmr_mobile.Views.Configuracion"
     Title="TMR Móvil"
-    FlyoutHeaderBehavior="CollapseOnScroll">
+    FlyoutBehavior="Disabled">
 
-    <Shell.FlyoutHeader>
-        <Grid BackgroundColor="#1E293B" HeightRequest="140" Padding="20">
-            <VerticalStackLayout VerticalOptions="End">
-                <Label Text="TMR Móvil" FontSize="22" FontAttributes="Bold" TextColor="White" />
-                <Label Text="Gestión de Tiempos y Recursos" FontSize="12" TextColor="#94A3B8" />
-            </VerticalStackLayout>
-        </Grid>
-    </Shell.FlyoutHeader>
-
-    <!-- Ruta de Autenticación fuera del Flyout/TabBar -->
-    <ShellItem Route="LoginPage" FlyoutItemIsVisible="False">
+    <ShellItem Route="LoginPage">
         <ShellContent ContentTemplate="{DataTemplate auth:LoginPage}" />
     </ShellItem>
 
-    <ShellItem Route="ForgotPasswordPage" FlyoutItemIsVisible="False">
+    <ShellItem Route="ForgotPasswordPage">
         <ShellContent ContentTemplate="{DataTemplate auth:ForgotPasswordPage}" />
     </ShellItem>
 
-    
-
-    <!-- Estructura Principal de Menú y Navegación (Coincidiendo con Angular Routes) -->
-    <FlyoutItem Title="Dashboard" Icon="dotnet_bot.png" Route="DashboardPage">
+    <ShellItem Route="DashboardPage">
         <ShellContent ContentTemplate="{DataTemplate dash:DashboardPage}" />
-    </FlyoutItem>
+    </ShellItem>
 
-    <FlyoutItem Title="Time Report" Icon="dotnet_bot.png">
+    <ShellItem Route="HomePage">
+        <ShellContent ContentTemplate="{DataTemplate home:HomePage}" />
+    </ShellItem>
+
+    <ShellItem Route="ProyectosPage" Shell.TabBarIsVisible="False">
+        <ShellContent ContentTemplate="{DataTemplate ops:ProyectosPage}" />
+    </ShellItem>
+
+    <ShellItem Route="TimeReportPage" Shell.TabBarIsVisible="False">
         <Tab Title="Mis Actividades">
-            <ShellContent ContentTemplate="{DataTemplate time:TimeReportPage}" Route="TimeReportPage" />
+            <ShellContent ContentTemplate="{DataTemplate time:TimeReportPage}" />
         </Tab>
-        <Tab Title="Carga Masiva">
-            <ShellContent ContentTemplate="{DataTemplate time:CargaActividadesPage}" Route="CargaActividadesPage" />
-        </Tab>
-    </FlyoutItem>
+    </ShellItem>
 
-    <FlyoutItem Title="Operaciones" Icon="dotnet_bot.png">
-        <Tab Title="Proyectos">
-            <ShellContent ContentTemplate="{DataTemplate ops:ProyectosPage}" Route="ProyectosPage" />
-        </Tab>
-        <Tab Title="Colaboradores">
-            <ShellContent ContentTemplate="{DataTemplate ops:ColaboradoresPage}" Route="ColaboradoresPage" />
-        </Tab>
-        <Tab Title="Clientes">
-            <ShellContent ContentTemplate="{DataTemplate ops:ClientesPage}" Route="ClientesPage" />
-        </Tab>
-        <Tab Title="Líderes">
-            <ShellContent ContentTemplate="{DataTemplate ops:LideresPage}" Route="LideresPage" />
-        </Tab>
-    </FlyoutItem>
+    <ShellItem Route="CargaActividadesPage" Shell.TabBarIsVisible="False">
+        <ShellContent ContentTemplate="{DataTemplate time:CargaActividadesPage}" />
+    </ShellItem>
 
-    <FlyoutItem Title="Reportes" Icon="dotnet_bot.png">
+    <ShellItem Route="ReportesPage" Shell.TabBarIsVisible="False">
         <Tab Title="Horas">
             <ShellContent ContentTemplate="{DataTemplate rep:ReporteHorasPage}" Route="ReporteHorasPage" />
         </Tab>
         <Tab Title="Fechas">
             <ShellContent ContentTemplate="{DataTemplate rep:ReporteFechasPage}" Route="ReporteFechasPage" />
         </Tab>
-    </FlyoutItem>
+    </ShellItem>
 
-    <FlyoutItem Title="Configuración" Icon="dotnet_bot.png">
+    <ShellItem Route="LideresPage" Shell.TabBarIsVisible="False">
+        <ShellContent ContentTemplate="{DataTemplate ops:LideresPage}" />
+    </ShellItem>
+
+    <ShellItem Route="ColaboradoresPage" Shell.TabBarIsVisible="False">
+        <ShellContent ContentTemplate="{DataTemplate ops:ColaboradoresPage}" />
+    </ShellItem>
+
+    <ShellItem Route="ProfilePage" Shell.TabBarIsVisible="False">
+        <ShellContent ContentTemplate="{DataTemplate auth:ProfilePage}" />
+    </ShellItem>
+
+    <ShellItem Route="ClientesPage" Shell.TabBarIsVisible="False">
+        <ShellContent ContentTemplate="{DataTemplate ops:ClientesPage}" />
+    </ShellItem>
+
+    <ShellItem Route="ConfiguracionPage" Shell.TabBarIsVisible="False">
         <Tab Title="Usuarios">
             <ShellContent ContentTemplate="{DataTemplate cfg:UsuariosPage}" Route="UsuariosPage" />
         </Tab>
@@ -83,6 +81,6 @@
         <Tab Title="Catálogos">
             <ShellContent ContentTemplate="{DataTemplate cfg:CatalogosPage}" Route="CatalogosPage" />
         </Tab>
-    </FlyoutItem>
+    </ShellItem>
 
 </Shell>

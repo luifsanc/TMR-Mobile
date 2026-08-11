@@ -1,9 +1,17 @@
 namespace tmr_shared.DTOs.TimeReport;
+using System;
 
-public record CalendarioActividadDto
-{
-    public int Id { get; init; }
-    public string ProyectoNombre { get; init; } = string.Empty;
-    public string DescripcionActividad { get; init; } = string.Empty;
-    public decimal CantidadHoras { get; init; }
-}
+public record CalendarioActividadDto(
+    int Id,
+    int IdEmpleado,
+    int? IdProyecto,
+    string ProyectoNombre,
+    int IdTipoActividad,
+    string TipoActividadNombre,
+    string? CodigoRequerimiento,
+    decimal CantidadHoras,
+    DateOnly FechaActividad,
+    string DescripcionActividad,
+    string? Notas,
+    bool? EsBillable
+);

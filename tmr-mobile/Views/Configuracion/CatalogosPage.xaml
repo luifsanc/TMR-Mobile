@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-
-<ContentPage
+<ContentPage xmlns:shared="clr-namespace:tmr_mobile.Views.Shared"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:vm="clr-namespace:tmr_mobile.ViewModels"
@@ -8,609 +7,217 @@
     x:Class="tmr_mobile.Views.Configuracion.CatalogosPage"
     x:DataType="vm:CatalogosConfigViewModel"
     Title="Catálogos"
-    BackgroundColor="#F4F6FA">
+    BackgroundColor="{StaticResource CatalogBackground}">
+    <Grid RowDefinitions="*,80">
+        <ContentView Grid.Row="0">
+            <Grid
+                RowDefinitions="Auto,Auto,Auto,Auto,*,Auto"
+                Padding="16"
+                RowSpacing="12">
 
-    <Grid
-        RowDefinitions="Auto,Auto,Auto,Auto,Auto,*,Auto"
-        Padding="16"
-        RowSpacing="12">
-
-        <!-- TÍTULO -->
-
-        <Label
-            Grid.Row="0"
-            Text="Catálogos"
-            FontSize="24"
-            FontAttributes="Bold"
-            TextColor="#173A54" />
-
-
-        <!-- SELECTOR HORIZONTAL -->
-
-        <ScrollView
-            Grid.Row="1"
-            Orientation="Horizontal"
-            HorizontalScrollBarVisibility="Never">
-
-            <HorizontalStackLayout
-                BindableLayout.ItemsSource="{Binding Catalogos}"
-                Spacing="8">
-
-                <BindableLayout.ItemTemplate>
-
-                    <DataTemplate
-                        x:DataType="model:CatalogoMaster">
-
-                        <Border
-                            Padding="15,9"
-                            BackgroundColor="White"
-                            Stroke="#DCE3EC"
-                            StrokeThickness="1">
-
-                            <Border.StrokeShape>
-                                <RoundRectangle
-                                    CornerRadius="18" />
-                            </Border.StrokeShape>
-
-                            <!-- CATÁLOGO SELECCIONADO -->
-
-                            <Border.Triggers>
-
-                                <DataTrigger
-                                    TargetType="Border"
-                                    Binding="{Binding IsSelected}"
-                                    Value="True">
-
-                                    <Setter
-                                        Property="BackgroundColor"
-                                        Value="#173A54" />
-
-                                    <Setter
-                                        Property="Stroke"
-                                        Value="#173A54" />
-
-                                </DataTrigger>
-
-                            </Border.Triggers>
-
-
-                            <Border.GestureRecognizers>
-
-                                <TapGestureRecognizer
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.SeleccionarCatalogoCommand}"
-                                    CommandParameter="{Binding .}" />
-
-                            </Border.GestureRecognizers>
-
-
-                            <Label
-                                Text="{Binding NombreMostrar}"
-                                FontSize="12"
-                                FontAttributes="Bold"
-                                TextColor="#173A54">
-
-                                <Label.Triggers>
-
-                                    <DataTrigger
-                                        TargetType="Label"
-                                        Binding="{Binding IsSelected}"
-                                        Value="True">
-
-                                        <Setter
-                                            Property="TextColor"
-                                            Value="White" />
-
-                                    </DataTrigger>
-
-                                </Label.Triggers>
-
-                            </Label>
-
-                        </Border>
-
-                    </DataTemplate>
-
-                </BindableLayout.ItemTemplate>
-
-            </HorizontalStackLayout>
-
-        </ScrollView>
-
-
-        <!-- RESUMEN -->
-
-        <Grid
-            Grid.Row="2"
-            ColumnDefinitions="*,*,*"
-            ColumnSpacing="8">
-
-            <!-- TOTAL -->
-
-            <Border
-                Grid.Column="0"
-                BackgroundColor="White"
-                Stroke="#E2E8F0"
-                StrokeThickness="1"
-                Padding="12">
-
-                <Border.StrokeShape>
-                    <RoundRectangle
-                        CornerRadius="14" />
-                </Border.StrokeShape>
-
-                <VerticalStackLayout
-                    Spacing="4">
-
-                    <Label
-                        Text="{Binding TotalItems}"
-                        FontSize="22"
-                        FontAttributes="Bold"
-                        TextColor="#173A54"
-                        HorizontalTextAlignment="Center" />
-
-                    <Label
-                        Text="Total"
-                        FontSize="11"
-                        TextColor="#64748B"
-                        HorizontalTextAlignment="Center" />
-
+                <VerticalStackLayout Grid.Row="0" Spacing="2">
+                    <Label Text="Catálogos" Style="{StaticResource CatalogPageTitle}" />
+                    <Label Text="Administra los valores de configuración del sistema"
+                           Style="{StaticResource CatalogPageSubtitle}" />
                 </VerticalStackLayout>
 
-            </Border>
-
-
-            <!-- ACTIVOS -->
-
-            <Border
-                Grid.Column="1"
-                BackgroundColor="White"
-                Stroke="#E2E8F0"
-                StrokeThickness="1"
-                Padding="12">
-
-                <Border.StrokeShape>
-                    <RoundRectangle
-                        CornerRadius="14" />
-                </Border.StrokeShape>
-
-                <VerticalStackLayout
-                    Spacing="4">
-
-                    <Label
-                        Text="{Binding TotalActivos}"
-                        FontSize="22"
-                        FontAttributes="Bold"
-                        TextColor="#173A54"
-                        HorizontalTextAlignment="Center" />
-
-                    <Label
-                        Text="Activos"
-                        FontSize="11"
-                        TextColor="#43A047"
-                        HorizontalTextAlignment="Center" />
-
-                </VerticalStackLayout>
-
-            </Border>
-
-
-            <!-- INACTIVOS -->
-
-            <Border
-                Grid.Column="2"
-                BackgroundColor="White"
-                Stroke="#E2E8F0"
-                StrokeThickness="1"
-                Padding="12">
-
-                <Border.StrokeShape>
-                    <RoundRectangle
-                        CornerRadius="14" />
-                </Border.StrokeShape>
-
-                <VerticalStackLayout
-                    Spacing="4">
-
-                    <Label
-                        Text="{Binding TotalInactivos}"
-                        FontSize="22"
-                        FontAttributes="Bold"
-                        TextColor="#173A54"
-                        HorizontalTextAlignment="Center" />
-
-                    <Label
-                        Text="Inactivos"
-                        FontSize="11"
-                        TextColor="#E53935"
-                        HorizontalTextAlignment="Center" />
-
-                </VerticalStackLayout>
-
-            </Border>
-
-        </Grid>
-
-
-        <!-- BUSCADOR -->
-
-        <Border
-            Grid.Row="3"
-            HeightRequest="50"
-            BackgroundColor="White"
-            Stroke="#DCE3EC"
-            StrokeThickness="1"
-            Padding="14,0">
-
-            <Border.StrokeShape>
-                <RoundRectangle
-                    CornerRadius="10" />
-            </Border.StrokeShape>
-
-            <Entry
-                Text="{Binding Busqueda}"
-                Placeholder="Buscar por código, nombre o descripción..."
-                PlaceholderColor="#9CA3AF"
-                TextColor="#173A54"
-                FontSize="13"
-                BackgroundColor="Transparent"
-                VerticalOptions="Center" />
-
-        </Border>
-
-
-        <!-- FILTROS + ESTADOS -->
-
-        <VerticalStackLayout
-            Grid.Row="4"
-            Spacing="10">
-
-            <ScrollView
-                Orientation="Horizontal"
-                HorizontalScrollBarVisibility="Never">
-
-                <HorizontalStackLayout
-                    Spacing="8">
-
-                    <Button
-                        Text="Todos"
-                        Command="{Binding MostrarTodosCommand}"
-                        HeightRequest="36"
-                        Padding="16,0"
-                        CornerRadius="18"
-                        FontSize="12"
-                        BackgroundColor="#7486AD"
-                        TextColor="White" />
-
-                    <Button
-                        Text="Activos"
-                        Command="{Binding MostrarActivosCommand}"
-                        HeightRequest="36"
-                        Padding="16,0"
-                        CornerRadius="18"
-                        FontSize="12"
-                        BackgroundColor="White"
-                        TextColor="#173A54" />
-
-                    <Button
-                        Text="Inactivos"
-                        Command="{Binding MostrarInactivosCommand}"
-                        HeightRequest="36"
-                        Padding="16,0"
-                        CornerRadius="18"
-                        FontSize="12"
-                        BackgroundColor="White"
-                        TextColor="#173A54" />
-
-                    <Button
-                        Text="+ Nuevo"
-                        Command="{Binding NuevoCommand}"
-                        HeightRequest="36"
-                        Padding="16,0"
-                        CornerRadius="18"
-                        FontSize="12"
-                        BackgroundColor="#173A54"
-                        TextColor="White" />
-
-                </HorizontalStackLayout>
-
-            </ScrollView>
-
-
-            <!-- LEYENDA -->
-
-            <Border
-                BackgroundColor="White"
-                Stroke="#E2E8F0"
-                StrokeThickness="1"
-                Padding="12,9">
-
-                <Border.StrokeShape>
-                    <RoundRectangle
-                        CornerRadius="10" />
-                </Border.StrokeShape>
-
-                <HorizontalStackLayout
-                    Spacing="16">
-
-                    <Label
-                        Text="Estado:"
-                        FontSize="12"
-                        TextColor="#64748B"
-                        VerticalTextAlignment="Center" />
-
-                    <HorizontalStackLayout
-                        Spacing="6">
-
-                        <BoxView
-                            Color="#43A047"
-                            WidthRequest="26"
-                            HeightRequest="5"
-                            VerticalOptions="Center" />
-
-                        <Label
-                            Text="Activo"
-                            FontSize="12"
-                            TextColor="#64748B"
-                            VerticalTextAlignment="Center" />
-
+                <ScrollView Grid.Row="1" Orientation="Horizontal" HorizontalScrollBarVisibility="Never">
+                    <HorizontalStackLayout BindableLayout.ItemsSource="{Binding Catalogos}" Spacing="8">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="model:CatalogoMaster">
+                                <Border Padding="16,9"
+                                        BackgroundColor="{StaticResource CatalogWhite}"
+                                        Stroke="{StaticResource CatalogBorder}"
+                                        StrokeThickness="1"
+                                        StrokeShape="RoundRectangle 18">
+                                    <Border.Triggers>
+                                        <DataTrigger TargetType="Border" Binding="{Binding IsSelected}" Value="True">
+                                            <Setter Property="BackgroundColor" Value="{StaticResource CatalogPrimary}" />
+                                            <Setter Property="Stroke" Value="{StaticResource CatalogPrimary}" />
+                                        </DataTrigger>
+                                    </Border.Triggers>
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.SeleccionarCatalogoCommand}"
+                                            CommandParameter="{Binding .}" />
+                                    </Border.GestureRecognizers>
+                                    <Label Text="{Binding NombreMostrar}"
+                                           FontFamily="Inter SemiBold"
+                                           FontSize="12"
+                                           FontAttributes="None"
+                                           TextColor="{StaticResource CatalogPrimary}">
+                                        <Label.Triggers>
+                                            <DataTrigger TargetType="Label" Binding="{Binding IsSelected}" Value="True">
+                                                <Setter Property="TextColor" Value="{StaticResource CatalogWhite}" />
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
+                                </Border>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
                     </HorizontalStackLayout>
+                </ScrollView>
 
-                    <HorizontalStackLayout
-                        Spacing="6">
+                <Grid Grid.Row="2" ColumnDefinitions="*,*,*" ColumnSpacing="8">
+                    <Border Grid.Column="0" HeightRequest="72" Style="{StaticResource CatalogMetricCard}">
+                        <VerticalStackLayout Spacing="2" VerticalOptions="Center">
+                            <HorizontalStackLayout Spacing="6" HorizontalOptions="Center">
+                                <Border WidthRequest="30" HeightRequest="30" Padding="6"
+                                        BackgroundColor="{StaticResource CatalogTotalIconBackground}"
+                                        StrokeThickness="0" StrokeShape="RoundRectangle 8">
+                                    <Image Source="catalog_total_items.png" WidthRequest="18" HeightRequest="18" Aspect="AspectFit" />
+                                </Border>
+                                <Label Text="{Binding TotalItems}" FontFamily="Inter SemiBold" FontSize="20" FontAttributes="None"
+                                       TextColor="{StaticResource CatalogPrimary}" VerticalTextAlignment="Center" />
+                            </HorizontalStackLayout>
+                            <Label Text="Total de ítems" FontFamily="Inter" FontSize="10"
+                                   TextColor="{StaticResource CatalogTextSecondary}" HorizontalTextAlignment="Center" />
+                        </VerticalStackLayout>
+                    </Border>
+                    <Border Grid.Column="1" HeightRequest="72" Style="{StaticResource CatalogMetricCard}">
+                        <VerticalStackLayout Spacing="2" VerticalOptions="Center">
+                            <HorizontalStackLayout Spacing="6" HorizontalOptions="Center">
+                                <Border WidthRequest="30" HeightRequest="30" Padding="6"
+                                        BackgroundColor="{StaticResource CatalogActiveIconBackground}"
+                                        StrokeThickness="0" StrokeShape="RoundRectangle 8">
+                                    <Image Source="catalog_active.png" WidthRequest="18" HeightRequest="18" Aspect="AspectFit" />
+                                </Border>
+                                <Label Text="{Binding TotalActivos}" FontFamily="Inter SemiBold" FontSize="20" FontAttributes="None"
+                                       TextColor="{StaticResource CatalogPrimary}" VerticalTextAlignment="Center" />
+                            </HorizontalStackLayout>
+                            <Label Text="Activos" FontFamily="Inter" FontSize="10"
+                                   TextColor="{StaticResource CatalogAccent}" HorizontalTextAlignment="Center" />
+                        </VerticalStackLayout>
+                    </Border>
+                    <Border Grid.Column="2" HeightRequest="72" Style="{StaticResource CatalogMetricCard}">
+                        <VerticalStackLayout Spacing="2" VerticalOptions="Center">
+                            <HorizontalStackLayout Spacing="6" HorizontalOptions="Center">
+                                <Border WidthRequest="30" HeightRequest="30" Padding="6"
+                                        BackgroundColor="{StaticResource CatalogInactiveIconBackground}"
+                                        StrokeThickness="0" StrokeShape="RoundRectangle 8">
+                                    <Image Source="catalog_inactive.png" WidthRequest="18" HeightRequest="18" Aspect="AspectFit" />
+                                </Border>
+                                <Label Text="{Binding TotalInactivos}" FontFamily="Inter SemiBold" FontSize="20" FontAttributes="None"
+                                       TextColor="{StaticResource CatalogPrimary}" VerticalTextAlignment="Center" />
+                            </HorizontalStackLayout>
+                            <Label Text="Inactivos" FontFamily="Inter" FontSize="10"
+                                   TextColor="{StaticResource CatalogError}" HorizontalTextAlignment="Center" />
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
 
-                        <BoxView
-                            Color="#E53935"
-                            WidthRequest="26"
-                            HeightRequest="5"
-                            VerticalOptions="Center" />
-
-                        <Label
-                            Text="Inactivo"
-                            FontSize="12"
-                            TextColor="#64748B"
-                            VerticalTextAlignment="Center" />
-
-                    </HorizontalStackLayout>
-
-                </HorizontalStackLayout>
-
-            </Border>
-
-        </VerticalStackLayout>
-
-
-        <!-- CARDS -->
-
-        <CollectionView
-            Grid.Row="5"
-            ItemsSource="{Binding Detalles}"
-            SelectionMode="None"
-            VerticalScrollBarVisibility="Never">
-
-            <CollectionView.EmptyView>
-
-                <VerticalStackLayout
-                    Padding="30"
-                    HorizontalOptions="Center"
-                    VerticalOptions="Center">
-
-                    <Label
-                        Text="No se encontraron registros."
-                        TextColor="#64748B"
-                        FontSize="14"
-                        HorizontalTextAlignment="Center" />
-
-                </VerticalStackLayout>
-
-            </CollectionView.EmptyView>
-
-
-            <CollectionView.ItemTemplate>
-
-                <DataTemplate
-                    x:DataType="model:CatalogoDetalle">
-
-                    <Border
-                        Margin="0,0,0,12"
-                        Padding="0"
-                        BackgroundColor="White"
-                        Stroke="#E1E6EC"
-                        StrokeThickness="1">
-
-                        <Border.StrokeShape>
-                            <RoundRectangle
-                                CornerRadius="14" />
-                        </Border.StrokeShape>
-
-                        <Border.Shadow>
-
-                            <Shadow
-                                Brush="Black"
-                                Offset="0,2"
-                                Radius="7"
-                                Opacity="0.08" />
-
-                        </Border.Shadow>
-
-
-                        <Border.GestureRecognizers>
-
-                            <TapGestureRecognizer
-                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.AbrirDetalleCommand}"
-                                CommandParameter="{Binding .}" />
-
-                        </Border.GestureRecognizers>
-
-
-                        <Grid
-                            RowDefinitions="6,Auto">
-
-                            <!-- FRANJA ESTADO -->
-
-                            <BoxView
-                                Grid.Row="0"
-                                Color="{Binding ColorEstado}" />
-
-
-                            <VerticalStackLayout
-                                Grid.Row="1"
-                                Padding="16,13"
-                                Spacing="8">
-
-                                <!-- CÓDIGO -->
-
-                                <VerticalStackLayout
-                                    Spacing="1">
-
-                                    <Label
-                                        Text="Código"
-                                        FontSize="10"
-                                        TextColor="#94A3B8" />
-
-                                    <Label
-                                        Text="{Binding CodigoValor}"
-                                        FontSize="14"
-                                        FontAttributes="Bold"
-                                        TextColor="#173A54" />
-
-                                </VerticalStackLayout>
-
-
-                                <!-- NOMBRE -->
-
-                                <VerticalStackLayout
-                                    Spacing="1">
-
-                                    <Label
-                                        Text="Nombre"
-                                        FontSize="10"
-                                        TextColor="#94A3B8" />
-
-                                    <Label
-                                        Text="{Binding Valor}"
-                                        FontSize="14"
-                                        TextColor="#334155"
-                                        MaxLines="1"
-                                        LineBreakMode="TailTruncation" />
-
-                                </VerticalStackLayout>
-
-
-                                <!-- DESCRIPCIÓN -->
-
-                                <VerticalStackLayout
-                                    IsVisible="{Binding TieneDescripcion}"
-                                    Spacing="1">
-
-                                    <Label
-                                        Text="Descripción"
-                                        FontSize="10"
-                                        TextColor="#94A3B8" />
-
-                                    <Label
-                                        Text="{Binding Descripcion}"
-                                        FontSize="12"
-                                        TextColor="#64748B"
-                                        MaxLines="2"
-                                        LineBreakMode="TailTruncation" />
-
-                                </VerticalStackLayout>
-
-                            </VerticalStackLayout>
-
+                <Grid Grid.Row="3" ColumnDefinitions="*,Auto,Auto" ColumnSpacing="6">
+                    <Border Grid.Column="0" HeightRequest="42" Style="{StaticResource CatalogInputBorder}" Padding="8,0">
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="5">
+                            <Label Grid.Column="0" Text="⌕" FontFamily="Inter" FontSize="19"
+                                   TextColor="{StaticResource CatalogTextLight}" VerticalTextAlignment="Center" />
+                            <Entry Grid.Column="1"
+                                   Text="{Binding Busqueda}"
+                                   Placeholder="Buscar..."
+                                   HeightRequest="40"
+                                   FontSize="12"
+                                   Style="{StaticResource CatalogInput}" />
                         </Grid>
-
                     </Border>
 
-                </DataTemplate>
+                    <Border Grid.Column="1"
+                            Padding="0"
+                            BackgroundColor="{StaticResource CatalogWhite}"
+                            Stroke="{StaticResource CatalogBorder}"
+                            StrokeThickness="1"
+                            StrokeShape="RoundRectangle 9">
+                        <Picker SelectedItem="{Binding FiltroEstado, Mode=TwoWay}"
+                                Style="{StaticResource CatalogFilterPicker}">
+                            <Picker.Items>
+                                <x:String>Todos</x:String>
+                                <x:String>Activos</x:String>
+                                <x:String>Inactivos</x:String>
+                            </Picker.Items>
+                        </Picker>
+                    </Border>
 
-            </CollectionView.ItemTemplate>
+                    <Button Grid.Column="2" Text="+ Nuevo" Command="{Binding NuevoCommand}"
+                            WidthRequest="78" HeightRequest="42" Padding="6,0" FontSize="12"
+                            Style="{StaticResource CatalogPrimaryButton}" />
+                </Grid>
 
-        </CollectionView>
-
-
-        <!-- PAGINACIÓN -->
-
-        <Grid
-            Grid.Row="6"
-            ColumnDefinitions="Auto,*,Auto"
-            ColumnSpacing="8"
-            Margin="0,4,0,0">
-
-            <Button
-                Grid.Column="0"
-                Text="‹"
-                Command="{Binding PaginaAnteriorCommand}"
-                IsEnabled="{Binding PuedeAnterior}"
-                WidthRequest="40"
-                HeightRequest="40"
-                CornerRadius="20"
-                Padding="0"
-                BackgroundColor="White"
-                TextColor="#173A54" />
-
-
-            <ScrollView
-                Grid.Column="1"
-                Orientation="Horizontal"
-                HorizontalOptions="Center"
-                HorizontalScrollBarVisibility="Never">
-
-                <HorizontalStackLayout
-                    BindableLayout.ItemsSource="{Binding PaginasVisibles}"
-                    Spacing="6">
-
-                    <BindableLayout.ItemTemplate>
-
-                        <DataTemplate
-                            x:DataType="{x:Null}">
-
-                            <Button
-                                Text="{Binding .}"
-                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.IrPaginaCommand}"
-                                CommandParameter="{Binding .}"
-                                WidthRequest="38"
-                                HeightRequest="38"
-                                CornerRadius="19"
-                                Padding="0"
-                                BackgroundColor="White"
-                                TextColor="#173A54"
-                                FontSize="12" />
-
+                <CollectionView Grid.Row="4"
+                                ItemsSource="{Binding Detalles}"
+                                SelectionMode="None"
+                                VerticalScrollBarVisibility="Never">
+                    <CollectionView.EmptyView>
+                        <VerticalStackLayout Padding="30" Spacing="6"
+                                             HorizontalOptions="Center" VerticalOptions="Center">
+                            <Label Text="Sin resultados" Style="{StaticResource CatalogHeadingText}" FontSize="16"
+                                   TextColor="{StaticResource CatalogTextMain}" HorizontalTextAlignment="Center" />
+                            <Label Text="No se encontraron registros para los filtros seleccionados."
+                                   Style="{StaticResource CatalogPageSubtitle}" HorizontalTextAlignment="Center" />
+                        </VerticalStackLayout>
+                    </CollectionView.EmptyView>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="model:CatalogoDetalle">
+                            <Border Margin="0,0,0,12" Padding="0" Style="{StaticResource CatalogCard}">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.AbrirDetalleCommand}"
+                                        CommandParameter="{Binding .}" />
+                                </Border.GestureRecognizers>
+                                <Grid RowDefinitions="5,Auto">
+                                    <BoxView Grid.Row="0" Color="{Binding ColorEstado}" />
+                                    <Grid Grid.Row="1" Padding="16" RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="*,Auto" RowSpacing="10">
+                                        <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="2">
+                                            <Label Text="CÓDIGO" Style="{StaticResource CatalogFieldLabel}" />
+                                            <Label Text="{Binding CodigoValor}" Style="{StaticResource CatalogFieldValueStrong}" />
+                                        </VerticalStackLayout>
+                                        <Label Grid.Row="0" Grid.Column="1" Text="›" FontFamily="Inter" FontSize="24"
+                                               TextColor="{StaticResource CatalogTextLight}" VerticalTextAlignment="Center" />
+                                        <VerticalStackLayout Grid.Row="1" Grid.ColumnSpan="2" Spacing="2">
+                                            <Label Text="VALOR / NOMBRE" Style="{StaticResource CatalogFieldLabel}" />
+                                            <Label Text="{Binding Valor}" Style="{StaticResource CatalogFieldValue}"
+                                                   MaxLines="1" LineBreakMode="TailTruncation" />
+                                        </VerticalStackLayout>
+                                        <VerticalStackLayout Grid.Row="2" Grid.ColumnSpan="2"
+                                                             IsVisible="{Binding TieneDescripcion}" Spacing="2">
+                                            <Label Text="DESCRIPCIÓN" Style="{StaticResource CatalogFieldLabel}" />
+                                            <Label Text="{Binding Descripcion}" FontFamily="Inter" FontSize="12"
+                                                   TextColor="{StaticResource CatalogTextMuted}"
+                                                   MaxLines="2" LineBreakMode="TailTruncation" />
+                                        </VerticalStackLayout>
+                                    </Grid>
+                                </Grid>
+                            </Border>
                         </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
 
-                    </BindableLayout.ItemTemplate>
+                <Grid Grid.Row="5" HeightRequest="32" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="5">
+                    <Button Grid.Column="0" Text="‹" Command="{Binding PaginaAnteriorCommand}"
+                            IsEnabled="{Binding PuedeAnterior}"
+                            Style="{StaticResource CatalogPaginationButton}" />
+                    <ScrollView Grid.Column="1" Orientation="Horizontal" HorizontalOptions="Center"
+                                HorizontalScrollBarVisibility="Never">
+                        <HorizontalStackLayout BindableLayout.ItemsSource="{Binding PaginasVisibles}" Spacing="5">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="{x:Null}">
+                                    <Button Text="{Binding .}"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.IrPaginaCommand}"
+                                            CommandParameter="{Binding .}"
+                                            Style="{StaticResource CatalogPaginationButton}" />
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </HorizontalStackLayout>
+                    </ScrollView>
+                    <Button Grid.Column="2" Text="›" Command="{Binding PaginaSiguienteCommand}"
+                            IsEnabled="{Binding PuedeSiguiente}"
+                            Style="{StaticResource CatalogPaginationButton}" />
+                </Grid>
 
-                </HorizontalStackLayout>
-
-            </ScrollView>
-
-
-            <Button
-                Grid.Column="2"
-                Text="›"
-                Command="{Binding PaginaSiguienteCommand}"
-                IsEnabled="{Binding PuedeSiguiente}"
-                WidthRequest="40"
-                HeightRequest="40"
-                CornerRadius="20"
-                Padding="0"
-                BackgroundColor="White"
-                TextColor="#173A54" />
-
-        </Grid>
-
-
-        <!-- LOADING -->
-
-        <ActivityIndicator
-            Grid.RowSpan="7"
-            IsVisible="{Binding IsBusy}"
-            IsRunning="{Binding IsBusy}"
-            Color="#173A54"
-            HorizontalOptions="Center"
-            VerticalOptions="Center" />
-
+                <Grid Grid.RowSpan="6" IsVisible="{Binding IsBusy}" BackgroundColor="#66FFFFFF">
+                    <ActivityIndicator IsRunning="{Binding IsBusy}" Color="{StaticResource CatalogPrimary}"
+                                       HorizontalOptions="Center" VerticalOptions="Center" />
+                </Grid>
+            </Grid>
+        </ContentView>
+        <shared:BottomNavBar Grid.Row="1" />
     </Grid>
-
 </ContentPage>
