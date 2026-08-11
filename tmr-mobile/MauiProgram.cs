@@ -27,7 +27,6 @@ public static class MauiProgram
         // Singleton: una sola instancia de HttpClient en toda la app (best practice)
         builder.Services.AddSingleton<ApiService>();
         builder.Services.AddSingleton<IAuthService, AuthService>();
-        builder.Services.AddSingleton<ICargaActividadesService, CargaActividadesService>();
 
         // ── ViewModels ────────────────────────────────────────────────────────
         builder.Services.AddTransient<LoginViewModel>();

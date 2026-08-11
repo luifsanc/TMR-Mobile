@@ -1,5 +1,4 @@
 <Solution>
-  <Project Path="tmr-backend/tmr-backend.csproj" />
   <Project Path="tmr-mobile/tmr-mobile.csproj" />
   <Project Path="tmr-shared/tmr-shared.csproj" />
 </Solution>

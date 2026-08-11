@@ -1,6 +1,8 @@
+using CommunityToolkit.Mvvm.ComponentModel;
+
 namespace tmr_mobile.Models;
 
-public class ActividadListItem
+public partial class ActividadCargaItem : ObservableObject
 {
     public int Id { get; set; }
     public string Colaborador { get; set; } = string.Empty;
@@ -12,4 +14,7 @@ public class ActividadListItem
     public string Fecha { get; set; } = string.Empty;
     public decimal NroHoras { get; set; }
     public string Estado { get; set; } = string.Empty;
+
+    [ObservableProperty]
+    public partial bool IsSeleccionado { get; set; }
 }
