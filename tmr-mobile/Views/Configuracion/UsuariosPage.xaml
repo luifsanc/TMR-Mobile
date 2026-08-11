@@ -4,11 +4,26 @@
              xmlns:vm="clr-namespace:tmr_mobile.ViewModels"
              x:Class="tmr_mobile.Views.Configuracion.UsuariosPage"
              x:DataType="vm:UsuariosConfigViewModel"
-             Title="{Binding Title}">
+             Title="{Binding Title}"
+             BackgroundColor="{StaticResource Background}">
 
-    <VerticalStackLayout Spacing="16" Padding="20">
-        <Label Text="Administración de Usuarios" FontAttributes="Bold" FontSize="18" />
-        <Label Text="Gestión de accesos y perfiles del sistema." TextColor="#64748B" FontSize="14" />
-    </VerticalStackLayout>
+    <ScrollView>
+        <VerticalStackLayout Spacing="18" Padding="20">
+            <Border Style="{StaticResource CardBorderStyle}" BackgroundColor="#F8FAFC">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Administración de usuarios" Style="{StaticResource PageHeaderTitleStyle}" />
+                    <Label Text="Gestión de accesos, perfiles y estado de las cuentas del sistema" Style="{StaticResource PageHeaderSubtitleStyle}" />
+                </VerticalStackLayout>
+            </Border>
+            <Border Style="{StaticResource ListCardStyle}">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Acciones principales" Style="{StaticResource SectionTitleStyle}" />
+                    <Label Text="• Activar o desactivar cuentas" Style="{StaticResource PageSubtitleStyle}" />
+                    <Label Text="• Asignar roles y permisos" Style="{StaticResource PageSubtitleStyle}" />
+                    <Label Text="• Revisar el estado activo o inactivo" Style="{StaticResource PageSubtitleStyle}" />
+                </VerticalStackLayout>
+            </Border>
+        </VerticalStackLayout>
+    </ScrollView>
 
 </ContentPage>

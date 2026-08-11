@@ -5,15 +5,27 @@
 
     <!-- Note: For Android please see also Platforms\Android\Resources\values\colors.xml -->
 
-    <Color x:Key="Primary">#512BD4</Color>
-    <Color x:Key="PrimaryDark">#ac99ea</Color>
+    <Color x:Key="Primary">#163572</Color>
+    <Color x:Key="PrimaryDark">#0A2463</Color>
     <Color x:Key="PrimaryDarkText">#242424</Color>
-    <Color x:Key="Secondary">#DFD8F7</Color>
-    <Color x:Key="SecondaryDarkText">#9880e5</Color>
-    <Color x:Key="Tertiary">#2B0B98</Color>
+    <Color x:Key="Secondary">#F8FAFC</Color>
+    <Color x:Key="SecondaryDarkText">#64748B</Color>
+    <Color x:Key="Tertiary">#0A2463</Color>
 
-    <Color x:Key="White">White</Color>
-    <Color x:Key="Black">Black</Color>
+    <Color x:Key="Surface">#FFFFFF</Color>
+    <Color x:Key="Background">#F8FAFC</Color>
+    <Color x:Key="CardBorder">#E5E7EB</Color>
+    <Color x:Key="TextPrimary">#111827</Color>
+    <Color x:Key="TextSecondary">#64748B</Color>
+    <Color x:Key="TextMuted">#6B7280</Color>
+    <Color x:Key="Error">#EF4444</Color>
+    <Color x:Key="Success">#16A34A</Color>
+    <Color x:Key="Warning">#D97706</Color>
+    <Color x:Key="Info">#2563EB</Color>
+    <Color x:Key="Accent">#8B5CF6</Color>
+
+    <Color x:Key="White">#FFFFFF</Color>
+    <Color x:Key="Black">#000000</Color>
     <Color x:Key="Magenta">#D600AA</Color>
     <Color x:Key="MidnightBlue">#190649</Color>
     <Color x:Key="OffBlack">#1f1f1f</Color>
@@ -28,8 +40,13 @@
     <Color x:Key="Gray950">#141414</Color>
 
     <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource Primary}"/>
-    <SolidColorBrush x:Key="SecondaryBrush" Color="{StaticResource Secondary}"/>
-    <SolidColorBrush x:Key="TertiaryBrush" Color="{StaticResource Tertiary}"/>
+    <SolidColorBrush x:Key="SurfaceBrush" Color="{StaticResource Surface}"/>
+    <SolidColorBrush x:Key="BackgroundBrush" Color="{StaticResource Background}"/>
+    <SolidColorBrush x:Key="CardBorderBrush" Color="{StaticResource CardBorder}"/>
+    <SolidColorBrush x:Key="TextPrimaryBrush" Color="{StaticResource TextPrimary}"/>
+    <SolidColorBrush x:Key="TextSecondaryBrush" Color="{StaticResource TextSecondary}"/>
+    <SolidColorBrush x:Key="TextMutedBrush" Color="{StaticResource TextMuted}"/>
+    <SolidColorBrush x:Key="ErrorBrush" Color="{StaticResource Error}"/>
     <SolidColorBrush x:Key="WhiteBrush" Color="{StaticResource White}"/>
     <SolidColorBrush x:Key="BlackBrush" Color="{StaticResource Black}"/>
 

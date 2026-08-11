@@ -8,16 +8,15 @@ public interface IAuthService
     Task LogoutAsync();
     Task<bool> IsAuthenticatedAsync();
     Task<string?> GetTokenAsync();
-    UserResponse? CurrentUser { get; }
+    tmr_shared.DTOs.Auth.UserResponse? CurrentUser { get; }
 }
 
 public class AuthService : IAuthService
 {
     private const string TokenKey = "auth_token";
-    private const string UserKey = "auth_user";
     private readonly ApiService _apiService;
 
-    public UserResponse? CurrentUser { get; private set; }
+    public tmr_shared.DTOs.Auth.UserResponse? CurrentUser { get; private set; }
 
     public AuthService(ApiService apiService)
     {
@@ -29,21 +28,35 @@ public class AuthService : IAuthService
         try
         {
             var request = new LoginRequest(username, password);
-            var response = await _apiService.PostAsync<LoginRequest, AuthResponse>("api/auth/login", request);
+            var response = await _apiService.PostAsync<LoginRequest, ApiResponse<AuthResponse>>("auth/login", request);
 
-            if (response != null && !string.IsNullOrEmpty(response.AccessToken))
+            if (response is { Success: true, Data: { } authData })
             {
-                await SecureStorage.Default.SetAsync(TokenKey, response.AccessToken);
-                CurrentUser = response.User;
+                await PersistSessionAsync(authData.AccessToken, authData.User);
                 return true;
             }
+
+            System.Diagnostics.Debug.WriteLine($"[Login Error] Login failed: {response?.Message ?? "No response"}");
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Login Error: {ex.Message}");
+            System.Diagnostics.Debug.WriteLine($"[Login Error] Type: {ex.GetType().Name}");
+            System.Diagnostics.Debug.WriteLine($"[Login Error] Message: {ex.Message}");
+            System.Diagnostics.Debug.WriteLine($"[Login Error] StackTrace: {ex.StackTrace}");
         }
 
         return false;
+    }
+
+    private async Task PersistSessionAsync(string accessToken, UserResponse user)
+    {
+        await SecureStorage.Default.SetAsync(TokenKey, accessToken);
+        CurrentUser = new UserResponse(
+            user.Id,
+            user.Email,
+            user.Name,
+            user.CreatedAt,
+            user.IdEmpleado > 0 ? user.IdEmpleado : null);
     }
 
     public async Task LogoutAsync()

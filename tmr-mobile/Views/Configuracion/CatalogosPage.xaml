@@ -4,11 +4,25 @@
              xmlns:vm="clr-namespace:tmr_mobile.ViewModels"
              x:Class="tmr_mobile.Views.Configuracion.CatalogosPage"
              x:DataType="vm:CatalogosConfigViewModel"
-             Title="{Binding Title}">
+             Title="{Binding Title}"
+             BackgroundColor="{StaticResource Background}">
 
-    <VerticalStackLayout Spacing="16" Padding="20">
-        <Label Text="Catálogos del Sistema" FontAttributes="Bold" FontSize="18" />
-        <Label Text="Gestión de maestras y catálogos generales." TextColor="#64748B" FontSize="14" />
-    </VerticalStackLayout>
+    <ScrollView>
+        <VerticalStackLayout Spacing="18" Padding="20">
+            <Border Style="{StaticResource CardBorderStyle}" BackgroundColor="#EFF6FF">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Catálogos del sistema" Style="{StaticResource PageHeaderTitleStyle}" />
+                    <Label Text="Mantenimiento de maestras y valores auxiliares del negocio" Style="{StaticResource PageHeaderSubtitleStyle}" />
+                </VerticalStackLayout>
+            </Border>
+            <Border Style="{StaticResource ListCardStyle}">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Uso frecuente" Style="{StaticResource SectionTitleStyle}" />
+                    <Label Text="• Actualizar listas maestras" Style="{StaticResource PageSubtitleStyle}" />
+                    <Label Text="• Mantener datos base del sistema" Style="{StaticResource PageSubtitleStyle}" />
+                </VerticalStackLayout>
+            </Border>
+        </VerticalStackLayout>
+    </ScrollView>
 
 </ContentPage>

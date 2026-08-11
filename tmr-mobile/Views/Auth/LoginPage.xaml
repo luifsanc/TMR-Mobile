@@ -6,58 +6,68 @@
              x:DataType="vm:LoginViewModel"
              Title="{Binding Title}"
              Shell.NavBarIsVisible="False"
-             BackgroundColor="{AppThemeBinding Light=#F8FAFC, Dark=#0F172A}">
+             BackgroundColor="{StaticResource Background}">
 
-    <ScrollView>
-        <VerticalStackLayout Spacing="24" Padding="32" VerticalOptions="Center">
-            
-            <Image Source="dotnet_bot.png"
-                   HeightRequest="120"
-                   HorizontalOptions="Center" />
+    <Grid>
+        <Image Source="Resources/Images/background.png"
+               Aspect="AspectFill"
+               Opacity="0.9"
+               VerticalOptions="Fill"
+               HorizontalOptions="Fill" />
 
-            <Label Text="TMR Móvil"
-                   FontSize="28"
-                   FontAttributes="Bold"
-                   HorizontalOptions="Center"
-                   TextColor="{AppThemeBinding Light=#1E293B, Dark=#F8FAFC}" />
+        <ScrollView>
+            <Grid Padding="24" MinimumHeightRequest="600">
+                <VerticalStackLayout Spacing="24" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="380">
+                    <VerticalStackLayout Spacing="24" BackgroundColor="Transparent">
+                        <Image Source="Resources/Images/logo_isc.png"
+                               HeightRequest="100"
+                               HorizontalOptions="Center" />
 
-            <Label Text="Inicia sesión con tu cuenta corporativa"
-                   FontSize="14"
-                   HorizontalOptions="Center"
-                   TextColor="#64748B" />
+                        <Border Style="{StaticResource CardBorderStyle}">
+                            <Border.Shadow>
+                                <Shadow Brush="{StaticResource Gray200Brush}" Offset="0,8" Radius="20" Opacity="0.12" />
+                            </Border.Shadow>
 
-            <VerticalStackLayout Spacing="16" Margin="0,16,0,0">
-                <Entry Placeholder="Usuario o Correo"
-                       Text="{Binding User}"
-                       Keyboard="Email"
-                       HeightRequest="50" />
+                            <VerticalStackLayout Spacing="20">
+                                <Label Text="Iniciar Sesión"
+                                       Style="{StaticResource TitleLarge}" />
 
-                <Entry Placeholder="Contraseña"
-                       Text="{Binding Password}"
-                       IsPassword="True"
-                       HeightRequest="50" />
+                                <Label Text="Accede a tu cuenta para ver tus actividades y reportes"
+                                       Style="{StaticResource Subtitle}" />
 
-                <Label Text="{Binding ErrorMessage}"
-                       TextColor="#EF4444"
-                       FontSize="13"
-                       IsVisible="{Binding ErrorMessage, Converter={StaticResource IsStringNotNullOrEmptyConverter}}" />
+                                <VerticalStackLayout Spacing="16">
+                                    <Entry Placeholder="Correo electrónico"
+                                           Style="{StaticResource PrimaryEntryStyle}"
+                                           Text="{Binding User}"
+                                           Keyboard="Email" />
 
-                <Button Text="INICIAR SESIÓN"
-                        Command="{Binding LoginCommand}"
-                        HeightRequest="50"
-                        CornerRadius="8"
-                        BackgroundColor="#2563EB"
-                        TextColor="White"
-                        FontAttributes="Bold"
-                        IsEnabled="{Binding IsNotBusy}" />
-                
-                <ActivityIndicator IsRunning="{Binding IsBusy}"
-                                   IsVisible="{Binding IsBusy}"
-                                   HorizontalOptions="Center"
-                                   Color="#2563EB" />
-            </VerticalStackLayout>
+                                    <Entry Placeholder="Contraseña"
+                                           Style="{StaticResource PrimaryEntryStyle}"
+                                           Text="{Binding Password}"
+                                           IsPassword="True" />
 
-        </VerticalStackLayout>
-    </ScrollView>
+                                    <Label Text="{Binding ErrorMessage}"
+                                           Style="{StaticResource ErrorText}"
+                                           IsVisible="{Binding ErrorMessage, Converter={StaticResource IsStringNotNullOrEmptyConverter}}" />
 
+                                    <Button Text="Ingresar"
+                                            Style="{StaticResource PrimaryButtonStyle}"
+                                            Command="{Binding LoginCommand}"
+                                            IsEnabled="{Binding IsNotBusy}" />
+
+                                    <ActivityIndicator IsRunning="{Binding IsBusy}"
+                                                       IsVisible="{Binding IsBusy}"
+                                                       HorizontalOptions="Center"
+                                                       Color="{StaticResource Primary}" />
+                                </VerticalStackLayout>
+
+                                <Label Text="¿Olvidaste tu contraseña?"
+                                       Style="{StaticResource LinkText}" />
+                            </VerticalStackLayout>
+                        </Border>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Grid>
+        </ScrollView>
+    </Grid>
 </ContentPage>

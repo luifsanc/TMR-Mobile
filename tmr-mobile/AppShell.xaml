@@ -13,12 +13,12 @@
     FlyoutHeaderBehavior="CollapseOnScroll">
 
     <Shell.FlyoutHeader>
-        <Grid BackgroundColor="#1E293B" HeightRequest="140" Padding="20">
-            <VerticalStackLayout VerticalOptions="End">
-                <Label Text="TMR Móvil" FontSize="22" FontAttributes="Bold" TextColor="White" />
-                <Label Text="Gestión de Tiempos y Recursos" FontSize="12" TextColor="#94A3B8" />
+        <Border Style="{StaticResource ShellFlyoutHeaderBorderStyle}" HeightRequest="140">
+            <VerticalStackLayout VerticalOptions="End" Spacing="4">
+                <Label Text="TMR Móvil" Style="{StaticResource ShellHeaderTitleStyle}" />
+                <Label Text="Gestión de tiempos y recursos" Style="{StaticResource ShellHeaderSubtitleStyle}" />
             </VerticalStackLayout>
-        </Grid>
+        </Border>
     </Shell.FlyoutHeader>
 
     <!-- Ruta de Autenticación fuera del Flyout/TabBar -->
@@ -27,11 +27,11 @@
     </ShellItem>
 
     <!-- Estructura Principal de Menú y Navegación (Coincidiendo con Angular Routes) -->
-    <FlyoutItem Title="Dashboard" Icon="dotnet_bot.png" Route="DashboardPage">
+    <FlyoutItem Title="Dashboard" Icon="logo_isc.png" Route="DashboardPage">
         <ShellContent ContentTemplate="{DataTemplate dash:DashboardPage}" />
     </FlyoutItem>
 
-    <FlyoutItem Title="Time Report" Icon="dotnet_bot.png">
+    <FlyoutItem Title="Time Report" Icon="logo_isc.png">
         <Tab Title="Mis Actividades">
             <ShellContent ContentTemplate="{DataTemplate time:TimeReportPage}" Route="TimeReportPage" />
         </Tab>
@@ -40,7 +40,7 @@
         </Tab>
     </FlyoutItem>
 
-    <FlyoutItem Title="Operaciones" Icon="dotnet_bot.png">
+    <FlyoutItem Title="Operaciones" Icon="logo_isc.png">
         <Tab Title="Proyectos">
             <ShellContent ContentTemplate="{DataTemplate ops:ProyectosPage}" Route="ProyectosPage" />
         </Tab>
@@ -55,7 +55,7 @@
         </Tab>
     </FlyoutItem>
 
-    <FlyoutItem Title="Reportes" Icon="dotnet_bot.png">
+    <FlyoutItem Title="Reportes" Icon="logo_isc.png">
         <Tab Title="Horas">
             <ShellContent ContentTemplate="{DataTemplate rep:ReporteHorasPage}" Route="ReporteHorasPage" />
         </Tab>
@@ -64,7 +64,7 @@
         </Tab>
     </FlyoutItem>
 
-    <FlyoutItem Title="Configuración" Icon="dotnet_bot.png">
+    <FlyoutItem Title="Configuración" Icon="logo_isc.png">
         <Tab Title="Usuarios">
             <ShellContent ContentTemplate="{DataTemplate cfg:UsuariosPage}" Route="UsuariosPage" />
         </Tab>

@@ -4,11 +4,25 @@
              xmlns:vm="clr-namespace:tmr_mobile.ViewModels"
              x:Class="tmr_mobile.Views.Reportes.ReporteFechasPage"
              x:DataType="vm:ReporteFechasViewModel"
-             Title="{Binding Title}">
+             Title="{Binding Title}"
+             BackgroundColor="{StaticResource Background}">
 
-    <VerticalStackLayout Spacing="16" Padding="20">
-        <Label Text="Reporte por Fechas" FontAttributes="Bold" FontSize="18" />
-        <Label Text="Consulta detallada de registros agrupados por fechas." TextColor="#64748B" FontSize="14" />
-    </VerticalStackLayout>
+    <ScrollView>
+        <VerticalStackLayout Spacing="18" Padding="20">
+            <Border Style="{StaticResource CardBorderStyle}" BackgroundColor="#FEFCE8">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Reporte por fechas" Style="{StaticResource PageHeaderTitleStyle}" />
+                    <Label Text="Consulta los registros agrupados por fecha para un análisis más claro" Style="{StaticResource PageHeaderSubtitleStyle}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border Style="{StaticResource ListCardStyle}">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Disponibilidad" Style="{StaticResource SectionTitleStyle}" />
+                    <Label Text="Los datos se organizan por día para simplificar la revisión del avance del equipo." Style="{StaticResource PageSubtitleStyle}" />
+                </VerticalStackLayout>
+            </Border>
+        </VerticalStackLayout>
+    </ScrollView>
 
 </ContentPage>

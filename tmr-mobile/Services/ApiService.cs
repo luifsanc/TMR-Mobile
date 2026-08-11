@@ -1,13 +1,21 @@
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text.Json;
+using tmr_mobile.Services;
 
 namespace tmr_mobile.Services;
 
 public class ApiService
 {
+    private static readonly JsonSerializerOptions SerializerOptions = new()
+    {
+        PropertyNameCaseInsensitive = true,
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+        Converters = { new DateOnlyJsonConverter() }
+    };
+
     private readonly HttpClient _httpClient;
-    private const string BaseUrl = "https://localhost:7198/"; // Ajustar según entorno/IP local
+    private const string BaseUrl = "https://dev.api.tmr2.dokploy.integritysolutions.com.ec/api/";
 
     public ApiService()
     {
@@ -35,26 +43,30 @@ public class ApiService
         var response = await _httpClient.GetAsync(endpoint);
         if (response.IsSuccessStatusCode)
         {
-            return await response.Content.ReadFromJsonAsync<TResponse>();
+            return await response.Content.ReadFromJsonAsync<TResponse>(SerializerOptions);
         }
-        return default;
+
+        var error = await response.Content.ReadAsStringAsync();
+        throw new HttpRequestException($"GET {endpoint} failed ({response.StatusCode}): {error}");
     }
 
     public async Task<TResponse?> PostAsync<TRequest, TResponse>(string endpoint, TRequest data)
     {
         await AddAuthHeaderAsync();
-        var response = await _httpClient.PostAsJsonAsync(endpoint, data);
+        var response = await _httpClient.PostAsJsonAsync(endpoint, data, SerializerOptions);
         if (response.IsSuccessStatusCode)
         {
-            return await response.Content.ReadFromJsonAsync<TResponse>();
+            return await response.Content.ReadFromJsonAsync<TResponse>(SerializerOptions);
         }
-        return default;
+
+        var error = await response.Content.ReadAsStringAsync();
+        throw new HttpRequestException($"POST {endpoint} failed ({response.StatusCode}): {error}");
     }
 
     public async Task<bool> PutAsync<TRequest>(string endpoint, TRequest data)
     {
         await AddAuthHeaderAsync();
-        var response = await _httpClient.PutAsJsonAsync(endpoint, data);
+        var response = await _httpClient.PutAsJsonAsync(endpoint, data, SerializerOptions);
         return response.IsSuccessStatusCode;
     }
 

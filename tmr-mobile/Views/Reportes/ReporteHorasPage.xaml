@@ -4,24 +4,27 @@
              xmlns:vm="clr-namespace:tmr_mobile.ViewModels"
              x:Class="tmr_mobile.Views.Reportes.ReporteHorasPage"
              x:DataType="vm:ReporteHorasViewModel"
-             Title="{Binding Title}">
+             Title="{Binding Title}"
+             BackgroundColor="{StaticResource Background}">
 
     <ScrollView>
-        <VerticalStackLayout Spacing="16" Padding="20">
-            <Label Text="Filtro de Reporte de Horas" FontAttributes="Bold" FontSize="18" />
+        <VerticalStackLayout Spacing="18" Padding="20">
+            <Border Style="{StaticResource CardBorderStyle}" BackgroundColor="#EFF6FF">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Reporte por horas" Style="{StaticResource PageHeaderTitleStyle}" />
+                    <Label Text="Elige el rango de fechas para filtrar la información y generar el reporte" Style="{StaticResource PageHeaderSubtitleStyle}" />
 
-            <Label Text="Fecha Inicio" FontSize="14" TextColor="#64748B" />
-            <DatePicker Date="{Binding FechaInicio}" Format="dd/MM/yyyy" />
+                    <Label Text="Fecha Inicio" Style="{StaticResource SectionTitleStyle}" />
+                    <DatePicker Date="{Binding FechaInicio}" Format="dd/MM/yyyy" />
 
-            <Label Text="Fecha Fin" FontSize="14" TextColor="#64748B" />
-            <DatePicker Date="{Binding FechaFin}" Format="dd/MM/yyyy" />
+                    <Label Text="Fecha Fin" Style="{StaticResource SectionTitleStyle}" />
+                    <DatePicker Date="{Binding FechaFin}" Format="dd/MM/yyyy" />
 
-            <Button Text="🔍 Generar Reporte"
-                    Command="{Binding GenerarReporteCommand}"
-                    BackgroundColor="#2563EB"
-                    TextColor="White"
-                    HeightRequest="50"
-                    CornerRadius="8" />
+                    <Button Text="🔍 Generar reporte"
+                            Command="{Binding GenerarReporteCommand}"
+                            Style="{StaticResource PrimaryButtonStyle}" />
+                </VerticalStackLayout>
+            </Border>
         </VerticalStackLayout>
     </ScrollView>
 

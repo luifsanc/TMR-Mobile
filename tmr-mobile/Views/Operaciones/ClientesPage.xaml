@@ -4,20 +4,37 @@
              xmlns:vm="clr-namespace:tmr_mobile.ViewModels"
              x:Class="tmr_mobile.Views.Operaciones.ClientesPage"
              x:DataType="vm:ClientesViewModel"
-             Title="{Binding Title}">
+             Title="{Binding Title}"
+             BackgroundColor="{StaticResource Background}">
 
-    <CollectionView ItemsSource="{Binding Clientes}" Margin="16">
-        <CollectionView.ItemTemplate>
-            <DataTemplate x:DataType="vm:ClienteItem">
-                <Frame Margin="0,0,0,12" Padding="16" CornerRadius="10">
-                    <VerticalStackLayout Spacing="4">
-                        <Label Text="{Binding RazónSocial}" FontAttributes="Bold" FontSize="16" />
-                        <Label Text="{Binding RUC, StringFormat='RUC: {0}'}" TextColor="#64748B" FontSize="14" />
-                        <Label Text="{Binding Contacto}" TextColor="#2563EB" FontSize="13" />
-                    </VerticalStackLayout>
-                </Frame>
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
-    </CollectionView>
+    <Grid RowDefinitions="Auto,*" Padding="20" RowSpacing="12">
+        <Border Grid.Row="0" Style="{StaticResource CardBorderStyle}" BackgroundColor="#EFF6FF">
+            <VerticalStackLayout Spacing="4">
+                <Label Text="Clientes" Style="{StaticResource PageHeaderTitleStyle}" />
+                <Label Text="Detalle de clientes, contacto y datos de identificación" Style="{StaticResource PageHeaderSubtitleStyle}" />
+            </VerticalStackLayout>
+        </Border>
+
+        <CollectionView Grid.Row="1" ItemsSource="{Binding Clientes}">
+            <CollectionView.EmptyView>
+                <VerticalStackLayout Padding="24" Spacing="8" HorizontalOptions="Center" VerticalOptions="Center">
+                    <Label Text="No se encontraron clientes." TextColor="{StaticResource TextSecondary}" HorizontalTextAlignment="Center" />
+                    <Label Text="{Binding ErrorMessage}" TextColor="{StaticResource Error}" IsVisible="{Binding ErrorMessage, Converter={StaticResource IsStringNotNullOrEmptyConverter}}" HorizontalTextAlignment="Center" />
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="vm:ClienteItem">
+                    <Border Style="{StaticResource ListCardStyle}" Margin="0,0,0,10">
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="{Binding NombreComercial}" Style="{StaticResource PageTitleStyle}" FontSize="16" />
+                            <Label Text="{Binding NumeroIdentificacion, StringFormat='Identificación: {0}'}" Style="{StaticResource PageSubtitleStyle}" FontSize="14" />
+                            <Label Text="{Binding Email}" TextColor="{StaticResource Primary}" FontSize="13" />
+                            <Label Text="{Binding Telefono, StringFormat='Teléfono: {0}'}" Style="{StaticResource PageSubtitleStyle}" FontSize="13" />
+                        </VerticalStackLayout>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
 
 </ContentPage>

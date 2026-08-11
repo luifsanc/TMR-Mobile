@@ -4,11 +4,25 @@
              xmlns:vm="clr-namespace:tmr_mobile.ViewModels"
              x:Class="tmr_mobile.Views.Configuracion.RolesPage"
              x:DataType="vm:RolesConfigViewModel"
-             Title="{Binding Title}">
+             Title="{Binding Title}"
+             BackgroundColor="{StaticResource Background}">
 
-    <VerticalStackLayout Spacing="16" Padding="20">
-        <Label Text="Roles y Permisos" FontAttributes="Bold" FontSize="18" />
-        <Label Text="Configuración de matrices de seguridad y roles." TextColor="#64748B" FontSize="14" />
-    </VerticalStackLayout>
+    <ScrollView>
+        <VerticalStackLayout Spacing="18" Padding="20">
+            <Border Style="{StaticResource CardBorderStyle}" BackgroundColor="#F5F3FF">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Roles y permisos" Style="{StaticResource PageHeaderTitleStyle}" />
+                    <Label Text="Configura la matriz de seguridad del sistema como en la vista del frontend" Style="{StaticResource PageHeaderSubtitleStyle}" />
+                </VerticalStackLayout>
+            </Border>
+            <Border Style="{StaticResource ListCardStyle}">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Cobertura" Style="{StaticResource SectionTitleStyle}" />
+                    <Label Text="• Revisar permisos por módulo" Style="{StaticResource PageSubtitleStyle}" />
+                    <Label Text="• Asignar accesos por rol" Style="{StaticResource PageSubtitleStyle}" />
+                </VerticalStackLayout>
+            </Border>
+        </VerticalStackLayout>
+    </ScrollView>
 
 </ContentPage>

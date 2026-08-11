@@ -4,44 +4,78 @@
              xmlns:vm="clr-namespace:tmr_mobile.ViewModels"
              x:Class="tmr_mobile.Views.Dashboard.DashboardPage"
              x:DataType="vm:DashboardViewModel"
-             Title="{Binding Title}">
+             Title="{Binding Title}"
+             BackgroundColor="{StaticResource Background}">
 
     <ScrollView>
         <VerticalStackLayout Spacing="20" Padding="20">
-            
-            <Label Text="Bienvenido al Dashboard TMR"
-                   FontSize="22"
-                   FontAttributes="Bold" />
+            <Border Style="{StaticResource CardBorderStyle}" BackgroundColor="#EEF2FF">
+                <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
+                    <VerticalStackLayout Grid.Column="0" Spacing="4">
+                        <Label Text="Resumen general" Style="{StaticResource PageHeaderTitleStyle}" />
+                        <Label Text="Visión rápida de proyectos, colaboradores y carga de horas" Style="{StaticResource PageHeaderSubtitleStyle}" />
+                    </VerticalStackLayout>
+                    <Button Grid.Column="1" Text="Actualizar" Command="{Binding CargarDashboardCommand}" Style="{StaticResource SecondaryButtonStyle}" />
+                </Grid>
+            </Border>
 
             <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" ColumnSpacing="12" RowSpacing="12">
-                <Frame Grid.Row="0" Grid.Column="0" BackgroundColor="#E0F2FE" CornerRadius="12" Padding="16">
-                    <VerticalStackLayout>
-                        <Label Text="Proyectos Activos" FontSize="12" TextColor="#0369A1" />
+                <Border Grid.Row="0" Grid.Column="0" Style="{StaticResource CardBorderStyle}" BackgroundColor="#E0F2FE">
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="📁 Proyectos activos" FontSize="12" TextColor="#0369A1" />
                         <Label Text="{Binding TotalProyectos}" FontSize="24" FontAttributes="Bold" TextColor="#0284C7" />
                     </VerticalStackLayout>
-                </Frame>
+                </Border>
 
-                <Frame Grid.Row="0" Grid.Column="1" BackgroundColor="#DCFCE7" CornerRadius="12" Padding="16">
-                    <VerticalStackLayout>
-                        <Label Text="Colaboradores" FontSize="12" TextColor="#15803D" />
+                <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource CardBorderStyle}" BackgroundColor="#DCFCE7">
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="👥 Colaboradores" FontSize="12" TextColor="#15803D" />
                         <Label Text="{Binding TotalColaboradores}" FontSize="24" FontAttributes="Bold" TextColor="#16A34A" />
                     </VerticalStackLayout>
-                </Frame>
+                </Border>
 
-                <Frame Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="#F3E8FF" CornerRadius="12" Padding="16">
-                    <VerticalStackLayout>
-                        <Label Text="Horas Registradas este Mes" FontSize="12" TextColor="#6B21A8" />
+                <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource CardBorderStyle}" BackgroundColor="#F5F3FF">
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="🕒 Horas registradas este mes" FontSize="12" TextColor="#6B21A8" />
                         <Label Text="{Binding HorasRegistradasMes, StringFormat='{0} hrs'}" FontSize="24" FontAttributes="Bold" TextColor="#9333EA" />
                     </VerticalStackLayout>
-                </Frame>
+                </Border>
             </Grid>
 
-            <Button Text="Actualizar Datos"
-                    Command="{Binding CargarDashboardCommand}"
-                    BackgroundColor="#2563EB"
-                    TextColor="White"
-                    CornerRadius="8" />
+            <VerticalStackLayout Spacing="10">
+                <Label Text="Proyectos próximos a cerrar" Style="{StaticResource SectionTitleStyle}" />
+                <CollectionView ItemsSource="{Binding ProyectosRecientes}" HeightRequest="190">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="vm:DashboardProyectoItem">
+                            <Border Style="{StaticResource ListCardStyle}" Margin="0,0,0,10">
+                                <VerticalStackLayout Spacing="6">
+                                    <Label Text="{Binding Nombre}" Style="{StaticResource PageTitleStyle}" FontSize="16" />
+                                    <Label Text="{Binding Cliente}" Style="{StaticResource PageSubtitleStyle}" />
+                                    <Label Text="{Binding Estado}" TextColor="{StaticResource Success}" FontAttributes="Bold" />
+                                    <Label Text="{Binding Horas, StringFormat='Horas: {0}'}" TextColor="{StaticResource Primary}" />
+                                </VerticalStackLayout>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
 
+            <VerticalStackLayout Spacing="10">
+                <Label Text="Proyectos por cliente" Style="{StaticResource SectionTitleStyle}" />
+                <CollectionView ItemsSource="{Binding ProyectosPorCliente}" HeightRequest="190">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="vm:DashboardClienteItem">
+                            <Border Style="{StaticResource ListCardStyle}" Margin="0,0,0,10">
+                                <VerticalStackLayout Spacing="6">
+                                    <Label Text="{Binding Cliente}" Style="{StaticResource PageTitleStyle}" />
+                                    <Label Text="{Binding ProyectosAsignados, StringFormat='Proyectos: {0}'}" Style="{StaticResource PageSubtitleStyle}" />
+                                    <Label Text="{Binding Porcentaje, StringFormat='Participación: {0}%'}" TextColor="{StaticResource Primary}" />
+                                </VerticalStackLayout>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
         </VerticalStackLayout>
     </ScrollView>
 

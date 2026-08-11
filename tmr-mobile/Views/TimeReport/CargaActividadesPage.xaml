@@ -4,32 +4,35 @@
              xmlns:vm="clr-namespace:tmr_mobile.ViewModels"
              x:Class="tmr_mobile.Views.TimeReport.CargaActividadesPage"
              x:DataType="vm:CargaActividadesViewModel"
-             Title="{Binding Title}">
+             Title="{Binding Title}"
+             BackgroundColor="{StaticResource Background}">
 
-    <VerticalStackLayout Spacing="20" Padding="24" VerticalOptions="Center">
-        <Label Text="Carga de Actividades por Excel"
-               FontSize="20"
-               FontAttributes="Bold"
-               HorizontalOptions="Center" />
+    <ScrollView>
+        <VerticalStackLayout Spacing="18" Padding="20">
+            <Border Style="{StaticResource CardBorderStyle}" BackgroundColor="#ECFDF5">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Carga masiva" Style="{StaticResource PageHeaderTitleStyle}" />
+                    <Label Text="Importa partes de horas desde un archivo Excel con la misma lógica del flujo del frontend" Style="{StaticResource PageHeaderSubtitleStyle}" />
+                    <Button Text="📁 Seleccionar archivo Excel"
+                            Command="{Binding SeleccionarArchivoCommand}"
+                            Style="{StaticResource PrimaryButtonStyle}" />
+                    <Label Text="{Binding ArchivoSeleccionado}"
+                           FontSize="13"
+                           FontAttributes="Italic"
+                           HorizontalOptions="Center"
+                           TextColor="{StaticResource TextSecondary}" />
+                </VerticalStackLayout>
+            </Border>
 
-        <Label Text="Selecciona una plantilla .xlsx para procesar masivamente los partes de horas."
-               FontSize="14"
-               TextColor="#64748B"
-               HorizontalOptions="Center"
-               HorizontalTextAlignment="Center" />
-
-        <Button Text="📁 Seleccionar Archivo Excel"
-                Command="{Binding SeleccionarArchivoCommand}"
-                BackgroundColor="#0284C7"
-                TextColor="White"
-                HeightRequest="50"
-                CornerRadius="8" />
-
-        <Label Text="{Binding ArchivoSeleccionado}"
-               FontSize="13"
-               FontAttributes="Italic"
-               HorizontalOptions="Center"
-               TextColor="#475569" />
-    </VerticalStackLayout>
+            <Border Style="{StaticResource ListCardStyle}">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Pasos recomendados" Style="{StaticResource SectionTitleStyle}" />
+                    <Label Text="1. Descarga la plantilla de ejemplo." Style="{StaticResource PageSubtitleStyle}" />
+                    <Label Text="2. Completa los campos de proyecto, horas y actividad." Style="{StaticResource PageSubtitleStyle}" />
+                    <Label Text="3. Sube el archivo y valida el resultado." Style="{StaticResource PageSubtitleStyle}" />
+                </VerticalStackLayout>
+            </Border>
+        </VerticalStackLayout>
+    </ScrollView>
 
 </ContentPage>

@@ -4,11 +4,25 @@
              xmlns:vm="clr-namespace:tmr_mobile.ViewModels"
              x:Class="tmr_mobile.Views.Configuracion.FeriadosPage"
              x:DataType="vm:FeriadosConfigViewModel"
-             Title="{Binding Title}">
+             Title="{Binding Title}"
+             BackgroundColor="{StaticResource Background}">
 
-    <VerticalStackLayout Spacing="16" Padding="20">
-        <Label Text="Gestión de Días Feriados" FontAttributes="Bold" FontSize="18" />
-        <Label Text="Calendario de días no laborables registrados." TextColor="#64748B" FontSize="14" />
-    </VerticalStackLayout>
+    <ScrollView>
+        <VerticalStackLayout Spacing="18" Padding="20">
+            <Border Style="{StaticResource CardBorderStyle}" BackgroundColor="#FEFCE8">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Días feriados" Style="{StaticResource PageHeaderTitleStyle}" />
+                    <Label Text="Control y administración del calendario de días no laborables" Style="{StaticResource PageHeaderSubtitleStyle}" />
+                </VerticalStackLayout>
+            </Border>
+            <Border Style="{StaticResource ListCardStyle}">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Vista de calendario" Style="{StaticResource SectionTitleStyle}" />
+                    <Label Text="• Registrar fechas especiales" Style="{StaticResource PageSubtitleStyle}" />
+                    <Label Text="• Revisar exclusiones para reportes y carga de tiempo" Style="{StaticResource PageSubtitleStyle}" />
+                </VerticalStackLayout>
+            </Border>
+        </VerticalStackLayout>
+    </ScrollView>
 
 </ContentPage>

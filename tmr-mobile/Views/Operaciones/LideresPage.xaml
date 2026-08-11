@@ -4,19 +4,35 @@
              xmlns:vm="clr-namespace:tmr_mobile.ViewModels"
              x:Class="tmr_mobile.Views.Operaciones.LideresPage"
              x:DataType="vm:LideresViewModel"
-             Title="{Binding Title}">
+             Title="{Binding Title}"
+             BackgroundColor="{StaticResource Background}">
 
-    <CollectionView ItemsSource="{Binding Lideres}" Margin="16">
-        <CollectionView.ItemTemplate>
-            <DataTemplate x:DataType="vm:LiderItem">
-                <Frame Margin="0,0,0,12" Padding="16" CornerRadius="10">
-                    <VerticalStackLayout Spacing="4">
-                        <Label Text="{Binding Nombre}" FontAttributes="Bold" FontSize="16" />
-                        <Label Text="{Binding Area}" TextColor="#64748B" FontSize="14" />
-                    </VerticalStackLayout>
-                </Frame>
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
-    </CollectionView>
+    <Grid RowDefinitions="Auto,*" Padding="20" RowSpacing="12">
+        <Border Grid.Row="0" Style="{StaticResource CardBorderStyle}" BackgroundColor="#F5F3FF">
+            <VerticalStackLayout Spacing="4">
+                <Label Text="Líderes" Style="{StaticResource PageHeaderTitleStyle}" />
+                <Label Text="Vista de líderes y su área de responsabilidad" Style="{StaticResource PageHeaderSubtitleStyle}" />
+            </VerticalStackLayout>
+        </Border>
+
+        <CollectionView Grid.Row="1" ItemsSource="{Binding Lideres}">
+            <CollectionView.EmptyView>
+                <VerticalStackLayout Padding="24" Spacing="8" HorizontalOptions="Center" VerticalOptions="Center">
+                    <Label Text="No se encontraron líderes." TextColor="{StaticResource TextSecondary}" HorizontalTextAlignment="Center" />
+                    <Label Text="{Binding ErrorMessage}" TextColor="{StaticResource Error}" IsVisible="{Binding ErrorMessage, Converter={StaticResource IsStringNotNullOrEmptyConverter}}" HorizontalTextAlignment="Center" />
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="vm:LiderItem">
+                    <Border Style="{StaticResource ListCardStyle}" Margin="0,0,0,10">
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="{Binding Nombre}" Style="{StaticResource PageTitleStyle}" FontSize="16" />
+                            <Label Text="{Binding Area}" Style="{StaticResource PageSubtitleStyle}" FontSize="14" />
+                        </VerticalStackLayout>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
 
 </ContentPage>
