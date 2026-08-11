@@ -1,13 +1,11 @@
-namespace tmr_shared.DTOs.TimeReport;
 using System;
 
-public record CalendarioActividadDto(
-    int Id,
+namespace tmr_shared.DTOs.TimeReport;
+
+public record CrearActividadDto(
     int IdEmpleado,
     int? IdProyecto,
-    string ProyectoNombre,
     int IdTipoActividad,
-    string TipoActividadNombre,
     string? CodigoRequerimiento,
     decimal CantidadHoras,
     DateOnly FechaActividad,
