@@ -29,6 +29,10 @@ bld/
 [Oo]bj/
 [Ll]og/
 [Ll]ogs/
+**/bin/
+**/obj/
+tmr-mobile/bin/
+tmr-mobile/obj/
 
 # Visual Studio 2015/2017/2019/2022 cache/options directory
 .vs/
