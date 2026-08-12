@@ -86,7 +86,7 @@ public partial class DashboardViewModel : BaseViewModel
         ErrorMessage = string.Empty;
         try
         {
-            var response = await _apiService.GetAsync<DashboardDataResponse>($"api/dashboard?rango={RangoSeleccionado}");
+            var response = await _apiService.GetAsync<DashboardDataResponse>($"dashboard?rango={RangoSeleccionado}");
 
             if (response?.Metricas == null)
             {

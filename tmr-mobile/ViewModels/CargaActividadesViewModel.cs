@@ -128,7 +128,7 @@ public partial class CargaActividadesViewModel : BaseViewModel
         ErrorMessage = string.Empty;
         try
         {
-            var response = await _apiService.GetAsync<List<ActividadCargaResponse>>("api/carga-actividades");
+            var response = await _apiService.GetAsync<List<ActividadCargaResponse>>("carga-actividades");
             _todasLasActividades = response ?? new List<ActividadCargaResponse>();
 
             var totalHoras = _todasLasActividades.Sum(a => a.NroHoras);
@@ -151,7 +151,7 @@ public partial class CargaActividadesViewModel : BaseViewModel
     {
         try
         {
-            var response = await _apiService.GetAsync<HorasIncompletasResponse>("api/dashboard/mis-horas-incompletas?rango=mes");
+            var response = await _apiService.GetAsync<HorasIncompletasResponse>("dashboard/mis-horas-incompletas?rango=mes");
             if (response != null)
             {
                 TieneHorasFaltantes = response.TieneFaltantes;
@@ -313,7 +313,7 @@ public partial class CargaActividadesViewModel : BaseViewModel
         try
         {
             System.Diagnostics.Debug.WriteLine("[Descargar] 1. Solicitando el archivo al backend...");
-            var bytesArchivo = await _apiService.GetFileBytesAsync("api/carga-actividades/download");
+            var bytesArchivo = await _apiService.GetFileBytesAsync("carga-actividades/download");
             System.Diagnostics.Debug.WriteLine($"[Descargar] 2. Descarga completa, {bytesArchivo?.Length ?? 0} bytes.");
 
             if (bytesArchivo == null || bytesArchivo.Length == 0)
