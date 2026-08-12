@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="tmr_mobile.Views.Shared.ConfirmDialogPage"
+             Shell.NavBarIsVisible="False"
+             Shell.TabBarIsVisible="False"
+             BackgroundColor="#990F172A">
+
+    <Grid Padding="20,32">
+        <Border x:Name="DialogCard"
+                MaximumWidthRequest="420"
+                HorizontalOptions="Fill"
+                VerticalOptions="Center"
+                BackgroundColor="White"
+                Stroke="#E8EDF5"
+                StrokeThickness="1"
+                StrokeShape="RoundRectangle 22"
+                Padding="24,26,24,22">
+            <Border.Shadow>
+                <Shadow Brush="#0F172A"
+                        Opacity="0.24"
+                        Radius="28"
+                        Offset="0,12" />
+            </Border.Shadow>
+
+            <VerticalStackLayout Spacing="0">
+                <Border WidthRequest="52"
+                        HeightRequest="52"
+                        HorizontalOptions="Start"
+                        BackgroundColor="#FEF2F2"
+                        Stroke="#FECACA"
+                        StrokeThickness="1"
+                        StrokeShape="RoundRectangle 16">
+                    <Label x:Name="IconLabel"
+                           FontFamily="InterSemiBold"
+                           FontSize="23"
+                           TextColor="#B42318"
+                           HorizontalTextAlignment="Center"
+                           VerticalTextAlignment="Center" />
+                </Border>
+
+                <Label x:Name="TitleLabel"
+                       Margin="0,18,0,0"
+                       FontFamily="InterSemiBold"
+                       FontSize="21"
+                       TextColor="#163572"
+                       LineHeight="1.15" />
+
+                <Label x:Name="MessageLabel"
+                       Margin="0,9,0,0"
+                       FontFamily="InterRegular"
+                       FontSize="14"
+                       TextColor="#5F6B7A"
+                       LineHeight="1.35" />
+
+                <BoxView Margin="0,24,0,20"
+                         HeightRequest="1"
+                         Color="#E8EDF5" />
+
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                    <Button x:Name="CancelButton"
+                            Grid.Column="0"
+                            Clicked="OnCancelClicked"
+                            HeightRequest="48"
+                            CornerRadius="11"
+                            Padding="12,0"
+                            FontFamily="InterSemiBold"
+                            FontSize="14"
+                            BackgroundColor="#FFFFFF"
+                            BorderColor="#D1D5DB"
+                            BorderWidth="1"
+                            TextColor="#374151" />
+
+                    <Button x:Name="ConfirmButton"
+                            Grid.Column="1"
+                            Clicked="OnConfirmClicked"
+                            HeightRequest="48"
+                            CornerRadius="11"
+                            Padding="12,0"
+                            FontFamily="InterSemiBold"
+                            FontSize="14"
+                            BackgroundColor="#163572"
+                            TextColor="White" />
+                </Grid>
+            </VerticalStackLayout>
+        </Border>
+    </Grid>
+</ContentPage>

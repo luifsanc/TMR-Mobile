@@ -3,6 +3,7 @@ using tmr_mobile.Views.Operaciones;
 using tmr_mobile.Views.TimeReport;
 using tmr_mobile.Views.Reportes;
 using tmr_mobile.Views.Home;
+using tmr_mobile.Views.Auth;
 
 namespace tmr_mobile;
 
@@ -56,5 +57,6 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(nameof(CrearActividadPage), typeof(CrearActividadPage));
         Routing.RegisterRoute(nameof(FeriadosPage), typeof(FeriadosPage));
         Routing.RegisterRoute(nameof(CatalogosPage), typeof(CatalogosPage));
+        Routing.RegisterRoute(nameof(ChangePasswordPage), typeof(ChangePasswordPage));
     }
 }

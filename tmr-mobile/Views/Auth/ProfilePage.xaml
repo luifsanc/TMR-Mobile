@@ -5,80 +5,151 @@
              xmlns:shared="clr-namespace:tmr_mobile.Views.Shared"
              x:Class="tmr_mobile.Views.Auth.ProfilePage"
              x:DataType="vm:ProfileViewModel"
-             BackgroundColor="#F4F6FA"
-             Title="{Binding Title}">
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="#F6F8FC"
+             Title="Perfil">
 
     <Grid RowDefinitions="*,80">
-        <!-- Main Content -->
-        <ScrollView Grid.Row="0">
-            <VerticalStackLayout Padding="24,60,24,24">
-                
-                <!-- White Profile Card -->
+        <ScrollView Grid.Row="0" VerticalScrollBarVisibility="Never">
+            <VerticalStackLayout Padding="24,32,24,32" Spacing="24">
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="Mi perfil"
+                           FontFamily="InterSemiBold"
+                           FontSize="28"
+                           TextColor="#163572" />
+                    <Label Text="Administra la seguridad de tu cuenta"
+                           FontFamily="InterRegular"
+                           FontSize="14"
+                           TextColor="#64748B" />
+                </VerticalStackLayout>
+
                 <Border BackgroundColor="White"
-                        StrokeThickness="0"
-                        StrokeShape="RoundRectangle 24"
-                        Padding="24,40,24,40">
+                        Stroke="#E8EDF5"
+                        StrokeThickness="1"
+                        StrokeShape="RoundRectangle 20"
+                        Padding="22">
                     <Border.Shadow>
-                        <Shadow Brush="#000000" Opacity="0.05" Radius="15" Offset="0,4" />
+                        <Shadow Brush="#163572" Opacity="0.08" Radius="18" Offset="0,6" />
                     </Border.Shadow>
-
-                    <VerticalStackLayout>
-                        
-                        <!-- User Name -->
-                        <Label Text="{Binding UserName}"
-                               FontSize="28"
-                               FontAttributes="Bold"
-                               TextColor="#101828"
-                               HorizontalOptions="Center"
-                               Margin="0,0,0,4"/>
-                        
-                        <!-- User Email -->
-                        <Label Text="{Binding Email}"
-                               FontSize="18"
-                               TextColor="#667085"
-                               HorizontalOptions="Center"
-                               Margin="0,0,0,48"/>
-                        
-                        <!-- Change Password Option -->
-                        <Border BackgroundColor="#F9FAFB"
-                                Stroke="#EAECF0"
-                                StrokeThickness="1"
-                                StrokeShape="RoundRectangle 12"
-                                Padding="16,16"
-                                Margin="0,0,0,16">
-                            <Border.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding ChangePasswordCommand}" />
-                            </Border.GestureRecognizers>
-                            <Grid ColumnDefinitions="Auto, *, Auto">
-                                <Image Grid.Column="0" Source="key_icon.png" WidthRequest="22" HeightRequest="22" VerticalOptions="Center" />
-                                <Label Grid.Column="1" Text="Cambiar Contraseña" TextColor="#101828" FontSize="15" FontAttributes="Bold" VerticalOptions="Center" Margin="14,0,0,0" />
-                                <Label Grid.Column="2" Text="›" TextColor="#98A2B3" FontSize="26" FontFamily="Inter" VerticalOptions="Center" />
-                            </Grid>
+                    <Grid ColumnDefinitions="64,*" ColumnSpacing="16">
+                        <Border WidthRequest="64"
+                                HeightRequest="64"
+                                BackgroundColor="#EAF1FA"
+                                StrokeThickness="0"
+                                StrokeShape="RoundRectangle 32">
+                            <Image Source="user_profile.png"
+                                   WidthRequest="28"
+                                   HeightRequest="28"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center" />
                         </Border>
-
-                        <!-- Logout Option -->
-                        <Border BackgroundColor="#F9FAFB"
-                                Stroke="#EAECF0"
-                                StrokeThickness="1"
-                                StrokeShape="RoundRectangle 12"
-                                Padding="16,16">
-                            <Border.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding LogoutCommand}" />
-                            </Border.GestureRecognizers>
-                            <Grid ColumnDefinitions="Auto, *, Auto">
-                                <Image Grid.Column="0" Source="logout_icon.png" WidthRequest="22" HeightRequest="22" VerticalOptions="Center" />
-                                <Label Grid.Column="1" Text="Cerrar Sesion" TextColor="#101828" FontSize="15" FontAttributes="Bold" VerticalOptions="Center" Margin="14,0,0,0" />
-                                <Label Grid.Column="2" Text="›" TextColor="#98A2B3" FontSize="26" FontFamily="Inter" VerticalOptions="Center" />
-                            </Grid>
-                        </Border>
-                        
-                    </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Column="1"
+                                             VerticalOptions="Center"
+                                             Spacing="4">
+                            <Label Text="{Binding UserName}"
+                                   FontFamily="InterSemiBold"
+                                   FontSize="20"
+                                   TextColor="#163572"
+                                   LineBreakMode="TailTruncation" />
+                            <Label Text="{Binding Email}"
+                                   FontFamily="InterRegular"
+                                   FontSize="13"
+                                   TextColor="#64748B"
+                                   LineBreakMode="TailTruncation" />
+                        </VerticalStackLayout>
+                    </Grid>
                 </Border>
-                
+
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="SEGURIDAD"
+                           FontFamily="InterSemiBold"
+                           FontSize="12"
+                           CharacterSpacing="1.2"
+                           TextColor="#64748B"
+                           Margin="4,0,0,2" />
+
+                    <Border BackgroundColor="White"
+                            Stroke="#E2E8F0"
+                            StrokeThickness="1"
+                            StrokeShape="RoundRectangle 16"
+                            Padding="16">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ChangePasswordCommand}" />
+                        </Border.GestureRecognizers>
+                        <Grid ColumnDefinitions="46,*,Auto" ColumnSpacing="14">
+                            <Border WidthRequest="46"
+                                    HeightRequest="46"
+                                    BackgroundColor="#EAF1FA"
+                                    StrokeThickness="0"
+                                    StrokeShape="RoundRectangle 13">
+                                <Image Source="key_icon.png"
+                                       WidthRequest="22"
+                                       HeightRequest="22"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center" />
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                                <Label Text="Cambiar contraseña"
+                                       FontFamily="InterSemiBold"
+                                       FontSize="15"
+                                       TextColor="#163572" />
+                                <Label Text="Actualiza tu clave de acceso"
+                                       FontFamily="InterRegular"
+                                       FontSize="12"
+                                       TextColor="#64748B" />
+                            </VerticalStackLayout>
+                            <Label Grid.Column="2"
+                                   Text="›"
+                                   FontFamily="InterRegular"
+                                   FontSize="28"
+                                   TextColor="#94A3B8"
+                                   VerticalOptions="Center" />
+                        </Grid>
+                    </Border>
+
+                    <Border BackgroundColor="White"
+                            Stroke="#FECACA"
+                            StrokeThickness="1"
+                            StrokeShape="RoundRectangle 16"
+                            Padding="16">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding LogoutCommand}" />
+                        </Border.GestureRecognizers>
+                        <Grid ColumnDefinitions="46,*,Auto" ColumnSpacing="14">
+                            <Border WidthRequest="46"
+                                    HeightRequest="46"
+                                    BackgroundColor="#FEF2F2"
+                                    StrokeThickness="0"
+                                    StrokeShape="RoundRectangle 13">
+                                <Image Source="logout_icon.png"
+                                       WidthRequest="22"
+                                       HeightRequest="22"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center" />
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                                <Label Text="Cerrar sesión"
+                                       FontFamily="InterSemiBold"
+                                       FontSize="15"
+                                       TextColor="#B42318" />
+                                <Label Text="Salir de este dispositivo"
+                                       FontFamily="InterRegular"
+                                       FontSize="12"
+                                       TextColor="#64748B" />
+                            </VerticalStackLayout>
+                            <ActivityIndicator Grid.Column="2"
+                                               IsVisible="{Binding IsBusy}"
+                                               IsRunning="{Binding IsBusy}"
+                                               Color="#B42318"
+                                               WidthRequest="22"
+                                               HeightRequest="22"
+                                               VerticalOptions="Center" />
+                        </Grid>
+                    </Border>
+                </VerticalStackLayout>
             </VerticalStackLayout>
         </ScrollView>
 
-        <!-- Bottom Navigation Bar -->
         <shared:BottomNavBar Grid.Row="1" />
     </Grid>
 </ContentPage>

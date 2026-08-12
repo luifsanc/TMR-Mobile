@@ -55,6 +55,7 @@ public static class MauiProgram
 
         builder.Services.AddSingleton<ApiService>();
         builder.Services.AddSingleton<IAuthService, AuthService>();
+        builder.Services.AddSingleton<IConfirmDialogService, ConfirmDialogService>();
         builder.Services.AddSingleton<ICatalogosService, CatalogosService>();
         builder.Services.AddSingleton<IClientesService, ClientesService>();
         builder.Services.AddSingleton<IColaboradoresService, ColaboradoresService>();
@@ -95,6 +96,7 @@ public static class MauiProgram
         builder.Services.AddTransient<NoticiasViewModel>();
         builder.Services.AddTransient<ReportesViewModel>();
         builder.Services.AddTransient<ProfileViewModel>();
+        builder.Services.AddTransient<ChangePasswordViewModel>();
 
 
         // ─────────────────────────────────────────────────────────────
@@ -131,6 +133,7 @@ public static class MauiProgram
         builder.Services.AddTransient<HomePage>();
         builder.Services.AddTransient<ReportesPage>();
         builder.Services.AddTransient<ProfilePage>();
+        builder.Services.AddTransient<ChangePasswordPage>();
 
 
         // ─────────────────────────────────────────────────────────────

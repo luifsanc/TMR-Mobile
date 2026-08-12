@@ -11,6 +11,7 @@ public partial class CatalogoDetalleViewModel :
     IQueryAttributable
 {
     private readonly ICatalogosService _catalogosService;
+    private readonly IConfirmDialogService _confirmDialogService;
 
     [ObservableProperty]
     public partial CatalogoDetalle? Detalle { get; set; }
@@ -42,9 +43,11 @@ public partial class CatalogoDetalleViewModel :
         );
 
     public CatalogoDetalleViewModel(
-        ICatalogosService catalogosService)
+        ICatalogosService catalogosService,
+        IConfirmDialogService confirmDialogService)
     {
         _catalogosService = catalogosService;
+        _confirmDialogService = confirmDialogService;
 
         Title = "Detalle";
     }
@@ -108,11 +111,12 @@ public partial class CatalogoDetalleViewModel :
             return;
 
         var confirmar =
-            await Shell.Current.DisplayAlertAsync(
+            await _confirmDialogService.ShowAsync(
                 "Eliminar registro",
                 $"¿Deseas eliminar \"{Detalle.Valor}\"?",
                 "Eliminar",
-                "Cancelar"
+                "Cancelar",
+                "!"
             );
 
         if (!confirmar)
