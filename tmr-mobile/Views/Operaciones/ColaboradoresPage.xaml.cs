@@ -4,18 +4,18 @@ namespace tmr_mobile.Views.Operaciones;
 
 public partial class ColaboradoresPage : ContentPage
 {
+    private readonly ColaboradoresViewModel _viewModel;
+
     public ColaboradoresPage(ColaboradoresViewModel viewModel)
     {
         InitializeComponent();
-        BindingContext = viewModel;
+        _viewModel = viewModel;
+        BindingContext = _viewModel;
     }
 
-    protected override void OnAppearing()
+    protected override async void OnAppearing()
     {
         base.OnAppearing();
-        if (BindingContext is ColaboradoresViewModel vm)
-        {
-            vm.CargarColaboradoresCommand.Execute(null);
-        }
+        await _viewModel.InicializarAsync();
     }
 }

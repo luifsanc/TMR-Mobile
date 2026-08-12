@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:tmr_mobile.ViewModels"
+    x:Class="tmr_mobile.Views.Configuracion.CatalogoFormPage"
+    x:DataType="vm:CatalogoFormViewModel"
+    Title="{Binding TituloFormulario}"
+    BackgroundColor="{StaticResource CatalogBackground}">
+
+    <Grid RowDefinitions="*,Auto">
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout Padding="18" Spacing="18">
+                <Button Text="‹  Regresar" Command="{Binding RegresarCommand}"
+                        Style="{StaticResource CatalogBackLink}" />
+
+                <VerticalStackLayout Spacing="3">
+                    <Label Text="{Binding TituloFormulario}" Style="{StaticResource CatalogPageTitle}" />
+                    <Label Text="{Binding NombreCatalogo}" Style="{StaticResource CatalogPageSubtitle}" />
+                </VerticalStackLayout>
+
+                <Border Style="{StaticResource CatalogCard}" Padding="18">
+                    <VerticalStackLayout Spacing="18">
+                        <Label Text="INFORMACIÓN DEL ÍTEM" Style="{StaticResource CatalogSectionTitle}" />
+
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="Código" Style="{StaticResource CatalogFieldLabel}" />
+                            <Border Style="{StaticResource CatalogInputBorder}">
+                                <Entry Text="{Binding CodigoValor}" Placeholder="Ej: CLI"
+                                       CharacterSpacing="1" Style="{StaticResource CatalogInput}" />
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="6">
+                            <Label Style="{StaticResource CatalogFieldLabel}">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Nombre / Valor " />
+                                        <Span Text="*" TextColor="{StaticResource CatalogError}" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Border Style="{StaticResource CatalogInputBorder}">
+                                <Entry Text="{Binding Valor}" Placeholder="Ingrese el nombre"
+                                       Style="{StaticResource CatalogInput}" />
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="Descripción" Style="{StaticResource CatalogFieldLabel}" />
+                            <Border Style="{StaticResource CatalogTextAreaBorder}">
+                                <Editor Text="{Binding Descripcion}"
+                                        Placeholder="Descripción del registro"
+                                        AutoSize="TextChanges"
+                                        Style="{StaticResource CatalogEditor}" />
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                            <VerticalStackLayout Grid.Column="0" Spacing="6">
+                                <Label Text="Orden" Style="{StaticResource CatalogFieldLabel}" />
+                                <Border Style="{StaticResource CatalogInputBorder}">
+                                    <Entry Text="{Binding OrdenTexto}" Placeholder="Ej: 1"
+                                           Keyboard="Numeric" Style="{StaticResource CatalogInput}" />
+                                </Border>
+                            </VerticalStackLayout>
+
+                            <VerticalStackLayout Grid.Column="1" Spacing="6">
+                                <Label Text="Valor extra" Style="{StaticResource CatalogFieldLabel}" />
+                                <Border Style="{StaticResource CatalogInputBorder}">
+                                    <Entry Text="{Binding ValorExtra}" Placeholder="Opcional"
+                                           Style="{StaticResource CatalogInput}" />
+                                </Border>
+                            </VerticalStackLayout>
+                        </Grid>
+
+                        <Border IsVisible="{Binding EsEdicion}"
+                                Padding="14,10"
+                                BackgroundColor="{StaticResource CatalogPrimaryLight}"
+                                Stroke="{StaticResource CatalogBorder}"
+                                StrokeThickness="1"
+                                StrokeShape="RoundRectangle 8">
+                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                                <VerticalStackLayout Grid.Column="0" Spacing="2">
+                                    <Label Text="Estado" Style="{StaticResource CatalogHeadingText}" FontSize="13"
+                                           TextColor="{StaticResource CatalogTextMain}" />
+                                    <Label Text="Activar o desactivar el registro" FontFamily="Inter" FontSize="11"
+                                           TextColor="{StaticResource CatalogTextSecondary}" />
+                                </VerticalStackLayout>
+                                <Switch Grid.Column="1" IsToggled="{Binding Activo}"
+                                        OnColor="{StaticResource CatalogAccent}" VerticalOptions="Center" />
+                            </Grid>
+                        </Border>
+
+                        <Label Text="{Binding ErrorMessage}"
+                               FontFamily="Inter"
+                               TextColor="{StaticResource CatalogError}"
+                               FontSize="12" LineBreakMode="WordWrap" />
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <Grid Grid.Row="1" Padding="18,12,18,18" BackgroundColor="{StaticResource CatalogBackground}">
+            <Button Text="{Binding TextoBoton}" Command="{Binding GuardarCommand}"
+                    Style="{StaticResource CatalogPrimaryButton}" />
+        </Grid>
+
+        <Grid Grid.RowSpan="2" IsVisible="{Binding IsBusy}" BackgroundColor="#66FFFFFF">
+            <ActivityIndicator IsRunning="{Binding IsBusy}" Color="{StaticResource CatalogPrimary}"
+                               HorizontalOptions="Center" VerticalOptions="Center" />
+        </Grid>
+    </Grid>
+</ContentPage>

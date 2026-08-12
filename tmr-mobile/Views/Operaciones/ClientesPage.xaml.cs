@@ -4,18 +4,18 @@ namespace tmr_mobile.Views.Operaciones;
 
 public partial class ClientesPage : ContentPage
 {
+    private readonly ClientesViewModel _viewModel;
+
     public ClientesPage(ClientesViewModel viewModel)
     {
         InitializeComponent();
-        BindingContext = viewModel;
+        _viewModel = viewModel;
+        BindingContext = _viewModel;
     }
 
-    protected override void OnAppearing()
+    protected override async void OnAppearing()
     {
         base.OnAppearing();
-        if (BindingContext is ClientesViewModel vm)
-        {
-            vm.CargarClientesCommand.Execute(null);
-        }
+        await _viewModel.InicializarAsync();
     }
 }

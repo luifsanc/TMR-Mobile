@@ -5,80 +5,87 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:auth="clr-namespace:tmr_mobile.Views.Auth"
     xmlns:dash="clr-namespace:tmr_mobile.Views.Dashboard"
+    xmlns:home="clr-namespace:tmr_mobile.Views.Home"
     xmlns:time="clr-namespace:tmr_mobile.Views.TimeReport"
     xmlns:ops="clr-namespace:tmr_mobile.Views.Operaciones"
     xmlns:rep="clr-namespace:tmr_mobile.Views.Reportes"
     xmlns:cfg="clr-namespace:tmr_mobile.Views.Configuracion"
     Title="TMR Móvil"
-    FlyoutHeaderBehavior="CollapseOnScroll">
+    FlyoutBehavior="Disabled">
 
-    <Shell.FlyoutHeader>
-        <Grid BackgroundColor="#1E293B" HeightRequest="140" Padding="20">
-            <VerticalStackLayout VerticalOptions="End">
-                <Label Text="TMR Móvil" FontSize="22" FontAttributes="Bold" TextColor="White" />
-                <Label Text="Gestión de Tiempos y Recursos" FontSize="12" TextColor="#94A3B8" />
-            </VerticalStackLayout>
-        </Grid>
-    </Shell.FlyoutHeader>
-
-    <!-- Ruta de Autenticación fuera del Flyout/TabBar -->
-    <ShellItem Route="LoginPage" FlyoutItemIsVisible="False">
+    <ShellItem Route="LoginPage">
         <ShellContent ContentTemplate="{DataTemplate auth:LoginPage}" />
     </ShellItem>
 
-    <!-- Estructura Principal de Menú y Navegación (Coincidiendo con Angular Routes) -->
-    <FlyoutItem Title="Dashboard" Icon="logo_isc.png" Route="DashboardPage">
+    <ShellItem Route="ForgotPasswordPage">
+        <ShellContent ContentTemplate="{DataTemplate auth:ForgotPasswordPage}" />
+    </ShellItem>
+
+    <ShellItem Route="DashboardPage">
         <ShellContent ContentTemplate="{DataTemplate dash:DashboardPage}" />
-    </FlyoutItem>
+    </ShellItem>
 
-    <FlyoutItem Title="Proyectos" Icon="logo_isc.png">
-        <ShellContent ContentTemplate="{DataTemplate ops:ProyectosPage}" Route="ProyectosPage" />
-    </FlyoutItem>
+    <ShellItem Route="HomePage">
+        <ShellContent ContentTemplate="{DataTemplate home:HomePage}" />
+    </ShellItem>
 
-    <FlyoutItem Title="Time Report" Icon="logo_isc.png">
+    <ShellItem Route="ProyectosPage" Shell.TabBarIsVisible="False">
+        <ShellContent ContentTemplate="{DataTemplate ops:ProyectosPage}" />
+    </ShellItem>
+
+    <ShellItem Route="TimeReportPage" Shell.TabBarIsVisible="False">
         <Tab Title="Mis Actividades">
-            <ShellContent ContentTemplate="{DataTemplate time:TimeReportPage}" Route="TimeReportPage" />
+            <ShellContent ContentTemplate="{DataTemplate time:TimeReportPage}" />
         </Tab>
-    </FlyoutItem>
+    </ShellItem>
 
-    <FlyoutItem Title="Carga de Actividades" Icon="logo_isc.png">
-        <ShellContent ContentTemplate="{DataTemplate time:CargaActividadesPage}" Route="CargaActividadesPage" />
-    </FlyoutItem>
+    <ShellItem Route="CargaActividadesPage" Shell.TabBarIsVisible="False">
+        <ShellContent ContentTemplate="{DataTemplate time:CargaActividadesPage}" />
+    </ShellItem>
 
-    <FlyoutItem Title="Reportes" Icon="logo_isc.png">
+    <ShellItem Route="NotificacionesPage" Shell.TabBarIsVisible="False">
+        <ShellContent ContentTemplate="{DataTemplate time:NotificacionesPage}" />
+    </ShellItem>
+
+    <ShellItem Route="ReportesPage" Shell.TabBarIsVisible="False">
         <Tab Title="Horas">
             <ShellContent ContentTemplate="{DataTemplate rep:ReporteHorasPage}" Route="ReporteHorasPage" />
         </Tab>
         <Tab Title="Fechas">
             <ShellContent ContentTemplate="{DataTemplate rep:ReporteFechasPage}" Route="ReporteFechasPage" />
         </Tab>
-    </FlyoutItem>
+    </ShellItem>
 
-    <FlyoutItem Title="Líderes" Icon="logo_isc.png">
-        <ShellContent ContentTemplate="{DataTemplate ops:LideresPage}" Route="LideresPage" />
-    </FlyoutItem>
+    <ShellItem Route="LideresPage" Shell.TabBarIsVisible="False">
+        <ShellContent ContentTemplate="{DataTemplate ops:LideresPage}" />
+    </ShellItem>
 
-    <FlyoutItem Title="Colaboradores" Icon="logo_isc.png">
-        <ShellContent ContentTemplate="{DataTemplate ops:ColaboradoresPage}" Route="ColaboradoresPage" />
-    </FlyoutItem>
+    <ShellItem Route="ColaboradoresPage" Shell.TabBarIsVisible="False">
+        <ShellContent ContentTemplate="{DataTemplate ops:ColaboradoresPage}" />
+    </ShellItem>
 
-    <FlyoutItem Title="Clientes" Icon="logo_isc.png">
-        <ShellContent ContentTemplate="{DataTemplate ops:ClientesPage}" Route="ClientesPage" />
-    </FlyoutItem>
+    <ShellItem Route="ProfilePage" Shell.TabBarIsVisible="False">
+        <ShellContent ContentTemplate="{DataTemplate auth:ProfilePage}" />
+    </ShellItem>
 
-    <FlyoutItem Title="Configuración" Icon="logo_isc.png">
-        <Tab Title="Usuarios">
-            <ShellContent ContentTemplate="{DataTemplate cfg:UsuariosPage}" Route="UsuariosPage" />
-        </Tab>
-        <Tab Title="Roles">
-            <ShellContent ContentTemplate="{DataTemplate cfg:RolesPage}" Route="RolesPage" />
-        </Tab>
-        <Tab Title="Feriados">
-            <ShellContent ContentTemplate="{DataTemplate cfg:FeriadosPage}" Route="FeriadosPage" />
-        </Tab>
-        <Tab Title="Catálogos">
-            <ShellContent ContentTemplate="{DataTemplate cfg:CatalogosPage}" Route="CatalogosPage" />
-        </Tab>
-    </FlyoutItem>
+    <ShellItem Route="ClientesPage" Shell.TabBarIsVisible="False">
+        <ShellContent ContentTemplate="{DataTemplate ops:ClientesPage}" />
+    </ShellItem>
+
+    <ShellItem Route="ConfiguracionPage" Shell.TabBarIsVisible="False">
+        <ShellContent ContentTemplate="{DataTemplate cfg:ConfiguracionPage}" />
+    </ShellItem>
+    <ShellItem Route="UsuariosPage" Shell.TabBarIsVisible="False">
+        <ShellContent ContentTemplate="{DataTemplate cfg:UsuariosPage}" />
+    </ShellItem>
+    <ShellItem Route="RolesPage" Shell.TabBarIsVisible="False">
+        <ShellContent ContentTemplate="{DataTemplate cfg:RolesPage}" />
+    </ShellItem>
+    <ShellItem Route="FeriadosPage" Shell.TabBarIsVisible="False">
+        <ShellContent ContentTemplate="{DataTemplate cfg:FeriadosPage}" />
+    </ShellItem>
+    <ShellItem Route="CatalogosPage" Shell.TabBarIsVisible="False">
+        <ShellContent ContentTemplate="{DataTemplate cfg:CatalogosPage}" />
+    </ShellItem>
 
 </Shell>

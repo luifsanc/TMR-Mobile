@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:tmr_mobile.ViewModels"
+    x:Class="tmr_mobile.Views.Configuracion.CatalogoDetallePage"
+    x:DataType="vm:CatalogoDetalleViewModel"
+    Title="Detalle"
+    BackgroundColor="{StaticResource CatalogBackground}">
+
+    <Grid RowDefinitions="*,Auto">
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout Padding="18" Spacing="18">
+                <Button Text="‹  Regresar" Command="{Binding RegresarCommand}"
+                        Style="{StaticResource CatalogBackLink}" />
+
+                <VerticalStackLayout Spacing="3">
+                    <Label Text="Detalle del catálogo" Style="{StaticResource CatalogPageTitle}" />
+                    <Label Text="Información completa del registro seleccionado"
+                           Style="{StaticResource CatalogPageSubtitle}" />
+                </VerticalStackLayout>
+
+                <Border Style="{StaticResource CatalogCard}" Padding="0">
+                    <Grid RowDefinitions="6,Auto">
+                        <BoxView Grid.Row="0" Color="{Binding EstadoColor}" />
+                        <VerticalStackLayout Grid.Row="1" Padding="20" Spacing="16">
+                            <VerticalStackLayout Spacing="4">
+                                <Label Text="CÓDIGO" Style="{StaticResource CatalogFieldLabel}" />
+                                <Label Text="{Binding Detalle.CodigoValor}"
+                                       FontSize="18" Style="{StaticResource CatalogFieldValueStrong}" />
+                            </VerticalStackLayout>
+
+                            <BoxView Style="{StaticResource CatalogDivider}" />
+
+                            <VerticalStackLayout Spacing="4">
+                                <Label Text="VALOR / NOMBRE" Style="{StaticResource CatalogFieldLabel}" />
+                                <Label Text="{Binding Detalle.Valor}" Style="{StaticResource CatalogFieldValue}" />
+                            </VerticalStackLayout>
+
+                            <VerticalStackLayout IsVisible="{Binding TieneDescripcion}" Spacing="8">
+                                <BoxView Style="{StaticResource CatalogDivider}" />
+                                <VerticalStackLayout Spacing="4">
+                                    <Label Text="DESCRIPCIÓN" Style="{StaticResource CatalogFieldLabel}" />
+                                    <Label Text="{Binding Detalle.Descripcion}"
+                                           Style="{StaticResource CatalogFieldValue}" LineBreakMode="WordWrap" />
+                                </VerticalStackLayout>
+                            </VerticalStackLayout>
+
+                            <VerticalStackLayout IsVisible="{Binding TieneOrden}" Spacing="8">
+                                <BoxView Style="{StaticResource CatalogDivider}" />
+                                <VerticalStackLayout Spacing="4">
+                                    <Label Text="ORDEN" Style="{StaticResource CatalogFieldLabel}" />
+                                    <Label Text="{Binding Detalle.Orden}" Style="{StaticResource CatalogFieldValue}" />
+                                </VerticalStackLayout>
+                            </VerticalStackLayout>
+
+                            <VerticalStackLayout IsVisible="{Binding TieneValorExtra}" Spacing="8">
+                                <BoxView Style="{StaticResource CatalogDivider}" />
+                                <VerticalStackLayout Spacing="4">
+                                    <Label Text="VALOR EXTRA" Style="{StaticResource CatalogFieldLabel}" />
+                                    <Label Text="{Binding Detalle.ValorExtra}"
+                                           Style="{StaticResource CatalogFieldValue}" LineBreakMode="WordWrap" />
+                                </VerticalStackLayout>
+                            </VerticalStackLayout>
+
+                            <BoxView Style="{StaticResource CatalogDivider}" />
+
+                            <VerticalStackLayout Spacing="7">
+                                <Label Text="ESTADO" Style="{StaticResource CatalogFieldLabel}" />
+                                <Border HorizontalOptions="Start"
+                                        Padding="11,6"
+                                        BackgroundColor="{StaticResource CatalogInactiveBackground}"
+                                        StrokeThickness="0"
+                                        StrokeShape="RoundRectangle 16">
+                                    <HorizontalStackLayout Spacing="7">
+                                        <BoxView WidthRequest="8" HeightRequest="8" CornerRadius="4"
+                                                 Color="{Binding EstadoColor}" VerticalOptions="Center" />
+                                        <Label Text="{Binding EstadoTexto}" FontFamily="Inter SemiBold" FontSize="12" FontAttributes="None"
+                                               TextColor="{StaticResource CatalogTextMain}"
+                                               VerticalTextAlignment="Center" />
+                                    </HorizontalStackLayout>
+                                </Border>
+                            </VerticalStackLayout>
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <Grid Grid.Row="1" ColumnDefinitions="*,*" ColumnSpacing="12"
+              Padding="18,12,18,18" BackgroundColor="{StaticResource CatalogBackground}">
+            <Button Grid.Column="0" Text="Editar" Command="{Binding EditarCommand}"
+                    Style="{StaticResource CatalogPrimaryButton}" />
+            <Button Grid.Column="1" Text="Eliminar" Command="{Binding EliminarCommand}"
+                    Style="{StaticResource CatalogDangerButton}" />
+        </Grid>
+
+        <Grid Grid.RowSpan="2" IsVisible="{Binding IsBusy}" BackgroundColor="#66FFFFFF">
+            <ActivityIndicator IsRunning="{Binding IsBusy}" Color="{StaticResource CatalogPrimary}"
+                               HorizontalOptions="Center" VerticalOptions="Center" />
+        </Grid>
+    </Grid>
+</ContentPage>

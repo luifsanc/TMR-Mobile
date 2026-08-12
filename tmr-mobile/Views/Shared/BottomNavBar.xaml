@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="tmr_mobile.Views.Shared.BottomNavBar">
+
+    <Grid BackgroundColor="White" ColumnDefinitions="*,*,*,*,*" HeightRequest="80" VerticalOptions="End">
+         <!-- Top shadow / border -->
+         <BoxView HeightRequest="1" Color="#E5E5E5" VerticalOptions="Start" Grid.ColumnSpan="5" />
+         
+         <!-- Home -->
+         <VerticalStackLayout Grid.Column="0" VerticalOptions="Center" HorizontalOptions="Center" Spacing="2">
+             <VerticalStackLayout.GestureRecognizers>
+                 <TapGestureRecognizer Tapped="OnNavigate" CommandParameter="DashboardPage" />
+             </VerticalStackLayout.GestureRecognizers>
+             <Image Source="direccion.png" WidthRequest="24" HeightRequest="24" HorizontalOptions="Center" />
+         </VerticalStackLayout>
+         
+         <!-- Profile -->
+         <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Center" Spacing="2">
+             <VerticalStackLayout.GestureRecognizers>
+                 <TapGestureRecognizer Tapped="OnNavigate" CommandParameter="ProfilePage" />
+             </VerticalStackLayout.GestureRecognizers>
+             <Image Source="user_profile.png" WidthRequest="24" HeightRequest="24" HorizontalOptions="Center" />
+         </VerticalStackLayout>
+         
+         <!-- Center FAB -->
+         <Grid Grid.Column="2" WidthRequest="70" HeightRequest="70" VerticalOptions="End" Margin="0,0,0,20">
+              <Grid.GestureRecognizers>
+                  <TapGestureRecognizer Tapped="OnNavigate" CommandParameter="HomePage" />
+              </Grid.GestureRecognizers>
+              <Border StrokeShape="RoundRectangle 35" BackgroundColor="White" Stroke="#EEF4FF" StrokeThickness="4" WidthRequest="70" HeightRequest="70" HorizontalOptions="Center" VerticalOptions="Center">
+                   <Border StrokeShape="RoundRectangle 26" BackgroundColor="Transparent" WidthRequest="52" HeightRequest="52" HorizontalOptions="Center" VerticalOptions="Center" Stroke="Transparent">
+                        <Image Source="logo_isc.png" WidthRequest="40" HeightRequest="40" HorizontalOptions="Center" VerticalOptions="Center" />
+                   </Border>
+              </Border>
+         </Grid>
+
+         <!-- Notifications -->
+         <VerticalStackLayout Grid.Column="3" VerticalOptions="Center" HorizontalOptions="Center" Spacing="2">
+             <VerticalStackLayout.GestureRecognizers>
+                 <TapGestureRecognizer Tapped="OnNavigate" CommandParameter="NotificacionesPage" />
+             </VerticalStackLayout.GestureRecognizers>
+             <Image Source="notification_bell_alarm.png" WidthRequest="24" HeightRequest="24" HorizontalOptions="Center" />
+         </VerticalStackLayout>
+         
+         <!-- Settings -->
+         <VerticalStackLayout Grid.Column="4" VerticalOptions="Center" HorizontalOptions="Center" Spacing="2">
+             <VerticalStackLayout.GestureRecognizers>
+                 <TapGestureRecognizer Tapped="OnNavigate" CommandParameter="ConfiguracionPage" />
+             </VerticalStackLayout.GestureRecognizers>
+             <Image Source="configura.png" WidthRequest="24" HeightRequest="24" HorizontalOptions="Center" />
+         </VerticalStackLayout>
+    </Grid>
+</ContentView>

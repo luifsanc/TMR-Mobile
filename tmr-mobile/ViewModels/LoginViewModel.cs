@@ -17,32 +17,48 @@ public partial class LoginViewModel : BaseViewModel
     public LoginViewModel(IAuthService authService)
     {
         _authService = authService;
+
         Title = "Iniciar Sesión";
     }
 
     [RelayCommand]
     private async Task LoginAsync()
     {
-        if (string.IsNullOrWhiteSpace(User) || string.IsNullOrWhiteSpace(Password))
+        if (string.IsNullOrWhiteSpace(User) ||
+            string.IsNullOrWhiteSpace(Password))
         {
-            ErrorMessage = "Por favor ingrese usuario y contraseña.";
+            ErrorMessage =
+                "Por favor ingrese usuario y contraseña.";
+
             return;
         }
 
-        IsBusy = true;
-        ErrorMessage = string.Empty;
-
-        var success = await _authService.LoginAsync(User, Password);
-
-        IsBusy = false;
-
-        if (success)
+        try
         {
-            await Shell.Current.GoToAsync("//DashboardPage");
+            IsBusy = true;
+            ErrorMessage = string.Empty;
+
+            var success =
+                await _authService.LoginAsync(
+                    User,
+                    Password
+                );
+
+            if (success)
+            {
+                await Shell.Current.GoToAsync(
+                    "//DashboardPage"
+                );
+
+                return;
+            }
+
+            ErrorMessage =
+                "Credenciales inválidas o error de conexión.";
         }
-        else
+        finally
         {
-            ErrorMessage = "Credenciales inválidas o error de conexión.";
+            IsBusy = false;
         }
     }
 }

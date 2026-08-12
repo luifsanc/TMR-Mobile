@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:tmr_mobile.ViewModels"
+    xmlns:model="clr-namespace:tmr_mobile.Models.Operaciones"
+    x:Class="tmr_mobile.Views.Operaciones.ClienteDetallePage"
+    x:DataType="vm:ClienteDetalleViewModel"
+    Title="Detalle de Cliente"
+    Shell.NavBarIsVisible="False"
+    BackgroundColor="#F8FAFC">
+
+    <Grid>
+        <!-- CONTENIDO SCROLLABLE -->
+        <ScrollView IsVisible="{Binding TieneCliente}" VerticalScrollBarVisibility="Never">
+            <VerticalStackLayout Padding="16" Spacing="16">
+                
+                <!-- HEADER CON BOTÓN ATRÁS Y TÍTULO -->
+                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12" VerticalOptions="Center" Margin="0,4,0,4">
+                    <Button
+                        Grid.Column="0"
+                        Text="‹"
+                        Command="{Binding RegresarCommand}"
+                        BackgroundColor="Transparent"
+                        TextColor="#163572"
+                        FontSize="28"
+                        FontAttributes="Bold"
+                        FontFamily="InterSemiBold"
+                        Padding="0"
+                        WidthRequest="36"
+                        HeightRequest="36"
+                        VerticalOptions="Center" />
+                    
+                    <Label
+                        Grid.Column="1"
+                        Text="{Binding Cliente.NombreComercial}"
+                        FontSize="22"
+                        FontAttributes="Bold"
+                        FontFamily="InterSemiBold"
+                        TextColor="#163572"
+                        VerticalOptions="Center"
+                        LineBreakMode="TailTruncation"
+                        MaxLines="1" />
+                        
+                    <!-- BADGE DE ESTADO CON PUNTO (•) -->
+                    <Border
+                        Grid.Column="2"
+                        BackgroundColor="{Binding Cliente.ColorFondoEstado}"
+                        StrokeThickness="0"
+                        Padding="10,4"
+                        VerticalOptions="Center">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="12" />
+                        </Border.StrokeShape>
+                        <HorizontalStackLayout Spacing="4" VerticalOptions="Center">
+                            <Label
+                                Text="•"
+                                FontSize="14"
+                                FontAttributes="Bold"
+                                TextColor="{Binding Cliente.ColorEstado}"
+                                VerticalOptions="Center" />
+                            <Label
+                                Text="{Binding Cliente.EstadoTexto}"
+                                FontSize="11"
+                                FontAttributes="Bold"
+                                FontFamily="InterSemiBold"
+                                TextColor="{Binding Cliente.ColorEstado}"
+                                VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+                    </Border>
+                </Grid>
+
+                <!-- CARD INFORMACIÓN GENERAL -->
+                <Border
+                    BackgroundColor="White"
+                    Stroke="#E5E7EB"
+                    StrokeThickness="1"
+                    Padding="18">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="14" />
+                    </Border.StrokeShape>
+                    <Border.Shadow>
+                        <Shadow Brush="Black" Offset="0,2" Radius="6" Opacity="0.04" />
+                    </Border.Shadow>
+
+                    <VerticalStackLayout Spacing="16">
+                        <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
+                            <BoxView WidthRequest="3" HeightRequest="14" Color="#163572" CornerRadius="1.5" VerticalOptions="Center" />
+                            <Label Text="Información General" FontSize="14" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#163572" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+                        
+                        <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" RowSpacing="12" ColumnSpacing="12">
+                            <!-- Tipo de Identificación -->
+                            <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="2">
+                                <Label Text="Tipo de Identificador" FontSize="12" FontFamily="InterRegular" TextColor="#6B7280" />
+                                <Label Text="{Binding Cliente.TipoIdentificacion}" FontSize="14" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#1A1A2E" />
+                            </VerticalStackLayout>
+
+                            <!-- Número de Identificación -->
+                            <VerticalStackLayout Grid.Row="0" Grid.Column="1" Spacing="2">
+                                <Label Text="Núm. Identificación" FontSize="12" FontFamily="InterRegular" TextColor="#6B7280" />
+                                <Label Text="{Binding Cliente.NumeroIdentificacion}" FontSize="14" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#1A1A2E" />
+                            </VerticalStackLayout>
+
+                            <!-- Nombre Comercial -->
+                            <VerticalStackLayout Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Spacing="2">
+                                <Label Text="Nombre Comercial" FontSize="12" FontFamily="InterRegular" TextColor="#6B7280" />
+                                <Label Text="{Binding Cliente.NombreComercial}" FontSize="14" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#163572" />
+                            </VerticalStackLayout>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- CARD DATOS DE CONTACTO -->
+                <Border
+                    BackgroundColor="White"
+                    Stroke="#E5E7EB"
+                    StrokeThickness="1"
+                    Padding="18">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="14" />
+                    </Border.StrokeShape>
+                    <Border.Shadow>
+                        <Shadow Brush="Black" Offset="0,2" Radius="6" Opacity="0.04" />
+                    </Border.Shadow>
+
+                    <VerticalStackLayout Spacing="16">
+                        <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
+                            <BoxView WidthRequest="3" HeightRequest="14" Color="#163572" CornerRadius="1.5" VerticalOptions="Center" />
+                            <Label Text="Datos de Contacto" FontSize="14" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#163572" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+                        
+                        <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto" RowSpacing="12" ColumnSpacing="12">
+                            <!-- Nombres -->
+                            <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="2">
+                                <Label Text="Nombres" FontSize="12" FontFamily="InterRegular" TextColor="#6B7280" />
+                                <Label Text="{Binding Cliente.Nombres}" FontSize="14" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#1A1A2E" />
+                            </VerticalStackLayout>
+
+                            <!-- Apellidos -->
+                            <VerticalStackLayout Grid.Row="0" Grid.Column="1" Spacing="2">
+                                <Label Text="Apellidos" FontSize="12" FontFamily="InterRegular" TextColor="#6B7280" />
+                                <Label Text="{Binding Cliente.Apellidos}" FontSize="14" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#1A1A2E" />
+                            </VerticalStackLayout>
+
+                            <!-- Correo Electrónico -->
+                            <VerticalStackLayout Grid.Row="1" Grid.Column="0" Spacing="2">
+                                <Label Text="Correo Electrónico" FontSize="12" FontFamily="InterRegular" TextColor="#6B7280" />
+                                <Label Text="{Binding Cliente.Email}" FontSize="13" FontFamily="InterRegular" TextColor="#1A1A2E" LineBreakMode="TailTruncation" MaxLines="1" />
+                            </VerticalStackLayout>
+
+                            <!-- Teléfono -->
+                            <VerticalStackLayout Grid.Row="1" Grid.Column="1" Spacing="2">
+                                <Label Text="Teléfono" FontSize="12" FontFamily="InterRegular" TextColor="#6B7280" />
+                                <Label Text="{Binding Cliente.Telefono}" FontSize="13" FontFamily="InterRegular" TextColor="#1A1A2E" />
+                            </VerticalStackLayout>
+
+                            <!-- Dirección -->
+                            <VerticalStackLayout Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Spacing="2">
+                                <Label Text="Dirección" FontSize="12" FontFamily="InterRegular" TextColor="#6B7280" />
+                                <Label Text="{Binding Cliente.Direccion}" FontSize="13" FontFamily="InterRegular" TextColor="#1A1A2E" />
+                            </VerticalStackLayout>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- CARD PROYECTOS ASIGNADOS -->
+                <Border
+                    BackgroundColor="White"
+                    Stroke="#E5E7EB"
+                    StrokeThickness="1"
+                    Padding="18">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="14" />
+                    </Border.StrokeShape>
+                    <Border.Shadow>
+                        <Shadow Brush="Black" Offset="0,2" Radius="6" Opacity="0.04" />
+                    </Border.Shadow>
+
+                    <VerticalStackLayout Spacing="16">
+                        <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
+                            <BoxView WidthRequest="3" HeightRequest="14" Color="#163572" CornerRadius="1.5" VerticalOptions="Center" />
+                            <Label Text="Proyectos Asignados" FontSize="14" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#163572" VerticalOptions="Center" />
+                            
+                            <Border BackgroundColor="#EEF4FF" StrokeThickness="0" Padding="8,2" VerticalOptions="Center">
+                                <Border.StrokeShape><RoundRectangle CornerRadius="6" /></Border.StrokeShape>
+                                <Label Text="{Binding Cliente.Proyectos.Count}" FontSize="11" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#163572" />
+                            </Border>
+                        </HorizontalStackLayout>
+
+                        <!-- LISTA DE PROYECTOS -->
+                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding Cliente.Proyectos}" Spacing="8">
+                            <BindableLayout.EmptyViewTemplate>
+                                <DataTemplate>
+                                    <Label Text="Sin proyectos asignados" FontSize="13" FontFamily="InterRegular" TextColor="#9CA3AF" Margin="0,4" />
+                                </DataTemplate>
+                            </BindableLayout.EmptyViewTemplate>
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="model:ProyectoClienteModel">
+                                    <Border BackgroundColor="#F8FAFC" Stroke="#E5E7EB" StrokeThickness="1" Padding="12">
+                                        <Border.StrokeShape><RoundRectangle CornerRadius="10" /></Border.StrokeShape>
+                                        <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" RowSpacing="2">
+                                            <Label Grid.Row="0" Grid.Column="0" Text="{Binding Nombre}" FontSize="13" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#163572" />
+                                            <Label Grid.Row="1" Grid.Column="0" Text="{Binding Cliente}" FontSize="11" FontFamily="InterRegular" TextColor="#6B7280" />
+                                            <Border Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" BackgroundColor="#E6FDEE" StrokeThickness="0" Padding="8,3" VerticalOptions="Center">
+                                                <Border.StrokeShape><RoundRectangle CornerRadius="8" /></Border.StrokeShape>
+                                                <Label Text="{Binding Estado}" FontSize="10" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#16A34A" />
+                                            </Border>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+                
+                <!-- ACCIONES (Botones abajo) -->
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="12" Margin="0,8,0,24">
+                    <!-- Botón Editar -->
+                    <Button
+                        Grid.Column="0"
+                        Text="Editar"
+                        Command="{Binding EditarCommand}"
+                        BackgroundColor="#163572"
+                        TextColor="White"
+                        CornerRadius="8"
+                        HeightRequest="48"
+                        FontSize="14"
+                        FontAttributes="Bold"
+                        FontFamily="InterSemiBold" />
+                        
+                    <!-- Botón Cambiar Estado (Inactivar/Activar) -->
+                    <Button
+                        Grid.Column="1"
+                        Text="{Binding TextoBotonEstado}"
+                        Command="{Binding CambiarEstadoCommand}"
+                        BackgroundColor="#DC2626"
+                        TextColor="White"
+                        CornerRadius="8"
+                        HeightRequest="48"
+                        FontSize="14"
+                        FontAttributes="Bold"
+                        FontFamily="InterSemiBold">
+                        <Button.Triggers>
+                            <DataTrigger TargetType="Button" Binding="{Binding EsInactivo}" Value="True">
+                                <Setter Property="BackgroundColor" Value="#16A34A" />
+                            </DataTrigger>
+                        </Button.Triggers>
+                    </Button>
+                </Grid>
+            </VerticalStackLayout>
+        </ScrollView>
+        
+        <!-- INDICADOR DE CARGA -->
+        <ActivityIndicator
+            IsVisible="{Binding IsBusy}"
+            IsRunning="{Binding IsBusy}"
+            Color="#163572"
+            HorizontalOptions="Center"
+            VerticalOptions="Center" />
+            
+        <!-- ERROR (si no pudo cargar nada) -->
+        <VerticalStackLayout
+            IsVisible="{Binding ErrorMessage, Converter={StaticResource IsStringNotNullOrEmptyConverter}}"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            Spacing="16"
+            Padding="32">
+            <Label
+                Text="{Binding ErrorMessage}"
+                TextColor="#DC2626"
+                FontSize="14"
+                FontFamily="InterRegular"
+                HorizontalTextAlignment="Center" />
+            <Button
+                Text="Regresar"
+                Command="{Binding RegresarCommand}"
+                BackgroundColor="#163572"
+                TextColor="White"
+                CornerRadius="8"
+                FontFamily="InterSemiBold" />
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

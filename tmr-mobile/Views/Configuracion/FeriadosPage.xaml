@@ -1,14 +1,18 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<ContentPage xmlns:shared="clr-namespace:tmr_mobile.Views.Shared" xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:tmr_mobile.ViewModels"
              x:Class="tmr_mobile.Views.Configuracion.FeriadosPage"
              x:DataType="vm:FeriadosConfigViewModel"
              Title="{Binding Title}">
-
-    <VerticalStackLayout Spacing="16" Padding="20">
+    <Grid RowDefinitions="*,80">
+        <ContentView Grid.Row="0">
+<VerticalStackLayout Spacing="16" Padding="20">
         <Label Text="Gestión de Días Feriados" FontAttributes="Bold" FontSize="18" />
         <Label Text="Calendario de días no laborables registrados." TextColor="#64748B" FontSize="14" />
     </VerticalStackLayout>
 
+
+        </ContentView>
+        <shared:BottomNavBar Grid.Row="1" />
+    </Grid>
 </ContentPage>

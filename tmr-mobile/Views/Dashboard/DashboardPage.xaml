@@ -4,6 +4,7 @@
              xmlns:conv="clr-namespace:tmr_mobile.Views.Dashboard.Converters"
              xmlns:models="clr-namespace:tmr_mobile.Views.Dashboard.Models"
              xmlns:vm="clr-namespace:tmr_mobile.ViewModels"
+             xmlns:shared="clr-namespace:tmr_mobile.Views.Shared"
              x:Class="tmr_mobile.Views.Dashboard.DashboardPage"
              x:DataType="vm:DashboardViewModel"
              Title="Dashboard"
@@ -25,10 +26,11 @@
         <Color x:Key="DashboardHeroEnd">#EEF4FF</Color>
     </ContentPage.Resources>
 
-    <!-- ===================== TODO EN UN SOLO SCROLL ===================== -->
-    <ScrollView>
-        <VerticalStackLayout Spacing="20"
-                             Padding="16,12,16,32">
+    <Grid>
+        <!-- ===================== TODO EN UN SOLO SCROLL ===================== -->
+        <ScrollView Margin="0,60,0,80">
+            <VerticalStackLayout Spacing="20"
+                                 Padding="16,12,16,32">
 
             <Grid ColumnDefinitions="Auto,*,Auto"
                   ColumnSpacing="12"
@@ -407,73 +409,76 @@
                        TextColor="#2E5BFF"/>
             </Grid>
 
-            <CollectionView ItemsSource="{Binding ProximosACerrar}">
-                <CollectionView.ItemsLayout>
-                    <LinearItemsLayout Orientation="Vertical"
-                                       ItemSpacing="12"/>
-                </CollectionView.ItemsLayout>
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="models:ClosingProject">
-                        <Border StrokeShape="RoundRectangle 16"
-                                BackgroundColor="White"
-                                Stroke="Transparent"
-                                Padding="16">
-                            <Grid ColumnDefinitions="*,Auto"
-                                  RowDefinitions="Auto,Auto,Auto,Auto"
-                                  RowSpacing="4">
-                                <Border Grid.Row="0"
-                                        Grid.Column="0"
-                                        BackgroundColor="#EEF1F6"
-                                        StrokeShape="RoundRectangle 6"
-                                        Padding="8,3"
-                                        HorizontalOptions="Start">
-                                    <Label Text="{Binding Codigo}"
-                                           FontSize="11"
-                                           TextColor="#667085"/>
-                                </Border>
+                <CollectionView ItemsSource="{Binding ProximosACerrar}">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical"
+                                           ItemSpacing="12"/>
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:ClosingProject">
+                            <Border StrokeShape="RoundRectangle 16"
+                                    BackgroundColor="White"
+                                    Stroke="Transparent"
+                                    Padding="16">
+                                <Grid ColumnDefinitions="*,Auto"
+                                      RowDefinitions="Auto,Auto,Auto,Auto"
+                                      RowSpacing="4">
+                                    <Border Grid.Row="0"
+                                            Grid.Column="0"
+                                            BackgroundColor="#EEF1F6"
+                                            StrokeShape="RoundRectangle 6"
+                                            Padding="8,3"
+                                            HorizontalOptions="Start">
+                                        <Label Text="{Binding Codigo}"
+                                               FontSize="11"
+                                               TextColor="#667085"/>
+                                    </Border>
 
-                                <Border Grid.Row="0"
-                                        Grid.Column="1"
-                                        StrokeShape="RoundRectangle 20"
-                                        Padding="10,4"
-                                        BackgroundColor="{Binding Estado, Converter={StaticResource StatusBg}}">
-                                    <Label Text="{Binding Estado}"
-                                           FontSize="11"
+                                    <Border Grid.Row="0"
+                                            Grid.Column="1"
+                                            StrokeShape="RoundRectangle 20"
+                                            Padding="10,4"
+                                            BackgroundColor="{Binding Estado, Converter={StaticResource StatusBg}}">
+                                        <Label Text="{Binding Estado}"
+                                               FontSize="11"
+                                               FontAttributes="Bold"
+                                               TextColor="{Binding Estado, Converter={StaticResource StatusText}}"/>
+                                    </Border>
+
+                                    <Label Grid.Row="1"
+                                           Grid.Column="0"
+                                           Text="{Binding Titulo}"
+                                           FontSize="15"
                                            FontAttributes="Bold"
-                                           TextColor="{Binding Estado, Converter={StaticResource StatusText}}"/>
-                                </Border>
+                                           TextColor="#101828"/>
 
-                                <Label Grid.Row="1"
-                                       Grid.Column="0"
-                                       Text="{Binding Titulo}"
-                                       FontSize="15"
-                                       FontAttributes="Bold"
-                                       TextColor="#101828"/>
+                                    <Label Grid.Row="2"
+                                           Grid.Column="0"
+                                           Text="{Binding Cliente}"
+                                           FontSize="13"
+                                           TextColor="#667085"/>
 
-                                <Label Grid.Row="2"
-                                       Grid.Column="0"
-                                       Text="{Binding Cliente}"
-                                       FontSize="13"
-                                       TextColor="#667085"/>
-
-                                <Label Grid.Row="3"
-                                       Grid.Column="0"
-                                       Text="{Binding FechaCierre, StringFormat='{0:dd/MM/yyyy}'}"
-                                       FontSize="13"
-                                       TextColor="#667085"/>
-                                <Label Grid.Row="3"
-                                       Grid.Column="1"
-                                       Text="{Binding HorasRestantes, StringFormat='{0} h restantes'}"
-                                       FontSize="12"
-                                       TextColor="#667085"
-                                       HorizontalOptions="End"/>
-                            </Grid>
-                        </Border>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+                                    <Label Grid.Row="3"
+                                           Grid.Column="0"
+                                           Text="{Binding FechaCierre, StringFormat='{0:dd/MM/yyyy}'}"
+                                           FontSize="13"
+                                           TextColor="#667085"/>
+                                    <Label Grid.Row="3"
+                                           Grid.Column="1"
+                                           Text="{Binding HorasRestantes, StringFormat='{0} h restantes'}"
+                                           FontSize="12"
+                                           TextColor="#667085"
+                                           HorizontalOptions="End"/>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
 
         </VerticalStackLayout>
     </ScrollView>
 
+        <shared:TopNavBar VerticalOptions="Start" />
+        <shared:BottomNavBar VerticalOptions="End" />
+    </Grid>
 </ContentPage>
