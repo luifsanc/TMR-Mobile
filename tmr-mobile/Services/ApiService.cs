@@ -165,6 +165,14 @@ public class ApiService
         return await HandleResponseAsync<TResponse>(response, endpoint, "PUT", data, ct);
     }
 
+    public async Task<bool> PutAsync<TRequest>(string endpoint, TRequest data,
+        CancellationToken ct = default)
+    {
+        await AddAuthHeaderAsync();
+        var response = await _httpClient.PutAsJsonAsync(endpoint, data, JsonOptions, ct);
+        return response.IsSuccessStatusCode;
+    }
+
     public async Task<bool> DeleteAsync(string endpoint,
         CancellationToken ct = default)
     {

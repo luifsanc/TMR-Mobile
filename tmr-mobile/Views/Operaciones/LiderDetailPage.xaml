@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:dto="clr-namespace:tmr_shared.DTOs.Lideres;assembly=tmr-shared"
+             x:Class="tmr_mobile.Views.Operaciones.LiderDetailPage"
+             x:DataType="dto:LiderResponse"
+             Title="Ficha Completa del Líder"
+             BackgroundColor="{AppThemeBinding Light=#F8FAFC, Dark=#0F172A}">
+
+    <ScrollView Padding="20">
+        <VerticalStackLayout Spacing="20">
+
+            <!-- Ficha / Header del Líder -->
+            <Border StrokeShape="RoundRectangle 16"
+                    BackgroundColor="{AppThemeBinding Light=White, Dark=#1E293B}"
+                    Padding="20"
+                    StrokeThickness="0">
+                <VerticalStackLayout Spacing="12" HorizontalOptions="Center">
+                    
+                    <!-- Avatar Circular -->
+                    <Border StrokeShape="RoundRectangle 40"
+                            HeightRequest="80"
+                            WidthRequest="80"
+                            BackgroundColor="#2563EB"
+                            HorizontalOptions="Center"
+                            StrokeThickness="0">
+                        <Label Text="{Binding Inicial}"
+                               TextColor="White"
+                               FontSize="32"
+                               FontAttributes="Bold"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center" />
+                    </Border>
+
+                    <Label Text="{Binding NombreCompleto}"
+                           FontSize="22"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"
+                           TextColor="{AppThemeBinding Light=#1E293B, Dark=#F8FAFC}" />
+
+                    <!-- Badges Row -->
+                    <HorizontalStackLayout Spacing="8" HorizontalOptions="Center">
+                        <Border StrokeShape="RoundRectangle 12"
+                                BackgroundColor="#DBEAFE"
+                                Padding="12,4"
+                                StrokeThickness="0">
+                            <Label Text="{Binding TipoBadge}"
+                                   TextColor="#1D4ED8"
+                                   FontAttributes="Bold"
+                                   FontSize="12" />
+                        </Border>
+
+                        <Border StrokeShape="RoundRectangle 12"
+                                BackgroundColor="{AppThemeBinding Light=#DCFCE7, Dark=#064E3B}"
+                                Padding="12,4"
+                                StrokeThickness="0">
+                            <Label Text="{Binding EstadoTexto}"
+                                   TextColor="{AppThemeBinding Light=#15803D, Dark=#4ADE80}"
+                                   FontAttributes="Bold"
+                                   FontSize="12" />
+                        </Border>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Datos de Contacto e Información -->
+            <Border StrokeShape="RoundRectangle 16"
+                    BackgroundColor="{AppThemeBinding Light=White, Dark=#1E293B}"
+                    Padding="20"
+                    StrokeThickness="0">
+                <VerticalStackLayout Spacing="16">
+                    
+                    <Label Text="Información General"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           TextColor="{AppThemeBinding Light=#1E293B, Dark=#F8FAFC}" />
+
+                    <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="Auto,*" RowSpacing="12" ColumnSpacing="12">
+                        <!-- Correo Electrónico -->
+                        <Label Grid.Row="0" Grid.Column="0" Text="📧 Correo:" FontAttributes="Bold" TextColor="#64748B" />
+                        <Label Grid.Row="0" Grid.Column="1" Text="{Binding Email, TargetNullValue='No registrado'}" TextColor="{AppThemeBinding Light=#1E293B, Dark=#F8FAFC}" />
+
+                        <!-- Teléfono -->
+                        <Label Grid.Row="1" Grid.Column="0" Text="📞 Teléfono:" FontAttributes="Bold" TextColor="#64748B" />
+                        <Label Grid.Row="1" Grid.Column="1" Text="{Binding Telefono, TargetNullValue='No registrado'}" TextColor="{AppThemeBinding Light=#1E293B, Dark=#F8FAFC}" />
+
+                        <!-- Identificación -->
+                        <Label Grid.Row="2" Grid.Column="0" Text="🪪 Doc. Id:" FontAttributes="Bold" TextColor="#64748B" />
+                        <Label Grid.Row="2" Grid.Column="1" Text="{Binding NumeroIdentificacion, TargetNullValue='N/A'}" TextColor="{AppThemeBinding Light=#1E293B, Dark=#F8FAFC}" />
+                    </Grid>
+
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Sección de Proyectos Asignados -->
+            <Border StrokeShape="RoundRectangle 16"
+                    BackgroundColor="{AppThemeBinding Light=White, Dark=#1E293B}"
+                    Padding="20"
+                    StrokeThickness="0">
+                <VerticalStackLayout Spacing="16">
+                    
+                    <HorizontalStackLayout Spacing="8">
+                        <Label Text="🚀 Proyectos que Lidera"
+                               FontSize="16"
+                               FontAttributes="Bold"
+                               TextColor="{AppThemeBinding Light=#1E293B, Dark=#F8FAFC}" />
+                        <Border StrokeShape="RoundRectangle 10" BackgroundColor="#E2E8F0" Padding="8,2" StrokeThickness="0">
+                            <Label Text="{Binding Proyectos.Count}" FontSize="12" FontAttributes="Bold" TextColor="#334155" />
+                        </Border>
+                    </HorizontalStackLayout>
+
+                    <CollectionView ItemsSource="{Binding Proyectos}" EmptyView="Este líder no tiene proyectos asignados actualmente.">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="dto:ProyectoAsignadoDTO">
+                                <Border Margin="0,0,0,8"
+                                        Padding="12"
+                                        StrokeShape="RoundRectangle 10"
+                                        BackgroundColor="{AppThemeBinding Light=#F8FAFC, Dark=#0F172A}"
+                                        StrokeThickness="0">
+                                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="8" RowDefinitions="Auto,Auto">
+                                        <Border Grid.Row="0" Grid.Column="0" StrokeShape="RoundRectangle 6" BackgroundColor="#DBEAFE" Padding="6,2" StrokeThickness="0">
+                                            <Label Text="{Binding Codigo}" FontSize="11" FontAttributes="Bold" TextColor="#1E40AF" />
+                                        </Border>
+
+                                        <Label Grid.Row="0" Grid.Column="1" Text="{Binding Nombre}" FontAttributes="Bold" FontSize="14" TextColor="{AppThemeBinding Light=#1E293B, Dark=#F8FAFC}" />
+
+                                        <Label Grid.Row="1" Grid.Column="1" Text="{Binding Cliente, StringFormat='Cliente: {0}'}" FontSize="12" TextColor="#64748B" />
+
+                                        <Border Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" StrokeShape="RoundRectangle 6" BackgroundColor="#E2E8F0" Padding="6,2" VerticalOptions="Center" StrokeThickness="0">
+                                            <Label Text="{Binding Estado}" FontSize="11" TextColor="#475569" />
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Botón Cerrar Modal -->
+            <Button Text="Cerrar Ficha"
+                    Clicked="OnCerrarClicked"
+                    BackgroundColor="#64748B"
+                    TextColor="White"
+                    CornerRadius="10"
+                    HeightRequest="48"
+                    FontAttributes="Bold" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
