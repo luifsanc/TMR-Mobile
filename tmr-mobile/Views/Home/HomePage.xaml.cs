@@ -6,9 +6,9 @@ namespace tmr_mobile.Views.Home;
 
 public partial class HomePage : ContentPage
 {
-    public HomePage()
+    public HomePage(HomeViewModel viewModel)
     {
         InitializeComponent();
-        BindingContext = new HomeViewModel();
+        BindingContext = viewModel;
     }
 }

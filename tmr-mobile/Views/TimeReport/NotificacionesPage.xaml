@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:tmr_mobile.ViewModels"
+             xmlns:shared="clr-namespace:tmr_mobile.Views.Shared"
+             x:Class="tmr_mobile.Views.TimeReport.NotificacionesPage"
+             x:DataType="vm:NotificacionesViewModel"
+             Title="{Binding Title}">
+
+    <Grid BackgroundColor="#F0F2F6">
+        
+        <ScrollView Margin="0,60,0,80">
+            <VerticalStackLayout Padding="20,24,20,32">
+                <!-- Tarjeta Notificaciones -->
+                <Border StrokeShape="RoundRectangle 8" Stroke="#EAECF0" StrokeThickness="1" BackgroundColor="White" Padding="0">
+                    <Border.Shadow>
+                        <Shadow Brush="#101828" Offset="0,2" Radius="4" Opacity="0.05" />
+                    </Border.Shadow>
+                    
+                    <VerticalStackLayout>
+                        <!-- Header -->
+                        <Label Text="Notificaciones" FontAttributes="Bold" FontSize="18" TextColor="#173968" Margin="16,16,16,12" />
+                        
+                        <!-- Separator -->
+                        <BoxView HeightRequest="1" Color="#EAECF0" />
+                        
+                        <!-- Lista de Notificaciones -->
+                        <CollectionView ItemsSource="{Binding Notificaciones}" SelectionMode="None">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="vm:NotificacionItemViewModel">
+                                    <Grid ColumnDefinitions="Auto,*" Padding="16" ColumnSpacing="12">
+                                        <!-- Icono de Alerta -->
+                                        <Grid Grid.Column="0" WidthRequest="22" HeightRequest="22" VerticalOptions="Start" Margin="0,2,0,0">
+                                            <!-- Triángulo de advertencia -->
+                                            <Polygon Points="11,0 22,20 0,20" Stroke="#F04438" StrokeThickness="1.5" Fill="Transparent" IsVisible="{Binding IsAlert}" />
+                                            <Label Text="!" TextColor="#F04438" FontAttributes="Bold" FontSize="13" HorizontalOptions="Center" VerticalOptions="Center" Margin="0,4,0,0" IsVisible="{Binding IsAlert}" />
+                                        </Grid>
+                                        
+                                        <!-- Contenido -->
+                                        <VerticalStackLayout Grid.Column="1" Spacing="4">
+                                            <Label Text="{Binding Titulo}" FontAttributes="Bold" FontSize="16" TextColor="#173968" />
+                                            <Label FontSize="14" LineHeight="1.2">
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="{Binding MensajePart1}" TextColor="#667085" />
+                                                        <Span Text="{Binding MensajeHighlight}" TextColor="#F04438" FontAttributes="Bold" />
+                                                        <Span Text="{Binding MensajePart2}" TextColor="#667085" />
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+                                        </VerticalStackLayout>
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                        
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <shared:TopNavBar VerticalOptions="Start" />
+        <shared:BottomNavBar VerticalOptions="End" />
+    </Grid>
+</ContentPage>
