@@ -9,17 +9,17 @@
          
          <!-- Home -->
          <VerticalStackLayout Grid.Column="0" VerticalOptions="Center" HorizontalOptions="Center" Spacing="2">
-             <Grid.GestureRecognizers>
+             <VerticalStackLayout.GestureRecognizers>
                  <TapGestureRecognizer Tapped="OnNavigate" CommandParameter="DashboardPage" />
-             </Grid.GestureRecognizers>
+             </VerticalStackLayout.GestureRecognizers>
              <Image Source="direccion.png" WidthRequest="24" HeightRequest="24" HorizontalOptions="Center" />
          </VerticalStackLayout>
          
          <!-- Profile -->
          <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Center" Spacing="2">
-             <Grid.GestureRecognizers>
+             <VerticalStackLayout.GestureRecognizers>
                  <TapGestureRecognizer Tapped="OnNavigate" CommandParameter="ProfilePage" />
-             </Grid.GestureRecognizers>
+             </VerticalStackLayout.GestureRecognizers>
              <Image Source="user_profile.png" WidthRequest="24" HeightRequest="24" HorizontalOptions="Center" />
          </VerticalStackLayout>
          
@@ -37,11 +37,17 @@
 
          <!-- Notifications -->
          <VerticalStackLayout Grid.Column="3" VerticalOptions="Center" HorizontalOptions="Center" Spacing="2">
+             <VerticalStackLayout.GestureRecognizers>
+                 <TapGestureRecognizer Tapped="OnNavigate" CommandParameter="NotificacionesPage" />
+             </VerticalStackLayout.GestureRecognizers>
              <Image Source="notification_bell_alarm.png" WidthRequest="24" HeightRequest="24" HorizontalOptions="Center" />
          </VerticalStackLayout>
          
          <!-- Settings -->
          <VerticalStackLayout Grid.Column="4" VerticalOptions="Center" HorizontalOptions="Center" Spacing="2">
+             <VerticalStackLayout.GestureRecognizers>
+                 <TapGestureRecognizer Tapped="OnNavigate" CommandParameter="ConfiguracionPage" />
+             </VerticalStackLayout.GestureRecognizers>
              <Image Source="configura.png" WidthRequest="24" HeightRequest="24" HorizontalOptions="Center" />
          </VerticalStackLayout>
     </Grid>

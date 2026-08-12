@@ -43,6 +43,10 @@
         <ShellContent ContentTemplate="{DataTemplate time:CargaActividadesPage}" />
     </ShellItem>
 
+    <ShellItem Route="NotificacionesPage" Shell.TabBarIsVisible="False">
+        <ShellContent ContentTemplate="{DataTemplate time:NotificacionesPage}" />
+    </ShellItem>
+
     <ShellItem Route="ReportesPage" Shell.TabBarIsVisible="False">
         <Tab Title="Horas">
             <ShellContent ContentTemplate="{DataTemplate rep:ReporteHorasPage}" Route="ReporteHorasPage" />
@@ -69,18 +73,19 @@
     </ShellItem>
 
     <ShellItem Route="ConfiguracionPage" Shell.TabBarIsVisible="False">
-        <Tab Title="Usuarios">
-            <ShellContent ContentTemplate="{DataTemplate cfg:UsuariosPage}" Route="UsuariosPage" />
-        </Tab>
-        <Tab Title="Roles">
-            <ShellContent ContentTemplate="{DataTemplate cfg:RolesPage}" Route="RolesPage" />
-        </Tab>
-        <Tab Title="Feriados">
-            <ShellContent ContentTemplate="{DataTemplate cfg:FeriadosPage}" Route="FeriadosPage" />
-        </Tab>
-        <Tab Title="Catálogos">
-            <ShellContent ContentTemplate="{DataTemplate cfg:CatalogosPage}" Route="CatalogosPage" />
-        </Tab>
+        <ShellContent ContentTemplate="{DataTemplate cfg:ConfiguracionPage}" />
+    </ShellItem>
+    <ShellItem Route="UsuariosPage" Shell.TabBarIsVisible="False">
+        <ShellContent ContentTemplate="{DataTemplate cfg:UsuariosPage}" />
+    </ShellItem>
+    <ShellItem Route="RolesPage" Shell.TabBarIsVisible="False">
+        <ShellContent ContentTemplate="{DataTemplate cfg:RolesPage}" />
+    </ShellItem>
+    <ShellItem Route="FeriadosPage" Shell.TabBarIsVisible="False">
+        <ShellContent ContentTemplate="{DataTemplate cfg:FeriadosPage}" />
+    </ShellItem>
+    <ShellItem Route="CatalogosPage" Shell.TabBarIsVisible="False">
+        <ShellContent ContentTemplate="{DataTemplate cfg:CatalogosPage}" />
     </ShellItem>
 
 </Shell>

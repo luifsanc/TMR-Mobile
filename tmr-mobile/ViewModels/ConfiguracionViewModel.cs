@@ -8,20 +8,20 @@ using System.Collections.Generic;
 
 namespace tmr_mobile.ViewModels;
 
-public class ModuloItem
+public class ConfiguracionModuloItem
 {
     public string Nombre { get; set; } = string.Empty;
     public string Icono { get; set; } = string.Empty;
     public string Ruta { get; set; } = string.Empty;
 }
 
-public partial class HomeViewModel : ObservableObject
+public partial class ConfiguracionViewModel : ObservableObject
 {
     private readonly ApiService _apiService;
 
-    public ObservableCollection<ModuloItem> Modulos { get; } = new();
+    public ObservableCollection<ConfiguracionModuloItem> Modulos { get; } = new();
 
-    public HomeViewModel(ApiService apiService)
+    public ConfiguracionViewModel(ApiService apiService)
     {
         _apiService = apiService;
         _ = CargarModulosAsync();
@@ -29,9 +29,9 @@ public partial class HomeViewModel : ObservableObject
 
     private async Task CargarModulosAsync()
     {
-        try 
+        try
         {
-            var response = await _apiService.GetAsync<List<ModuloItem>>("api/home/modulos");
+            var response = await _apiService.GetAsync<List<ConfiguracionModuloItem>>("api/configuracion/modulos");
             if (response != null && response.Count > 0)
             {
                 Modulos.Clear();
@@ -43,13 +43,10 @@ public partial class HomeViewModel : ObservableObject
 
         // Fallback local si la API falla o no está encendida
         Modulos.Clear();
-        Modulos.Add(new ModuloItem { Nombre = "Proyectos", Icono = "icon_proyectos.png", Ruta = "ProyectosPage" });
-        Modulos.Add(new ModuloItem { Nombre = "Time Report", Icono = "icon_timereport.png", Ruta = "TimeReportPage" });
-        Modulos.Add(new ModuloItem { Nombre = "Carga Actividades", Icono = "icon_carga.png", Ruta = "CargaActividadesPage" });
-        Modulos.Add(new ModuloItem { Nombre = "Reportes", Icono = "icon_reportes.png", Ruta = "ReportesPage" });
-        Modulos.Add(new ModuloItem { Nombre = "Líderes", Icono = "icon_lideres.png", Ruta = "LideresPage" });
-        Modulos.Add(new ModuloItem { Nombre = "Colaboradores", Icono = "icon_colaboradores.png", Ruta = "ColaboradoresPage" });
-        Modulos.Add(new ModuloItem { Nombre = "Clientes", Icono = "icon_clientes.png", Ruta = "ClientesPage" });
+        Modulos.Add(new ConfiguracionModuloItem { Nombre = "Usuarios", Icono = "user_profile.png", Ruta = "UsuariosPage" });
+        Modulos.Add(new ConfiguracionModuloItem { Nombre = "Roles", Icono = "rol.png", Ruta = "RolesPage" });
+        Modulos.Add(new ConfiguracionModuloItem { Nombre = "Feriados", Icono = "feriado.png", Ruta = "FeriadosPage" });
+        Modulos.Add(new ConfiguracionModuloItem { Nombre = "Catálogos", Icono = "catalogo.png", Ruta = "CatalogosPage" });
     }
 
     [RelayCommand]
@@ -57,7 +54,6 @@ public partial class HomeViewModel : ObservableObject
     {
         if (!string.IsNullOrEmpty(route))
         {
-            // Todos los módulos principales ahora son ShellItems raíz
             await Shell.Current.GoToAsync($"//{route}");
         }
     }

@@ -71,6 +71,7 @@ public static class MauiProgram
         builder.Services.AddTransient<TimeReportViewModel>();
         builder.Services.AddTransient<CrearActividadViewModel>();
         builder.Services.AddTransient<CargaActividadesViewModel>();
+        builder.Services.AddTransient<NotificacionesViewModel>();
         builder.Services.AddTransient<ProyectosViewModel>();
         builder.Services.AddTransient<ColaboradoresViewModel>();
         builder.Services.AddTransient<ClientesViewModel>();
@@ -81,6 +82,7 @@ public static class MauiProgram
         builder.Services.AddTransient<RolesConfigViewModel>();
         builder.Services.AddTransient<FeriadosConfigViewModel>();
         builder.Services.AddTransient<CatalogosConfigViewModel>();
+        builder.Services.AddTransient<ConfiguracionViewModel>();
         builder.Services.AddTransient<CatalogoDetalleViewModel>();
         builder.Services.AddTransient<CatalogoFormViewModel>();
         builder.Services.AddTransient<ClienteDetalleViewModel>();
@@ -105,6 +107,7 @@ public static class MauiProgram
         builder.Services.AddTransient<TimeReportPage>();
         builder.Services.AddTransient<CrearActividadPage>();
         builder.Services.AddTransient<CargaActividadesPage>();
+        builder.Services.AddTransient<NotificacionesPage>();
         builder.Services.AddTransient<ProyectosPage>();
         builder.Services.AddTransient<ColaboradoresPage>();
         builder.Services.AddTransient<ClientesPage>();
@@ -114,6 +117,7 @@ public static class MauiProgram
         builder.Services.AddTransient<UsuariosPage>();
         builder.Services.AddTransient<RolesPage>();
         builder.Services.AddTransient<FeriadosPage>();
+        builder.Services.AddTransient<ConfiguracionPage>();
         builder.Services.AddTransient<CatalogosPage>();
         builder.Services.AddTransient<CatalogoDetallePage>();
         builder.Services.AddTransient<CatalogoFormPage>();
