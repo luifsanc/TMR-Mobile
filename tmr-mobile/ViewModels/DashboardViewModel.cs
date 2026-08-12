@@ -7,7 +7,7 @@ namespace tmr_mobile.ViewModels;
 
 public partial class DashboardViewModel : BaseViewModel
 {
-    private readonly ApiService  _apiService;
+    private readonly ApiService _apiService;
     private readonly IAuthService _authService;
 
     // Paleta usada para "Detalle de horas" (derivado de HorasPorProyecto,
@@ -37,14 +37,12 @@ public partial class DashboardViewModel : BaseViewModel
 
     public DashboardViewModel(ApiService apiService, IAuthService authService)
     {
-        _apiService  = apiService;
+        _apiService = apiService;
         _authService = authService;
         Title = "Dashboard Principal";
 
         // Leer el nombre del usuario logueado
         NombreUsuario = _authService.CurrentUser?.Name ?? "Usuario";
-
-        ActualizarOpcionesRango();
 
         // Carga inicial. CargarDashboardCommand es un IAsyncRelayCommand
         // generado por [RelayCommand]; Execute maneja el fire-and-forget
@@ -270,11 +268,6 @@ public partial class DashboardViewModel : BaseViewModel
             ProyectosPorClienteVisibles.Add(item);
     }
 
-
-
-    [ObservableProperty]
-    public partial bool MostrarSelectorRango { get; set; }
-
     [ObservableProperty]
     public partial string RangoSeleccionado { get; set; } = "mes";
 
@@ -283,51 +276,35 @@ public partial class DashboardViewModel : BaseViewModel
 
     private static readonly (string Valor, string Texto)[] RangosDisponibles =
     {
-        ("mes", "Este mes"),
-        ("trimestre", "Este trimestre"),
-        ("anio", "Este año")
-    };
-
-    public System.Collections.ObjectModel.ObservableCollection<RangoOption> OpcionesRango { get; } = new();
-
-    private static readonly Dictionary<string, string> RangoLabels =
-    RangosDisponibles.ToDictionary(r => r.Valor, r => r.Texto);
+    ("mes", "Este mes"),
+    ("trimestre", "Este trimestre"),
+    ("anio", "Este año")
+};
 
     [RelayCommand]
-    private void ToggleSelectorRango()
+    [Obsolete]
+    private async Task ToggleSelectorRangoAsync()
     {
-        MostrarSelectorRango = !MostrarSelectorRango;
-    }
+        var opciones = RangosDisponibles.Select(r => r.Texto).ToArray();
 
-    [RelayCommand]
-    private async Task CambiarRangoAsync(string nuevoRango)
-    {
-        // Cerrar el selector siempre, incluso si ya estaba seleccionada la misma opción
-        MostrarSelectorRango = false;
+        string seleccion = await Application.Current!.MainPage!.DisplayActionSheet(
+            "Selecciona un rango",
+            "Cancelar",
+            null,
+            opciones);
 
-        if (nuevoRango == RangoSeleccionado) return;
+        if (string.IsNullOrEmpty(seleccion) || seleccion == "Cancelar")
+            return;
 
-        RangoSeleccionado = nuevoRango;
-        RangoLabel = RangoLabels.TryGetValue(nuevoRango, out var label) ? label : nuevoRango;
+        var rango = RangosDisponibles.FirstOrDefault(r => r.Texto == seleccion);
+        if (rango.Valor is null || rango.Valor == RangoSeleccionado)
+            return;
 
-        // Actualizar el estado visual de las opciones del dropdown
-        ActualizarOpcionesRango();
+        RangoSeleccionado = rango.Valor;
+        RangoLabel = rango.Texto;
 
         await CargarDashboardAsync();
     }
 
-    private void ActualizarOpcionesRango()
-    {
-        OpcionesRango.Clear();
-        foreach (var (valor, texto) in RangosDisponibles)
-        {
-            OpcionesRango.Add(new RangoOption
-            {
-                Valor = valor,
-                Texto = texto,
-                EsSeleccionado = valor == RangoSeleccionado
-            });
-        }
-    }
 
 }

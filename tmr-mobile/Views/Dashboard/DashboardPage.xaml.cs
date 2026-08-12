@@ -21,16 +21,6 @@ public partial class DashboardPage : ContentPage
         }
     }
 
-    private void OnOpcionRangoTapped(object sender, EventArgs e)
-    {
-        if (sender is not Border border) return;
-        if (border.BindingContext is not RangoOption opcion) return;
-        if (BindingContext is not DashboardViewModel vm) return;
-
-        vm.CambiarRangoCommand.Execute(opcion.Valor);
-    }
-
-
     private async void OnVerReporteCompletoClicked(object sender, EventArgs e)
     {
         // Ajusta la ruta Shell según cómo hayas registrado la página de reportes.

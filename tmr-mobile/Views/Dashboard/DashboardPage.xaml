@@ -34,23 +34,6 @@
                   ColumnSpacing="12"
                   VerticalOptions="Center">
 
-                <Border Grid.Column="0"
-                        StrokeShape="RoundRectangle 14"
-                        BackgroundColor="White"
-                        Stroke="{StaticResource DashboardBorder}"
-                        WidthRequest="44"
-                        HeightRequest="44"
-                        Padding="0">
-                    <Border.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnMenuTapped"/>
-                    </Border.GestureRecognizers>
-                    <Label Text="☰"
-                           FontSize="20"
-                           TextColor="{StaticResource DashboardText}"
-                           HorizontalOptions="Center"
-                           VerticalOptions="Center"/>
-                </Border>
-
                 <Label Grid.Column="1"
                        Text="Dashboard"
                        FontSize="22"
@@ -225,12 +208,6 @@
                                             HeightRequest="26"
                                             HorizontalOptions="End"
                                             WidthRequest="26">
-                                        <Label Text="+"
-                                               FontSize="14"
-                                               FontAttributes="Bold"
-                                               TextColor="{StaticResource DashboardText}"
-                                               HorizontalOptions="Center"
-                                               VerticalOptions="Center"/>
                                     </Border>
                                 </Grid>
 
@@ -251,7 +228,6 @@
             </FlexLayout>
 
             <!-- ===================== Horas reportadas por proyecto (con selector de rango) ===================== -->
-            <Grid>
                 <Border StrokeShape="RoundRectangle 16"
                         BackgroundColor="White"
                         Stroke="Transparent"
@@ -259,20 +235,35 @@
                     <VerticalStackLayout Spacing="14">
                         <Grid ColumnDefinitions="*,Auto">
                             <Label Grid.Column="0"
-                                   Text="Horas reportadas por proyecto"
-                                   FontSize="16"
-                                   FontAttributes="Bold"
-                                   TextColor="#101828"/>
+                                Text="Horas reportadas por proyecto"
+                                FontSize="16"
+                                FontAttributes="Bold"
+                                TextColor="#101828"/>
+
                             <Border Grid.Column="1"
                                     StrokeShape="RoundRectangle 20"
                                     Stroke="#E4E7EC"
-                                    Padding="10,4">
+                                    BackgroundColor="#F9FAFB"
+                                    Padding="12,6">
                                 <Border.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding ToggleSelectorRangoCommand}"/>
                                 </Border.GestureRecognizers>
-                                <Label Text="{ Binding RangoLabel, StringFormat='{0} ▼  '} "
-                                       FontSize="12"
-                                       TextColor="#101828"/>
+                                <HorizontalStackLayout Spacing="6">
+                                    <Label Text="{Binding RangoLabel}"
+                                        FontSize="12"
+                                        FontAttributes="Bold"
+                                        TextColor="#101828"
+                                        VerticalOptions="Center"/>
+                                    <Path Data="M2,4 L7,9 L12,4"
+                                        Stroke="#667085"
+                                        StrokeThickness="1.5"
+                                        StrokeLineCap="Round"
+                                        StrokeLineJoin="Round"
+                                        WidthRequest="12"
+                                        HeightRequest="9"
+                                        VerticalOptions="Center"
+                                        Aspect="Uniform"/>
+                                </HorizontalStackLayout>
                             </Border>
                         </Grid>
 
@@ -334,43 +325,7 @@
                     </VerticalStackLayout>
                 </Border>
 
-                <!-- Dropdown flotante -->
-                <Border IsVisible="{Binding MostrarSelectorRango}"
-                        StrokeShape="RoundRectangle 12"
-                        Stroke="#2E5BFF"
-                        StrokeThickness="1.5"
-                        BackgroundColor="White"
-                        Padding="0"
-                        HorizontalOptions="End"
-                        VerticalOptions="Start"
-                        Margin="0,44,16,0"
-                        WidthRequest="170"
-                        ZIndex="10">
-                    <Border.Shadow>
-                        <Shadow Brush="Black"
-                                Opacity="0.15"
-                                Radius="12"
-                                Offset="0,4"/>
-                    </Border.Shadow>
-                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding OpcionesRango}"
-                                         Spacing="0">
-                        <BindableLayout.ItemTemplate>
-                            <DataTemplate x:DataType="models:RangoOption">
-                                <Border Padding="14,12"
-                                        Stroke="Transparent"
-                                        BackgroundColor="{Binding EsSeleccionado, Converter={StaticResource SelectedBg}}">
-                                    <Border.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="OnOpcionRangoTapped"/>
-                                    </Border.GestureRecognizers>
-                                    <Label Text="{Binding Texto}"
-                                           FontSize="14"
-                                           TextColor="{Binding EsSeleccionado, Converter={StaticResource SelectedText}}"/>
-                                </Border>
-                            </DataTemplate>
-                        </BindableLayout.ItemTemplate>
-                    </VerticalStackLayout>
-                </Border>
-            </Grid>
+                
 
             <!-- ===================== Proyectos por cliente ===================== -->
             <Border StrokeShape="RoundRectangle 16"

@@ -22,9 +22,9 @@ public class ApiService
     private const string BaseUrl = "https://dev.api.tmr2.dokploy.integritysolutions.com.ec/";
 
     // Claves en SecureStorage
-    internal const string TokenKey        = "auth_token";
+    internal const string TokenKey = "auth_token";
     internal const string RefreshTokenKey = "refresh_token";
-    internal const string TokenFamilyKey  = "token_family_id";
+    internal const string TokenFamilyKey = "token_family_id";
 
     // Para evitar ciclo: el AuthService se inyecta lazily desde el exterior
     private Func<Task<bool>>? _refreshTokenFunc;
@@ -47,12 +47,12 @@ public class ApiService
         _httpClient = new HttpClient(handler)
         {
             BaseAddress = new Uri(BaseUrl),
-            Timeout     = TimeSpan.FromSeconds(30)
+            Timeout = TimeSpan.FromSeconds(30)
         };
 
         _httpClient.DefaultRequestHeaders.Accept.Add(
             new MediaTypeWithQualityHeaderValue("application/json"));
-            
+
         // Agregar User-Agent por defecto para el control de sesiones del backend
         _httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("TMR-Mobile-App/1.0");
     }
@@ -112,6 +112,21 @@ public class ApiService
         await AddAuthHeaderAsync();
         var response = await _httpClient.DeleteAsync(endpoint, ct);
         return response.IsSuccessStatusCode;
+    }
+
+    public async Task<byte[]?> GetFileBytesAsync(string endpoint, CancellationToken ct = default)
+    {
+        await AddAuthHeaderAsync();
+        var response = await _httpClient.GetAsync(endpoint, ct);
+
+        if (!response.IsSuccessStatusCode)
+        {
+            var error = await response.Content.ReadAsStringAsync(ct);
+            Log($"[ApiService] Error {(int)response.StatusCode} descargando {endpoint}: {error}");
+            return null;
+        }
+
+        return await response.Content.ReadAsByteArrayAsync(ct);
     }
 
     // ─────────────────────────────────────────────────────────────────────────

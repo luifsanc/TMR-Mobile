@@ -12,6 +12,7 @@
     <ContentPage.Resources>
         <converters:EstadoToColorConverter x:Key="EstadoToColorConverter"/>
         <converters:BoolToOpacityConverter x:Key="BoolToOpacityConverter"/>
+        <converters:InverseBoolConverter x:Key="InverseBoolConverter"/>
     </ContentPage.Resources>
 
     <ScrollView>
@@ -238,13 +239,14 @@
                      Stroke="Transparent"
                      HeightRequest="50"
                      Padding="0"
-                     Opacity="{Binding TieneSeleccionActividades, Converter={StaticResource BoolToOpacityConverter}}"
-                     IsEnabled="{Binding TieneSeleccionActividades}">
+                     Opacity="{Binding PuedeDescargar, Converter={StaticResource BoolToOpacityConverter}}"
+                     IsEnabled="{Binding PuedeDescargar}">
                      <Border.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding DescargarCommand}"/>
                      </Border.GestureRecognizers>
                             <HorizontalStackLayout Spacing="8" HorizontalOptions="Center" VerticalOptions="Center">
                                    <Path Data="M12,4 L12,14 M7,9 L12,14 L17,9 M5,19 L19,19"
+                                                 IsVisible="{Binding DescargandoArchivo, Converter={StaticResource InverseBoolConverter}}"
                                                  Stroke="White"
                                                  StrokeThickness="2"
                                                  StrokeLineCap="Round"
@@ -252,7 +254,12 @@
                                                  WidthRequest="18"
                                                  HeightRequest="18"
                                                  Aspect="Uniform"/>
-                            <Label Text="Descargar" FontSize="15" FontAttributes="Bold" TextColor="White"/>
+                            <ActivityIndicator IsRunning="{Binding DescargandoArchivo}"
+                                                IsVisible="{Binding DescargandoArchivo}"
+                                                Color="White"
+                                                WidthRequest="18"
+                                                HeightRequest="18"/>
+                            <Label Text="{Binding TextoBotonDescargar}" FontSize="15" FontAttributes="Bold" TextColor="White"/>
                      </HorizontalStackLayout>
               </Border>
 

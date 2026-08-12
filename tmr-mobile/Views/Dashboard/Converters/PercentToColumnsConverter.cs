@@ -30,15 +30,18 @@ public sealed class PercentToColumnsConverter : IValueConverter
             _ => 0d
         };
 
+        if (double.IsNaN(percent) || double.IsInfinity(percent))
+            percent = 0;
+
         percent = Math.Clamp(percent, 0, 100);
         if (percent > 0 && percent < MinVisiblePercent)
             percent = MinVisiblePercent;
 
         return new ColumnDefinitionCollection
-        {
-            new ColumnDefinition(new GridLength(percent, GridUnitType.Star)),
-            new ColumnDefinition(new GridLength(100 - percent, GridUnitType.Star)),
-        };
+    {
+        new ColumnDefinition(new GridLength(percent, GridUnitType.Star)),
+        new ColumnDefinition(new GridLength(100 - percent, GridUnitType.Star)),
+    };
     }
 
     public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
