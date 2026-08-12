@@ -1,42 +1,60 @@
-using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using tmr_mobile.Services;
-using System.Threading.Tasks;
-using Microsoft.Maui.Controls;
+using tmr_mobile.Views.Auth;
 
 namespace tmr_mobile.ViewModels;
 
 public partial class ProfileViewModel : BaseViewModel
 {
     private readonly IAuthService _authService;
+    private readonly IConfirmDialogService _confirmDialogService;
 
-    public ProfileViewModel(IAuthService authService)
+    public ProfileViewModel(
+        IAuthService authService,
+        IConfirmDialogService confirmDialogService)
     {
         _authService = authService;
+        _confirmDialogService = confirmDialogService;
         Title = "Perfil";
     }
 
-    public string UserName => _authService.CurrentUser?.Name ?? "Teofilo";
-    
-    public string Email => _authService.CurrentUser?.Email ?? "admin@tmr.com";
+    public string UserName => _authService.CurrentUser?.Name ?? "Usuario TMR";
+
+    public string Email => _authService.CurrentUser?.Email ?? "Sesión activa";
 
     [RelayCommand]
     private async Task ChangePasswordAsync()
     {
-        // Placeholder temporal para no romper funcionalidad actual
-        if (Shell.Current != null)
-        {
-            await Shell.Current.DisplayAlert("Info", "Opción Cambiar Contraseña (próximamente)", "OK");
-        }
+        if (IsBusy)
+            return;
+
+        await Shell.Current.GoToAsync(nameof(ChangePasswordPage));
     }
 
     [RelayCommand]
     private async Task LogoutAsync()
     {
-        // Placeholder temporal para no romper funcionalidad actual
-        if (Shell.Current != null)
+        if (IsBusy)
+            return;
+
+        var confirmed = await _confirmDialogService.ShowAsync(
+            "Cerrar sesión",
+            "¿Deseas cerrar tu sesión en este dispositivo?",
+            "Cerrar sesión",
+            "Cancelar",
+            "↪");
+
+        if (!confirmed)
+            return;
+
+        try
         {
-            await Shell.Current.DisplayAlert("Info", "Opción Cerrar Sesión (próximamente)", "OK");
+            IsBusy = true;
+            await _authService.LogoutAsync();
+        }
+        finally
+        {
+            IsBusy = false;
         }
     }
 }
