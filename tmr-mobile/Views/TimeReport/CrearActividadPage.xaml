@@ -5,53 +5,209 @@
              x:Class="tmr_mobile.Views.TimeReport.CrearActividadPage"
              x:DataType="vm:CrearActividadViewModel"
              Title="{Binding Title}"
-             BackgroundColor="#F8FAFC">
+             NavigationPage.HasNavigationBar="False"
+             Shell.NavBarIsVisible="False"
+             Shell.PresentationMode="ModalAnimated"
+             BackgroundColor="#80000000">
 
-    <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="16">
+    <!-- Se simula el Modal / Bottom Sheet cubriendo toda la pantalla pero con estilo limpio -->
+    <Grid>
+        
+        <Border StrokeShape="RoundRectangle 24,24,0,0" Stroke="Transparent" BackgroundColor="White" Padding="0" VerticalOptions="End" MaximumHeightRequest="750">
             
-            <Label Text="Fecha de la actividad" FontSize="14" TextColor="#475569" FontAttributes="Bold" />
-            <DatePicker Date="{Binding FechaActividad}" BackgroundColor="White" TextColor="#0F172A" />
+            <Grid RowDefinitions="Auto,*,Auto" Padding="20">
+                
+                <!-- Encabezado -->
+                <Grid Grid.Row="0" ColumnDefinitions="*,Auto" Margin="0,0,0,24">
+                    <VerticalStackLayout Grid.Column="0" Spacing="4">
+                        <Label Text="Agregar actividad" FontAttributes="Bold" FontSize="26" TextColor="#0F172A" />
+                        <Label Text="Registra el tiempo y detalles de ..." FontSize="14" TextColor="#64748B" />
+                    </VerticalStackLayout>
+                    <Border Grid.Column="1" Stroke="#E2E8F0" StrokeShape="RoundRectangle 12" BackgroundColor="White" WidthRequest="44" HeightRequest="44" VerticalOptions="Start" Padding="0">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding CancelarCommand}" />
+                        </Border.GestureRecognizers>
+                        <Label Text="X" FontSize="18" FontAttributes="Bold" TextColor="#0F172A" HorizontalOptions="Center" VerticalOptions="Center" />
+                    </Border>
+                </Grid>
 
-            <Label Text="Proyecto (Opcional)" FontSize="14" TextColor="#475569" FontAttributes="Bold" />
-            <Picker ItemsSource="{Binding Proyectos}" 
-                    ItemDisplayBinding="{Binding Nombre}" 
-                    SelectedItem="{Binding ProyectoSeleccionado}" 
-                    Title="Seleccionar Proyecto"
-                    BackgroundColor="White" TextColor="#0F172A" />
+                <!-- ScrollView Content -->
+                <ScrollView Grid.Row="1">
+                    <VerticalStackLayout Spacing="16" Padding="0,0,0,20">
+                        
+                        <!-- Tipo de Actividad -->
+                        <VerticalStackLayout Spacing="8">
+                            <HorizontalStackLayout Spacing="4">
+                                <Label Text="Tipo de Actividad" FontAttributes="Bold" FontSize="14" TextColor="#0F172A" />
+                                <Label Text="*" FontAttributes="Bold" FontSize="14" TextColor="#EF4444" />
+                                <Label Text="ⓘ" FontSize="14" TextColor="#CBD5E1" Margin="4,0,0,0" />
+                            </HorizontalStackLayout>
+                            <Border Stroke="#E2E8F0" StrokeShape="RoundRectangle 12" BackgroundColor="#F8FAFC" Padding="12,4">
+                                <Picker ItemsSource="{Binding TiposActividad}" 
+                                        ItemDisplayBinding="{Binding Nombre}" 
+                                        SelectedItem="{Binding TipoActividadSeleccionada}" 
+                                        Title="👤  Busque y seleccione un tipo"
+                                        TextColor="#0F172A" TitleColor="#64748B" BackgroundColor="Transparent" />
+                            </Border>
+                        </VerticalStackLayout>
 
-            <Label Text="Tipo de Actividad" FontSize="14" TextColor="#475569" FontAttributes="Bold" />
-            <Picker ItemsSource="{Binding TiposActividad}" 
-                    ItemDisplayBinding="{Binding Nombre}" 
-                    SelectedItem="{Binding TipoActividadSeleccionada}" 
-                    Title="Seleccionar Tipo de Actividad"
-                    BackgroundColor="White" TextColor="#0F172A" />
+                        <!-- Proyecto -->
+                        <VerticalStackLayout Spacing="8">
+                            <HorizontalStackLayout Spacing="4">
+                                <Label Text="Proyecto" FontAttributes="Bold" FontSize="14" TextColor="#0F172A" />
+                                <Label Text="*" FontAttributes="Bold" FontSize="14" TextColor="#EF4444" />
+                                <Label Text="ⓘ" FontSize="14" TextColor="#CBD5E1" Margin="4,0,0,0" />
+                            </HorizontalStackLayout>
+                            <Border Stroke="#E2E8F0" StrokeShape="RoundRectangle 12" BackgroundColor="#F8FAFC" Padding="12,4">
+                                <Picker ItemsSource="{Binding Proyectos}" 
+                                        ItemDisplayBinding="{Binding Nombre}" 
+                                        SelectedItem="{Binding ProyectoSeleccionado}" 
+                                        Title="▣  Busque y seleccione un proyecto"
+                                        TextColor="#0F172A" TitleColor="#64748B" BackgroundColor="Transparent" />
+                            </Border>
+                        </VerticalStackLayout>
 
-            <Label Text="Horas Invertidas" FontSize="14" TextColor="#475569" FontAttributes="Bold" />
-            <Grid ColumnDefinitions="*,Auto">
-                <Slider Grid.Column="0" Minimum="0.5" Maximum="24" Value="{Binding CantidadHoras}" />
-                <Label Grid.Column="1" Text="{Binding CantidadHoras, StringFormat='{0:F2} h'}" FontSize="16" FontAttributes="Bold" VerticalOptions="Center" Margin="10,0,0,0" />
+                        <!-- Código Requerimiento -->
+                        <VerticalStackLayout Spacing="8">
+                            <HorizontalStackLayout Spacing="4">
+                                <Label Text="Código de Requerimiento" FontAttributes="Bold" FontSize="14" TextColor="#0F172A" />
+                                <Label Text="*" FontAttributes="Bold" FontSize="14" TextColor="#EF4444" />
+                                <Label Text="ⓘ" FontSize="14" TextColor="#CBD5E1" Margin="4,0,0,0" />
+                            </HorizontalStackLayout>
+                            <Border Stroke="#E2E8F0" StrokeShape="RoundRectangle 12" BackgroundColor="#F8FAFC" Padding="12,0" HeightRequest="52">
+                                <Grid ColumnDefinitions="*,Auto" VerticalOptions="Center">
+                                    <Entry Grid.Column="0" Text="{Binding CodigoRequerimiento}" MaxLength="50" Placeholder="Ej. REQ-101" BackgroundColor="Transparent" TextColor="#0F172A" />
+                                    <Label Grid.Column="1" Text="0/50" FontSize="12" TextColor="#94A3B8" VerticalOptions="Center" />
+                                </Grid>
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <!-- Descripción -->
+                        <VerticalStackLayout Spacing="8">
+                            <HorizontalStackLayout Spacing="4">
+                                <Label Text="Descripción" FontAttributes="Bold" FontSize="14" TextColor="#0F172A" />
+                                <Label Text="ⓘ" FontSize="14" TextColor="#CBD5E1" Margin="4,0,0,0" />
+                            </HorizontalStackLayout>
+                            <Border Stroke="#E2E8F0" StrokeShape="RoundRectangle 12" BackgroundColor="#F8FAFC" Padding="12,12" HeightRequest="100">
+                                <Grid RowDefinitions="*,Auto">
+                                    <Editor Grid.Row="0" Text="{Binding DescripcionActividad}" MaxLength="255" Placeholder="Descripción de la actividad" BackgroundColor="Transparent" TextColor="#0F172A" />
+                                    <Label Grid.Row="1" Text="0/255" FontSize="12" TextColor="#94A3B8" HorizontalOptions="End" />
+                                </Grid>
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <!-- Actividad Normal (Fecha y Horas) -->
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="16" IsVisible="{Binding IsRecurrente, Converter={x:StaticResource InvertedBoolConverter}}">
+                            <VerticalStackLayout Grid.Column="0" Spacing="8">
+                                <HorizontalStackLayout Spacing="4">
+                                    <Label Text="Fecha Actividad" FontAttributes="Bold" FontSize="14" TextColor="#0F172A" />
+                                    <Label Text="*" FontAttributes="Bold" FontSize="14" TextColor="#EF4444" />
+                                </HorizontalStackLayout>
+                                <Border Stroke="#E2E8F0" StrokeShape="RoundRectangle 12" BackgroundColor="#F8FAFC" Padding="12,4" HeightRequest="52">
+                                    <DatePicker Date="{Binding FechaActividad}" BackgroundColor="Transparent" TextColor="#0F172A" Format="dd/MM/yyyy" />
+                                </Border>
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Column="1" Spacing="8">
+                                <HorizontalStackLayout Spacing="4">
+                                    <Label Text="Número de Horas" FontAttributes="Bold" FontSize="14" TextColor="#0F172A" />
+                                    <Label Text="*" FontAttributes="Bold" FontSize="14" TextColor="#EF4444" />
+                                    <Label Text="ⓘ" FontSize="14" TextColor="#CBD5E1" Margin="4,0,0,0" />
+                                </HorizontalStackLayout>
+                                <Border Stroke="#E2E8F0" StrokeShape="RoundRectangle 12" BackgroundColor="#F8FAFC" Padding="12,0" HeightRequest="52">
+                                    <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
+                                        <Label Text="🕘" FontSize="16" VerticalOptions="Center" />
+                                        <Entry Text="{Binding CantidadHoras}" Keyboard="Numeric" BackgroundColor="Transparent" TextColor="#0F172A" />
+                                    </HorizontalStackLayout>
+                                </Border>
+                            </VerticalStackLayout>
+                        </Grid>
+
+                        <!-- Checkbox Actividad Recurrente -->
+                        <HorizontalStackLayout Spacing="12" Margin="0,8,0,0">
+                            <CheckBox IsChecked="{Binding IsRecurrente}" Color="#1E3A8A" />
+                            <Label Text="Actividad Recurrente" FontAttributes="Bold" FontSize="15" TextColor="#0F172A" VerticalOptions="Center" />
+                            <Label Text="ⓘ" FontSize="15" TextColor="#CBD5E1" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+
+                        <!-- Campos Recurrentes -->
+                        <VerticalStackLayout Spacing="16" IsVisible="{Binding IsRecurrente}">
+                            
+                            <!-- Fecha Inicio -->
+                            <VerticalStackLayout Spacing="8">
+                                <HorizontalStackLayout Spacing="4">
+                                    <Label Text="Fecha Inicio" FontAttributes="Bold" FontSize="14" TextColor="#0F172A" />
+                                    <Label Text="*" FontAttributes="Bold" FontSize="14" TextColor="#EF4444" />
+                                </HorizontalStackLayout>
+                                <Border Stroke="#E2E8F0" StrokeShape="RoundRectangle 12" BackgroundColor="#F8FAFC" Padding="12,4" HeightRequest="52">
+                                    <Grid ColumnDefinitions="*,Auto" VerticalOptions="Center">
+                                        <DatePicker Grid.Column="0" Date="{Binding FechaInicio}" BackgroundColor="Transparent" TextColor="#0F172A" Format="dd/MM/yyyy" />
+                                        <Label Grid.Column="1" Text="📅" FontSize="16" VerticalOptions="Center" />
+                                    </Grid>
+                                </Border>
+                            </VerticalStackLayout>
+
+                            <!-- Fecha Fin -->
+                            <VerticalStackLayout Spacing="8">
+                                <HorizontalStackLayout Spacing="4">
+                                    <Label Text="Fecha Fin" FontAttributes="Bold" FontSize="14" TextColor="#0F172A" />
+                                    <Label Text="*" FontAttributes="Bold" FontSize="14" TextColor="#EF4444" />
+                                    <Label Text="ⓘ" FontSize="14" TextColor="#CBD5E1" Margin="4,0,0,0" />
+                                </HorizontalStackLayout>
+                                <Border Stroke="#E2E8F0" StrokeShape="RoundRectangle 12" BackgroundColor="#F8FAFC" Padding="12,4" HeightRequest="52">
+                                    <Grid ColumnDefinitions="*,Auto" VerticalOptions="Center">
+                                        <DatePicker Grid.Column="0" Date="{Binding FechaFin}" BackgroundColor="Transparent" TextColor="#0F172A" Format="dd/MM/yyyy" />
+                                        <Label Grid.Column="1" Text="📅" FontSize="16" VerticalOptions="Center" />
+                                    </Grid>
+                                </Border>
+                            </VerticalStackLayout>
+
+                            <!-- Horas por día -->
+                            <VerticalStackLayout Spacing="8">
+                                <HorizontalStackLayout Spacing="4">
+                                    <Label Text="Horas por día" FontAttributes="Bold" FontSize="14" TextColor="#0F172A" />
+                                    <Label Text="*" FontAttributes="Bold" FontSize="14" TextColor="#EF4444" />
+                                    <Label Text="ⓘ" FontSize="14" TextColor="#CBD5E1" Margin="4,0,0,0" />
+                                </HorizontalStackLayout>
+                                <Border Stroke="#E2E8F0" StrokeShape="RoundRectangle 12" BackgroundColor="#F8FAFC" Padding="12,0" HeightRequest="52">
+                                    <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
+                                        <Label Text="🕘" FontSize="16" VerticalOptions="Center" />
+                                        <Entry Text="{Binding HorasPorDia}" Keyboard="Numeric" BackgroundColor="Transparent" TextColor="#0F172A" />
+                                    </HorizontalStackLayout>
+                                </Border>
+                            </VerticalStackLayout>
+
+                            <!-- Checkbox Fines de Semana -->
+                            <HorizontalStackLayout Spacing="12">
+                                <CheckBox IsChecked="{Binding IncluirFinesSemana}" Color="#1E3A8A" />
+                                <Label Text="Incluir fines de semana" FontSize="15" TextColor="#475569" VerticalOptions="Center" />
+                                <Label Text="ⓘ" FontSize="15" TextColor="#CBD5E1" VerticalOptions="Center" />
+                            </HorizontalStackLayout>
+
+                            <!-- Checkbox Feriados -->
+                            <HorizontalStackLayout Spacing="12">
+                                <CheckBox IsChecked="{Binding IncluirFeriados}" Color="#1E3A8A" />
+                                <Label Text="Incluir días feriados" FontSize="15" TextColor="#475569" VerticalOptions="Center" />
+                                <Label Text="ⓘ" FontSize="15" TextColor="#CBD5E1" VerticalOptions="Center" />
+                            </HorizontalStackLayout>
+
+                            <!-- Mensaje Recurrente -->
+                            <Border StrokeShape="RoundRectangle 12" Stroke="Transparent" BackgroundColor="#DCFCE7" Padding="16" Margin="0,12,0,0">
+                                <HorizontalStackLayout Spacing="12">
+                                    <Label Text="ℹ️" FontSize="20" VerticalOptions="Center" />
+                                    <Label Text="{Binding MensajeRecurrente}" FontSize="14" TextColor="#166534" FontAttributes="Bold" VerticalOptions="Center" LineBreakMode="WordWrap" />
+                                </HorizontalStackLayout>
+                            </Border>
+
+                        </VerticalStackLayout>
+                        
+                    </VerticalStackLayout>
+                </ScrollView>
+
+                <!-- Botón Guardar -->
+                <Button Grid.Row="2" Text="Guardar" Command="{Binding GuardarActividadCommand}" BackgroundColor="#475569" TextColor="White" FontAttributes="Bold" FontSize="16" CornerRadius="16" HeightRequest="56" />
+
             </Grid>
-
-            <Label Text="Descripción" FontSize="14" TextColor="#475569" FontAttributes="Bold" />
-            <Editor Text="{Binding DescripcionActividad}" Placeholder="¿Qué tarea realizaste?" HeightRequest="80" BackgroundColor="White" TextColor="#0F172A" />
-
-            <Label Text="Notas adicionales" FontSize="14" TextColor="#475569" FontAttributes="Bold" />
-            <Editor Text="{Binding Notas}" Placeholder="Comentarios opcionales" HeightRequest="60" BackgroundColor="White" TextColor="#0F172A" />
-
-            <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
-                <Switch IsToggled="{Binding EsBillable}" />
-                <Label Text="Es Billable" VerticalOptions="Center" TextColor="#0F172A" />
-            </HorizontalStackLayout>
-
-            <Grid ColumnDefinitions="*,*" ColumnSpacing="16" Margin="0,20,0,0">
-                <Button Grid.Column="0" Text="Cancelar" Command="{Binding CancelarCommand}" BackgroundColor="#E2E8F0" TextColor="#475569" CornerRadius="8" />
-                <Button Grid.Column="1" Text="Guardar" Command="{Binding GuardarActividadCommand}" BackgroundColor="#2563EB" TextColor="White" CornerRadius="8" />
-            </Grid>
-            
-            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="#2563EB" HorizontalOptions="Center" Margin="0,20,0,0" />
-            
-        </VerticalStackLayout>
-    </ScrollView>
+        </Border>
+    </Grid>
 
 </ContentPage>
