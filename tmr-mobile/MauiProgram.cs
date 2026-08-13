@@ -60,6 +60,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<IClientesService, ClientesService>();
         builder.Services.AddSingleton<IColaboradoresService, ColaboradoresService>();
         builder.Services.AddSingleton<ICargaActividadesService, CargaActividadesService>();
+        builder.Services.AddSingleton<ExcelExportService>();
 
 
         // ─────────────────────────────────────────────────────────────

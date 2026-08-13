@@ -1,3 +1,4 @@
+using ClosedXML.Excel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Globalization;
@@ -12,6 +13,7 @@ namespace tmr_mobile.ViewModels;
 public partial class CargaActividadesViewModel : BaseViewModel
 {
     private readonly ApiService _apiService;
+    private readonly ExcelExportService _excelExportService;
 
     // Cache completo sin filtrar. Se descarga una vez y el filtro/búsqueda
     // se resuelve en memoria, para no golpear la API en cada tecla.
@@ -89,9 +91,10 @@ public partial class CargaActividadesViewModel : BaseViewModel
 
     public System.Collections.ObjectModel.ObservableCollection<ActividadCargaItem> Actividades { get; } = new();
 
-    public CargaActividadesViewModel(ApiService apiService)
+    public CargaActividadesViewModel(ApiService apiService, ExcelExportService excelExportService)
     {
         _apiService = apiService;
+        _excelExportService = excelExportService;
         Title = "Carga Masiva de Actividades";
 
         CargarActividadesCommand.Execute(null);
@@ -172,6 +175,32 @@ public partial class CargaActividadesViewModel : BaseViewModel
     private enum CriterioOrden { FechaDesc, FechaAsc, ColaboradorAsc, HorasDesc }
     private CriterioOrden _criterioOrden = CriterioOrden.FechaDesc;
 
+    [ObservableProperty]
+    public partial bool FiltroFechaActivo { get; set; } = false;
+
+    [ObservableProperty]
+    public partial DateTime FechaDesde { get; set; } = DateTime.Today.AddMonths(-1);
+
+    [ObservableProperty]
+    public partial DateTime FechaHasta { get; set; } = DateTime.Today;
+
+    partial void OnFiltroFechaActivoChanged(bool value)
+    {
+        PaginaActual = 1;
+        AplicarFiltro();
+    }
+
+    partial void OnFechaDesdeChanged(DateTime value)
+    {
+        if (FechaDesde > FechaHasta) FechaHasta = FechaDesde; // evita rango invertido
+        if (FiltroFechaActivo) { PaginaActual = 1; AplicarFiltro(); }
+    }
+
+    partial void OnFechaHastaChanged(DateTime value)
+    {
+        if (FechaHasta < FechaDesde) FechaDesde = FechaHasta;
+        if (FiltroFechaActivo) { PaginaActual = 1; AplicarFiltro(); }
+    }
 
     [ObservableProperty]
     public partial string OrdenTexto { get; set; } = "Más recientes";
@@ -224,6 +253,11 @@ public partial class CargaActividadesViewModel : BaseViewModel
                 "Cliente" => filtradas.Where(a => a.Cliente.Contains(termino, StringComparison.OrdinalIgnoreCase)),
                 _ => filtradas.Where(a => a.Colaborador.Contains(termino, StringComparison.OrdinalIgnoreCase)),
             };
+        }
+
+        if (FiltroFechaActivo)
+        {
+            filtradas = filtradas.Where(a => a.Fecha.Date >= FechaDesde.Date && a.Fecha.Date <= FechaHasta.Date);
         }
 
         filtradas = _criterioOrden switch
@@ -302,48 +336,6 @@ public partial class CargaActividadesViewModel : BaseViewModel
     {
         PaginaActual++;
         MostrarPaginaActual();
-    }
-
-
-    [RelayCommand]
-    [Obsolete]
-    private async Task DescargarAsync()
-    {
-        ErrorMessage = string.Empty;
-        DescargandoArchivo = true;
-        try
-        {
-            System.Diagnostics.Debug.WriteLine("[Descargar] 1. Solicitando el archivo al backend...");
-            var bytesArchivo = await _apiService.GetFileBytesAsync("carga-actividades/download");
-            System.Diagnostics.Debug.WriteLine($"[Descargar] 2. Descarga completa, {bytesArchivo?.Length ?? 0} bytes.");
-
-            if (bytesArchivo == null || bytesArchivo.Length == 0)
-            {
-                ErrorMessage = "No se pudo descargar el archivo de actividades.";
-                await Shell.Current.DisplayAlert("Error", ErrorMessage, "OK");
-                return;
-            }
-
-            var nombreArchivo = $"actividades-{DateTime.Now:yyyyMMdd-HHmmss}.xlsx";
-            var rutaFinal = await DescargaArchivoHelper.GuardarExcelAsync(bytesArchivo, nombreArchivo);
-            System.Diagnostics.Debug.WriteLine($"[Descargar] 3. Guardado: {rutaFinal ?? "(share sheet)"}");
-
-            var mensaje = rutaFinal != null
-                ? $"El archivo se guardó en:\n{rutaFinal}"
-                : "El archivo está listo. Elige dónde guardarlo.";
-
-            await Shell.Current.DisplayAlert("Archivo descargado", mensaje, "OK");
-        }
-        catch (Exception ex)
-        {
-            System.Diagnostics.Debug.WriteLine($"[Descargar] ERROR: {ex}");
-            ErrorMessage = $"Error al descargar actividades: {ex.Message}";
-            await Shell.Current.DisplayAlert("Error", ErrorMessage, "OK");
-        }
-        finally
-        {
-            DescargandoArchivo = false;
-        }
     }
 
 
@@ -492,4 +484,73 @@ public partial class CargaActividadesViewModel : BaseViewModel
         MensajeResultado = null;
         HuboErrores = false;
     }
+
+
+    [RelayCommand]
+    [Obsolete]
+    private async Task DescargarAsync()
+    {
+        ErrorMessage = string.Empty;
+        DescargandoArchivo = true;
+        try
+        {
+            if (_filtradasCache == null || _filtradasCache.Count == 0)
+            {
+                ErrorMessage = "No hay actividades para exportar con los filtros aplicados.";
+                await Shell.Current.DisplayAlert("Error", ErrorMessage, "OK");
+                return;
+            }
+
+            System.Diagnostics.Debug.WriteLine($"[Descargar] Generando Excel con {_filtradasCache.Count} actividades filtradas...");
+
+            var columnas = new List<ReporteColumna>
+            {
+                new() { Encabezado = "Fecha", AnchoExcel = 15, Alineacion = XLAlignmentHorizontalValues.Center },
+                new() { Encabezado = "Colaborador", AnchoExcel = 36 },
+                new() { Encabezado = "Proyecto", AnchoExcel = 42 },
+                new() { Encabezado = "Cliente", AnchoExcel = 36 },
+                new() { Encabezado = "Líder técnico", AnchoExcel = 30 },
+                new() { Encabezado = "Horas", AnchoExcel = 12, Alineacion = XLAlignmentHorizontalValues.Center },
+                new() { Encabezado = "Estado", AnchoExcel = 18, Alineacion = XLAlignmentHorizontalValues.Center },
+            };
+
+            var filas = _filtradasCache.Select(a => new object[]
+            {
+                a.Fecha.ToString("dd/MM/yyyy"),
+                a.Colaborador,
+                a.Proyecto,
+                a.Cliente,
+                a.LiderTecnico,
+                a.NroHoras,
+                a.Estado
+            }).ToList();
+
+            var bytesArchivo = _excelExportService.GenerarReporteExcel(
+                titulo: "Reporte de Actividades",
+                nombreHoja: "Actividades",
+                columnas: columnas,
+                filas: filas,
+                columnaEstado: 6);
+
+            var nombreArchivo = $"actividades-{DateTime.Now:yyyyMMdd-HHmmss}.xlsx";
+            var rutaFinal = await DescargaArchivoHelper.GuardarExcelAsync(bytesArchivo, nombreArchivo);
+
+            var mensaje = rutaFinal != null
+                ? $"El archivo se guardó en:\n{rutaFinal}"
+                : "El archivo está listo. Elige dónde guardarlo.";
+
+            await Shell.Current.DisplayAlert("Archivo descargado", mensaje, "OK");
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"[Descargar] ERROR: {ex}");
+            ErrorMessage = $"Error al descargar actividades: {ex.Message}";
+            await Shell.Current.DisplayAlert("Error", ErrorMessage, "OK");
+        }
+        finally
+        {
+            DescargandoArchivo = false;
+        }
+    }
+
 }
