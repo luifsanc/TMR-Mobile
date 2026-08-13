@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="tmr_mobile.Views.Operaciones.LiderFormPage"
+             Title="Formulario de Líder"
+             BackgroundColor="{AppThemeBinding Light=#F8FAFC, Dark=#0F172A}">
+
+    <ScrollView Padding="20">
+        <VerticalStackLayout Spacing="16">
+
+            <Label x:Name="TitleLabel"
+                   Text="Agregar Nuevo Líder"
+                   FontSize="20"
+                   FontAttributes="Bold"
+                   TextColor="{AppThemeBinding Light=#1E293B, Dark=#F8FAFC}" />
+
+            <!-- Nombres -->
+            <VerticalStackLayout Spacing="6">
+                <Label Text="Nombres *" FontAttributes="Bold" TextColor="#64748B" FontSize="13" />
+                <Entry x:Name="NombresEntry" Placeholder="Ej. Roberto" HeightRequest="46" />
+            </VerticalStackLayout>
+
+            <!-- Apellidos -->
+            <VerticalStackLayout Spacing="6">
+                <Label Text="Apellidos *" FontAttributes="Bold" TextColor="#64748B" FontSize="13" />
+                <Entry x:Name="ApellidosEntry" Placeholder="Ej. Gómez" HeightRequest="46" />
+            </VerticalStackLayout>
+
+            <!-- Tipo de Líder (Interno / Externo) -->
+            <VerticalStackLayout Spacing="6">
+                <Label Text="Tipo de Líder" FontAttributes="Bold" TextColor="#64748B" FontSize="13" />
+                <Picker x:Name="TipoPicker" HeightRequest="46">
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>Interno</x:String>
+                            <x:String>Externo</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+            </VerticalStackLayout>
+
+            <!-- Correo Electrónico -->
+            <VerticalStackLayout Spacing="6">
+                <Label Text="Correo Electrónico" FontAttributes="Bold" TextColor="#64748B" FontSize="13" />
+                <Entry x:Name="EmailEntry" Placeholder="ejemplo@tmr.com" Keyboard="Email" HeightRequest="46" />
+            </VerticalStackLayout>
+
+            <!-- Teléfono -->
+            <VerticalStackLayout Spacing="6">
+                <Label Text="Teléfono" FontAttributes="Bold" TextColor="#64748B" FontSize="13" />
+                <Entry x:Name="TelefonoEntry" Placeholder="Ej. 0991234567" Keyboard="Telephone" HeightRequest="46" />
+            </VerticalStackLayout>
+
+            <!-- Documento de Identificación -->
+            <VerticalStackLayout Spacing="6">
+                <Label Text="Número de Identificación / Cédula" FontAttributes="Bold" TextColor="#64748B" FontSize="13" />
+                <Entry x:Name="IdentificacionEntry" Placeholder="Ej. 0912345678" HeightRequest="46" />
+            </VerticalStackLayout>
+
+            <!-- Error Label -->
+            <Label x:Name="ErrorLabel" TextColor="#EF4444" FontSize="13" IsVisible="False" />
+
+            <!-- Botones de Acción -->
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="12" Margin="0,12,0,0">
+                <Button Grid.Column="0"
+                        Text="Cancelar"
+                        Clicked="OnCancelarClicked"
+                        BackgroundColor="#94A3B8"
+                        TextColor="White"
+                        HeightRequest="48"
+                        CornerRadius="10"
+                        FontAttributes="Bold" />
+
+                <Button Grid.Column="1"
+                        x:Name="GuardarBtn"
+                        Text="Guardar"
+                        Clicked="OnGuardarClicked"
+                        BackgroundColor="#2563EB"
+                        TextColor="White"
+                        HeightRequest="48"
+                        CornerRadius="10"
+                        FontAttributes="Bold" />
+            </Grid>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
