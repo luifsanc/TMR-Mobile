@@ -8,7 +8,7 @@
     x:DataType="vm:ReportesViewModel"
     Title="Reportes"
     Shell.NavBarIsVisible="False"
-    BackgroundColor="#F4F6FA">
+    BackgroundColor="#F8FAFC">
 
     <Grid RowDefinitions="*,80">
         <!-- Contenido principal -->
@@ -18,15 +18,17 @@
                 <!-- TÍTULO -->
                 <Label
                     Text="Módulo de Reportes"
-                    FontSize="24"
+                    FontSize="28"
                     FontAttributes="Bold"
-                    TextColor="#173A54"
+                    FontFamily="InterSemiBold"
+                    TextColor="#163572"
                     Margin="0,4,0,4" />
 
                 <!-- SUBTÍTULO -->
                 <Label
                     Text="Seleccione el tipo de informe operacional que desea consultar o exportar:"
                     FontSize="13"
+                    FontFamily="InterRegular"
                     TextColor="#64748B" />
 
                 <!-- TARJETA 1: REPORTE POR HORAS -->
