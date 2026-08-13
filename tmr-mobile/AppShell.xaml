@@ -11,6 +11,7 @@
     xmlns:rep="clr-namespace:tmr_mobile.Views.Reportes"
     xmlns:cfg="clr-namespace:tmr_mobile.Views.Configuracion"
     Title="TMR Móvil"
+    Shell.NavBarIsVisible="False"
     FlyoutBehavior="Disabled">
 
     <ShellItem Route="LoginPage">

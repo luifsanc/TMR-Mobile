@@ -29,7 +29,7 @@
     <Grid>
         <!-- ===================== TODO EN UN SOLO SCROLL ===================== -->
         <ScrollView Margin="0,60,0,80">
-            <VerticalStackLayout Spacing="20"
+            <VerticalStackLayout Spacing="14"
                                  Padding="16,12,16,32">
 
             <Grid ColumnDefinitions="Auto,*,Auto"
@@ -94,17 +94,23 @@
             <FlexLayout BindableLayout.ItemsSource="{Binding StatCards}"
                         Wrap="Wrap"
                         Direction="Row"
-                        JustifyContent="SpaceBetween">
+                        AlignItems="Stretch"
+                        JustifyContent="Start"
+                        Margin="-4">
                 <BindableLayout.ItemTemplate>
                     <DataTemplate x:DataType="models:StatCard">
                         <Border StrokeShape="RoundRectangle 14"
                                 BackgroundColor="White"
                                 Stroke="{StaticResource DashboardBorder}"
-                                Padding="10"
-                                Margin="0,0,0,8"
-                                WidthRequest="132">
+                                Padding="12,10"
+                                Margin="4"
+                                HeightRequest="126"
+                                FlexLayout.Basis="48%"
+                                FlexLayout.Grow="1">
                             <Grid RowDefinitions="Auto,Auto,Auto"
-                                RowSpacing="6">
+                                  RowSpacing="5"
+                                  HorizontalOptions="Fill"
+                                  VerticalOptions="Center">
                                 <Border Grid.Row="0"
                                         StrokeShape="RoundRectangle 10"
                                         BackgroundColor="{Binding IconBackground}"
@@ -112,7 +118,7 @@
                                         HeightRequest="34"
                                         Padding="0"
                                         Stroke="Transparent"
-                                        HorizontalOptions="Start">
+                                        HorizontalOptions="Center">
                                     <Label Text="{Binding Icon}"
                                         FontSize="15"
                                         TextColor="{Binding IconColor}"
@@ -124,11 +130,16 @@
                                     Text="{Binding Value}"
                                     FontSize="17"
                                     FontAttributes="Bold"
+                                    HorizontalTextAlignment="Center"
+                                    HorizontalOptions="Fill"
                                     TextColor="{StaticResource DashboardText}"/>
 
                                 <Label Grid.Row="2"
                                     Text="{Binding Label}"
                                     FontSize="10.5"
+                                    HorizontalTextAlignment="Center"
+                                    HorizontalOptions="Fill"
+                                    LineBreakMode="WordWrap"
                                     TextColor="{StaticResource DashboardMuted}"/>
                             </Grid>
                         </Border>
