@@ -314,6 +314,7 @@
                             HeightRequest="36"/>
                 </VerticalStackLayout>
             </Border>
+            
 
             <!-- ===================== Próximos a cerrar ===================== -->
             <Grid ColumnDefinitions="*,Auto">
@@ -322,10 +323,6 @@
                        FontSize="17"
                        FontAttributes="Bold"
                        TextColor="#101828"/>
-                <Label Grid.Column="1"
-                       Text="Ver todos"
-                       FontSize="14"
-                       TextColor="#2E5BFF"/>
             </Grid>
 
                 <CollectionView ItemsSource="{Binding ProximosACerrar}">
