@@ -2,29 +2,223 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:tmr_mobile.ViewModels"
-             xmlns:shared="clr-namespace:tmr_mobile.Views.Shared"
-             xmlns:dto="clr-namespace:tmr_shared.DTOs.Proyectos;assembly=tmr-shared"
+             xmlns:model="clr-namespace:tmr_mobile.Models.Operaciones"
              x:Class="tmr_mobile.Views.Operaciones.ProyectosPage"
              x:DataType="vm:ProyectosViewModel"
-             Title="{Binding Title}">
+             Title="{Binding Title}"
+             BackgroundColor="{StaticResource Background}">
 
-    <Grid RowDefinitions="*,80">
-        <CollectionView Grid.Row="0" ItemsSource="{Binding Proyectos}" Margin="16">
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="dto:ProyectoResponse">
-                    <Border Margin="0,0,0,12" Padding="16"
-                            StrokeShape="RoundRectangle 10" Stroke="Transparent">
-                        <VerticalStackLayout Spacing="4">
-                            <Label Text="{Binding Nombre}" FontAttributes="Bold" FontSize="16" />
-                            <Label Text="{Binding Cliente, StringFormat='Cliente: {0}'}" TextColor="#64748B" FontSize="14" />
-                            <Label Text="{Binding Estado}" TextColor="#16A34A" FontAttributes="Bold" FontSize="12" />
+    <CollectionView ItemsSource="{Binding ProyectosFiltrados}" SelectionMode="None" ItemsLayout="VerticalList" VerticalOptions="FillAndExpand" BackgroundColor="{StaticResource Background}" Margin="16,0,16,0">
+        <CollectionView.Header>
+            <VerticalStackLayout Spacing="16">
+                <Border Style="{StaticResource CardBorderStyle}" BackgroundColor="#F8FAFC" Padding="24">
+                    <VerticalStackLayout Spacing="18">
+                        <VerticalStackLayout Spacing="10">
+                            <Label Text="Proyectos" Style="{StaticResource PageHeaderTitleStyle}" />
+                            <Label Text="Seguimiento de estado, cliente y carga de horas" Style="{StaticResource PageHeaderSubtitleStyle}" />
                         </VerticalStackLayout>
-                    </Border>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
 
-        <shared:BottomNavBar Grid.Row="1" />
-    </Grid>
+                        <Border BackgroundColor="{StaticResource White}" Stroke="{StaticResource CardBorderBrush}" StrokeThickness="1" Padding="12" Margin="0,0,0,16">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="20" />
+                            </Border.StrokeShape>
+                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12" VerticalOptions="Center">
+                                <Entry Text="{Binding SearchText}" Placeholder="Buscar proyecto, cliente o código" Style="{StaticResource PrimaryEntryStyle}" BackgroundColor="{StaticResource White}" VerticalOptions="Center" />
+                                <Button Text="Nuevo" Command="{Binding CrearProyectoCommand}" Style="{StaticResource PrimaryButtonStyle}" WidthRequest="110" HorizontalOptions="End" VerticalOptions="Center" />
+                            </Grid>
+                        </Border>
 
+                        <VerticalStackLayout Spacing="14">
+                            <VerticalStackLayout Spacing="4">
+                                <Label Text="Estado:" Style="{StaticResource ProjectSmallLabelStyle}" />
+                                <Picker ItemsSource="{Binding EstadoOpciones}" SelectedItem="{Binding SelectedEstado}" Style="{StaticResource PrimaryPickerStyle}" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Spacing="4">
+                                <Label Text="Tipo:" Style="{StaticResource ProjectSmallLabelStyle}" />
+                                <Picker ItemsSource="{Binding TipoOpciones}" SelectedItem="{Binding SelectedTipo}" Style="{StaticResource PrimaryPickerStyle}" />
+                            </VerticalStackLayout>
+                        </VerticalStackLayout>
+
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12" VerticalOptions="Center">
+                            <VerticalStackLayout Spacing="2" VerticalOptions="Center">
+                                <Label Text="{Binding ProyectosCount, StringFormat='Proyectos cargados: {0}'}" Style="{StaticResource PageSubtitleStyle}" />
+                                <Label Text="{Binding FiltradosCount, StringFormat='Proyectos encontrados: {0}'}" Style="{StaticResource PageSubtitleStyle}" />
+                            </VerticalStackLayout>
+                            <Button Text="Limpiar" Command="{Binding LimpiarFiltrosCommand}" Style="{StaticResource SecondaryButtonStyle}" WidthRequest="110" Grid.Column="1" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Style="{StaticResource CardBorderStyle}" BackgroundColor="{StaticResource White}" Padding="18" IsVisible="{Binding IsFormVisible}">
+                    <VerticalStackLayout Spacing="16">
+                        <Label Text="{Binding FormTitle}" Style="{StaticResource PageHeaderTitleStyle}" />
+                        <Label Text="Completa la información del proyecto y guarda los cambios." Style="{StaticResource PageHeaderSubtitleStyle}" />
+
+                        <Grid ColumnDefinitions="*,*" RowSpacing="14" ColumnSpacing="12">
+                            <VerticalStackLayout Spacing="6" Grid.Column="0">
+                                <Label Text="Código" Style="{StaticResource ProjectSmallLabelStyle}" />
+                                <Entry Text="{Binding ProyectoForm.Codigo}" Style="{StaticResource PrimaryEntryStyle}" Placeholder="Ej. PROJ-001" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Spacing="6" Grid.Column="1">
+                                <Label Text="Nombre" Style="{StaticResource ProjectSmallLabelStyle}" />
+                                <Entry Text="{Binding ProyectoForm.Nombre}" Style="{StaticResource PrimaryEntryStyle}" Placeholder="Nombre del proyecto" />
+                            </VerticalStackLayout>
+
+                            <VerticalStackLayout Spacing="6" Grid.Column="0">
+                                <Label Text="Cliente" Style="{StaticResource ProjectSmallLabelStyle}" />
+                                <Entry Text="{Binding ProyectoForm.Cliente}" Style="{StaticResource PrimaryEntryStyle}" Placeholder="Nombre del cliente" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Spacing="6" Grid.Column="1">
+                                <Label Text="Tipo" Style="{StaticResource ProjectSmallLabelStyle}" />
+                                <Picker ItemsSource="{Binding TipoFormOpciones}" SelectedItem="{Binding ProyectoForm.Tipo}" Style="{StaticResource PrimaryPickerStyle}" />
+                            </VerticalStackLayout>
+
+                            <VerticalStackLayout Spacing="6" Grid.Column="0">
+                                <Label Text="Líder" Style="{StaticResource ProjectSmallLabelStyle}" />
+                                <Entry Text="{Binding ProyectoForm.Lider}" Style="{StaticResource PrimaryEntryStyle}" Placeholder="Nombre del líder" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Spacing="6" Grid.Column="1">
+                                <Label Text="Estado" Style="{StaticResource ProjectSmallLabelStyle}" />
+                                <Picker ItemsSource="{Binding EstadoFormOpciones}" SelectedItem="{Binding ProyectoForm.Estado}" Style="{StaticResource PrimaryPickerStyle}" />
+                            </VerticalStackLayout>
+
+                            <VerticalStackLayout Spacing="6" Grid.Column="0">
+                                <Label Text="Estado de seguimiento" Style="{StaticResource ProjectSmallLabelStyle}" />
+                                <Picker ItemsSource="{Binding SeguimientoOpciones}" SelectedItem="{Binding SelectedSeguimiento}" ItemDisplayBinding="{Binding Nombre}" Style="{StaticResource PrimaryPickerStyle}" />
+                            </VerticalStackLayout>
+
+                            <VerticalStackLayout Spacing="6" Grid.Column="1">
+                                <Label Text="Id seguimiento" Style="{StaticResource ProjectSmallLabelStyle}" />
+                                <Entry Text="{Binding ProyectoForm.IdEstadoProyecto}" Style="{StaticResource PrimaryEntryStyle}" Placeholder="Opcional" Keyboard="Numeric" />
+                            </VerticalStackLayout>
+
+                            <VerticalStackLayout Spacing="6" Grid.Column="0">
+                                <Label Text="Fecha inicio" Style="{StaticResource ProjectSmallLabelStyle}" />
+                                <Entry Text="{Binding ProyectoForm.FechaInicio, StringFormat='dd/MM/yyyy'}" Style="{StaticResource PrimaryEntryStyle}" Placeholder="dd/MM/yyyy" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Spacing="6" Grid.Column="1">
+                                <Label Text="Fecha fin" Style="{StaticResource ProjectSmallLabelStyle}" />
+                                <Entry Text="{Binding ProyectoForm.FechaFin, StringFormat='dd/MM/yyyy'}" Style="{StaticResource PrimaryEntryStyle}" Placeholder="dd/MM/yyyy" />
+                            </VerticalStackLayout>
+
+                            <VerticalStackLayout Spacing="6" Grid.Column="0">
+                                <Label Text="Presupuesto" Style="{StaticResource ProjectSmallLabelStyle}" />
+                                <Entry Text="{Binding ProyectoForm.Presupuesto}" Style="{StaticResource PrimaryEntryStyle}" Placeholder="0.00" Keyboard="Numeric" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Spacing="6" Grid.Column="1">
+                                <Label Text="Horas" Style="{StaticResource ProjectSmallLabelStyle}" />
+                                <Entry Text="{Binding ProyectoForm.Horas}" Style="{StaticResource PrimaryEntryStyle}" Placeholder="0" Keyboard="Numeric" />
+                            </VerticalStackLayout>
+
+                            <VerticalStackLayout Spacing="6" Grid.Column="0">
+                                <Label Text="Fecha inicio real" Style="{StaticResource ProjectSmallLabelStyle}" />
+                                <Entry Text="{Binding ProyectoForm.FechaInicioReal, StringFormat='dd/MM/yyyy'}" Style="{StaticResource PrimaryEntryStyle}" Placeholder="dd/MM/yyyy" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Spacing="6" Grid.Column="1">
+                                <Label Text="Fecha fin real" Style="{StaticResource ProjectSmallLabelStyle}" />
+                                <Entry Text="{Binding ProyectoForm.FechaFinReal, StringFormat='dd/MM/yyyy'}" Style="{StaticResource PrimaryEntryStyle}" Placeholder="dd/MM/yyyy" />
+                            </VerticalStackLayout>
+
+                            <VerticalStackLayout Spacing="6" Grid.Column="0">
+                                <Label Text="Fecha inicio espera" Style="{StaticResource ProjectSmallLabelStyle}" />
+                                <Entry Text="{Binding ProyectoForm.FechaInicioEspera, StringFormat='dd/MM/yyyy'}" Style="{StaticResource PrimaryEntryStyle}" Placeholder="dd/MM/yyyy" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Spacing="6" Grid.Column="1">
+                                <Label Text="Fecha fin espera" Style="{StaticResource ProjectSmallLabelStyle}" />
+                                <Entry Text="{Binding ProyectoForm.FechaFinEspera, StringFormat='dd/MM/yyyy'}" Style="{StaticResource PrimaryEntryStyle}" Placeholder="dd/MM/yyyy" />
+                            </VerticalStackLayout>
+
+                            <VerticalStackLayout Spacing="6" Grid.ColumnSpan="2">
+                                <Label Text="Observación" Style="{StaticResource ProjectSmallLabelStyle}" />
+                                <Editor Text="{Binding ProyectoForm.Observacion}" HeightRequest="100" BackgroundColor="{StaticResource White}" TextColor="{StaticResource TextPrimary}" />
+                            </VerticalStackLayout>
+                        </Grid>
+
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                            <Button Text="Guardar" Command="{Binding GuardarProyectoCommand}" Style="{StaticResource PrimaryButtonStyle}" />
+                            <Button Text="Cancelar" Command="{Binding CancelarFormularioCommand}" Style="{StaticResource SecondaryButtonStyle}" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+        </CollectionView.Header>
+
+        <CollectionView.EmptyView>
+            <VerticalStackLayout Padding="24" Spacing="12" HorizontalOptions="Center" VerticalOptions="Center">
+                <Label Text="No se encontraron proyectos." TextColor="{StaticResource TextSecondary}" HorizontalTextAlignment="Center" />
+                <Label Text="{Binding ErrorMessage}" Style="{StaticResource ErrorText}" IsVisible="{Binding ErrorMessage, Converter={StaticResource IsStringNotNullOrEmptyConverter}}" Margin="0,6,0,0" />
+                <Button Text="Crear proyecto" Command="{Binding CrearProyectoCommand}" Style="{StaticResource PrimaryButtonStyle}" WidthRequest="180" />
+            </VerticalStackLayout>
+        </CollectionView.EmptyView>
+
+        <CollectionView.ItemTemplate>
+            <DataTemplate x:DataType="model:ProyectoItem">
+                <Border Style="{StaticResource ListCardStyle}" Margin="0,0,0,12" Padding="18">
+                    <VerticalStackLayout Spacing="14">
+                        <!-- Header: Nombre, ID y Menú -->
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                            <VerticalStackLayout Spacing="4">
+                                <Label Text="{Binding Nombre}" FontSize="18" FontAttributes="Bold" TextColor="#1E293B" LineBreakMode="TailTruncation" />
+                                <Label Text="{Binding Codigo, StringFormat='ID: {0}'}" FontSize="12" TextColor="#64748B" />
+                            </VerticalStackLayout>
+                            <Button Text="⋮" Style="{StaticResource ProjectIconButtonStyle}" CommandParameter="{Binding .}" Clicked="OnProjectOptionsClicked" />
+                        </Grid>
+
+                        <!-- Cliente y Estado -->
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12" VerticalOptions="Center">
+                            <VerticalStackLayout Spacing="4">
+                                <Label Text="Cliente" FontSize="11" TextColor="#64748B" FontAttributes="Bold" />
+                                <Label Text="{Binding Cliente}" FontSize="14" TextColor="#1E293B" LineBreakMode="TailTruncation" />
+                            </VerticalStackLayout>
+                            <Border Style="{StaticResource ProjectStatusPillStyle}" HorizontalOptions="End">
+                                <Border.BackgroundColor>
+                                    <Binding Path="Estado" Converter="{StaticResource EstadoColorConverter}" />
+                                </Border.BackgroundColor>
+                                <Label Text="{Binding Estado}" FontSize="12" FontAttributes="Bold" HorizontalTextAlignment="Center" VerticalTextAlignment="Center">
+                                    <Label.TextColor>
+                                        <Binding Path="Estado" Converter="{StaticResource EstadoTextColorConverter}" />
+                                    </Label.TextColor>
+                                </Label>
+                            </Border>
+                        </Grid>
+
+                        <BoxView Color="#E2E8F0" HeightRequest="1" HorizontalOptions="FillAndExpand" />
+
+                        <Grid ColumnDefinitions="Auto,Auto" ColumnSpacing="16">
+                            <VerticalStackLayout Spacing="8">
+                                <Label Text="Líder" FontSize="11" TextColor="#64748B" FontAttributes="Bold" />
+                                <Grid ColumnDefinitions="36,*" ColumnSpacing="10">
+                                    <Border BackgroundColor="#E0F2FE" StrokeThickness="0" WidthRequest="36" HeightRequest="36" VerticalOptions="Center">
+                                        <Border.StrokeShape>
+                                            <RoundRectangle CornerRadius="18" />
+                                        </Border.StrokeShape>
+                                        <Label Text="{Binding Lider, Converter={StaticResource LiderInicialConverter}}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="12" FontAttributes="Bold" TextColor="#0369A1" />
+                                    </Border>
+                                    <Label Text="{Binding Lider}" FontSize="14" TextColor="#1E293B" VerticalTextAlignment="Center" LineBreakMode="TailTruncation" />
+                                </Grid>
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Spacing="8" HorizontalOptions="End">
+                                <Label Text="Recursos" FontSize="11" TextColor="#64748B" FontAttributes="Bold" HorizontalTextAlignment="End" />
+                                <Border BackgroundColor="#F1F5F9" StrokeThickness="0" Padding="12,8" HorizontalOptions="End">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="8" />
+                                    </Border.StrokeShape>
+                                    <Label Text="{Binding NumeroRecursos, StringFormat='{0} recurso(s)'}" FontSize="14" FontAttributes="Bold" TextColor="#0F172A" HorizontalTextAlignment="Center" />
+                                </Border>
+                            </VerticalStackLayout>
+                        </Grid>
+
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8" VerticalOptions="Center">
+                            <Label Text="📅" FontSize="14" VerticalTextAlignment="Center" />
+                            <Label Text="{Binding FechaRango}" FontSize="13" TextColor="#64748B" VerticalTextAlignment="Center" />
+                        </Grid>
+
+                        <BoxView Color="#E2E8F0" HeightRequest="1" HorizontalOptions="FillAndExpand" />
+
+                        <Button Text="Ver más" Style="{StaticResource ProjectCardButtonStyle}" CommandParameter="{Binding .}" Clicked="OnProjectDetailsClicked" />
+                    </VerticalStackLayout>
+                </Border>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+    </CollectionView>
 </ContentPage>
