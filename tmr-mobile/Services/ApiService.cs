@@ -57,6 +57,25 @@ public class ApiService
         _httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("TMR-Mobile-App/1.0");
     }
 
+    private string NormalizeEndpoint(string endpoint)
+    {
+        if (string.IsNullOrWhiteSpace(endpoint))
+            return string.Empty;
+
+        // Aceptar formatos: "proyectos", "/proyectos", "api/proyectos", "/api/proyectos"
+        var e = endpoint.TrimStart('/');
+
+        // Si BaseAddress ya termina en "api/" y el endpoint comienza con "api/", evitar duplicado
+        if (_httpClient?.BaseAddress != null &&
+            _httpClient.BaseAddress.AbsoluteUri.TrimEnd('/').EndsWith("/api", StringComparison.OrdinalIgnoreCase) &&
+            e.StartsWith("api/", StringComparison.OrdinalIgnoreCase))
+        {
+            e = e.Substring(4); // quitar "api/"
+        }
+
+        return e;
+    }
+
     /// <summary>
     /// Registra la función de refresh token para que ApiService pueda
     /// renovar automáticamente el AT al recibir un 401, sin ciclo de dependencia.
@@ -73,8 +92,18 @@ public class ApiService
         CancellationToken ct = default)
     {
         await AddAuthHeaderAsync();
-        var response = await _httpClient.GetAsync(endpoint, ct);
-        return await HandleResponseAsync<TResponse>(response, endpoint, "GET", null, ct);
+        try
+        {
+            endpoint = NormalizeEndpoint(endpoint);
+            var response = await _httpClient.GetAsync(endpoint, ct);
+            Log($"[ApiService] GET {endpoint} -> {(int)response.StatusCode} {response.ReasonPhrase}");
+            return await HandleResponseAsync<TResponse>(response, endpoint, "GET", null, ct);
+        }
+        catch (Exception ex)
+        {
+            Log($"[ApiService] Exception en GET {endpoint}: {ex.Message}");
+            return default;
+        }
     }
 
     public async Task<TResponse?> PostAsync<TRequest, TResponse>(string endpoint, TRequest data,
@@ -94,6 +123,7 @@ public class ApiService
         TRequest data,
         CancellationToken ct = default)
     {
+        endpoint = NormalizeEndpoint(endpoint);
         using var response = await _httpClient.PostAsJsonAsync(endpoint, data, JsonOptions, ct);
 
         if (!response.IsSuccessStatusCode)
@@ -116,6 +146,7 @@ public class ApiService
         CancellationToken ct = default)
     {
         await AddAuthHeaderAsync();
+        endpoint = NormalizeEndpoint(endpoint);
         using var response = await _httpClient.PostAsJsonAsync(endpoint, data, JsonOptions, ct);
 
         if (response.StatusCode == HttpStatusCode.Unauthorized && _refreshTokenFunc != null)
@@ -153,6 +184,7 @@ public class ApiService
         fileContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
         content.Add(fileContent, "file", fileName);
 
+        endpoint = NormalizeEndpoint(endpoint);
         var response = await _httpClient.PostAsync(endpoint, content, ct);
         return await HandleResponseAsync<TResponse>(response, endpoint, "POST", null, ct);
     }
@@ -161,6 +193,7 @@ public class ApiService
         CancellationToken ct = default)
     {
         await AddAuthHeaderAsync();
+        endpoint = NormalizeEndpoint(endpoint);
         var response = await _httpClient.PutAsJsonAsync(endpoint, data, JsonOptions, ct);
         return await HandleResponseAsync<TResponse>(response, endpoint, "PUT", data, ct);
     }
@@ -169,6 +202,7 @@ public class ApiService
         CancellationToken ct = default)
     {
         await AddAuthHeaderAsync();
+        endpoint = NormalizeEndpoint(endpoint);
         var response = await _httpClient.DeleteAsync(endpoint, ct);
         return response.IsSuccessStatusCode;
     }
@@ -177,6 +211,7 @@ public class ApiService
     public async Task<byte[]?> GetFileBytesAsync(string endpoint, CancellationToken ct = default)
     {
         await AddAuthHeaderAsync();
+        endpoint = NormalizeEndpoint(endpoint);
         var response = await _httpClient.GetAsync(endpoint, ct);
 
         if (!response.IsSuccessStatusCode)
@@ -205,6 +240,7 @@ public class ApiService
             return content;
         }
 
+        endpoint = NormalizeEndpoint(endpoint);
         var response = await _httpClient.PostAsync(endpoint, BuildContent(), ct);
 
         if (response.StatusCode == HttpStatusCode.Unauthorized && _refreshTokenFunc != null)
@@ -244,10 +280,16 @@ public class ApiService
     {
         var token = await SecureStorage.Default.GetAsync(TokenKey);
         if (!string.IsNullOrEmpty(token))
+        {
             _httpClient.DefaultRequestHeaders.Authorization =
                 new AuthenticationHeaderValue("Bearer", token);
+            Log("[ApiService] Token presente en SecureStorage (no se muestra).");
+        }
         else
+        {
             _httpClient.DefaultRequestHeaders.Authorization = null;
+            Log("[ApiService] No hay token en SecureStorage.");
+        }
     }
 
     private async Task<TResponse?> HandleResponseAsync<TResponse>(
@@ -298,17 +340,35 @@ public class ApiService
     {
         try
         {
-            return await response.Content.ReadFromJsonAsync<TResponse>(JsonOptions);
+            var content = await response.Content.ReadAsStringAsync();
+            if (!string.IsNullOrWhiteSpace(content))
+            {
+                var sample = content.Length > 1000 ? content.Substring(0, 1000) + "..." : content;
+                Log($"[ApiService] Body ({response.RequestMessage?.RequestUri}): {sample}");
+            }
+
+            if (string.IsNullOrWhiteSpace(content))
+                return default;
+
+            return JsonSerializer.Deserialize<TResponse>(content, JsonOptions);
         }
         catch (JsonException ex)
         {
             Log($"[ApiService] Error de deserialización: {ex.Message}");
             return default;
         }
+        catch (Exception ex)
+        {
+            Log($"[ApiService] Error leyendo respuesta: {ex.Message}");
+            return default;
+        }
     }
 
     private static void Log(string message)
-        => System.Diagnostics.Debug.WriteLine(message);
+    {
+        System.Diagnostics.Debug.WriteLine(message);
+        Console.WriteLine(message);
+    }
 
     private static string ExtractErrorMessage(string content)
     {

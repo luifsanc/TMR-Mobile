@@ -1,28 +1,504 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:vm="clr-namespace:tmr_mobile.ViewModels"
-             xmlns:shared="clr-namespace:tmr_mobile.Views.Shared"
-             xmlns:dto="clr-namespace:tmr_shared.DTOs.Proyectos;assembly=tmr-shared"
-             x:Class="tmr_mobile.Views.Operaciones.ProyectosPage"
-             x:DataType="vm:ProyectosViewModel"
-             Title="{Binding Title}">
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:tmr_mobile.ViewModels"
+    xmlns:shared="clr-namespace:tmr_mobile.Views.Shared"
+    xmlns:dto="clr-namespace:tmr_shared.DTOs.Proyectos;assembly=tmr-shared"
+    xmlns:conv="clr-namespace:tmr_mobile.Views.Dashboard.Converters"
+    x:Class="tmr_mobile.Views.Operaciones.ProyectosPage"
+    x:DataType="vm:ProyectosViewModel"
+    Title="Proyectos"
+    Shell.NavBarIsVisible="False"
+    BackgroundColor="#F8FAFC">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <conv:StatusToBackgroundColorConverter x:Key="StatusToBackgroundColorConverter" />
+            <conv:StatusToTextColorConverter x:Key="StatusToTextColorConverter" />
+            <conv:ShortNameConverter x:Key="ShortNameConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
     <Grid RowDefinitions="*,80">
-        <CollectionView Grid.Row="0" ItemsSource="{Binding Proyectos}" Margin="16">
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="dto:ProyectoResponse">
-                    <Border Margin="0,0,0,12" Padding="16"
-                            StrokeShape="RoundRectangle 10" Stroke="Transparent">
-                        <VerticalStackLayout Spacing="4">
-                            <Label Text="{Binding Nombre}" FontAttributes="Bold" FontSize="16" />
-                            <Label Text="{Binding Cliente, StringFormat='Cliente: {0}'}" TextColor="#64748B" FontSize="14" />
-                            <Label Text="{Binding Estado}" TextColor="#16A34A" FontAttributes="Bold" FontSize="12" />
+        <!-- Contenido principal y Botón Flotante en la fila superior -->
+        <Grid Grid.Row="0">
+            <Grid RowDefinitions="Auto,Auto,*" Padding="16" RowSpacing="14">
+
+                <!-- TÍTULO DE LA PÁGINA -->
+                <Label
+                    Grid.Row="0"
+                    Text="Proyectos"
+                    FontSize="28"
+                    FontAttributes="Bold"
+                    TextColor="#163572"
+                    Margin="0,4,0,4" />
+
+                <!-- BARRA DE BÚSQUEDA Y BOTONES DE FILTRO Y DESCARGA -->
+                <Grid Grid.Row="1" ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
+                    <!-- Input de Búsqueda -->
+                    <Border
+                        Grid.Column="0"
+                        HeightRequest="44"
+                        BackgroundColor="White"
+                        Stroke="#D1D5DB"
+                        StrokeThickness="1"
+                        Padding="12,0">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10" />
+                        </Border.StrokeShape>
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8" VerticalOptions="Center">
+                            <Label
+                                Grid.Column="0"
+                                Text="🔍"
+                                FontSize="16"
+                                VerticalOptions="Center" />
+                            <Entry
+                                Grid.Column="1"
+                                x:Name="SearchEntry"
+                                Placeholder="Buscar por nombre..."
+                                PlaceholderColor="#9CA3AF"
+                                TextColor="#111827"
+                                FontSize="13"
+                                BackgroundColor="Transparent"
+                                VerticalOptions="Center"
+                                Text="{Binding TextoBusqueda}" />
+                        </Grid>
+                    </Border>
+
+                    <!-- Botón de Filtro de Estado -->
+                    <Button
+                        Grid.Column="1"
+                        Text="🔽"
+                        FontSize="18"
+                        Padding="11"
+                        WidthRequest="44"
+                        HeightRequest="44"
+                        BackgroundColor="White"
+                        TextColor="#6B7280"
+                        BorderWidth="1"
+                        BorderColor="#D1D5DB"
+                        CornerRadius="10"
+                        Command="{Binding FiltrarEstadoCommand}" />
+
+                    <!-- Botón de Descargar / Exportar -->
+                    <Button
+                        Grid.Column="2"
+                        Text="⬇️"
+                        FontSize="18"
+                        Padding="11"
+                        WidthRequest="44"
+                        HeightRequest="44"
+                        BackgroundColor="White"
+                        TextColor="#6B7280"
+                        BorderWidth="1"
+                        BorderColor="#D1D5DB"
+                        CornerRadius="10"
+                        Command="{Binding DescargarCommand}" />
+                </Grid>
+
+                <!-- CARDS DE PROYECTOS -->
+                <CollectionView
+                    Grid.Row="2"
+                    ItemsSource="{Binding Proyectos}"
+                    SelectionMode="None"
+                    VerticalScrollBarVisibility="Never">
+                    <CollectionView.EmptyView>
+                        <VerticalStackLayout Padding="40" HorizontalOptions="Center" VerticalOptions="Center">
+                            <Label
+                                Text="No hay proyectos para mostrar."
+                                TextColor="#6B7280"
+                                FontSize="14"
+                                HorizontalTextAlignment="Center" />
+                        </VerticalStackLayout>
+                    </CollectionView.EmptyView>
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="dto:ProyectoResponse">
+                            <Border
+                                Margin="0,0,0,14"
+                                Padding="0"
+                                BackgroundColor="White"
+                                Stroke="#E5E7EB"
+                                StrokeThickness="1"
+                                MinimumHeightRequest="170">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="18" />
+                                </Border.StrokeShape>
+                                <Border.Shadow>
+                                    <Shadow Brush="Black" Offset="0,3" Radius="8" Opacity="0.06" />
+                                </Border.Shadow>
+
+                                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14" Padding="18,16" VerticalOptions="Center">
+                                    <!-- Avatar Iniciales del Cliente -->
+                                    <Border
+                                        Grid.Column="0"
+                                        WidthRequest="58"
+                                        HeightRequest="58"
+                                        BackgroundColor="#F0F4FF"
+                                        StrokeThickness="0"
+                                        VerticalOptions="Center">
+                                        <Border.StrokeShape>
+                                            <RoundRectangle CornerRadius="29" />
+                                        </Border.StrokeShape>
+                                        <Label
+                                            Text="{Binding Cliente, Converter={StaticResource ShortNameConverter}}"
+                                            FontSize="16"
+                                            FontAttributes="Bold"
+                                            TextColor="#163572"
+                                            HorizontalTextAlignment="Center"
+                                            VerticalTextAlignment="Center" />
+                                    </Border>
+
+                                    <!-- Información del Proyecto -->
+                                    <VerticalStackLayout Grid.Column="1" Spacing="6" VerticalOptions="Center">
+                                        <Label
+                                            Text="{Binding Nombre}"
+                                            FontSize="16"
+                                            FontAttributes="Bold"
+                                            TextColor="#163572"
+                                            MaxLines="2"
+                                            LineBreakMode="TailTruncation" />
+                                        <Label
+                                            Text="{Binding Cliente}"
+                                            FontSize="12.5"
+                                            TextColor="#4B5563"
+                                            MaxLines="1"
+                                            LineBreakMode="TailTruncation" />
+
+                                        <Grid ColumnDefinitions="Auto,Auto,*" ColumnSpacing="6" Margin="0,2,0,0">
+                                            <Label Grid.Column="0" Text="👤" FontSize="11" VerticalOptions="Center" />
+                                            <Label Grid.Column="1" Text="Líder:" FontSize="11" TextColor="#6B7280" VerticalOptions="Center" />
+                                            <Label
+                                                Grid.Column="2"
+                                                Text="{Binding LiderAsignado}"
+                                                FontSize="11"
+                                                FontAttributes="Bold"
+                                                TextColor="#163572"
+                                                MaxLines="1"
+                                                LineBreakMode="TailTruncation"
+                                                HorizontalTextAlignment="Start"
+                                                VerticalOptions="Center" />
+                                        </Grid>
+
+                                        <Grid ColumnDefinitions="Auto,Auto,*" ColumnSpacing="6">
+                                            <Label Grid.Column="0" Text="👥" FontSize="11" VerticalOptions="Center" />
+                                            <Label Grid.Column="1" Text="Recursos:" FontSize="11" TextColor="#6B7280" VerticalOptions="Center" />
+                                            <Label
+                                                Grid.Column="2"
+                                                Text="{Binding Recursos}"
+                                                FontSize="11"
+                                                FontAttributes="Bold"
+                                                TextColor="#163572"
+                                                HorizontalTextAlignment="Start"
+                                                VerticalOptions="Center" />
+                                        </Grid>
+
+                                        <HorizontalStackLayout Spacing="6">
+                                            <Label Text="📅" FontSize="11" VerticalOptions="Center" />
+                                            <Label Text="{Binding FechaInicio, StringFormat='{}{0:dd/MM}'} - {Binding FechaFin, StringFormat='{0:dd/MM}'}" FontSize="12" TextColor="#6B7280" />
+                                        </HorizontalStackLayout>
+                                    </VerticalStackLayout>
+
+                                    <VerticalStackLayout Grid.Column="2" Spacing="10" HorizontalOptions="End" VerticalOptions="Center">
+                                        <!-- Status Badge -->
+                                        <Border
+                                            BackgroundColor="{Binding Estado, Converter={StaticResource StatusToBackgroundColorConverter}}"
+                                            StrokeThickness="0"
+                                            Padding="10,6"
+                                            HorizontalOptions="End">
+                                            <Border.StrokeShape>
+                                                <RoundRectangle CornerRadius="12" />
+                                            </Border.StrokeShape>
+                                            <HorizontalStackLayout Spacing="5" VerticalOptions="Center">
+                                                <Label
+                                                    Text="•"
+                                                    FontSize="14"
+                                                    FontAttributes="Bold"
+                                                    TextColor="{Binding Estado, Converter={StaticResource StatusToTextColorConverter}}"
+                                                    VerticalOptions="Center" />
+                                                <Label
+                                                    Text="{Binding Estado}"
+                                                    FontSize="11"
+                                                    FontAttributes="Bold"
+                                                    TextColor="{Binding Estado, Converter={StaticResource StatusToTextColorConverter}}"
+                                                    VerticalOptions="Center" />
+                                            </HorizontalStackLayout>
+                                        </Border>
+
+                                        <Button
+                                            Text="⋮"
+                                            FontSize="26"
+                                            WidthRequest="36"
+                                            HeightRequest="36"
+                                            Padding="0"
+                                            CornerRadius="18"
+                                            BackgroundColor="#F3F6FB"
+                                            TextColor="#163572"
+                                            FontAttributes="Bold"
+                                            HorizontalOptions="End"
+                                            Clicked="OnMoreOptionsClicked"
+                                            CommandParameter="{Binding .}" />
+                                    </VerticalStackLayout>
+                                </Grid>
+
+                                <!-- Gesture Recognizer para abrir detalles -->
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.AbrirDetalleCommand}" CommandParameter="{Binding .}" />
+                                </Border.GestureRecognizers>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                <Grid
+                    x:Name="ContextMenuOverlay"
+                    Grid.Row="0"
+                    IsVisible="False"
+                    BackgroundColor="#0F172A66"
+                    InputTransparent="False"
+                    Padding="16,12,16,0">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnCloseMenuTapped" />
+                    </Grid.GestureRecognizers>
+
+                    <Border
+                        x:Name="ContextMenuCard"
+                        WidthRequest="220"
+                        BackgroundColor="White"
+                        Stroke="#E5E7EB"
+                        StrokeThickness="1"
+                        Padding="10"
+                        HorizontalOptions="End"
+                        VerticalOptions="Start"
+                        Margin="0,80,0,0">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="18" />
+                        </Border.StrokeShape>
+                        <Border.Shadow>
+                            <Shadow Brush="Black" Offset="0,10" Radius="18" Opacity="0.18" />
+                        </Border.Shadow>
+
+                        <VerticalStackLayout Spacing="8">
+                            <Border
+                                Padding="12,10"
+                                BackgroundColor="#F3F7FF"
+                                StrokeThickness="0"
+                                StrokeShape="RoundRectangle 12">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnMenuViewClicked" />
+                                </Border.GestureRecognizers>
+                                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10" VerticalOptions="Center">
+                                    <Label
+                                        Text="👁️"
+                                        FontSize="16"
+                                        VerticalOptions="Center" />
+                                    <Label
+                                        Grid.Column="1"
+                                        Text="Ver más"
+                                        FontSize="15"
+                                        FontAttributes="Bold"
+                                        TextColor="#163572"
+                                        VerticalOptions="Center" />
+                                </Grid>
+                            </Border>
+
+                            <Border
+                                Padding="12,10"
+                                BackgroundColor="#F3F7FF"
+                                StrokeThickness="0"
+                                StrokeShape="RoundRectangle 12">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnMenuEditClicked" />
+                                </Border.GestureRecognizers>
+                                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10" VerticalOptions="Center">
+                                    <Label
+                                        Text="✏️"
+                                        FontSize="16"
+                                        VerticalOptions="Center" />
+                                    <Label
+                                        Grid.Column="1"
+                                        Text="Editar"
+                                        FontSize="15"
+                                        FontAttributes="Bold"
+                                        TextColor="#163572"
+                                        VerticalOptions="Center" />
+                                </Grid>
+                            </Border>
+
+                            <Border
+                                Padding="12,10"
+                                BackgroundColor="#FFF5F5"
+                                StrokeThickness="0"
+                                StrokeShape="RoundRectangle 12">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnMenuDeactivateClicked" />
+                                </Border.GestureRecognizers>
+                                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10" VerticalOptions="Center">
+                                    <Label
+                                        Text="⏸️"
+                                        FontSize="16"
+                                        VerticalOptions="Center" />
+                                    <Label
+                                        Grid.Column="1"
+                                        Text="Inactivar"
+                                        FontSize="15"
+                                        FontAttributes="Bold"
+                                        TextColor="#D14343"
+                                        VerticalOptions="Center" />
+                                </Grid>
+                            </Border>
                         </VerticalStackLayout>
                     </Border>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+                </Grid>
+
+                <Grid
+                    x:Name="ProjectDetailOverlay"
+                    Grid.Row="0"
+                    IsVisible="False"
+                    BackgroundColor="#0F172A66"
+                    InputTransparent="False"
+                    Padding="20">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnCloseProjectDetailTapped" />
+                    </Grid.GestureRecognizers>
+
+                    <Border
+                        WidthRequest="380"
+                        BackgroundColor="White"
+                        Stroke="#E5E7EB"
+                        StrokeThickness="1"
+                        Padding="20"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="22" />
+                        </Border.StrokeShape>
+                        <Border.Shadow>
+                            <Shadow Brush="Black" Offset="0,12" Radius="20" Opacity="0.18" />
+                        </Border.Shadow>
+
+                        <VerticalStackLayout Spacing="16">
+                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12" VerticalOptions="Center">
+                                <VerticalStackLayout Grid.Column="0" Spacing="4">
+                                    <Label
+                                        Text="Detalle del proyecto"
+                                        FontSize="15"
+                                        FontAttributes="Bold"
+                                        TextColor="#6B7280" />
+                                    <Label
+                                        x:Name="ProjectDetailName"
+                                        FontSize="20"
+                                        FontAttributes="Bold"
+                                        TextColor="#163572"
+                                        MaxLines="2"
+                                        LineBreakMode="TailTruncation" />
+                                </VerticalStackLayout>
+
+                                <Button
+                                    Grid.Column="1"
+                                    Text="×"
+                                    WidthRequest="34"
+                                    HeightRequest="34"
+                                    Padding="0"
+                                    CornerRadius="17"
+                                    BackgroundColor="#EEF2FF"
+                                    TextColor="#163572"
+                                    FontSize="20"
+                                    FontAttributes="Bold"
+                                    Clicked="OnCloseProjectDetailTapped" />
+                            </Grid>
+
+                            <Border
+                                x:Name="ProjectDetailStatusBadge"
+                                BackgroundColor="#E0F2FE"
+                                StrokeThickness="0"
+                                Padding="10,7"
+                                HorizontalOptions="Start">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="12" />
+                                </Border.StrokeShape>
+                                <Label
+                                    x:Name="ProjectDetailStatus"
+                                    FontSize="12"
+                                    FontAttributes="Bold"
+                                    TextColor="#0F766E" />
+                            </Border>
+
+                            <Border
+                                BackgroundColor="#F8FAFC"
+                                Stroke="#E5E7EB"
+                                StrokeThickness="1"
+                                Padding="14"
+                                StrokeShape="RoundRectangle 16">
+                                <VerticalStackLayout Spacing="12">
+                                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                                        <Border WidthRequest="28" HeightRequest="28" BackgroundColor="#E0E7FF" StrokeThickness="0" StrokeShape="RoundRectangle 8">
+                                            <Label Text="🏢" FontSize="13" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                                        </Border>
+                                        <VerticalStackLayout Grid.Column="1" Spacing="2">
+                                            <Label Text="Cliente" FontSize="11" TextColor="#6B7280" />
+                                            <Label x:Name="ProjectDetailClient" FontSize="13" FontAttributes="Bold" TextColor="#1F2937" />
+                                        </VerticalStackLayout>
+                                    </Grid>
+
+                                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                                        <Border WidthRequest="28" HeightRequest="28" BackgroundColor="#E0F2FE" StrokeThickness="0" StrokeShape="RoundRectangle 8">
+                                            <Label Text="👤" FontSize="13" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                                        </Border>
+                                        <VerticalStackLayout Grid.Column="1" Spacing="2">
+                                            <Label Text="Líder" FontSize="11" TextColor="#6B7280" />
+                                            <Label x:Name="ProjectDetailLeader" FontSize="13" FontAttributes="Bold" TextColor="#163572" />
+                                        </VerticalStackLayout>
+                                    </Grid>
+
+                                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                                        <Border WidthRequest="28" HeightRequest="28" BackgroundColor="#DCFCE7" StrokeThickness="0" StrokeShape="RoundRectangle 8">
+                                            <Label Text="👥" FontSize="13" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                                        </Border>
+                                        <VerticalStackLayout Grid.Column="1" Spacing="2">
+                                            <Label Text="Recursos" FontSize="11" TextColor="#6B7280" />
+                                            <Label x:Name="ProjectDetailResources" FontSize="13" FontAttributes="Bold" TextColor="#163572" />
+                                        </VerticalStackLayout>
+                                    </Grid>
+
+                                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                                        <Border WidthRequest="28" HeightRequest="28" BackgroundColor="#FDE68A" StrokeThickness="0" StrokeShape="RoundRectangle 8">
+                                            <Label Text="📅" FontSize="13" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                                        </Border>
+                                        <VerticalStackLayout Grid.Column="1" Spacing="2">
+                                            <Label Text="Fechas" FontSize="11" TextColor="#6B7280" />
+                                            <Label x:Name="ProjectDetailDates" FontSize="13" FontAttributes="Bold" TextColor="#163572" />
+                                        </VerticalStackLayout>
+                                    </Grid>
+                                </VerticalStackLayout>
+                            </Border>
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
+
+            </Grid>
+
+            <!-- FLOATING ACTION BUTTON (+) -->
+            <Button
+                Text="+"
+                Command="{Binding NuevoCommand}"
+                WidthRequest="52"
+                HeightRequest="52"
+                CornerRadius="26"
+                BackgroundColor="#163572"
+                TextColor="White"
+                FontSize="24"
+                FontAttributes="Bold"
+                HorizontalOptions="End"
+                VerticalOptions="End"
+                Margin="20"
+                Padding="0">
+                <Button.Shadow>
+                    <Shadow Brush="Black" Offset="0,4" Radius="6" Opacity="0.2" />
+                </Button.Shadow>
+            </Button>
+        </Grid>
 
         <shared:BottomNavBar Grid.Row="1" />
     </Grid>
