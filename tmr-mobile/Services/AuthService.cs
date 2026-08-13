@@ -102,7 +102,7 @@ public class AuthService : IAuthService
                     object,
                     ApiLoginResponse
                 >(
-                    "api/auth/login",
+                    "auth/login",
                     payload
                 );
 
@@ -161,7 +161,7 @@ public class AuthService : IAuthService
                     object,
                     ApiForgotPasswordResponse
                 >(
-                    "api/auth/forgot-password",
+                    "auth/forgot-password",
                     payload
                 );
 
@@ -208,13 +208,13 @@ public class AuthService : IAuthService
         {
             var payload = new { refreshToken };
             var result = await _apiService.PostForResultAsync(
-                "api/auth/logout",
+                "auth/logout",
                 payload);
 
             if (!result.Success && !string.IsNullOrWhiteSpace(refreshToken))
             {
                 await _apiService.PostForResultAsync(
-                    "api/auth/logout-rt",
+                    "auth/logout-rt",
                     payload);
             }
         }
@@ -241,7 +241,7 @@ public class AuthService : IAuthService
         try
         {
             var result = await _apiService.PostForResultAsync(
-                "api/auth/change-password",
+                "auth/change-password",
                 new
                 {
                     oldPassword,
@@ -292,7 +292,7 @@ public class AuthService : IAuthService
                 return false;
 
             var response = await _apiService.PostAnonymousAsync<object, ApiLoginResponse>(
-                "api/auth/refresh-token",
+                "auth/refresh-token",
                 new { refreshToken });
 
             if (response?.Data?.AccessToken is null)

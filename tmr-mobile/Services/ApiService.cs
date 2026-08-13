@@ -19,7 +19,7 @@ public class ApiService
 
     // ── Configuración de URL ─────────────────────────────────────────────────
     // Apuntando al entorno de desarrollo remoto para evitar problemas de loopback local
-    private const string BaseUrl = "https://dev.api.tmr2.dokploy.integritysolutions.com.ec/";
+    private const string BaseUrl = "https://dev.api.tmr2.dokploy.integritysolutions.com.ec/api/";
 
     // Claves en SecureStorage
     internal const string TokenKey = "auth_token";
@@ -163,6 +163,14 @@ public class ApiService
         await AddAuthHeaderAsync();
         var response = await _httpClient.PutAsJsonAsync(endpoint, data, JsonOptions, ct);
         return await HandleResponseAsync<TResponse>(response, endpoint, "PUT", data, ct);
+    }
+
+    public async Task<bool> PutAsync<TRequest>(string endpoint, TRequest data,
+        CancellationToken ct = default)
+    {
+        await AddAuthHeaderAsync();
+        var response = await _httpClient.PutAsJsonAsync(endpoint, data, JsonOptions, ct);
+        return response.IsSuccessStatusCode;
     }
 
     public async Task<bool> DeleteAsync(string endpoint,

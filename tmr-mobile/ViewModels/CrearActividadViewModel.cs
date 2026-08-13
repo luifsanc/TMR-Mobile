@@ -146,11 +146,10 @@ public partial class CrearActividadViewModel : BaseViewModel, IQueryAttributable
             {
                 foreach (var tipo in tiposTask.Result)
                 {
-                    var tipoLimpio = tipo with { Nombre = tipo.Nombre?.Trim() };
-                    TiposActividad.Add(tipoLimpio);
+                    TiposActividad.Add(tipo);
                     if (_tempTipoActividadId.HasValue && tipo.Id == _tempTipoActividadId.Value)
                     {
-                        TipoActividadSeleccionada = tipoLimpio;
+                        TipoActividadSeleccionada = tipo;
                     }
                 }
             }
@@ -160,11 +159,10 @@ public partial class CrearActividadViewModel : BaseViewModel, IQueryAttributable
             {
                 foreach (var proy in proyectosTask.Result)
                 {
-                    var proyLimpio = proy with { Nombre = proy.Nombre?.Trim(), Codigo = proy.Codigo?.Trim() };
-                    Proyectos.Add(proyLimpio);
+                    Proyectos.Add(proy);
                     if (_tempProyectoId.HasValue && proy.Id == _tempProyectoId.Value)
                     {
-                        ProyectoSeleccionado = proyLimpio;
+                        ProyectoSeleccionado = proy;
                     }
                 }
             }
