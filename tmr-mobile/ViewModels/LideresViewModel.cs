@@ -190,49 +190,19 @@ public partial class LideresViewModel : BaseViewModel
     [RelayCommand]
     private async Task ExportarReporteAsync()
     {
-        if (Lideres.Count == 0)
+        var encabezados = new[] { "Nombre", "Correo", "Teléfono", "Tipo", "Clientes Vinculados", "Estado" };
+        var filas = _lideresFiltradosCache.Select(l => new[]
         {
-            await Shell.Current.DisplayAlert("Exportar", "No hay datos para exportar.", "OK");
-            return;
-        }
+            l.NombreCompleto,
+            l.Email ?? "-",
+            l.Telefono ?? "-",
+            l.TipoBadge,
+            l.ClientesResumen,
+            l.EstadoTexto
+        }).ToList();
 
-        var opcion = await Shell.Current.DisplayActionSheet(
-            title: "Seleccione el formato de descarga:",
-            cancel: "Cancelar",
-            destruction: null,
-            buttons: new[] { "📄 Descargar PDF", "📊 Descargar Excel" }
-        );
-
-        if (opcion == "📄 Descargar PDF")
-        {
-            var encabezados = new[] { "Nombre", "Correo", "Teléfono", "Tipo", "Clientes Vinculados", "Estado" };
-            var filas = _lideresFiltradosCache.Select(l => new[]
-            {
-                l.NombreCompleto,
-                l.Email ?? "-",
-                l.Telefono ?? "-",
-                l.TipoBadge,
-                l.ClientesResumen,
-                l.EstadoTexto
-            }).ToList();
-
-            await ReportService.ExportarHtmlPdfAsync("Reporte de Líderes", encabezados, filas, "Lideres");
-        }
-        else if (opcion == "📊 Descargar Excel")
-        {
-            var encabezados = new[] { "Nombre", "Correo", "Teléfono", "Tipo", "Clientes Vinculados", "Estado" };
-            var filas = _lideresFiltradosCache.Select(l => new[]
-            {
-                l.NombreCompleto,
-                l.Email ?? "-",
-                l.Telefono ?? "-",
-                l.TipoBadge,
-                l.ClientesResumen,
-                l.EstadoTexto
-            }).ToList();
-
-            await ReportService.ExportarCsvAsync("Reporte de Líderes", encabezados, filas, "Lideres");
-        }
+        await ReportService.SeleccionarYExportarAsync(
+            "Reporte de Líderes", encabezados, filas, "Lideres");
     }
 
     [RelayCommand]

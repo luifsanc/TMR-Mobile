@@ -191,19 +191,6 @@ public partial class ReporteHorasViewModel : BaseViewModel
     [RelayCommand]
     private async Task ExportarReporteAsync()
     {
-        if (Resultados.Count == 0)
-        {
-            await Shell.Current.DisplayAlert("Exportar", "No hay datos para exportar.", "OK");
-            return;
-        }
-
-        var opcion = await Shell.Current.DisplayActionSheet(
-            title: "Seleccione el formato de descarga:",
-            cancel: "Cancelar",
-            destruction: null,
-            buttons: new[] { "📄 Descargar PDF", "📊 Descargar Excel" }
-        );
-
         var encabezados = new[] { "Cliente", "Recursos", "Horas", "Mes", "Año", "Estado Cliente" };
         var filas = Resultados.Select(r => new[]
         {
@@ -215,14 +202,8 @@ public partial class ReporteHorasViewModel : BaseViewModel
             r.EstadoCliente
         }).ToList();
 
-        if (opcion == "📄 Descargar PDF")
-        {
-            await ReportService.ExportarHtmlPdfAsync("Reporte por Horas Ejecutadas", encabezados, filas, "Reporte_Horas");
-        }
-        else if (opcion == "📊 Descargar Excel")
-        {
-            await ReportService.ExportarCsvAsync("Reporte por Horas Ejecutadas", encabezados, filas, "Reporte_Horas");
-        }
+        await ReportService.SeleccionarYExportarAsync(
+            "Reporte por Horas Ejecutadas", encabezados, filas, "Reporte_Horas");
     }
 
     [RelayCommand]

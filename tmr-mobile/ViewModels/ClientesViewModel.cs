@@ -146,7 +146,18 @@ public partial class ClientesViewModel : BaseViewModel
     [RelayCommand]
     private async Task DescargarAsync()
     {
-        await Shell.Current.CurrentPage.DisplayAlert("Exportar", "Se ha generado la descarga del reporte de clientes.", "OK");
+        var encabezados = new[] { "Identificación", "Nombre comercial", "Correo", "Teléfono", "Estado" };
+        var filas = Clientes.Select(c => new[]
+        {
+            c.NumeroIdentificacion,
+            c.NombreComercial,
+            c.Email,
+            c.Telefono,
+            c.EstadoTexto
+        }).ToList();
+
+        await ReportService.SeleccionarYExportarAsync(
+            "Reporte de Clientes", encabezados, filas, "Clientes");
     }
 
     private void ActualizarListadoYResumen()

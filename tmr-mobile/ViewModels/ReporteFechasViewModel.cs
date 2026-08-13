@@ -180,19 +180,6 @@ public partial class ReporteFechasViewModel : BaseViewModel
     [RelayCommand]
     private async Task ExportarReporteAsync()
     {
-        if (Resultados.Count == 0)
-        {
-            await Shell.Current.DisplayAlert("Exportar", "No hay datos para exportar.", "OK");
-            return;
-        }
-
-        var opcion = await Shell.Current.DisplayActionSheet(
-            title: "Seleccione el formato de descarga:",
-            cancel: "Cancelar",
-            destruction: null,
-            buttons: new[] { "📄 Descargar PDF", "📊 Descargar Excel" }
-        );
-
         var encabezados = new[] { "Cliente", "Líder", "Recurso", "Cargo", "Fecha Inicio", "Fecha Fin" };
         var filas = Resultados.Select(r => new[]
         {
@@ -204,14 +191,8 @@ public partial class ReporteFechasViewModel : BaseViewModel
             r.FechaFinFormateada
         }).ToList();
 
-        if (opcion == "📄 Descargar PDF")
-        {
-            await ReportService.ExportarHtmlPdfAsync("Reporte por Rango de Fechas", encabezados, filas, "Reporte_Fechas");
-        }
-        else if (opcion == "📊 Descargar Excel")
-        {
-            await ReportService.ExportarCsvAsync("Reporte por Rango de Fechas", encabezados, filas, "Reporte_Fechas");
-        }
+        await ReportService.SeleccionarYExportarAsync(
+            "Reporte por Rango de Fechas", encabezados, filas, "Reporte_Fechas");
     }
 
     [RelayCommand]

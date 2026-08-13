@@ -1,4 +1,3 @@
-using ClosedXML.Excel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Globalization;
@@ -13,7 +12,6 @@ namespace tmr_mobile.ViewModels;
 public partial class CargaActividadesViewModel : BaseViewModel
 {
     private readonly ApiService _apiService;
-    private readonly ExcelExportService _excelExportService;
 
     // Cache completo sin filtrar. Se descarga una vez y el filtro/búsqueda
     // se resuelve en memoria, para no golpear la API en cada tecla.
@@ -91,10 +89,9 @@ public partial class CargaActividadesViewModel : BaseViewModel
 
     public System.Collections.ObjectModel.ObservableCollection<ActividadCargaItem> Actividades { get; } = new();
 
-    public CargaActividadesViewModel(ApiService apiService, ExcelExportService excelExportService)
+    public CargaActividadesViewModel(ApiService apiService)
     {
         _apiService = apiService;
-        _excelExportService = excelExportService;
         Title = "Carga Masiva de Actividades";
 
         CargarActividadesCommand.Execute(null);
@@ -487,7 +484,6 @@ public partial class CargaActividadesViewModel : BaseViewModel
 
 
     [RelayCommand]
-    [Obsolete]
     private async Task DescargarAsync()
     {
         ErrorMessage = string.Empty;
@@ -501,45 +497,23 @@ public partial class CargaActividadesViewModel : BaseViewModel
                 return;
             }
 
-            System.Diagnostics.Debug.WriteLine($"[Descargar] Generando Excel con {_filtradasCache.Count} actividades filtradas...");
-
-            var columnas = new List<ReporteColumna>
+            var encabezados = new[]
             {
-                new() { Encabezado = "Fecha", AnchoExcel = 15, Alineacion = XLAlignmentHorizontalValues.Center },
-                new() { Encabezado = "Colaborador", AnchoExcel = 36 },
-                new() { Encabezado = "Proyecto", AnchoExcel = 42 },
-                new() { Encabezado = "Cliente", AnchoExcel = 36 },
-                new() { Encabezado = "Líder técnico", AnchoExcel = 30 },
-                new() { Encabezado = "Horas", AnchoExcel = 12, Alineacion = XLAlignmentHorizontalValues.Center },
-                new() { Encabezado = "Estado", AnchoExcel = 18, Alineacion = XLAlignmentHorizontalValues.Center },
+                "Fecha", "Colaborador", "Proyecto", "Cliente", "Líder técnico", "Horas", "Estado"
             };
-
-            var filas = _filtradasCache.Select(a => new object[]
+            var filas = _filtradasCache.Select(a => new[]
             {
                 a.Fecha.ToString("dd/MM/yyyy"),
                 a.Colaborador,
                 a.Proyecto,
                 a.Cliente,
                 a.LiderTecnico,
-                a.NroHoras,
+                a.NroHoras.ToString(CulturaEc),
                 a.Estado
             }).ToList();
 
-            var bytesArchivo = _excelExportService.GenerarReporteExcel(
-                titulo: "Reporte de Actividades",
-                nombreHoja: "Actividades",
-                columnas: columnas,
-                filas: filas,
-                columnaEstado: 6);
-
-            var nombreArchivo = $"actividades-{DateTime.Now:yyyyMMdd-HHmmss}.xlsx";
-            var rutaFinal = await DescargaArchivoHelper.GuardarExcelAsync(bytesArchivo, nombreArchivo);
-
-            var mensaje = rutaFinal != null
-                ? $"El archivo se guardó en:\n{rutaFinal}"
-                : "El archivo está listo. Elige dónde guardarlo.";
-
-            await Shell.Current.DisplayAlert("Archivo descargado", mensaje, "OK");
+            await ReportService.SeleccionarYExportarAsync(
+                "Reporte de Actividades", encabezados, filas, "Actividades");
         }
         catch (Exception ex)
         {
