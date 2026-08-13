@@ -1,179 +1,300 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:vm="clr-namespace:tmr_mobile.ViewModels"
-             xmlns:dto="clr-namespace:tmr_shared.DTOs.Lideres;assembly=tmr-shared"
-             x:Class="tmr_mobile.Views.Operaciones.LideresPage"
-             x:DataType="vm:LideresViewModel"
-             Title="{Binding Title}"
-             BackgroundColor="{AppThemeBinding Light=#F8FAFC, Dark=#0F172A}">
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:tmr_mobile.ViewModels"
+    xmlns:dto="clr-namespace:tmr_shared.DTOs.Lideres;assembly=tmr-shared"
+    xmlns:shared="clr-namespace:tmr_mobile.Views.Shared"
+    x:Class="tmr_mobile.Views.Operaciones.LideresPage"
+    x:DataType="vm:LideresViewModel"
+    Title="Líderes"
+    Shell.NavBarIsVisible="False"
+    BackgroundColor="#F4F6FA">
 
-    <Grid RowDefinitions="Auto,Auto,Auto,*" Padding="16,12,16,0" RowSpacing="12">
-        
-        <!-- Fila 0: Header de Métricas (4 Tarjetas) -->
-        <Grid Grid.Row="0" ColumnDefinitions="*,*,*,*" ColumnSpacing="8">
-            <!-- Internos -->
-            <Border Grid.Column="0" StrokeShape="RoundRectangle 10" BackgroundColor="#DBEAFE" Padding="8,6" StrokeThickness="0">
-                <VerticalStackLayout Spacing="2">
-                    <Label Text="Internos" FontSize="10" TextColor="#1E40AF" FontAttributes="Bold" HorizontalOptions="Center" />
-                    <Label Text="{Binding TotalInternos}" FontSize="16" FontAttributes="Bold" TextColor="#1E3A8A" HorizontalOptions="Center" />
-                </VerticalStackLayout>
-            </Border>
+    <Grid RowDefinitions="*,80">
+        <!-- Contenido principal y Botón Flotante en la fila superior -->
+        <Grid Grid.Row="0">
+            <Grid RowDefinitions="Auto,Auto,Auto,*" Padding="16" RowSpacing="14">
 
-            <!-- Externos -->
-            <Border Grid.Column="1" StrokeShape="RoundRectangle 10" BackgroundColor="#F3E8FF" Padding="8,6" StrokeThickness="0">
-                <VerticalStackLayout Spacing="2">
-                    <Label Text="Externos" FontSize="10" TextColor="#6B21A8" FontAttributes="Bold" HorizontalOptions="Center" />
-                    <Label Text="{Binding TotalExternos}" FontSize="16" FontAttributes="Bold" TextColor="#581C87" HorizontalOptions="Center" />
-                </VerticalStackLayout>
-            </Border>
-
-            <!-- Activos -->
-            <Border Grid.Column="2" StrokeShape="RoundRectangle 10" BackgroundColor="#DCFCE7" Padding="8,6" StrokeThickness="0">
-                <VerticalStackLayout Spacing="2">
-                    <Label Text="Activos" FontSize="10" TextColor="#166534" FontAttributes="Bold" HorizontalOptions="Center" />
-                    <Label Text="{Binding TotalActivos}" FontSize="16" FontAttributes="Bold" TextColor="#14532D" HorizontalOptions="Center" />
-                </VerticalStackLayout>
-            </Border>
-
-            <!-- Inactivos -->
-            <Border Grid.Column="3" StrokeShape="RoundRectangle 10" BackgroundColor="#F1F5F9" Padding="8,6" StrokeThickness="0">
-                <VerticalStackLayout Spacing="2">
-                    <Label Text="Inactivos" FontSize="10" TextColor="#475569" FontAttributes="Bold" HorizontalOptions="Center" />
-                    <Label Text="{Binding TotalInactivos}" FontSize="16" FontAttributes="Bold" TextColor="#334155" HorizontalOptions="Center" />
-                </VerticalStackLayout>
-            </Border>
-        </Grid>
-
-        <!-- Fila 1: Barra de Búsqueda + Botón Exportar (📥) -->
-        <Grid Grid.Row="1" ColumnDefinitions="*,Auto" ColumnSpacing="8">
-            
-            <Border Grid.Column="0" StrokeShape="RoundRectangle 10" BackgroundColor="{AppThemeBinding Light=White, Dark=#1E293B}" StrokeThickness="0" Padding="2">
-                <SearchBar Placeholder="Buscar por nombre, correo o cliente..."
-                           Text="{Binding TextoBusqueda}"
-                           PlaceholderColor="#94A3B8"
-                           BackgroundColor="Transparent" />
-            </Border>
-
-            <Button Grid.Column="1"
-                    Text="📥 Descargar"
-                    FontSize="12"
+                <!-- TÍTULO DE LA PÁGINA -->
+                <Label
+                    Grid.Row="0"
+                    Text="Líderes de Proyecto"
+                    FontSize="24"
                     FontAttributes="Bold"
-                    BackgroundColor="#1E293B"
-                    TextColor="White"
-                    CornerRadius="10"
-                    HeightRequest="46"
-                    Padding="12,0"
-                    Command="{Binding ExportarReporteCommand}" />
-        </Grid>
+                    TextColor="#173A54" />
 
-        <!-- Fila 2: Mensaje de Error -->
-        <Label Grid.Row="2"
-               Text="{Binding ErrorMessage}"
-               TextColor="#EF4444"
-               FontSize="13"
-               IsVisible="{Binding ErrorMessage, Converter={StaticResource IsStringNotNullOrEmptyConverter}}" />
+                <!-- BUSCADOR CON BOTÓN DE DESCARGA -->
+                <Grid Grid.Row="1" ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                    <!-- Input de Búsqueda -->
+                    <Border
+                        Grid.Column="0"
+                        HeightRequest="46"
+                        BackgroundColor="White"
+                        Stroke="#DCE3EC"
+                        StrokeThickness="1"
+                        Padding="12,0">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10" />
+                        </Border.StrokeShape>
+                        <Entry
+                            Text="{Binding TextoBusqueda}"
+                            Placeholder="Buscar por nombre, correo o cliente..."
+                            PlaceholderColor="#9CA3AF"
+                            TextColor="#334155"
+                            FontSize="13"
+                            BackgroundColor="Transparent"
+                            VerticalOptions="Center" />
+                    </Border>
 
-        <!-- Fila 3: RefreshView + CollectionView VIRTUALIZADO -->
-        <RefreshView Grid.Row="3" IsRefreshing="{Binding IsBusy}" Command="{Binding CargarLideresCommand}">
-            <Grid RowDefinitions="*,Auto">
-                
-                <CollectionView Grid.Row="0"
-                                ItemsSource="{Binding Lideres}"
-                                EmptyView="No se encontraron líderes registrados."
-                                RemainingItemsThreshold="3"
-                                RemainingItemsThresholdReachedCommand="{Binding CargarMasLideresCommand}">
-                    
+                    <!-- Botón Descargar Reporte (Excel / PDF) -->
+                    <Border
+                        Grid.Column="1"
+                        HeightRequest="46"
+                        BackgroundColor="#2563EB"
+                        Stroke="Transparent"
+                        Padding="14,0">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10" />
+                        </Border.StrokeShape>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ExportarReporteCommand}" />
+                        </Border.GestureRecognizers>
+                        <HorizontalStackLayout Spacing="6" HorizontalOptions="Center" VerticalOptions="Center">
+                            <Path Data="M12,4 L12,14 M7,9 L12,14 L17,9 M5,19 L19,19"
+                                  Stroke="White"
+                                  StrokeThickness="2"
+                                  StrokeLineCap="Round"
+                                  StrokeLineJoin="Round"
+                                  WidthRequest="16"
+                                  HeightRequest="16"
+                                  VerticalOptions="Center"
+                                  Aspect="Uniform" />
+                            <Label Text="Descargar"
+                                   TextColor="White"
+                                   FontSize="13"
+                                   FontAttributes="Bold"
+                                   VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+                    </Border>
+                </Grid>
+
+                <!-- CARDS DE RESUMEN (Estadísticas 4 métricas) -->
+                <Grid Grid.Row="2" ColumnDefinitions="*,*,*,*" ColumnSpacing="6">
+                    <!-- Internos -->
+                    <Border
+                        Grid.Column="0"
+                        BackgroundColor="#EBF3FA"
+                        Stroke="#D0E3F5"
+                        StrokeThickness="1"
+                        Padding="6,8">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10" />
+                        </Border.StrokeShape>
+                        <VerticalStackLayout Spacing="2">
+                            <Label Text="Internos" FontSize="10" TextColor="#1E40AF" HorizontalTextAlignment="Center" />
+                            <Label Text="{Binding TotalInternos}" FontSize="16" FontAttributes="Bold" TextColor="#1E3A8A" HorizontalTextAlignment="Center" />
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <!-- Externos -->
+                    <Border
+                        Grid.Column="1"
+                        BackgroundColor="#F3E8FF"
+                        Stroke="#E9D5FF"
+                        StrokeThickness="1"
+                        Padding="6,8">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10" />
+                        </Border.StrokeShape>
+                        <VerticalStackLayout Spacing="2">
+                            <Label Text="Externos" FontSize="10" TextColor="#6B21A8" HorizontalTextAlignment="Center" />
+                            <Label Text="{Binding TotalExternos}" FontSize="16" FontAttributes="Bold" TextColor="#581C87" HorizontalTextAlignment="Center" />
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <!-- Activos -->
+                    <Border
+                        Grid.Column="2"
+                        BackgroundColor="#E8F5E9"
+                        Stroke="#C8E6C9"
+                        StrokeThickness="1"
+                        Padding="6,8">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10" />
+                        </Border.StrokeShape>
+                        <VerticalStackLayout Spacing="2">
+                            <Label Text="Activos" FontSize="10" TextColor="#2E7D32" HorizontalTextAlignment="Center" />
+                            <Label Text="{Binding TotalActivos}" FontSize="16" FontAttributes="Bold" TextColor="#2E7D32" HorizontalTextAlignment="Center" />
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <!-- Inactivos -->
+                    <Border
+                        Grid.Column="3"
+                        BackgroundColor="#FFEBEE"
+                        Stroke="#FFCDD2"
+                        StrokeThickness="1"
+                        Padding="6,8">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10" />
+                        </Border.StrokeShape>
+                        <VerticalStackLayout Spacing="2">
+                            <Label Text="Inactivos" FontSize="10" TextColor="#C62828" HorizontalTextAlignment="Center" />
+                            <Label Text="{Binding TotalInactivos}" FontSize="16" FontAttributes="Bold" TextColor="#C62828" HorizontalTextAlignment="Center" />
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
+
+                <!-- LISTA DE LÍDERES -->
+                <CollectionView
+                    Grid.Row="3"
+                    ItemsSource="{Binding Lideres}"
+                    RemainingItemsThreshold="3"
+                    RemainingItemsThresholdReachedCommand="{Binding CargarMasLideresCommand}"
+                    SelectionMode="None">
+
+                    <CollectionView.EmptyView>
+                        <VerticalStackLayout Padding="40" HorizontalOptions="Center" VerticalOptions="Center">
+                            <Label
+                                Text="No se encontraron líderes de proyecto."
+                                TextColor="#64748B"
+                                FontSize="14"
+                                HorizontalTextAlignment="Center" />
+                        </VerticalStackLayout>
+                    </CollectionView.EmptyView>
+
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="dto:LiderResponse">
-                            <Border Margin="0,0,0,10"
-                                    Padding="14"
-                                    StrokeShape="RoundRectangle 14"
-                                    BackgroundColor="{AppThemeBinding Light=White, Dark=#1E293B}"
-                                    StrokeThickness="0">
-                                
+                            <Border
+                                Margin="0,0,0,10"
+                                Padding="14"
+                                BackgroundColor="White"
+                                Stroke="#E2E8F0"
+                                StrokeThickness="1">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="12" />
+                                </Border.StrokeShape>
                                 <Border.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:LideresViewModel}}, Path=AbrirOpcionesCommand}" CommandParameter="{Binding .}" />
+                                    <TapGestureRecognizer
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.AbrirOpcionesCommand}"
+                                        CommandParameter="{Binding .}" />
                                 </Border.GestureRecognizers>
 
-                                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12" RowDefinitions="Auto,Auto">
-                                    
-                                    <!-- Avatar con Iniciales -->
-                                    <Border Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"
-                                            StrokeShape="RoundRectangle 22"
-                                            HeightRequest="44"
-                                            WidthRequest="44"
-                                            BackgroundColor="#2563EB"
-                                            StrokeThickness="0"
-                                            VerticalOptions="Start">
-                                        <Label Text="{Binding Inicial}"
-                                               TextColor="White"
-                                               FontAttributes="Bold"
-                                               FontSize="18"
-                                               HorizontalOptions="Center"
-                                               VerticalOptions="Center" />
+                                <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="12" VerticalOptions="Center">
+                                    <!-- Avatar Iniciales -->
+                                    <Border
+                                        Grid.Column="0"
+                                        WidthRequest="42"
+                                        HeightRequest="42"
+                                        BackgroundColor="#EBF3FA"
+                                        StrokeThickness="0"
+                                        VerticalOptions="Center">
+                                        <Border.StrokeShape>
+                                            <RoundRectangle CornerRadius="21" />
+                                        </Border.StrokeShape>
+                                        <Label
+                                            Text="{Binding Inicial}"
+                                            FontSize="14"
+                                            FontAttributes="Bold"
+                                            TextColor="#173A54"
+                                            HorizontalTextAlignment="Center"
+                                            VerticalTextAlignment="Center" />
                                     </Border>
 
-                                    <!-- Nombre Completo y Correo -->
-                                    <VerticalStackLayout Grid.Row="0" Grid.Column="1" Spacing="2">
-                                        <Label Text="{Binding NombreCompleto}" FontAttributes="Bold" FontSize="15" TextColor="{AppThemeBinding Light=#1E293B, Dark=#F8FAFC}" />
-                                        <Label Text="{Binding Email, TargetNullValue='Sin correo registrado'}" FontSize="12" TextColor="#64748B" />
+                                    <!-- Información -->
+                                    <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                        <Label
+                                            Text="{Binding NombreCompleto}"
+                                            FontSize="14"
+                                            FontAttributes="Bold"
+                                            TextColor="#173A54"
+                                            MaxLines="1"
+                                            LineBreakMode="TailTruncation" />
+                                        <Label
+                                            Text="{Binding Email}"
+                                            FontSize="12"
+                                            TextColor="#64748B"
+                                            MaxLines="1"
+                                            LineBreakMode="TailTruncation" />
+                                        <Label
+                                            Text="{Binding ClientesResumen}"
+                                            FontSize="11"
+                                            TextColor="#94A3B8"
+                                            MaxLines="1"
+                                            LineBreakMode="TailTruncation" />
                                     </VerticalStackLayout>
 
-                                    <!-- Botón de 3 Puntos (...) -->
-                                    <Border Grid.Row="0" Grid.Column="2"
-                                            StrokeShape="RoundRectangle 8"
-                                            BackgroundColor="Transparent"
+                                    <!-- Estado y Tipo Badges -->
+                                    <VerticalStackLayout Grid.Column="2" Spacing="4" VerticalOptions="Center" HorizontalOptions="End">
+                                        <Border
+                                            BackgroundColor="{Binding ColorFondoEstado}"
+                                            Stroke="Transparent"
+                                            Padding="8,4"
+                                            HorizontalOptions="End">
+                                            <Border.StrokeShape>
+                                                <RoundRectangle CornerRadius="6" />
+                                            </Border.StrokeShape>
+                                            <Label
+                                                Text="{Binding EstadoTexto}"
+                                                FontSize="11"
+                                                FontAttributes="Bold"
+                                                TextColor="{Binding ColorEstado}" />
+                                        </Border>
+
+                                        <Border
+                                            BackgroundColor="#F1F5F9"
+                                            Stroke="Transparent"
                                             Padding="6,2"
-                                            VerticalOptions="Start"
-                                            StrokeThickness="0">
-                                        <Border.GestureRecognizers>
-                                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:LideresViewModel}}, Path=AbrirOpcionesCommand}" CommandParameter="{Binding .}" />
-                                        </Border.GestureRecognizers>
-                                        <Label Text="⋮" FontSize="22" FontAttributes="Bold" TextColor="#64748B" HorizontalOptions="Center" />
-                                    </Border>
-
-                                    <!-- Badges -->
-                                    <HorizontalStackLayout Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Spacing="8" Margin="0,6,0,0">
-                                        <Border StrokeShape="RoundRectangle 6" BackgroundColor="#EFF6FF" Padding="6,2" StrokeThickness="0">
-                                            <Label Text="{Binding TipoBadge}" FontSize="11" FontAttributes="Bold" TextColor="#2563EB" />
+                                            HorizontalOptions="End">
+                                            <Border.StrokeShape>
+                                                <RoundRectangle CornerRadius="4" />
+                                            </Border.StrokeShape>
+                                            <Label
+                                                Text="{Binding TipoBadge}"
+                                                FontSize="10"
+                                                TextColor="#475569" />
                                         </Border>
-
-                                        <Border StrokeShape="RoundRectangle 6" BackgroundColor="#F1F5F9" Padding="6,2" StrokeThickness="0">
-                                            <Label Text="{Binding ClientesResumen}" FontSize="11" TextColor="#475569" />
-                                        </Border>
-
-                                        <Border StrokeShape="RoundRectangle 6"
-                                                BackgroundColor="{AppThemeBinding Light=#DCFCE7, Dark=#064E3B}"
-                                                Padding="6,2"
-                                                StrokeThickness="0">
-                                            <Label Text="{Binding EstadoTexto}" FontSize="11" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#166534, Dark=#4ADE80}" />
-                                        </Border>
-                                    </HorizontalStackLayout>
-
+                                    </VerticalStackLayout>
                                 </Grid>
                             </Border>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
 
-                <!-- Botón Flotante para Agregar Líder (+) -->
-                <Button Grid.Row="0"
-                        Text="+"
-                        FontSize="28"
-                        FontAttributes="Bold"
-                        BackgroundColor="#2563EB"
-                        TextColor="White"
-                        CornerRadius="28"
-                        WidthRequest="56"
-                        HeightRequest="56"
-                        HorizontalOptions="End"
-                        VerticalOptions="End"
-                        Margin="0,0,16,16"
-                        Command="{Binding AbrirCrearLiderCommand}" />
             </Grid>
-        </RefreshView>
 
+            <!-- BOTÓN FLOTANTE NUEVO -->
+            <Button
+                Text="+"
+                Command="{Binding AbrirCrearLiderCommand}"
+                WidthRequest="56"
+                HeightRequest="56"
+                CornerRadius="28"
+                BackgroundColor="#173A54"
+                TextColor="White"
+                FontSize="24"
+                FontAttributes="Bold"
+                HorizontalOptions="End"
+                VerticalOptions="End"
+                Margin="20"
+                Padding="0">
+                <Button.Shadow>
+                    <Shadow Brush="Black" Offset="0,4" Radius="6" Opacity="0.2" />
+                </Button.Shadow>
+            </Button>
+        </Grid>
+
+        <!-- BARRA DE NAVEGACIÓN INFERIOR COMPARTIDA -->
+        <shared:BottomNavBar Grid.Row="1" />
+
+        <!-- LOADING -->
+        <ActivityIndicator
+            Grid.RowSpan="2"
+            IsVisible="{Binding IsBusy}"
+            IsRunning="{Binding IsBusy}"
+            Color="#173A54"
+            HorizontalOptions="Center"
+            VerticalOptions="Center" />
     </Grid>
-
 </ContentPage>

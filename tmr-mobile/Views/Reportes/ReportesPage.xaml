@@ -1,22 +1,156 @@
-<ContentPage xmlns:shared="clr-namespace:tmr_mobile.Views.Shared" xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:vm="clr-namespace:tmr_mobile.ViewModels"
-             x:Class="tmr_mobile.Views.Reportes.ReportesPage"
-             x:DataType="vm:ReportesViewModel"
-             Title="Reportes">
-    <ContentPage.ToolbarItems>
-        <ToolbarItem IconImageSource="direccion.png" Text="Inicio" Clicked="OnHomeClicked" />
-    </ContentPage.ToolbarItems>
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:tmr_mobile.ViewModels"
+    xmlns:shared="clr-namespace:tmr_mobile.Views.Shared"
+    x:Class="tmr_mobile.Views.Reportes.ReportesPage"
+    x:DataType="vm:ReportesViewModel"
+    Title="Reportes"
+    Shell.NavBarIsVisible="False"
+    BackgroundColor="#F4F6FA">
+
     <Grid RowDefinitions="*,80">
-        <ContentView Grid.Row="0">
+        <!-- Contenido principal -->
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout Padding="16" Spacing="16">
 
-    <VerticalStackLayout Padding="20">
-        <Label Text="Pantalla de Reportes"
-               FontSize="24"
-               HorizontalOptions="Center" />
-    </VerticalStackLayout>
+                <!-- TÍTULO -->
+                <Label
+                    Text="Módulo de Reportes"
+                    FontSize="24"
+                    FontAttributes="Bold"
+                    TextColor="#173A54"
+                    Margin="0,4,0,4" />
 
-        </ContentView>
+                <!-- SUBTÍTULO -->
+                <Label
+                    Text="Seleccione el tipo de informe operacional que desea consultar o exportar:"
+                    FontSize="13"
+                    TextColor="#64748B" />
+
+                <!-- TARJETA 1: REPORTE POR HORAS -->
+                <Border
+                    BackgroundColor="White"
+                    Stroke="#E2E8F0"
+                    StrokeThickness="1"
+                    Padding="18">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="14" />
+                    </Border.StrokeShape>
+                    <Border.Shadow>
+                        <Shadow Brush="Black" Offset="0,2" Radius="6" Opacity="0.04" />
+                    </Border.Shadow>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding IrAReporteHorasCommand}" />
+                    </Border.GestureRecognizers>
+
+                    <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="14" VerticalOptions="Center">
+                        <!-- Icono -->
+                        <Border
+                            Grid.Column="0"
+                            WidthRequest="48"
+                            HeightRequest="48"
+                            BackgroundColor="#EBF3FA"
+                            StrokeThickness="0"
+                            VerticalOptions="Center">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="12" />
+                            </Border.StrokeShape>
+                            <Label
+                                Text="📊"
+                                FontSize="24"
+                                HorizontalTextAlignment="Center"
+                                VerticalTextAlignment="Center" />
+                        </Border>
+
+                        <!-- Info -->
+                        <VerticalStackLayout Grid.Column="1" Spacing="3" VerticalOptions="Center">
+                            <Label
+                                Text="Reporte por Horas"
+                                FontSize="16"
+                                FontAttributes="Bold"
+                                TextColor="#173A54" />
+                            <Label
+                                Text="Consolidado de horas ejecutadas por cliente, mes y recursos asignados."
+                                FontSize="12"
+                                TextColor="#64748B" />
+                        </VerticalStackLayout>
+
+                        <!-- Arrow Icon -->
+                        <Label
+                            Grid.Column="2"
+                            Text="›"
+                            FontSize="28"
+                            FontAttributes="Bold"
+                            TextColor="#94A3B8"
+                            VerticalOptions="Center" />
+                    </Grid>
+                </Border>
+
+                <!-- TARJETA 2: REPORTE POR FECHAS -->
+                <Border
+                    BackgroundColor="White"
+                    Stroke="#E2E8F0"
+                    StrokeThickness="1"
+                    Padding="18">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="14" />
+                    </Border.StrokeShape>
+                    <Border.Shadow>
+                        <Shadow Brush="Black" Offset="0,2" Radius="6" Opacity="0.04" />
+                    </Border.Shadow>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding IrAReporteFechasCommand}" />
+                    </Border.GestureRecognizers>
+
+                    <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="14" VerticalOptions="Center">
+                        <!-- Icono -->
+                        <Border
+                            Grid.Column="0"
+                            WidthRequest="48"
+                            HeightRequest="48"
+                            BackgroundColor="#F3E8FF"
+                            StrokeThickness="0"
+                            VerticalOptions="Center">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="12" />
+                            </Border.StrokeShape>
+                            <Label
+                                Text="📅"
+                                FontSize="24"
+                                HorizontalTextAlignment="Center"
+                                VerticalTextAlignment="Center" />
+                        </Border>
+
+                        <!-- Info -->
+                        <VerticalStackLayout Grid.Column="1" Spacing="3" VerticalOptions="Center">
+                            <Label
+                                Text="Reporte por Fechas"
+                                FontSize="16"
+                                FontAttributes="Bold"
+                                TextColor="#173A54" />
+                            <Label
+                                Text="Detalle cronológico de registros de actividades por rango de fechas, líder y colaborador."
+                                FontSize="12"
+                                TextColor="#64748B" />
+                        </VerticalStackLayout>
+
+                        <!-- Arrow Icon -->
+                        <Label
+                            Grid.Column="2"
+                            Text="›"
+                            FontSize="28"
+                            FontAttributes="Bold"
+                            TextColor="#94A3B8"
+                            VerticalOptions="Center" />
+                    </Grid>
+                </Border>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- BARRA DE NAVEGACIÓN INFERIOR COMPARTIDA -->
         <shared:BottomNavBar Grid.Row="1" />
     </Grid>
 </ContentPage>

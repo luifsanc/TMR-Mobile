@@ -4,9 +4,17 @@ namespace tmr_mobile.Views.Reportes;
 
 public partial class ReporteFechasPage : ContentPage
 {
+    private readonly ReporteFechasViewModel _viewModel;
+
     public ReporteFechasPage(ReporteFechasViewModel viewModel)
     {
         InitializeComponent();
-        BindingContext = viewModel;
+        BindingContext = _viewModel = viewModel;
+    }
+
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+        await _viewModel.CargarReporteCommand.ExecuteAsync(null);
     }
 }

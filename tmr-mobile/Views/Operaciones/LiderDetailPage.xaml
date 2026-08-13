@@ -1,153 +1,235 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:dto="clr-namespace:tmr_shared.DTOs.Lideres;assembly=tmr-shared"
-             x:Class="tmr_mobile.Views.Operaciones.LiderDetailPage"
-             x:DataType="dto:LiderResponse"
-             Title="Ficha Completa del Líder"
-             BackgroundColor="{AppThemeBinding Light=#F8FAFC, Dark=#0F172A}">
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:dto="clr-namespace:tmr_shared.DTOs.Lideres;assembly=tmr-shared"
+    x:Class="tmr_mobile.Views.Operaciones.LiderDetailPage"
+    x:DataType="dto:LiderResponse"
+    Title="Ficha Completa del Líder"
+    Shell.NavBarIsVisible="False"
+    BackgroundColor="#F8FAFC">
 
-    <ScrollView Padding="20">
-        <VerticalStackLayout Spacing="20">
+    <Grid>
+        <ScrollView VerticalScrollBarVisibility="Never">
+            <VerticalStackLayout Padding="16" Spacing="16">
 
-            <!-- Ficha / Header del Líder -->
-            <Border StrokeShape="RoundRectangle 16"
-                    BackgroundColor="{AppThemeBinding Light=White, Dark=#1E293B}"
-                    Padding="20"
-                    StrokeThickness="0">
-                <VerticalStackLayout Spacing="12" HorizontalOptions="Center">
-                    
-                    <!-- Avatar Circular -->
-                    <Border StrokeShape="RoundRectangle 40"
-                            HeightRequest="80"
-                            WidthRequest="80"
-                            BackgroundColor="#2563EB"
+                <!-- CABECERA DE NAVEGACIÓN -->
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12" VerticalOptions="Center" Margin="0,4,0,4">
+                    <Button
+                        Grid.Column="0"
+                        Text="‹"
+                        Clicked="OnCerrarClicked"
+                        BackgroundColor="Transparent"
+                        TextColor="#173A54"
+                        FontSize="28"
+                        FontAttributes="Bold"
+                        Padding="0"
+                        WidthRequest="36"
+                        HeightRequest="36"
+                        VerticalOptions="Center" />
+
+                    <Label
+                        Grid.Column="1"
+                        Text="Ficha del Líder"
+                        FontSize="22"
+                        FontAttributes="Bold"
+                        TextColor="#173A54"
+                        VerticalOptions="Center" />
+                </Grid>
+
+                <!-- FICHA / HEADER DEL LÍDER -->
+                <Border
+                    BackgroundColor="White"
+                    Stroke="#E5E7EB"
+                    StrokeThickness="1"
+                    Padding="20">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="14" />
+                    </Border.StrokeShape>
+                    <Border.Shadow>
+                        <Shadow Brush="Black" Offset="0,2" Radius="6" Opacity="0.04" />
+                    </Border.Shadow>
+
+                    <VerticalStackLayout Spacing="12" HorizontalOptions="Center">
+                        <!-- Avatar Circular -->
+                        <Border
+                            WidthRequest="64"
+                            HeightRequest="64"
+                            BackgroundColor="#EBF3FA"
+                            StrokeThickness="0"
+                            HorizontalOptions="Center">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="32" />
+                            </Border.StrokeShape>
+                            <Label
+                                Text="{Binding Inicial}"
+                                TextColor="#173A54"
+                                FontSize="24"
+                                FontAttributes="Bold"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center" />
+                        </Border>
+
+                        <!-- Nombre Completo -->
+                        <Label
+                            Text="{Binding NombreCompleto}"
+                            FontSize="20"
+                            FontAttributes="Bold"
                             HorizontalOptions="Center"
-                            StrokeThickness="0">
-                        <Label Text="{Binding Inicial}"
-                               TextColor="White"
-                               FontSize="32"
-                               FontAttributes="Bold"
-                               HorizontalOptions="Center"
-                               VerticalOptions="Center" />
-                    </Border>
+                            TextColor="#173A54" />
 
-                    <Label Text="{Binding NombreCompleto}"
-                           FontSize="22"
-                           FontAttributes="Bold"
-                           HorizontalOptions="Center"
-                           TextColor="{AppThemeBinding Light=#1E293B, Dark=#F8FAFC}" />
+                        <!-- Badges Row -->
+                        <HorizontalStackLayout Spacing="8" HorizontalOptions="Center">
+                            <!-- Tipo Badge -->
+                            <Border
+                                BackgroundColor="#F1F5F9"
+                                Stroke="Transparent"
+                                Padding="10,4"
+                                HorizontalOptions="Center">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="6" />
+                                </Border.StrokeShape>
+                                <Label
+                                    Text="{Binding TipoBadge}"
+                                    TextColor="#475569"
+                                    FontAttributes="Bold"
+                                    FontSize="11" />
+                            </Border>
 
-                    <!-- Badges Row -->
-                    <HorizontalStackLayout Spacing="8" HorizontalOptions="Center">
-                        <Border StrokeShape="RoundRectangle 12"
-                                BackgroundColor="#DBEAFE"
-                                Padding="12,4"
-                                StrokeThickness="0">
-                            <Label Text="{Binding TipoBadge}"
-                                   TextColor="#1D4ED8"
-                                   FontAttributes="Bold"
-                                   FontSize="12" />
-                        </Border>
+                            <!-- Estado Badge -->
+                            <Border
+                                BackgroundColor="{Binding ColorFondoEstado}"
+                                Stroke="Transparent"
+                                Padding="10,4"
+                                HorizontalOptions="Center">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="6" />
+                                </Border.StrokeShape>
+                                <Label
+                                    Text="{Binding EstadoTexto}"
+                                    TextColor="{Binding ColorEstado}"
+                                    FontAttributes="Bold"
+                                    FontSize="11" />
+                            </Border>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
 
-                        <Border StrokeShape="RoundRectangle 12"
-                                BackgroundColor="{AppThemeBinding Light=#DCFCE7, Dark=#064E3B}"
-                                Padding="12,4"
-                                StrokeThickness="0">
-                            <Label Text="{Binding EstadoTexto}"
-                                   TextColor="{AppThemeBinding Light=#15803D, Dark=#4ADE80}"
-                                   FontAttributes="Bold"
-                                   FontSize="12" />
-                        </Border>
-                    </HorizontalStackLayout>
-                </VerticalStackLayout>
-            </Border>
+                <!-- DATOS DE CONTACTO E INFORMACIÓN GENERAL -->
+                <Border
+                    BackgroundColor="White"
+                    Stroke="#E5E7EB"
+                    StrokeThickness="1"
+                    Padding="18">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="14" />
+                    </Border.StrokeShape>
+                    <Border.Shadow>
+                        <Shadow Brush="Black" Offset="0,2" Radius="6" Opacity="0.04" />
+                    </Border.Shadow>
 
-            <!-- Datos de Contacto e Información -->
-            <Border StrokeShape="RoundRectangle 16"
-                    BackgroundColor="{AppThemeBinding Light=White, Dark=#1E293B}"
-                    Padding="20"
-                    StrokeThickness="0">
-                <VerticalStackLayout Spacing="16">
-                    
-                    <Label Text="Información General"
-                           FontSize="16"
-                           FontAttributes="Bold"
-                           TextColor="{AppThemeBinding Light=#1E293B, Dark=#F8FAFC}" />
+                    <VerticalStackLayout Spacing="14">
+                        <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
+                            <BoxView WidthRequest="3" HeightRequest="14" Color="#173A54" CornerRadius="1.5" VerticalOptions="Center" />
+                            <Label Text="Información General" FontSize="14" FontAttributes="Bold" TextColor="#173A54" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
 
-                    <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="Auto,*" RowSpacing="12" ColumnSpacing="12">
-                        <!-- Correo Electrónico -->
-                        <Label Grid.Row="0" Grid.Column="0" Text="📧 Correo:" FontAttributes="Bold" TextColor="#64748B" />
-                        <Label Grid.Row="0" Grid.Column="1" Text="{Binding Email, TargetNullValue='No registrado'}" TextColor="{AppThemeBinding Light=#1E293B, Dark=#F8FAFC}" />
+                        <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="Auto,*" RowSpacing="10" ColumnSpacing="12">
+                            <!-- Correo Electrónico -->
+                            <Label Grid.Row="0" Grid.Column="0" Text="Correo:" FontAttributes="Bold" TextColor="#64748B" FontSize="13" />
+                            <Label Grid.Row="0" Grid.Column="1" Text="{Binding Email, TargetNullValue='No registrado'}" TextColor="#334155" FontSize="13" />
 
-                        <!-- Teléfono -->
-                        <Label Grid.Row="1" Grid.Column="0" Text="📞 Teléfono:" FontAttributes="Bold" TextColor="#64748B" />
-                        <Label Grid.Row="1" Grid.Column="1" Text="{Binding Telefono, TargetNullValue='No registrado'}" TextColor="{AppThemeBinding Light=#1E293B, Dark=#F8FAFC}" />
+                            <!-- Teléfono -->
+                            <Label Grid.Row="1" Grid.Column="0" Text="Teléfono:" FontAttributes="Bold" TextColor="#64748B" FontSize="13" />
+                            <Label Grid.Row="1" Grid.Column="1" Text="{Binding Telefono, TargetNullValue='No registrado'}" TextColor="#334155" FontSize="13" />
 
-                        <!-- Identificación -->
-                        <Label Grid.Row="2" Grid.Column="0" Text="🪪 Doc. Id:" FontAttributes="Bold" TextColor="#64748B" />
-                        <Label Grid.Row="2" Grid.Column="1" Text="{Binding NumeroIdentificacion, TargetNullValue='N/A'}" TextColor="{AppThemeBinding Light=#1E293B, Dark=#F8FAFC}" />
-                    </Grid>
+                            <!-- Identificación -->
+                            <Label Grid.Row="2" Grid.Column="0" Text="Cédula / Doc:" FontAttributes="Bold" TextColor="#64748B" FontSize="13" />
+                            <Label Grid.Row="2" Grid.Column="1" Text="{Binding NumeroIdentificacion, TargetNullValue='N/A'}" TextColor="#334155" FontSize="13" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
 
-                </VerticalStackLayout>
-            </Border>
+                <!-- SECCIÓN DE PROYECTOS ASIGNADOS -->
+                <Border
+                    BackgroundColor="White"
+                    Stroke="#E5E7EB"
+                    StrokeThickness="1"
+                    Padding="18">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="14" />
+                    </Border.StrokeShape>
+                    <Border.Shadow>
+                        <Shadow Brush="Black" Offset="0,2" Radius="6" Opacity="0.04" />
+                    </Border.Shadow>
 
-            <!-- Sección de Proyectos Asignados -->
-            <Border StrokeShape="RoundRectangle 16"
-                    BackgroundColor="{AppThemeBinding Light=White, Dark=#1E293B}"
-                    Padding="20"
-                    StrokeThickness="0">
-                <VerticalStackLayout Spacing="16">
-                    
-                    <HorizontalStackLayout Spacing="8">
-                        <Label Text="🚀 Proyectos que Lidera"
-                               FontSize="16"
-                               FontAttributes="Bold"
-                               TextColor="{AppThemeBinding Light=#1E293B, Dark=#F8FAFC}" />
-                        <Border StrokeShape="RoundRectangle 10" BackgroundColor="#E2E8F0" Padding="8,2" StrokeThickness="0">
-                            <Label Text="{Binding Proyectos.Count}" FontSize="12" FontAttributes="Bold" TextColor="#334155" />
-                        </Border>
-                    </HorizontalStackLayout>
+                    <VerticalStackLayout Spacing="14">
+                        <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
+                            <BoxView WidthRequest="3" HeightRequest="14" Color="#173A54" CornerRadius="1.5" VerticalOptions="Center" />
+                            <Label Text="Proyectos que Lidera" FontSize="14" FontAttributes="Bold" TextColor="#173A54" VerticalOptions="Center" />
+                            <Border BackgroundColor="#E2E8F0" Padding="6,2" StrokeThickness="0">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="8" />
+                                </Border.StrokeShape>
+                                <Label Text="{Binding Proyectos.Count}" FontSize="11" FontAttributes="Bold" TextColor="#334155" />
+                            </Border>
+                        </HorizontalStackLayout>
 
-                    <CollectionView ItemsSource="{Binding Proyectos}" EmptyView="Este líder no tiene proyectos asignados actualmente.">
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate x:DataType="dto:ProyectoAsignadoDTO">
-                                <Border Margin="0,0,0,8"
+                        <CollectionView ItemsSource="{Binding Proyectos}">
+                            <CollectionView.EmptyView>
+                                <Label Text="Este líder no tiene proyectos asignados actualmente." FontSize="13" TextColor="#94A3B8" Padding="10,0" />
+                            </CollectionView.EmptyView>
+
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="dto:ProyectoAsignadoDTO">
+                                    <Border
+                                        Margin="0,0,0,8"
                                         Padding="12"
-                                        StrokeShape="RoundRectangle 10"
-                                        BackgroundColor="{AppThemeBinding Light=#F8FAFC, Dark=#0F172A}"
-                                        StrokeThickness="0">
-                                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="8" RowDefinitions="Auto,Auto">
-                                        <Border Grid.Row="0" Grid.Column="0" StrokeShape="RoundRectangle 6" BackgroundColor="#DBEAFE" Padding="6,2" StrokeThickness="0">
-                                            <Label Text="{Binding Codigo}" FontSize="11" FontAttributes="Bold" TextColor="#1E40AF" />
-                                        </Border>
+                                        BackgroundColor="#F8FAFC"
+                                        Stroke="#E2E8F0"
+                                        StrokeThickness="1">
+                                        <Border.StrokeShape>
+                                            <RoundRectangle CornerRadius="10" />
+                                        </Border.StrokeShape>
 
-                                        <Label Grid.Row="0" Grid.Column="1" Text="{Binding Nombre}" FontAttributes="Bold" FontSize="14" TextColor="{AppThemeBinding Light=#1E293B, Dark=#F8FAFC}" />
+                                        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="8" RowDefinitions="Auto,Auto">
+                                            <Border Grid.Row="0" Grid.Column="0" BackgroundColor="#DBEAFE" Padding="6,2" StrokeThickness="0">
+                                                <Border.StrokeShape>
+                                                    <RoundRectangle CornerRadius="6" />
+                                                </Border.StrokeShape>
+                                                <Label Text="{Binding Codigo}" FontSize="11" FontAttributes="Bold" TextColor="#1E40AF" />
+                                            </Border>
 
-                                        <Label Grid.Row="1" Grid.Column="1" Text="{Binding Cliente, StringFormat='Cliente: {0}'}" FontSize="12" TextColor="#64748B" />
+                                            <Label Grid.Row="0" Grid.Column="1" Text="{Binding Nombre}" FontAttributes="Bold" FontSize="13" TextColor="#173A54" />
 
-                                        <Border Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" StrokeShape="RoundRectangle 6" BackgroundColor="#E2E8F0" Padding="6,2" VerticalOptions="Center" StrokeThickness="0">
-                                            <Label Text="{Binding Estado}" FontSize="11" TextColor="#475569" />
-                                        </Border>
-                                    </Grid>
-                                </Border>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
+                                            <Label Grid.Row="1" Grid.Column="1" Text="{Binding Cliente, StringFormat='Cliente: {0}'}" FontSize="12" TextColor="#64748B" />
 
-                </VerticalStackLayout>
-            </Border>
+                                            <Border Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" BackgroundColor="#E2E8F0" Padding="6,2" VerticalOptions="Center" StrokeThickness="0">
+                                                <Border.StrokeShape>
+                                                    <RoundRectangle CornerRadius="6" />
+                                                </Border.StrokeShape>
+                                                <Label Text="{Binding Estado}" FontSize="11" TextColor="#475569" />
+                                            </Border>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </VerticalStackLayout>
+                </Border>
 
-            <!-- Botón Cerrar Modal -->
-            <Button Text="Cerrar Ficha"
+                <!-- BOTÓN CERRAR -->
+                <Button
+                    Text="Cerrar Ficha"
                     Clicked="OnCerrarClicked"
-                    BackgroundColor="#64748B"
-                    TextColor="White"
+                    BackgroundColor="#F1F5F9"
+                    TextColor="#475569"
                     CornerRadius="10"
-                    HeightRequest="48"
+                    HeightRequest="46"
+                    FontSize="14"
                     FontAttributes="Bold" />
 
-        </VerticalStackLayout>
-    </ScrollView>
-
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
 </ContentPage>

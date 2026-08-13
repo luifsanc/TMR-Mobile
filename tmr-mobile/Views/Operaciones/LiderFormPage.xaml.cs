@@ -68,7 +68,7 @@ public partial class LiderFormPage : ContentPage
                     NumeroIdentificacion = IdentificacionEntry.Text?.Trim() ?? string.Empty
                 };
 
-                var res = await _apiService.PostAsync<CrearLiderRequest, LiderResponse>("api/lideres", nuevoReq);
+                var res = await _apiService.PostAsync<CrearLiderRequest, LiderResponse>("lideres", nuevoReq);
                 GuardadoExitoso = res != null;
             }
             else
@@ -85,7 +85,7 @@ public partial class LiderFormPage : ContentPage
                     Activo = _liderExistente.Activo
                 };
 
-                var ok = await _apiService.PutAsync($"api/lideres/{_liderExistente.Id}", updateReq);
+                var ok = await _apiService.PutAsync($"lideres/{_liderExistente.Id}", updateReq);
                 GuardadoExitoso = ok;
             }
 

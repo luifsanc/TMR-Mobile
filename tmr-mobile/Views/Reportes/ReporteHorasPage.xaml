@@ -1,32 +1,334 @@
-<ContentPage xmlns:shared="clr-namespace:tmr_mobile.Views.Shared" xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:vm="clr-namespace:tmr_mobile.ViewModels"
-             x:Class="tmr_mobile.Views.Reportes.ReporteHorasPage"
-             x:DataType="vm:ReporteHorasViewModel"
-             Title="{Binding Title}">
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:tmr_mobile.ViewModels"
+    xmlns:dto="clr-namespace:tmr_shared.DTOs.Reportes;assembly=tmr-shared"
+    xmlns:shared="clr-namespace:tmr_mobile.Views.Shared"
+    x:Class="tmr_mobile.Views.Reportes.ReporteHorasPage"
+    x:DataType="vm:ReporteHorasViewModel"
+    Title="Reporte por Horas"
+    Shell.NavBarIsVisible="False"
+    BackgroundColor="#F4F6FA">
+
     <Grid RowDefinitions="*,80">
-        <ContentView Grid.Row="0">
-<ScrollView>
-        <VerticalStackLayout Spacing="16" Padding="20">
-            <Label Text="Filtro de Reporte de Horas" FontAttributes="Bold" FontSize="18" />
+        <Grid Grid.Row="0">
+            <Grid RowDefinitions="Auto,Auto,Auto,*" Padding="16" RowSpacing="14">
 
-            <Label Text="Fecha Inicio" FontSize="14" TextColor="#64748B" />
-            <DatePicker Date="{Binding FechaInicio}" Format="dd/MM/yyyy" />
+                <!-- CABECERA -->
+                <Grid Grid.Row="0" ColumnDefinitions="Auto,*" ColumnSpacing="12" VerticalOptions="Center">
+                    <Button
+                        Grid.Column="0"
+                        Text="‹"
+                        Command="{Binding RegresarCommand}"
+                        BackgroundColor="Transparent"
+                        TextColor="#173A54"
+                        FontSize="28"
+                        FontAttributes="Bold"
+                        Padding="0"
+                        WidthRequest="36"
+                        HeightRequest="36"
+                        VerticalOptions="Center" />
 
-            <Label Text="Fecha Fin" FontSize="14" TextColor="#64748B" />
-            <DatePicker Date="{Binding FechaFin}" Format="dd/MM/yyyy" />
+                    <Label
+                        Grid.Column="1"
+                        Text="Reporte por Horas"
+                        FontSize="24"
+                        FontAttributes="Bold"
+                        TextColor="#173A54"
+                        VerticalOptions="Center" />
+                </Grid>
 
-            <Button Text="🔍 Generar Reporte"
-                    Command="{Binding GenerarReporteCommand}"
-                    BackgroundColor="#2563EB"
-                    TextColor="White"
-                    HeightRequest="50"
-                    CornerRadius="8" />
-        </VerticalStackLayout>
-    </ScrollView>
+                <!-- BUSCADOR CON DESPLEGABLES Y BOTÓN DE DESCARGA -->
+                <VerticalStackLayout Grid.Row="1" Spacing="8">
+                    <!-- Fila 1: Buscador y Botón Descarga -->
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                        <Border
+                            Grid.Column="0"
+                            HeightRequest="44"
+                            BackgroundColor="White"
+                            Stroke="#DCE3EC"
+                            StrokeThickness="1"
+                            Padding="12,0">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="10" />
+                            </Border.StrokeShape>
+                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8" VerticalOptions="Center">
+                                <Image
+                                    Grid.Column="0"
+                                    Source="buscar_icon.png"
+                                    WidthRequest="18"
+                                    HeightRequest="18"
+                                    VerticalOptions="Center" />
+                                <Entry
+                                    Grid.Column="1"
+                                    Text="{Binding TextoCliente}"
+                                    Placeholder="Buscar por cliente..."
+                                    PlaceholderColor="#9CA3AF"
+                                    TextColor="#334155"
+                                    FontSize="13"
+                                    BackgroundColor="Transparent"
+                                    VerticalOptions="Center"
+                                    ReturnCommand="{Binding CargarReporteCommand}" />
+                            </Grid>
+                        </Border>
 
+                        <!-- Botón Descargar Reporte (PDF / Excel) -->
+                        <Border
+                            Grid.Column="1"
+                            HeightRequest="44"
+                            BackgroundColor="#2563EB"
+                            Stroke="Transparent"
+                            Padding="14,0">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="10" />
+                            </Border.StrokeShape>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ExportarReporteCommand}" />
+                            </Border.GestureRecognizers>
+                            <HorizontalStackLayout Spacing="6" HorizontalOptions="Center" VerticalOptions="Center">
+                                <Path Data="M12,4 L12,14 M7,9 L12,14 L17,9 M5,19 L19,19"
+                                      Stroke="White"
+                                      StrokeThickness="2"
+                                      StrokeLineCap="Round"
+                                      StrokeLineJoin="Round"
+                                      WidthRequest="16"
+                                      HeightRequest="16"
+                                      VerticalOptions="Center"
+                                      Aspect="Uniform" />
+                                <Label Text="Descargar"
+                                       TextColor="White"
+                                       FontSize="13"
+                                       FontAttributes="Bold"
+                                       VerticalOptions="Center" />
+                            </HorizontalStackLayout>
+                        </Border>
+                    </Grid>
 
-        </ContentView>
+                    <!-- Fila 2: Desplegables de Año y Mes -->
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+                        <!-- Desplegable Año -->
+                        <Border
+                            Grid.Column="0"
+                            HeightRequest="44"
+                            BackgroundColor="White"
+                            Stroke="#DCE3EC"
+                            StrokeThickness="1"
+                            Padding="10,0">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="8" />
+                            </Border.StrokeShape>
+                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="6" VerticalOptions="Center">
+                                <Label Text="Año:" FontSize="12" FontAttributes="Bold" TextColor="#64748B" VerticalOptions="Center" />
+                                <Picker
+                                    Grid.Column="1"
+                                    ItemsSource="{Binding AniosDisponibles}"
+                                    SelectedItem="{Binding AnioSeleccionadoTexto}"
+                                    FontSize="12"
+                                    TextColor="#1E293B"
+                                    VerticalTextAlignment="Center"
+                                    HorizontalOptions="Fill"
+                                    VerticalOptions="Center" />
+                            </Grid>
+                        </Border>
+
+                        <!-- Desplegable Mes -->
+                        <Border
+                            Grid.Column="1"
+                            HeightRequest="44"
+                            BackgroundColor="White"
+                            Stroke="#DCE3EC"
+                            StrokeThickness="1"
+                            Padding="10,0">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="8" />
+                            </Border.StrokeShape>
+                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="6" VerticalOptions="Center">
+                                <Label Text="Mes:" FontSize="12" FontAttributes="Bold" TextColor="#64748B" VerticalOptions="Center" />
+                                <Picker
+                                    Grid.Column="1"
+                                    ItemsSource="{Binding MesesDisponibles}"
+                                    SelectedItem="{Binding MesSeleccionadoTexto}"
+                                    FontSize="12"
+                                    TextColor="#1E293B"
+                                    VerticalTextAlignment="Center"
+                                    HorizontalOptions="Fill"
+                                    VerticalOptions="Center" />
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </VerticalStackLayout>
+
+                <!-- CARDS DE RESUMEN METRICAS (3 CARDS) -->
+                <Grid Grid.Row="2" ColumnDefinitions="*,*,*" ColumnSpacing="6">
+                    <!-- Card 1: Clientes Consultados -->
+                    <Border
+                        Grid.Column="0"
+                        BackgroundColor="#F3E8FF"
+                        Stroke="#E9D5FF"
+                        StrokeThickness="1"
+                        Padding="8,8">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10" />
+                        </Border.StrokeShape>
+                        <VerticalStackLayout Spacing="2">
+                            <Label Text="Clientes" FontSize="10" TextColor="#6B21A8" HorizontalTextAlignment="Center" />
+                            <Label Text="{Binding TotalClientesConsultados}" FontSize="16" FontAttributes="Bold" TextColor="#581C87" HorizontalTextAlignment="Center" />
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <!-- Card 2: Recursos Asignados -->
+                    <Border
+                        Grid.Column="1"
+                        BackgroundColor="#F0FDF4"
+                        Stroke="#DCFCE7"
+                        StrokeThickness="1"
+                        Padding="8,8">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10" />
+                        </Border.StrokeShape>
+                        <VerticalStackLayout Spacing="2">
+                            <Label Text="Recursos" FontSize="10" TextColor="#166534" HorizontalTextAlignment="Center" />
+                            <Label Text="{Binding TotalRecursosInvolucrados}" FontSize="16" FontAttributes="Bold" TextColor="#14532D" HorizontalTextAlignment="Center" />
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <!-- Card 3: Total Horas -->
+                    <Border
+                        Grid.Column="2"
+                        BackgroundColor="#EBF3FA"
+                        Stroke="#D0E3F5"
+                        StrokeThickness="1"
+                        Padding="8,8">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10" />
+                        </Border.StrokeShape>
+                        <VerticalStackLayout Spacing="2">
+                            <Label Text="Total Horas" FontSize="10" TextColor="#1E40AF" HorizontalTextAlignment="Center" />
+                            <Label Text="{Binding TotalHorasRegistradas, StringFormat='{0:N1}h'}" FontSize="16" FontAttributes="Bold" TextColor="#1E3A8A" HorizontalTextAlignment="Center" />
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
+
+                <!-- RESULTADOS -->
+                <CollectionView
+                    Grid.Row="3"
+                    ItemsSource="{Binding Resultados}"
+                    RemainingItemsThreshold="3"
+                    RemainingItemsThresholdReachedCommand="{Binding CargarMasReportesCommand}"
+                    SelectionMode="None">
+
+                    <CollectionView.EmptyView>
+                        <VerticalStackLayout Padding="40" HorizontalOptions="Center" VerticalOptions="Center">
+                            <Label
+                                Text="No se encontraron registros de horas."
+                                TextColor="#64748B"
+                                FontSize="14"
+                                HorizontalTextAlignment="Center" />
+                        </VerticalStackLayout>
+                    </CollectionView.EmptyView>
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="dto:ReporteHorasResponse">
+                            <Border
+                                Margin="0,0,0,10"
+                                Padding="14"
+                                BackgroundColor="White"
+                                Stroke="#E2E8F0"
+                                StrokeThickness="1">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="12" />
+                                </Border.StrokeShape>
+
+                                <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="12" VerticalOptions="Center">
+                                    <!-- Avatar Inicial Cliente -->
+                                    <Border
+                                        Grid.Column="0"
+                                        WidthRequest="42"
+                                        HeightRequest="42"
+                                        BackgroundColor="#EBF3FA"
+                                        StrokeThickness="0"
+                                        VerticalOptions="Center">
+                                        <Border.StrokeShape>
+                                            <RoundRectangle CornerRadius="21" />
+                                        </Border.StrokeShape>
+                                        <Label
+                                            Text="{Binding Inicial}"
+                                            FontSize="15"
+                                            FontAttributes="Bold"
+                                            TextColor="#173A54"
+                                            HorizontalTextAlignment="Center"
+                                            VerticalTextAlignment="Center" />
+                                    </Border>
+
+                                    <!-- Datos de Cliente y Recursos -->
+                                    <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                        <Label
+                                            Text="{Binding Cliente}"
+                                            FontSize="14"
+                                            FontAttributes="Bold"
+                                            TextColor="#173A54"
+                                            MaxLines="1"
+                                            LineBreakMode="TailTruncation" />
+                                        <HorizontalStackLayout Spacing="6">
+                                            <Label
+                                                Text="{Binding Recursos, StringFormat='👥 {0} recursos'}"
+                                                FontSize="12"
+                                                TextColor="#64748B" />
+                                            <Label
+                                                Text="•"
+                                                FontSize="12"
+                                                TextColor="#CBD5E1" />
+                                            <Label
+                                                Text="{Binding Mes, StringFormat='📅 {0}'}"
+                                                FontSize="12"
+                                                TextColor="#64748B" />
+                                        </HorizontalStackLayout>
+                                    </VerticalStackLayout>
+
+                                    <!-- Horas Acumuladas y Estado -->
+                                    <VerticalStackLayout Grid.Column="2" Spacing="4" VerticalOptions="Center" HorizontalOptions="End">
+                                        <Label
+                                            Text="{Binding Horas, StringFormat='{0:N1} hrs'}"
+                                            FontSize="15"
+                                            FontAttributes="Bold"
+                                            TextColor="#173A54"
+                                            HorizontalTextAlignment="End" />
+
+                                        <Border
+                                            BackgroundColor="{Binding ColorFondoEstado}"
+                                            Stroke="Transparent"
+                                            Padding="8,3"
+                                            HorizontalOptions="End">
+                                            <Border.StrokeShape>
+                                                <RoundRectangle CornerRadius="6" />
+                                            </Border.StrokeShape>
+                                            <Label
+                                                Text="{Binding EstadoCliente}"
+                                                FontSize="10"
+                                                FontAttributes="Bold"
+                                                TextColor="{Binding ColorEstado}" />
+                                        </Border>
+                                    </VerticalStackLayout>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+            </Grid>
+        </Grid>
+
+        <!-- BARRA DE NAVEGACIÓN INFERIOR COMPARTIDA -->
         <shared:BottomNavBar Grid.Row="1" />
+
+        <!-- LOADING -->
+        <ActivityIndicator
+            Grid.RowSpan="2"
+            IsVisible="{Binding IsBusy}"
+            IsRunning="{Binding IsBusy}"
+            Color="#173A54"
+            HorizontalOptions="Center"
+            VerticalOptions="Center" />
     </Grid>
 </ContentPage>
