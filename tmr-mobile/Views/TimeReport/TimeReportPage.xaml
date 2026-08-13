@@ -188,7 +188,7 @@
 
                     </VerticalStackLayout>
                 </Border>
-                
+                              
                 <Label Text="No hay actividades para este día." TextColor="#64748B" HorizontalTextAlignment="Center" Margin="0,16" IsVisible="False">
                     <Label.Triggers>
                         <DataTrigger TargetType="Label" Binding="{Binding ActividadesDelDia.Count}" Value="0">
