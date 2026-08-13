@@ -170,8 +170,8 @@
                                                     </MultiTrigger>
                                                 </Label.Triggers>
                                             </Label>
-                                            <!-- Indicador de actividad -->
-                                            <Ellipse Grid.Row="1" WidthRequest="4" HeightRequest="4" Fill="#3B82F6" HorizontalOptions="Center" Margin="0,2,0,0" IsVisible="{Binding HasActivities}" />
+                                            <!-- Indicador de actividad (Horas) -->
+                                            <Label Grid.Row="1" Text="{Binding TotalHoras, StringFormat='{0:F1}h'}" FontSize="10" TextColor="#3B82F6" HorizontalOptions="Center" Margin="0,-2,0,0" IsVisible="{Binding HasActivities}" />
                                         </Grid>
                                     </Border>
                                 </DataTemplate>
@@ -191,7 +191,10 @@
                 </Border>
 
                 <!-- Lista de Actividades del día -->
-                <Label Text="{Binding FechaSeleccionada, StringFormat='Actividades del {0:dd/MM/yyyy}'}" FontAttributes="Bold" FontSize="16" TextColor="#0F172A" Margin="0,8,0,0" IsVisible="False" />
+                <Grid ColumnDefinitions="*,Auto" Margin="0,16,0,8">
+                    <Label Grid.Column="0" Text="{Binding FechaSeleccionada, StringFormat='Actividades: {0:dd/MM/yyyy}'}" FontAttributes="Bold" FontSize="18" TextColor="#0F172A" VerticalOptions="Center" />
+                    <Button Grid.Column="1" Text="Nueva ＋" Command="{Binding NuevaActividadCommand}" BackgroundColor="#3B82F6" TextColor="White" FontAttributes="Bold" FontSize="14" CornerRadius="8" HeightRequest="36" Padding="12,0" />
+                </Grid>
                 
                 <Label Text="No hay actividades para este día." TextColor="#64748B" HorizontalTextAlignment="Center" Margin="0,16" IsVisible="False">
                     <Label.Triggers>
@@ -208,6 +211,9 @@
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="dto:CalendarioActividadDto">
                             <Border Padding="12" StrokeShape="RoundRectangle 12" Stroke="#E2E8F0" BackgroundColor="#FFF8E7" HeightRequest="90">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:TimeReportViewModel}}, Path=EditarActividadCommand}" CommandParameter="{Binding .}" />
+                                </Border.GestureRecognizers>
                                 <VerticalStackLayout Spacing="2">
                                     <Label Text="{Binding ProyectoNombre}" FontAttributes="Bold" FontSize="13" TextColor="#0F172A" LineBreakMode="TailTruncation" />
                                     <Label Text="{Binding DescripcionActividad}" TextColor="#64748B" FontSize="12" LineBreakMode="TailTruncation" />

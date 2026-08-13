@@ -12,6 +12,9 @@ public partial class CrearActividadViewModel : BaseViewModel, IQueryAttributable
     private readonly IAuthService _authService;
 
     [ObservableProperty]
+    private int? _actividadId;
+
+    [ObservableProperty]
     private DateTime _fechaActividad = DateTime.Today;
 
     [ObservableProperty]
@@ -19,6 +22,14 @@ public partial class CrearActividadViewModel : BaseViewModel, IQueryAttributable
 
     [ObservableProperty]
     private TipoActividadDto _tipoActividadSeleccionada;
+
+    partial void OnProyectoSeleccionadoChanged(ProyectoLookupDto value)
+    {
+        if (value != null && !string.IsNullOrWhiteSpace(value.Codigo))
+        {
+            CodigoRequerimiento = value.Codigo;
+        }
+    }
 
     [ObservableProperty]
     private decimal _cantidadHoras = 1;
@@ -93,11 +104,29 @@ public partial class CrearActividadViewModel : BaseViewModel, IQueryAttributable
         Title = "Registrar Actividad";
     }
 
+    private int? _tempProyectoId;
+    private int? _tempTipoActividadId;
+
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
         if (query.ContainsKey("FechaActividad") && query["FechaActividad"] is DateTime date)
         {
             FechaActividad = date;
+        }
+        
+        if (query.ContainsKey("Actividad") && query["Actividad"] is CalendarioActividadDto actividad)
+        {
+            ActividadId = actividad.Id;
+            FechaActividad = actividad.FechaActividad.ToDateTime(TimeOnly.MinValue);
+            CantidadHoras = actividad.CantidadHoras;
+            DescripcionActividad = actividad.DescripcionActividad;
+            Notas = actividad.Notas;
+            CodigoRequerimiento = actividad.CodigoRequerimiento;
+            EsBillable = actividad.EsBillable ?? true;
+            Title = "Editar Actividad";
+            
+            _tempProyectoId = actividad.IdProyecto;
+            _tempTipoActividadId = actividad.IdTipoActividad;
         }
     }
 
@@ -118,6 +147,10 @@ public partial class CrearActividadViewModel : BaseViewModel, IQueryAttributable
                 foreach (var tipo in tiposTask.Result)
                 {
                     TiposActividad.Add(tipo);
+                    if (_tempTipoActividadId.HasValue && tipo.Id == _tempTipoActividadId.Value)
+                    {
+                        TipoActividadSeleccionada = tipo;
+                    }
                 }
             }
 
@@ -127,6 +160,10 @@ public partial class CrearActividadViewModel : BaseViewModel, IQueryAttributable
                 foreach (var proy in proyectosTask.Result)
                 {
                     Proyectos.Add(proy);
+                    if (_tempProyectoId.HasValue && proy.Id == _tempProyectoId.Value)
+                    {
+                        ProyectoSeleccionado = proy;
+                    }
                 }
             }
         }
@@ -171,7 +208,32 @@ public partial class CrearActividadViewModel : BaseViewModel, IQueryAttributable
         IsBusy = true;
         try
         {
-            if (IsRecurrente)
+            if (ActividadId.HasValue)
+            {
+                var req = new CrearActividadDto(
+                    IdEmpleado: idEmpleado.Value,
+                    IdProyecto: ProyectoSeleccionado?.Id,
+                    IdTipoActividad: TipoActividadSeleccionada.Id,
+                    CodigoRequerimiento: string.IsNullOrWhiteSpace(CodigoRequerimiento) ? null : CodigoRequerimiento,
+                    CantidadHoras: CantidadHoras,
+                    FechaActividad: DateOnly.FromDateTime(FechaActividad),
+                    DescripcionActividad: DescripcionActividad,
+                    Notas: string.IsNullOrWhiteSpace(Notas) ? null : Notas,
+                    EsBillable: EsBillable
+                );
+
+                var result = await _apiService.PutAsync<CrearActividadDto, CalendarioActividadDto>($"api/time-report/actividades/{ActividadId.Value}", req);
+                
+                if (result != null)
+                {
+                    await Shell.Current.GoToAsync("..");
+                }
+                else
+                {
+                    await Shell.Current.DisplayAlertAsync("Error", "No se pudo actualizar la actividad.", "OK");
+                }
+            }
+            else if (IsRecurrente)
             {
                 int count = 0;
                 for (var date = FechaInicio.Date; date <= FechaFin.Date; date = date.AddDays(1))
