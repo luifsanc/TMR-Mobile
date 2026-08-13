@@ -1,6 +1,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Globalization;
+using TMR.Shared.DTOs.CargaActividades;
 using tmr_mobile.Models;
 using tmr_mobile.Services;
 using tmr_shared.DTOs.CargaActividades;
@@ -346,47 +347,149 @@ public partial class CargaActividadesViewModel : BaseViewModel
     }
 
 
-        // Propiedad para reflejar en la UI qué archivo se seleccionó (nombre, para mostrarlo si quieres)
-[ObservableProperty]
-private string? nombreArchivoSeleccionado;
+    private FileResult? _archivoSeleccionado; // guardamos el FileResult completo, no solo la ruta
 
-// Guardamos la ruta completa para usarla después (subida, lectura, etc.)
-private string? _rutaArchivoSeleccionado;
+    [ObservableProperty]
+    public partial string? NombreArchivoSeleccionado { get; set; }
 
-[RelayCommand]
-private async Task SeleccionarArchivoAsync()
-{
-    try
+    [ObservableProperty]
+    public new partial bool IsBusy { get; set; }
+
+    [ObservableProperty]
+    public partial string? MensajeResultado { get; set; }
+
+    [ObservableProperty]
+    public partial bool HuboErrores { get; set; }
+
+    partial void OnIsBusyChanged(bool value)
     {
-        var customFileType = new FilePickerFileType(
-            new Dictionary<DevicePlatform, IEnumerable<string>>
+        OnPropertyChanged(nameof(PuedeSubirArchivo));
+        OnPropertyChanged(nameof(TextoBotonSubir));
+    }
+
+    public bool PuedeSubirArchivo => !IsBusy;
+    public string TextoBotonSubir => IsBusy ? "Subiendo..." : "Subir";
+
+    partial void OnNombreArchivoSeleccionadoChanged(string? value)
+    {
+        OnPropertyChanged(nameof(TieneArchivoSeleccionado));
+    }
+
+    public bool TieneArchivoSeleccionado => !string.IsNullOrEmpty(NombreArchivoSeleccionado);
+
+    partial void OnMensajeResultadoChanged(string? value)
+    {
+        OnPropertyChanged(nameof(TieneMensajeResultado));
+    }
+
+    public bool TieneMensajeResultado => !string.IsNullOrEmpty(MensajeResultado);
+
+
+    [RelayCommand]
+    private async Task SeleccionarArchivoAsync()
+    {
+        try
+        {
+            var customFileType = new FilePickerFileType(
+                new Dictionary<DevicePlatform, IEnumerable<string>>
+                {
+                    { DevicePlatform.Android, new[] { "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" } },
+                    { DevicePlatform.iOS, new[] { "org.openxmlformats.spreadsheetml.sheet" } },
+                    { DevicePlatform.WinUI, new[] { ".xlsx" } },
+                    { DevicePlatform.MacCatalyst, new[] { "org.openxmlformats.spreadsheetml.sheet" } },
+                });
+
+            var resultado = await FilePicker.Default.PickAsync(new PickOptions
             {
-                { DevicePlatform.Android, new[] { "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" } },
-                { DevicePlatform.iOS, new[] { "org.openxmlformats.spreadsheetml.sheet" } },
-                { DevicePlatform.WinUI, new[] { ".xlsx" } },
-                { DevicePlatform.MacCatalyst, new[] { "org.openxmlformats.spreadsheetml.sheet" } },
+                PickerTitle = "Selecciona un archivo Excel",
+                FileTypes = customFileType
             });
 
-        var options = new PickOptions
+            if (resultado is null)
+                return; // el usuario canceló, no es un error
+
+            _archivoSeleccionado = resultado;
+            NombreArchivoSeleccionado = resultado.FileName;
+            MensajeResultado = null; // limpia el resultado de una carga previa
+            HuboErrores = false;
+        }
+        catch (Exception ex)
         {
-            PickerTitle = "Selecciona un archivo Excel",
-            FileTypes = customFileType
-        };
-
-        var resultado = await FilePicker.Default.PickAsync(options);
-
-        if (resultado is null)
-            return; // el usuario canceló, no es un error
-
-        NombreArchivoSeleccionado = resultado.FileName;
-        _rutaArchivoSeleccionado = resultado.FullPath;
-
-        // Aquí después conectamos la subida al backend o el procesamiento local
+            Console.WriteLine($"Error al seleccionar archivo: {ex.Message}");
+        }
     }
-    catch (Exception ex)
+
+    [RelayCommand]
+    private async Task CargarArchivoAsync()
     {
-        // TODO: reemplazar con tu manejo de errores habitual (DisplayAlert, logging, etc.)
-        Console.WriteLine($"Error al seleccionar archivo: {ex.Message}");
+        if (_archivoSeleccionado is null)
+        {
+            MensajeResultado = "Primero selecciona un archivo.";
+            HuboErrores = true;
+            return;
+        }
+
+        if (IsBusy) return;
+
+        try
+        {
+            IsBusy = true;
+            MensajeResultado = null;
+            HuboErrores = false;
+
+            await using var stream = await _archivoSeleccionado.OpenReadAsync();
+            using var memoryStream = new MemoryStream();
+            await stream.CopyToAsync(memoryStream);
+
+            var resultado = await _apiService.PostFileWithDetailsAsync<CargaActividadesResponseDto>(
+                "carga-actividades/excel", // sin "api/" — el BaseUrl ya lo incluye
+                memoryStream.ToArray(),
+                _archivoSeleccionado.FileName,
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+
+            if (resultado is null)
+            {
+                MensajeResultado = "No se pudo interpretar la respuesta del servidor.";
+                HuboErrores = true;
+                return;
+            }
+
+            HuboErrores = !resultado.IsSuccess || resultado.ErroresValidacion.Count > 0;
+            MensajeResultado = resultado.IsSuccess
+                ? $"{resultado.Message} ({resultado.RegistrosProcesados} registros procesados)"
+                : resultado.Message;
+
+            if (resultado.IsSuccess)
+            {
+                // Refrescamos toda la lista desde el backend en vez de mapear
+                // resultado.Actividades directo, porque ActividadCargadaDto no trae Id
+                // y nuestro sistema de selección (_idsSeleccionados) depende de tenerlo.
+                await CargarActividadesAsync();
+
+                // Limpiamos la selección de archivo para que el usuario pueda cargar
+                // otro sin ver el nombre del archivo anterior pegado en pantalla.
+                _archivoSeleccionado = null;
+                NombreArchivoSeleccionado = null;
+            }
+        }
+        catch (Exception ex)
+        {
+            MensajeResultado = $"Error al subir el archivo: {ex.Message}";
+            HuboErrores = true;
+        }
+        finally
+        {
+            IsBusy = false;
+        }
     }
-}
+
+
+    [RelayCommand]
+    private void QuitarArchivoSeleccionado()
+    {
+        _archivoSeleccionado = null;
+        NombreArchivoSeleccionado = null;
+        MensajeResultado = null;
+        HuboErrores = false;
+    }
 }

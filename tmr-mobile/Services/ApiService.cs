@@ -114,6 +114,7 @@ public class ApiService
         return response.IsSuccessStatusCode;
     }
 
+    //metodo para descargar archivos binarios desde el backend
     public async Task<byte[]?> GetFileBytesAsync(string endpoint, CancellationToken ct = default)
     {
         await AddAuthHeaderAsync();
@@ -127,6 +128,53 @@ public class ApiService
         }
 
         return await response.Content.ReadAsByteArrayAsync(ct);
+    }
+
+    //metodo para subir archivos binarios al backend y recibir una respuesta con detalles
+    public async Task<TResponse?> PostFileWithDetailsAsync<TResponse>(
+    string endpoint, byte[] fileBytes, string fileName, string contentType,
+    CancellationToken ct = default)
+    {
+        await AddAuthHeaderAsync();
+
+        HttpContent BuildContent()
+        {
+            var content = new MultipartFormDataContent();
+            var fileContent = new ByteArrayContent(fileBytes);
+            fileContent.Headers.ContentType = new MediaTypeHeaderValue(contentType);
+            content.Add(fileContent, "file", fileName);
+            return content;
+        }
+
+        var response = await _httpClient.PostAsync(endpoint, BuildContent(), ct);
+
+        if (response.StatusCode == HttpStatusCode.Unauthorized && _refreshTokenFunc != null)
+        {
+            var refreshed = await _refreshTokenFunc();
+            if (!refreshed)
+            {
+                await MainThread.InvokeOnMainThreadAsync(async () =>
+                    await Shell.Current.GoToAsync("//LoginPage"));
+                return default;
+            }
+
+            await AddAuthHeaderAsync();
+            // El content anterior ya se envió y no se puede reenviar; se arma de nuevo.
+            response = await _httpClient.PostAsync(endpoint, BuildContent(), ct);
+        }
+
+        // A diferencia de HandleResponseAsync, aquí SIEMPRE deserializamos el body,
+        // sin importar el status code: el endpoint devuelve el mismo shape de
+        // respuesta tanto en éxito (200) como en error de validación (400).
+        try
+        {
+            return await response.Content.ReadFromJsonAsync<TResponse>(JsonOptions, ct);
+        }
+        catch (JsonException ex)
+        {
+            Log($"[ApiService] Error de deserialización en {endpoint}: {ex.Message}");
+            return default;
+        }
     }
 
     // ─────────────────────────────────────────────────────────────────────────

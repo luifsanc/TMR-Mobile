@@ -21,41 +21,117 @@
             Margin="0,60,0,80">
         <VerticalStackLayout Padding="16,12,16,32" Spacing="20">
 
-            <!-- ===================== Card de horas por registrar ===================== -->
-<Border StrokeShape="RoundRectangle 16"
-        BackgroundColor="#F1F3F6"
-        Stroke="Transparent"
-        Padding="16">
-    <Grid ColumnDefinitions="*,Auto">
-        <VerticalStackLayout Grid.Column="0" Spacing="4" VerticalOptions="Center">
-            <Label Text="Horas por registrar" FontSize="14" TextColor="#667085"/>
-            <Label Text="{Binding HorasPorRegistrarTexto}" FontSize="28" FontAttributes="Bold" TextColor="#101828"/>
-        </VerticalStackLayout>
-
-        <Border Grid.Column="1"
-                StrokeShape="RoundRectangle 24"
-                BackgroundColor="#0E0E0E"
+        <!-- ===================== Card de horas por registrar + carga de archivo ===================== -->
+        <Border StrokeShape="RoundRectangle 16"
+                BackgroundColor="#F1F3F6"
                 Stroke="Transparent"
-                WidthRequest="48"
-                HeightRequest="48"
-                Padding="0"
-                VerticalOptions="Center">
-            <Border.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding SeleccionarArchivoCommand}"/>
-            </Border.GestureRecognizers>
-            <Path Data="M12,14 L12,4 M7,9 L12,4 L17,9 M5,19 L19,19"
-                  Stroke="White"
-                  StrokeThickness="2"
-                  StrokeLineCap="Round"
-                  StrokeLineJoin="Round"
-                  WidthRequest="18"
-                  HeightRequest="18"
-                  Aspect="Uniform"
-                  HorizontalOptions="Center"
-                  VerticalOptions="Center"/>
+                Padding="16">
+            <VerticalStackLayout Spacing="12">
+
+                <Grid ColumnDefinitions="*,Auto">
+                    <VerticalStackLayout Grid.Column="0" Spacing="4" VerticalOptions="Center">
+                        <Label Text="Horas por registrar" FontSize="14" TextColor="#667085"/>
+                        <Label Text="{Binding HorasPorRegistrarTexto}" FontSize="28" FontAttributes="Bold" TextColor="#101828"/>
+                    </VerticalStackLayout>
+
+                    <Border Grid.Column="1"
+                            StrokeShape="RoundRectangle 24"
+                            BackgroundColor="#0E0E0E"
+                            Stroke="Transparent"
+                            WidthRequest="48"
+                            HeightRequest="48"
+                            Padding="0"
+                            VerticalOptions="Center">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding SeleccionarArchivoCommand}"/>
+                        </Border.GestureRecognizers>
+                        <Path Data="M12,14 L12,4 M7,9 L12,4 L17,9 M5,19 L19,19"
+                            Stroke="White"
+                            StrokeThickness="2"
+                            StrokeLineCap="Round"
+                            StrokeLineJoin="Round"
+                            WidthRequest="18"
+                            HeightRequest="18"
+                            Aspect="Uniform"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center"/>
+                    </Border>
+                </Grid>
+
+                <!-- Fila del archivo elegido: aparece solo tras usar el botón de arriba -->
+                <Grid IsVisible="{Binding TieneArchivoSeleccionado}"
+                    ColumnDefinitions="*,Auto,Auto"
+                    ColumnSpacing="8"
+                    VerticalOptions="Center">
+
+                    <Label Grid.Column="0"
+                        Text="{Binding NombreArchivoSeleccionado}"
+                        FontSize="13"
+                        TextColor="#344054"
+                        LineBreakMode="MiddleTruncation"
+                        VerticalOptions="Center"/>
+
+                    <!-- Botón "X" para cancelar la selección -->
+                    <Border Grid.Column="1"
+                            StrokeShape="RoundRectangle 12"
+                            BackgroundColor="Transparent"
+                            Stroke="Transparent"
+                            WidthRequest="24"
+                            HeightRequest="24"
+                            Padding="0"
+                            IsVisible="{Binding PuedeSubirArchivo}"
+                            VerticalOptions="Center">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding QuitarArchivoSeleccionadoCommand}"/>
+                        </Border.GestureRecognizers>
+                        <Path Data="M6,6 L18,18 M6,18 L18,6"
+                            Stroke="#98A2B3"
+                            StrokeThickness="2"
+                            StrokeLineCap="Round"
+                            WidthRequest="14"
+                            HeightRequest="14"
+                            Aspect="Uniform"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center"/>
+                    </Border>
+
+                    <Grid Grid.Column="2" ColumnDefinitions="Auto,Auto" ColumnSpacing="8" VerticalOptions="Center">
+                        <ActivityIndicator Grid.Column="0"
+                                            IsRunning="{Binding IsBusy}"
+                                            IsVisible="{Binding IsBusy}"
+                                            Color="#0E0E0E"
+                                            WidthRequest="20"
+                                            HeightRequest="20"/>
+
+                        <Button Grid.Column="1"
+                                Text="{Binding TextoBotonSubir}"
+                                Command="{Binding CargarArchivoCommand}"
+                                IsEnabled="{Binding PuedeSubirArchivo}"
+                                FontSize="13"
+                                Padding="12,6"
+                                CornerRadius="8"
+                                BackgroundColor="#0E0E0E"
+                                TextColor="White"/>
+                    </Grid>
+                </Grid>
+
+                <!-- Resultado de la carga: éxito en verde, error en rojo -->
+                <Label Text="{Binding MensajeResultado}"
+                    IsVisible="{Binding TieneMensajeResultado}"
+                    FontSize="12"
+                    LineBreakMode="WordWrap">
+                    <Label.Triggers>
+                        <DataTrigger TargetType="Label" Binding="{Binding HuboErrores}" Value="True">
+                            <Setter Property="TextColor" Value="#D92D20"/>
+                        </DataTrigger>
+                        <DataTrigger TargetType="Label" Binding="{Binding HuboErrores}" Value="False">
+                            <Setter Property="TextColor" Value="#12B76A"/>
+                        </DataTrigger>
+                    </Label.Triggers>
+                </Label>
+
+            </VerticalStackLayout>
         </Border>
-    </Grid>
-</Border>
 
             <!-- ===================== Búsqueda + Filtro ===================== -->
             <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
