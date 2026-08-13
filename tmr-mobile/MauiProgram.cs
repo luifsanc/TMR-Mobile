@@ -194,6 +194,18 @@ public static class MauiProgram
 #endif
             });
 
+        DatePickerHandler.Mapper.AppendToMapping(
+            "CapitalizedPlaceholderDatePicker",
+            (handler, view) =>
+            {
+#if WINDOWS
+                if (handler.PlatformView is Microsoft.UI.Xaml.Controls.CalendarDatePicker datePicker)
+                {
+                    datePicker.PlaceholderText = "Seleccionar una fecha";
+                }
+#endif
+            });
+
 
         // ─────────────────────────────────────────────────────────────
         // DEBUG

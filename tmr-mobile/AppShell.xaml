@@ -48,12 +48,7 @@
     </ShellItem>
 
     <ShellItem Route="ReportesPage" Shell.TabBarIsVisible="False">
-        <Tab Title="Horas">
-            <ShellContent ContentTemplate="{DataTemplate rep:ReporteHorasPage}" Route="ReporteHorasPage" />
-        </Tab>
-        <Tab Title="Fechas">
-            <ShellContent ContentTemplate="{DataTemplate rep:ReporteFechasPage}" Route="ReporteFechasPage" />
-        </Tab>
+        <ShellContent ContentTemplate="{DataTemplate rep:ReportesPage}" />
     </ShellItem>
 
     <ShellItem Route="LideresPage" Shell.TabBarIsVisible="False">
