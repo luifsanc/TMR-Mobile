@@ -208,32 +208,7 @@ public partial class CrearActividadViewModel : BaseViewModel, IQueryAttributable
         IsBusy = true;
         try
         {
-            if (ActividadId.HasValue)
-            {
-                var req = new CrearActividadDto(
-                    IdEmpleado: idEmpleado.Value,
-                    IdProyecto: ProyectoSeleccionado?.Id,
-                    IdTipoActividad: TipoActividadSeleccionada.Id,
-                    CodigoRequerimiento: string.IsNullOrWhiteSpace(CodigoRequerimiento) ? null : CodigoRequerimiento,
-                    CantidadHoras: CantidadHoras,
-                    FechaActividad: DateOnly.FromDateTime(FechaActividad),
-                    DescripcionActividad: DescripcionActividad,
-                    Notas: string.IsNullOrWhiteSpace(Notas) ? null : Notas,
-                    EsBillable: EsBillable
-                );
-
-                var result = await _apiService.PutAsync<CrearActividadDto, CalendarioActividadDto>($"api/time-report/actividades/{ActividadId.Value}", req);
-                
-                if (result != null)
-                {
-                    await Shell.Current.GoToAsync("..");
-                }
-                else
-                {
-                    await Shell.Current.DisplayAlertAsync("Error", "No se pudo actualizar la actividad.", "OK");
-                }
-            }
-            else if (IsRecurrente)
+            if (IsRecurrente)
             {
                 int count = 0;
                 for (var date = FechaInicio.Date; date <= FechaFin.Date; date = date.AddDays(1))
