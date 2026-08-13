@@ -12,7 +12,7 @@
              <VerticalStackLayout.GestureRecognizers>
                  <TapGestureRecognizer Tapped="OnNavigate" CommandParameter="DashboardPage" />
              </VerticalStackLayout.GestureRecognizers>
-             <Image Source="homes.png" WidthRequest="24" HeightRequest="24" HorizontalOptions="Center" />
+             <Image Source="direccion.png" WidthRequest="24" HeightRequest="24" HorizontalOptions="Center" />
          </VerticalStackLayout>
          
          <!-- Profile -->
