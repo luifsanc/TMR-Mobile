@@ -10,10 +10,17 @@
              Shell.PresentationMode="ModalAnimated"
              BackgroundColor="#80000000">
 
-    <!-- Se simula el Modal / Bottom Sheet cubriendo toda la pantalla pero con estilo limpio -->
-    <Grid>
+    <!-- Se simula el Modal / Bottom Sheet cubriendo toda la pantalla pero respetando los márgenes superiores -->
+    <Grid RowDefinitions="Auto,*">
         
-        <Border StrokeShape="RoundRectangle 24,24,0,0" Stroke="Transparent" BackgroundColor="White" Padding="0" VerticalOptions="End" MaximumHeightRequest="750">
+        <!-- Área superior transparente para poder cerrar tocando fuera (opcional) o simplemente como margen -->
+        <ContentView Grid.Row="0" HeightRequest="60" BackgroundColor="Transparent">
+            <ContentView.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding CancelarCommand}" />
+            </ContentView.GestureRecognizers>
+        </ContentView>
+
+        <Border Grid.Row="1" StrokeShape="RoundRectangle 24,24,0,0" Stroke="Transparent" BackgroundColor="White" Padding="0" VerticalOptions="End">
             
             <Grid RowDefinitions="Auto,*,Auto" Padding="20">
                 
@@ -36,36 +43,40 @@
                     <VerticalStackLayout Spacing="16" Padding="0,0,0,20">
                         
                         <!-- Tipo de Actividad -->
-                        <VerticalStackLayout Spacing="8">
-                            <HorizontalStackLayout Spacing="4">
+                        <Grid RowDefinitions="Auto,Auto" RowSpacing="8">
+                            <HorizontalStackLayout Grid.Row="0" Spacing="4">
                                 <Label Text="Tipo de Actividad" FontAttributes="Bold" FontSize="14" TextColor="#0F172A" />
                                 <Label Text="*" FontAttributes="Bold" FontSize="14" TextColor="#EF4444" />
                                 <Label Text="ⓘ" FontSize="14" TextColor="#CBD5E1" Margin="4,0,0,0" />
                             </HorizontalStackLayout>
-                            <Border Stroke="#E2E8F0" StrokeShape="RoundRectangle 12" BackgroundColor="#F8FAFC" Padding="12,4">
+                            <Border Grid.Row="1" Stroke="#E2E8F0" StrokeShape="RoundRectangle 12" BackgroundColor="#F8FAFC" Padding="12,4">
                                 <Picker ItemsSource="{Binding TiposActividad}" 
                                         ItemDisplayBinding="{Binding Nombre}" 
                                         SelectedItem="{Binding TipoActividadSeleccionada}" 
                                         Title="👤  Busque y seleccione un tipo"
+                                        HorizontalOptions="Fill"
+                                        MinimumWidthRequest="50"
                                         TextColor="#0F172A" TitleColor="#64748B" BackgroundColor="Transparent" />
                             </Border>
-                        </VerticalStackLayout>
+                        </Grid>
 
                         <!-- Proyecto -->
-                        <VerticalStackLayout Spacing="8">
-                            <HorizontalStackLayout Spacing="4">
+                        <Grid RowDefinitions="Auto,Auto" RowSpacing="8">
+                            <HorizontalStackLayout Grid.Row="0" Spacing="4">
                                 <Label Text="Proyecto" FontAttributes="Bold" FontSize="14" TextColor="#0F172A" />
                                 <Label Text="*" FontAttributes="Bold" FontSize="14" TextColor="#EF4444" />
                                 <Label Text="ⓘ" FontSize="14" TextColor="#CBD5E1" Margin="4,0,0,0" />
                             </HorizontalStackLayout>
-                            <Border Stroke="#E2E8F0" StrokeShape="RoundRectangle 12" BackgroundColor="#F8FAFC" Padding="12,4">
+                            <Border Grid.Row="1" Stroke="#E2E8F0" StrokeShape="RoundRectangle 12" BackgroundColor="#F8FAFC" Padding="12,4">
                                 <Picker ItemsSource="{Binding Proyectos}" 
                                         ItemDisplayBinding="{Binding Nombre}" 
                                         SelectedItem="{Binding ProyectoSeleccionado}" 
                                         Title="▣  Busque y seleccione un proyecto"
+                                        HorizontalOptions="Fill"
+                                        MinimumWidthRequest="50"
                                         TextColor="#0F172A" TitleColor="#64748B" BackgroundColor="Transparent" />
                             </Border>
-                        </VerticalStackLayout>
+                        </Grid>
 
                         <!-- Código Requerimiento -->
                         <VerticalStackLayout Spacing="8">

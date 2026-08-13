@@ -19,7 +19,7 @@ public class ApiService
 
     // ── Configuración de URL ─────────────────────────────────────────────────
     // Apuntando al entorno de desarrollo remoto para evitar problemas de loopback local
-    private const string BaseUrl = "https://dev.api.tmr2.dokploy.integritysolutions.com.ec/api/";
+    private const string BaseUrl = "https://dev.api.tmr2.dokploy.integritysolutions.com.ec/";
 
     // Claves en SecureStorage
     internal const string TokenKey = "auth_token";

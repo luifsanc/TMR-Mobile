@@ -17,10 +17,14 @@ public partial class TimeReportViewModel : BaseViewModel
     public ObservableCollection<DayModel> Days { get; } = new();
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(NombreMesActual))]
     public partial int AnioActual { get; set; } = DateTime.Now.Year;
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(NombreMesActual))]
     public partial int MesActual { get; set; } = DateTime.Now.Month;
+
+    public string NombreMesActual => new DateTime(AnioActual, MesActual, 1).ToString("MMMM 'de' yyyy", new System.Globalization.CultureInfo("es-ES"));
 
     [ObservableProperty]
     public partial ResumenHorasDto Resumen { get; set; }

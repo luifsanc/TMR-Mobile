@@ -93,28 +93,27 @@
                     
                     <VerticalStackLayout Spacing="16">
                         
-                        <!-- Resumen Semanal -->
+                        <!-- Resumen Semanal 
                         <Border StrokeShape="RoundRectangle 12" Stroke="Transparent" BackgroundColor="#F1F5F9" Padding="12,10" Margin="0,0,0,4">
-                            <Grid ColumnDefinitions="Auto,*,Auto">
-                                <Label Grid.Column="0" Text="‹" FontSize="20" FontAttributes="Bold" TextColor="#0F172A" VerticalOptions="Center" Margin="8,0,0,0">
-                                    <Label.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding MesAnteriorCommand}"/>
-                                    </Label.GestureRecognizers>
-                                </Label>
-                                <Label Grid.Column="1" Text="Resumen Semanal" FontSize="15" FontAttributes="Bold" TextColor="#0F172A" HorizontalOptions="Center" VerticalOptions="Center" />
-                                <Label Grid.Column="2" Text="›" FontSize="20" FontAttributes="Bold" TextColor="#0F172A" VerticalOptions="Center" Margin="0,0,8,0">
-                                    <Label.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding MesSiguienteCommand}"/>
-                                    </Label.GestureRecognizers>
-                                </Label>
-                            </Grid>
-                        </Border>
+                            <Label Text="Resumen Semanal" FontSize="15" FontAttributes="Bold" TextColor="#0F172A" HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>-->
                         
                         <!-- Subcabecera Agosto de 2026 v -->
-                        <HorizontalStackLayout HorizontalOptions="Center" Spacing="6">
-                            <Label Text="{Binding FechaSeleccionada, StringFormat='{0:MMMM} de {0:yyyy}'}" FontSize="16" FontAttributes="Bold" TextColor="#0F172A" VerticalOptions="Center" TextTransform="None" />
-                            <Label Text="˅" FontSize="12" FontAttributes="Bold" TextColor="#64748B" VerticalOptions="Center" />
-                        </HorizontalStackLayout>
+                        <Grid ColumnDefinitions="Auto,*,Auto" Margin="0,4,0,4">
+                            <Label Grid.Column="0" Text="‹" FontSize="24" FontAttributes="Bold" TextColor="#0F172A" VerticalOptions="Center" Margin="8,0,0,0">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding MesAnteriorCommand}"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+
+                            <Label Grid.Column="1" Text="{Binding NombreMesActual}" FontSize="16" FontAttributes="Bold" TextColor="#0F172A" HorizontalOptions="Center" VerticalOptions="Center" TextTransform="Uppercase" />
+                            
+                            <Label Grid.Column="2" Text="›" FontSize="24" FontAttributes="Bold" TextColor="#0F172A" VerticalOptions="Center" Margin="0,0,8,0">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding MesSiguienteCommand}"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </Grid>
                         
                         <!-- Encabezados de Días -->
                         <Grid ColumnDefinitions="*,*,*,*,*,*,*" Margin="0,8,0,4">
@@ -189,9 +188,12 @@
 
                     </VerticalStackLayout>
                 </Border>
+<<<<<<< Updated upstream
 
                 <!-- Lista de Actividades del día -->
                 <Label Text="{Binding FechaSeleccionada, StringFormat='Actividades del {0:dd/MM/yyyy}'}" FontAttributes="Bold" FontSize="16" TextColor="#0F172A" Margin="0,8,0,0" IsVisible="False" />
+=======
+>>>>>>> Stashed changes
                 
                 <Label Text="No hay actividades para este día." TextColor="#64748B" HorizontalTextAlignment="Center" Margin="0,16" IsVisible="False">
                     <Label.Triggers>
