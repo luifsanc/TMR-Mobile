@@ -85,6 +85,65 @@ public class ApiService
         return await HandleResponseAsync<TResponse>(response, endpoint, "POST", data, ct);
     }
 
+    /// <summary>
+    /// POST sin credenciales ni reintento de autenticación. Se usa únicamente
+    /// para endpoints públicos como refresh-token.
+    /// </summary>
+    internal async Task<TResponse?> PostAnonymousAsync<TRequest, TResponse>(
+        string endpoint,
+        TRequest data,
+        CancellationToken ct = default)
+    {
+        using var response = await _httpClient.PostAsJsonAsync(endpoint, data, JsonOptions, ct);
+
+        if (!response.IsSuccessStatusCode)
+        {
+            var error = await response.Content.ReadAsStringAsync(ct);
+            Log($"[ApiService] Error {(int)response.StatusCode} en POST {endpoint}: {error}");
+            return default;
+        }
+
+        return await DeserializeAsync<TResponse>(response);
+    }
+
+    /// <summary>
+    /// Ejecuta un POST cuyo resultado puede no tener cuerpo (por ejemplo, HTTP 204)
+    /// y conserva el mensaje de error devuelto por el backend.
+    /// </summary>
+    public async Task<ApiOperationResult> PostForResultAsync<TRequest>(
+        string endpoint,
+        TRequest data,
+        CancellationToken ct = default)
+    {
+        await AddAuthHeaderAsync();
+        using var response = await _httpClient.PostAsJsonAsync(endpoint, data, JsonOptions, ct);
+
+        if (response.StatusCode == HttpStatusCode.Unauthorized && _refreshTokenFunc != null)
+        {
+            Log($"[ApiService] 401 en POST {endpoint} — intentando refresh...");
+            var refreshed = await _refreshTokenFunc();
+
+            if (refreshed)
+            {
+                await AddAuthHeaderAsync();
+                using var retry = await _httpClient.PostAsJsonAsync(endpoint, data, JsonOptions, ct);
+                var retryContent = await retry.Content.ReadAsStringAsync(ct);
+
+                return retry.IsSuccessStatusCode
+                    ? ApiOperationResult.Ok()
+                    : ApiOperationResult.Fail(ExtractErrorMessage(retryContent), retry.StatusCode);
+            }
+        }
+
+        var content = await response.Content.ReadAsStringAsync(ct);
+
+        if (response.IsSuccessStatusCode)
+            return ApiOperationResult.Ok();
+
+        Log($"[ApiService] Error {(int)response.StatusCode} en POST {endpoint}: {content}");
+        return ApiOperationResult.Fail(ExtractErrorMessage(content), response.StatusCode);
+    }
+
     public async Task<TResponse?> PostFileAsync<TResponse>(string endpoint, byte[] fileBytes, string fileName,
         CancellationToken ct = default)
     {
@@ -250,4 +309,57 @@ public class ApiService
 
     private static void Log(string message)
         => System.Diagnostics.Debug.WriteLine(message);
+
+    private static string ExtractErrorMessage(string content)
+    {
+        if (string.IsNullOrWhiteSpace(content))
+            return "No se pudo completar la solicitud.";
+
+        try
+        {
+            using var document = JsonDocument.Parse(content);
+            var root = document.RootElement;
+
+            foreach (var propertyName in new[] { "detail", "message", "mensaje", "title" })
+            {
+                if (root.TryGetProperty(propertyName, out var property) &&
+                    property.ValueKind == JsonValueKind.String &&
+                    !string.IsNullOrWhiteSpace(property.GetString()))
+                    return property.GetString()!;
+            }
+
+            if (root.TryGetProperty("errors", out var errors) &&
+                errors.ValueKind == JsonValueKind.Array)
+            {
+                foreach (var error in errors.EnumerateArray())
+                {
+                    if (error.ValueKind == JsonValueKind.String)
+                        return error.GetString()!;
+
+                    if (error.ValueKind == JsonValueKind.Object &&
+                        error.TryGetProperty("message", out var message) &&
+                        message.ValueKind == JsonValueKind.String)
+                        return message.GetString()!;
+                }
+            }
+        }
+        catch (JsonException)
+        {
+            // Algunos proxies devuelven texto plano; se muestra tal cual.
+        }
+
+        return content.Trim('"', ' ', '\r', '\n');
+    }
+}
+
+public sealed record ApiOperationResult(
+    bool Success,
+    string Message,
+    HttpStatusCode StatusCode)
+{
+    public static ApiOperationResult Ok() =>
+        new(true, string.Empty, HttpStatusCode.OK);
+
+    public static ApiOperationResult Fail(string message, HttpStatusCode statusCode) =>
+        new(false, message, statusCode);
 }

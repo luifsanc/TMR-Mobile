@@ -68,8 +68,6 @@ public partial class TimeReportViewModel : BaseViewModel
                 foreach (var a in lista)
                     Actividades.Add(a);
             }
-
-            GenerarCalendario();
         }
         catch (Exception ex)
         {
@@ -77,6 +75,7 @@ public partial class TimeReportViewModel : BaseViewModel
         }
         finally
         {
+            GenerarCalendario(); // Draw calendar regardless of API success
             IsBusy = false;
         }
     }
@@ -87,7 +86,7 @@ public partial class TimeReportViewModel : BaseViewModel
         var primerDia = new DateTime(AnioActual, MesActual, 1);
         
         int diaSemanaPrimerDia = (int)primerDia.DayOfWeek; // Sun=0, Mon=1...
-        int offset = diaSemanaPrimerDia == 0 ? 6 : diaSemanaPrimerDia - 1; // Mon=0
+        int offset = diaSemanaPrimerDia; // Sun=0
 
         var fechaActual = primerDia.AddDays(-offset);
         
@@ -95,14 +94,17 @@ public partial class TimeReportViewModel : BaseViewModel
         {
             var isCurrentMonth = fechaActual.Month == MesActual;
             var isToday = fechaActual.Date == DateTime.Today;
-            var hasActivities = Actividades.Any(a => a.FechaActividad.ToDateTime(TimeOnly.MinValue).Date == fechaActual.Date);
+            var actividadesDelDia = Actividades.Where(a => a.FechaActividad.ToDateTime(TimeOnly.MinValue).Date == fechaActual.Date).ToList();
+            var hasActivities = actividadesDelDia.Any();
+            var totalHoras = actividadesDelDia.Sum(a => a.CantidadHoras);
             
             var dayModel = new DayModel
             {
                 Date = fechaActual,
                 IsCurrentMonth = isCurrentMonth,
                 IsToday = isToday,
-                HasActivities = hasActivities
+                HasActivities = hasActivities,
+                TotalHoras = totalHoras
             };
 
             if (fechaActual.Date == FechaSeleccionada.Date)
@@ -119,7 +121,7 @@ public partial class TimeReportViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    private void SeleccionarDia(DayModel day)
+    private async Task SeleccionarDiaAsync(DayModel day)
     {
         if (day == null) return;
         
@@ -131,6 +133,7 @@ public partial class TimeReportViewModel : BaseViewModel
         FechaSeleccionada = day.Date;
         
         ActualizarActividadesDelDia();
+        await NuevaActividadAsync();
     }
 
     private void ActualizarActividadesDelDia()
@@ -179,6 +182,18 @@ public partial class TimeReportViewModel : BaseViewModel
         var query = new Dictionary<string, object>
         {
             { "FechaActividad", FechaSeleccionada }
+        };
+        await Shell.Current.GoToAsync("CrearActividadPage", query);
+    }
+
+    [RelayCommand]
+    private async Task EditarActividadAsync(CalendarioActividadDto actividad)
+    {
+        if (actividad == null) return;
+        
+        var query = new Dictionary<string, object>
+        {
+            { "Actividad", actividad }
         };
         await Shell.Current.GoToAsync("CrearActividadPage", query);
     }
