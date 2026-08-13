@@ -24,4 +24,7 @@ public partial class DayModel : ObservableObject
 
     [ObservableProperty]
     private string _specialDayText = string.Empty;
+
+    [ObservableProperty]
+    private decimal _totalHoras;
 }
