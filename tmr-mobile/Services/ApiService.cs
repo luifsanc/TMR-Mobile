@@ -22,9 +22,9 @@ public class ApiService
     private const string BaseUrl = "https://dev.api.tmr2.dokploy.integritysolutions.com.ec/api/";
 
     // Claves en SecureStorage
-    internal const string TokenKey        = "auth_token";
+    internal const string TokenKey = "auth_token";
     internal const string RefreshTokenKey = "refresh_token";
-    internal const string TokenFamilyKey  = "token_family_id";
+    internal const string TokenFamilyKey = "token_family_id";
 
     // Para evitar ciclo: el AuthService se inyecta lazily desde el exterior
     private Func<Task<bool>>? _refreshTokenFunc;
@@ -47,12 +47,12 @@ public class ApiService
         _httpClient = new HttpClient(handler)
         {
             BaseAddress = new Uri(BaseUrl),
-            Timeout     = TimeSpan.FromSeconds(30)
+            Timeout = TimeSpan.FromSeconds(30)
         };
 
         _httpClient.DefaultRequestHeaders.Accept.Add(
             new MediaTypeWithQualityHeaderValue("application/json"));
-            
+
         // Agregar User-Agent por defecto para el control de sesiones del backend
         _httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("TMR-Mobile-App/1.0");
     }
@@ -171,6 +171,69 @@ public class ApiService
         await AddAuthHeaderAsync();
         var response = await _httpClient.DeleteAsync(endpoint, ct);
         return response.IsSuccessStatusCode;
+    }
+
+    //metodo para descargar archivos binarios desde el backend
+    public async Task<byte[]?> GetFileBytesAsync(string endpoint, CancellationToken ct = default)
+    {
+        await AddAuthHeaderAsync();
+        var response = await _httpClient.GetAsync(endpoint, ct);
+
+        if (!response.IsSuccessStatusCode)
+        {
+            var error = await response.Content.ReadAsStringAsync(ct);
+            Log($"[ApiService] Error {(int)response.StatusCode} descargando {endpoint}: {error}");
+            return null;
+        }
+
+        return await response.Content.ReadAsByteArrayAsync(ct);
+    }
+
+    //metodo para subir archivos binarios al backend y recibir una respuesta con detalles
+    public async Task<TResponse?> PostFileWithDetailsAsync<TResponse>(
+    string endpoint, byte[] fileBytes, string fileName, string contentType,
+    CancellationToken ct = default)
+    {
+        await AddAuthHeaderAsync();
+
+        HttpContent BuildContent()
+        {
+            var content = new MultipartFormDataContent();
+            var fileContent = new ByteArrayContent(fileBytes);
+            fileContent.Headers.ContentType = new MediaTypeHeaderValue(contentType);
+            content.Add(fileContent, "file", fileName);
+            return content;
+        }
+
+        var response = await _httpClient.PostAsync(endpoint, BuildContent(), ct);
+
+        if (response.StatusCode == HttpStatusCode.Unauthorized && _refreshTokenFunc != null)
+        {
+            var refreshed = await _refreshTokenFunc();
+            if (!refreshed)
+            {
+                await MainThread.InvokeOnMainThreadAsync(async () =>
+                    await Shell.Current.GoToAsync("//LoginPage"));
+                return default;
+            }
+
+            await AddAuthHeaderAsync();
+            // El content anterior ya se envió y no se puede reenviar; se arma de nuevo.
+            response = await _httpClient.PostAsync(endpoint, BuildContent(), ct);
+        }
+
+        // A diferencia de HandleResponseAsync, aquí SIEMPRE deserializamos el body,
+        // sin importar el status code: el endpoint devuelve el mismo shape de
+        // respuesta tanto en éxito (200) como en error de validación (400).
+        try
+        {
+            return await response.Content.ReadFromJsonAsync<TResponse>(JsonOptions, ct);
+        }
+        catch (JsonException ex)
+        {
+            Log($"[ApiService] Error de deserialización en {endpoint}: {ex.Message}");
+            return default;
+        }
     }
 
     // ─────────────────────────────────────────────────────────────────────────

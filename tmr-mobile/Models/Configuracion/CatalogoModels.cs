@@ -23,6 +23,7 @@ public partial class CatalogoMaster : ObservableObject
             : TipoCatalogo;
 }
 
+
 public class CatalogoDetalle
 {
     public int Id { get; set; }
