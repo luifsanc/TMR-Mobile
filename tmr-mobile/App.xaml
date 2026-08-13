@@ -13,6 +13,7 @@
 
             <converters:IsStringNotNullOrEmptyConverter x:Key="IsStringNotNullOrEmptyConverter" />
             <converters:BoolToColorConverter x:Key="BoolToColorConverter" />
+            <converters:InvertedBoolConverter x:Key="InvertedBoolConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

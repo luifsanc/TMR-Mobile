@@ -5,7 +5,7 @@ namespace tmr_mobile.Services;
 public interface ICargaActividadesService
 {
     Task<CargaActividadesUploadResult> SubirExcelAsync(byte[] fileBytes, string fileName);
-    Task<List<ActividadListItem>> ObtenerActividadesAsync();
+    Task<List<ActividadCargaItem>> ObtenerActividadesAsync();
 }
 
 public sealed class CargaActividadesUploadResult
@@ -37,9 +37,9 @@ public class CargaActividadesService : ICargaActividadesService
         };
     }
 
-    public async Task<List<ActividadListItem>> ObtenerActividadesAsync()
+    public async Task<List<ActividadCargaItem>> ObtenerActividadesAsync()
     {
-        var result = await _apiService.GetAsync<List<ActividadListItem>>("api/carga-actividades/");
-        return result ?? new List<ActividadListItem>();
+        var result = await _apiService.GetAsync<List<ActividadCargaItem>>("api/carga-actividades/");
+        return result ?? new List<ActividadCargaItem>();
     }
 }

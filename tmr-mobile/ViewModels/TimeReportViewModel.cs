@@ -94,14 +94,17 @@ public partial class TimeReportViewModel : BaseViewModel
         {
             var isCurrentMonth = fechaActual.Month == MesActual;
             var isToday = fechaActual.Date == DateTime.Today;
-            var hasActivities = Actividades.Any(a => a.FechaActividad.ToDateTime(TimeOnly.MinValue).Date == fechaActual.Date);
+            var actividadesDelDia = Actividades.Where(a => a.FechaActividad.ToDateTime(TimeOnly.MinValue).Date == fechaActual.Date).ToList();
+            var hasActivities = actividadesDelDia.Any();
+            var totalHoras = actividadesDelDia.Sum(a => a.CantidadHoras);
             
             var dayModel = new DayModel
             {
                 Date = fechaActual,
                 IsCurrentMonth = isCurrentMonth,
                 IsToday = isToday,
-                HasActivities = hasActivities
+                HasActivities = hasActivities,
+                TotalHoras = totalHoras
             };
 
             if (fechaActual.Date == FechaSeleccionada.Date)
@@ -179,6 +182,18 @@ public partial class TimeReportViewModel : BaseViewModel
         var query = new Dictionary<string, object>
         {
             { "FechaActividad", FechaSeleccionada }
+        };
+        await Shell.Current.GoToAsync("CrearActividadPage", query);
+    }
+
+    [RelayCommand]
+    private async Task EditarActividadAsync(CalendarioActividadDto actividad)
+    {
+        if (actividad == null) return;
+        
+        var query = new Dictionary<string, object>
+        {
+            { "Actividad", actividad }
         };
         await Shell.Current.GoToAsync("CrearActividadPage", query);
     }
