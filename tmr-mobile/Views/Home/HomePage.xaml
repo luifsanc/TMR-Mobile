@@ -14,9 +14,8 @@
         
         <!-- Header -->
         <VerticalStackLayout Grid.Row="0" HorizontalOptions="Center" Padding="0,50,0,30" Spacing="4">
-             <Image Source="logo_empresa.png" HeightRequest="25" HorizontalOptions="Center" />
-             <Label Text="INTEGRITY" FontSize="14" FontAttributes="Bold" TextColor="#1e293b" HorizontalOptions="Center" />
-             <Label Text="SOLUTIONS" FontSize="14" TextColor="#5F6B7A" HorizontalOptions="Center" />
+             <Image Source="logo_empresa.png" HeightRequest="60" HorizontalOptions="Center" />
+             <Label Text="MENÚ" FontSize="14" FontAttributes="Bold" TextColor="#1e293b" HorizontalOptions="Center" />
         </VerticalStackLayout>
         
         <!-- Modules Grid -->

@@ -167,6 +167,31 @@
                 </Border>
             </Grid>
 
+
+            <!-- ======================== Filtro de fechas ========================== -->
+            <Border>
+                    <VerticalStackLayout Spacing="4">
+                        <HorizontalStackLayout Spacing="8">
+                            <CheckBox IsChecked="{Binding FiltroFechaActivo}" />
+                            <Label Text="Filtrar por fecha"
+                                VerticalOptions="Center"
+                                FontAttributes="Bold" />
+                        </HorizontalStackLayout>
+
+                        <HorizontalStackLayout Spacing="8" IsVisible="{Binding FiltroFechaActivo}">
+                            <Label Text="Desde" VerticalOptions="Center" />
+                            <DatePicker Date="{Binding FechaDesde}"
+                                        Format="dd/MM/yyyy"
+                                        MaximumDate="{Binding FechaHasta}" />
+
+                            <Label Text="Hasta" VerticalOptions="Center" />
+                            <DatePicker Date="{Binding FechaHasta}"
+                                    Format="dd/MM/yyyy"
+                                    MinimumDate="{Binding FechaDesde}" />
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+
        <!-- ===================== Botón Ordenar (reemplaza el Button de texto plano) ===================== -->
             <Border StrokeShape="RoundRectangle 10"
                      Stroke="#E4E7EC"

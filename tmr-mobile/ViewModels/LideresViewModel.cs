@@ -81,10 +81,10 @@ public partial class LideresViewModel : BaseViewModel
         try
         {
             // 1. Cargar lista completa de líderes desde el Backend
-            var respuestaLideres = await _apiService.GetAsync<List<LiderResponse>>("api/lideres");
+            var respuestaLideres = await _apiService.GetAsync<List<LiderResponse>>("lideres");
             
             // 2. Cargar lista de proyectos para realizar el cruce estricto por líder y estado funcional activo (igual a la Web)
-            var respuestaProyectos = await _apiService.GetAsync<List<ProyectoMinimalResponse>>("api/proyectos");
+            var respuestaProyectos = await _apiService.GetAsync<List<ProyectoMinimalResponse>>("proyectos");
 
             if (respuestaLideres != null)
             {
@@ -114,22 +114,11 @@ public partial class LideresViewModel : BaseViewModel
                 FiltrarLideres(reset: true);
             }
 
-            // 3. Cargar contadores de métricas desde el Backend
-            var contadores = await _apiService.GetAsync<ContadoresLiderResponse>("api/lideres/contadores");
-            if (contadores != null)
-            {
-                TotalInternos = contadores.Internos;
-                TotalExternos = contadores.Externos;
-                TotalActivos = contadores.Activos;
-                TotalInactivos = contadores.Inactivos;
-            }
-            else
-            {
-                TotalInternos = _todosLideres.Count(l => l.TipoBadge == "Interno");
-                TotalExternos = _todosLideres.Count(l => l.TipoBadge == "Externo");
-                TotalActivos = _todosLideres.Count(l => l.Activo);
-                TotalInactivos = _todosLideres.Count(l => !l.Activo);
-            }
+            // 3. Calcular contadores de métricas en la App Móvil directamente desde los datos reales
+            TotalInternos = _todosLideres.Count(l => l.TipoBadge == "Interno");
+            TotalExternos = _todosLideres.Count(l => l.TipoBadge == "Externo");
+            TotalActivos = _todosLideres.Count(l => l.Activo);
+            TotalInactivos = _todosLideres.Count(l => !l.Activo);
         }
         catch (Exception ex)
         {
@@ -201,49 +190,19 @@ public partial class LideresViewModel : BaseViewModel
     [RelayCommand]
     private async Task ExportarReporteAsync()
     {
-        if (Lideres.Count == 0)
+        var encabezados = new[] { "Nombre", "Correo", "Teléfono", "Tipo", "Clientes Vinculados", "Estado" };
+        var filas = _lideresFiltradosCache.Select(l => new[]
         {
-            await Shell.Current.DisplayAlert("Exportar", "No hay datos para exportar.", "OK");
-            return;
-        }
+            l.NombreCompleto,
+            l.Email ?? "-",
+            l.Telefono ?? "-",
+            l.TipoBadge,
+            l.ClientesResumen,
+            l.EstadoTexto
+        }).ToList();
 
-        var opcion = await Shell.Current.DisplayActionSheet(
-            title: "Seleccione el formato de descarga:",
-            cancel: "Cancelar",
-            destruction: null,
-            buttons: new[] { "📄 Descargar PDF", "📊 Descargar Excel" }
-        );
-
-        if (opcion == "📄 Descargar PDF")
-        {
-            var encabezados = new[] { "Nombre", "Correo", "Teléfono", "Tipo", "Clientes Vinculados", "Estado" };
-            var filas = _lideresFiltradosCache.Select(l => new[]
-            {
-                l.NombreCompleto,
-                l.Email ?? "-",
-                l.Telefono ?? "-",
-                l.TipoBadge,
-                l.ClientesResumen,
-                l.EstadoTexto
-            }).ToList();
-
-            await ReportService.ExportarHtmlPdfAsync("Reporte de Líderes", encabezados, filas, "Lideres");
-        }
-        else if (opcion == "📊 Descargar Excel")
-        {
-            var encabezados = new[] { "Nombre", "Correo", "Teléfono", "Tipo", "Clientes Vinculados", "Estado" };
-            var filas = _lideresFiltradosCache.Select(l => new[]
-            {
-                l.NombreCompleto,
-                l.Email ?? "-",
-                l.Telefono ?? "-",
-                l.TipoBadge,
-                l.ClientesResumen,
-                l.EstadoTexto
-            }).ToList();
-
-            await ReportService.ExportarCsvAsync("Reporte de Líderes", encabezados, filas, "Lideres");
-        }
+        await ReportService.SeleccionarYExportarAsync(
+            "Reporte de Líderes", encabezados, filas, "Lideres");
     }
 
     [RelayCommand]
@@ -326,7 +285,7 @@ public partial class LideresViewModel : BaseViewModel
                 Activo = !lider.Activo
             };
 
-            var ok = await _apiService.PutAsync($"api/lideres/{lider.Id}", updateReq);
+            var ok = await _apiService.PutAsync($"lideres/{lider.Id}", updateReq);
             if (ok)
             {
                 await CargarLideresAsync();
@@ -347,7 +306,7 @@ public partial class LideresViewModel : BaseViewModel
 
         if (confirm)
         {
-            var ok = await _apiService.DeleteAsync($"api/lideres/{lider.Id}");
+            var ok = await _apiService.DeleteAsync($"lideres/{lider.Id}");
             if (ok)
             {
                 await CargarLideresAsync();

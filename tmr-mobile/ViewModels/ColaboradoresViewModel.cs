@@ -136,7 +136,20 @@ public partial class ColaboradoresViewModel : BaseViewModel
     [RelayCommand]
     private async Task DescargarAsync()
     {
-        await Shell.Current.CurrentPage.DisplayAlert("Exportar", "Se ha generado la descarga del reporte de colaboradores.", "OK");
+        var encabezados = new[] { "Código", "Identificación", "Nombre", "Correo", "Cargo", "Proyectos", "Estado" };
+        var filas = Colaboradores.Select(c => new[]
+        {
+            c.CodigoEmpleado,
+            c.NumeroIdentificacion,
+            c.NombreCompleto,
+            c.Email,
+            c.Cargo,
+            c.NumProyectos.ToString(),
+            c.EstadoTexto
+        }).ToList();
+
+        await ReportService.SeleccionarYExportarAsync(
+            "Reporte de Colaboradores", encabezados, filas, "Colaboradores");
     }
 
     [RelayCommand]

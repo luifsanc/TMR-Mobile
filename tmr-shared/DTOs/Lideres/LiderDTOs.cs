@@ -40,6 +40,8 @@ public class LiderResponse
         }
     }
     public string EstadoTexto => Activo ? "Activo" : "Inactivo";
+    public string ColorFondoEstado => Activo ? "#E8F5E9" : "#FFEBEE";
+    public string ColorEstado => Activo ? "#2E7D32" : "#C62828";
     public string ClientesResumen => Proyectos.Count > 0 
         ? string.Join(", ", Proyectos.Select(p => p.Cliente).Where(c => !string.IsNullOrEmpty(c)).Distinct()) 
         : "Sin proyectos";
