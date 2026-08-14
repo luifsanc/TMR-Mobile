@@ -4,6 +4,7 @@ using tmr_mobile.Views.TimeReport;
 using tmr_mobile.Views.Reportes;
 using tmr_mobile.Views.Home;
 using tmr_mobile.Views.Auth;
+using tmr_mobile.Views.Seguimiento;
 
 namespace tmr_mobile;
 
@@ -48,6 +49,11 @@ public partial class AppShell : Shell
             typeof(ColaboradorFormPage)
         );
 
+        Routing.RegisterRoute(
+            nameof(ProyectosFormPage),
+            typeof(ProyectosFormPage)
+        );
+
         // Subpáginas y configuraciones que no son items raíz del Shell
         Routing.RegisterRoute(nameof(ReporteHorasPage), typeof(ReporteHorasPage));
         Routing.RegisterRoute(nameof(ReporteFechasPage), typeof(ReporteFechasPage));
@@ -64,5 +70,6 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(nameof(FeriadoFormPage), typeof(FeriadoFormPage));
         Routing.RegisterRoute(nameof(CatalogosPage), typeof(CatalogosPage));
         Routing.RegisterRoute(nameof(ChangePasswordPage), typeof(ChangePasswordPage));
+        Routing.RegisterRoute(nameof(SeguimientoDetallePage), typeof(SeguimientoDetallePage));
     }
 }

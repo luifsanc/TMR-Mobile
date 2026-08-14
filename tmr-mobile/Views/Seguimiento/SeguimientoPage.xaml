@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:tmr_mobile.ViewModels"
+    xmlns:model="clr-namespace:tmr_mobile.Models.Seguimiento"
+    xmlns:shared="clr-namespace:tmr_mobile.Views.Shared"
+    x:Class="tmr_mobile.Views.Seguimiento.SeguimientoPage"
+    x:DataType="vm:SeguimientoViewModel"
+    Title="Seguimiento de Colaboradores"
+    BackgroundColor="#F4F6FA">
+
+    <Grid RowDefinitions="*,80">
+        <!-- Contenido principal -->
+        <Grid Grid.Row="0">
+            <Grid RowDefinitions="Auto,Auto,*" Padding="16" RowSpacing="14">
+
+                <!-- TÍTULO Y NAVBAR SIMULADO (Se usa titulo y menu por default del Shell si aplica, pero aquí ponemos el label) -->
+                <Label
+                    Grid.Row="0"
+                    Text="Reportes de Colaboradores"
+                    FontSize="24"
+                    FontAttributes="Bold"
+                    TextColor="#173A54" />
+
+                <!-- BUSCADOR CON FILTROS -->
+                <Grid Grid.Row="1" ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
+                    <!-- Buscador -->
+                    <Border
+                        Grid.Column="0"
+                        HeightRequest="46"
+                        BackgroundColor="White"
+                        Stroke="#DCE3EC"
+                        StrokeThickness="1"
+                        Padding="12,0">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10" />
+                        </Border.StrokeShape>
+                        <Entry
+                            Text="{Binding Busqueda}"
+                            Placeholder="Buscar colaborador..."
+                            PlaceholderColor="#9CA3AF"
+                            TextColor="#334155"
+                            FontSize="13"
+                            BackgroundColor="Transparent"
+                            VerticalOptions="Center" />
+                    </Border>
+                    <!-- Filtros Fecha -->
+                    <Border
+                        Grid.Column="1"
+                        HeightRequest="46"
+                        BackgroundColor="White"
+                        Stroke="#DCE3EC"
+                        StrokeThickness="1"
+                        Padding="5,0">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10" />
+                        </Border.StrokeShape>
+                        <DatePicker 
+                            Date="{Binding FechaDesde}" 
+                            Format="dd/MM/yyyy"
+                            FontSize="13" 
+                            TextColor="#334155" 
+                            BackgroundColor="Transparent" />
+                    </Border>
+                    <Border
+                        Grid.Column="2"
+                        HeightRequest="46"
+                        BackgroundColor="White"
+                        Stroke="#DCE3EC"
+                        StrokeThickness="1"
+                        Padding="5,0">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10" />
+                        </Border.StrokeShape>
+                        <DatePicker 
+                            Date="{Binding FechaHasta}" 
+                            Format="dd/MM/yyyy"
+                            FontSize="13" 
+                            TextColor="#334155" 
+                            BackgroundColor="Transparent" />
+                    </Border>
+                </Grid>
+
+                <!-- LISTA DE COLABORADORES CON TARJETAS EN EL HEADER -->
+                <CollectionView
+                    Grid.Row="2"
+                    ItemsSource="{Binding ColaboradoresFiltrados}"
+                    SelectionMode="None">
+                    
+                    <CollectionView.Header>
+                        <!-- TARJETAS DE INDICADORES -->
+                        <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="*,*" ColumnSpacing="10" RowSpacing="10" Margin="0,0,0,14">
+                            <!-- Tarjeta 1 -->
+                            <Border Grid.Row="0" Grid.Column="0" BackgroundColor="White" Stroke="#E4E7EC" StrokeThickness="1" Padding="12">
+                                <Border.StrokeShape><RoundRectangle CornerRadius="10" /></Border.StrokeShape>
+                                <VerticalStackLayout Spacing="2">
+                                    <Label Text="Horas por registrar" FontSize="11" TextColor="#64748B" FontAttributes="Bold" />
+                                    <Label Text="{Binding HorasPorRegistrar, StringFormat='{0} h'}" FontSize="16" FontAttributes="Bold" TextColor="#1E293B" />
+                                    <Label Text="Pendientes" FontSize="10" TextColor="#64748B" />
+                                </VerticalStackLayout>
+                            </Border>
+                            <!-- Tarjeta 2 -->
+                            <Border Grid.Row="0" Grid.Column="1" BackgroundColor="White" Stroke="#E4E7EC" StrokeThickness="1" Padding="12">
+                                <Border.StrokeShape><RoundRectangle CornerRadius="10" /></Border.StrokeShape>
+                                <VerticalStackLayout Spacing="2">
+                                    <Label Text="Horas registradas" FontSize="11" TextColor="#64748B" FontAttributes="Bold" />
+                                    <Label Text="{Binding HorasRegistradas, StringFormat='{0} h'}" FontSize="16" FontAttributes="Bold" TextColor="#43A047" />
+                                    <Label Text="Total del periodo" FontSize="10" TextColor="#64748B" />
+                                </VerticalStackLayout>
+                            </Border>
+                            <!-- Tarjeta 3 -->
+                            <Border Grid.Row="1" Grid.Column="0" BackgroundColor="White" Stroke="#E4E7EC" StrokeThickness="1" Padding="12">
+                                <Border.StrokeShape><RoundRectangle CornerRadius="10" /></Border.StrokeShape>
+                                <VerticalStackLayout Spacing="2">
+                                    <Label Text="Promedio por día" FontSize="11" TextColor="#64748B" FontAttributes="Bold" />
+                                    <Label Text="{Binding PromedioPorDia, StringFormat='{0} h'}" FontSize="16" FontAttributes="Bold" TextColor="#1E293B" />
+                                    <Label Text="Horas registradas" FontSize="10" TextColor="#64748B" />
+                                </VerticalStackLayout>
+                            </Border>
+                            <!-- Tarjeta 4 -->
+                            <Border Grid.Row="1" Grid.Column="1" BackgroundColor="White" Stroke="#E4E7EC" StrokeThickness="1" Padding="12">
+                                <Border.StrokeShape><RoundRectangle CornerRadius="10" /></Border.StrokeShape>
+                                <VerticalStackLayout Spacing="2">
+                                    <Label Text="Colaboradores" FontSize="11" TextColor="#64748B" FontAttributes="Bold" />
+                                    <Label Text="{Binding ColaboradoresActivos}" FontSize="16" FontAttributes="Bold" TextColor="#1E293B" />
+                                    <Label Text="activos" FontSize="10" TextColor="#64748B" />
+                                </VerticalStackLayout>
+                            </Border>
+                            <!-- Tarjeta 5 -->
+                            <Border Grid.Row="2" Grid.Column="0" BackgroundColor="White" Stroke="#E4E7EC" StrokeThickness="1" Padding="12">
+                                <Border.StrokeShape><RoundRectangle CornerRadius="10" /></Border.StrokeShape>
+                                <VerticalStackLayout Spacing="2">
+                                    <Label Text="Colaboradores con reporte" FontSize="11" TextColor="#64748B" FontAttributes="Bold" />
+                                    <Label Text="{Binding ColaboradoresConReporte}" FontSize="16" FontAttributes="Bold" TextColor="#1E293B" />
+                                    <Label Text="activos" FontSize="10" TextColor="#64748B" />
+                                </VerticalStackLayout>
+                            </Border>
+                            <!-- Tarjeta 6 -->
+                            <Border Grid.Row="2" Grid.Column="1" BackgroundColor="White" Stroke="#E4E7EC" StrokeThickness="1" Padding="12">
+                                <Border.StrokeShape><RoundRectangle CornerRadius="10" /></Border.StrokeShape>
+                                <VerticalStackLayout Spacing="2">
+                                    <Label Text="Proyectos" FontSize="11" TextColor="#64748B" FontAttributes="Bold" />
+                                    <Label Text="{Binding ProyectosConActividades}" FontSize="16" FontAttributes="Bold" TextColor="#1E293B" />
+                                    <Label Text="Con actividades" FontSize="10" TextColor="#64748B" />
+                                </VerticalStackLayout>
+                            </Border>
+                        </Grid>
+                    </CollectionView.Header>
+
+                    <CollectionView.EmptyView>
+                        <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10" Margin="0,40,0,0">
+                            <Label Text="No existen colaboradores para mostrar." FontSize="14" TextColor="#64748B" HorizontalOptions="Center" />
+                            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="#173A54" />
+                        </VerticalStackLayout>
+                    </CollectionView.EmptyView>
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="model:SeguimientoColaboradorDto">
+                            <!-- Envolvemos en un Grid con GestureRecognizer para navegar -->
+                            <Grid>
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer 
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:SeguimientoViewModel}}, Path=ItemTappedCommand}"
+                                        CommandParameter="{Binding .}" />
+                                </Grid.GestureRecognizers>
+                                
+                                <Border
+                                    Margin="0,0,0,10"
+                                    BackgroundColor="White"
+                                    Stroke="#E4E7EC"
+                                    StrokeThickness="1"
+                                    Padding="16">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="12" />
+                                    </Border.StrokeShape>
+
+                                    <Grid ColumnDefinitions="*, Auto" RowDefinitions="Auto,Auto">
+                                        <Label Grid.Row="0" Grid.Column="0" Text="{Binding Nombre}" FontSize="15" FontAttributes="Bold" TextColor="#1E293B" LineBreakMode="TailTruncation" />
+                                        <Label Grid.Row="0" Grid.Column="1" Text="&gt;" FontSize="18" TextColor="#94A3B8" VerticalOptions="Center" />
+                                        
+                                        <Label Grid.Row="1" Grid.Column="0" FontSize="12" TextColor="#64748B" Margin="0,4,0,0" LineBreakMode="TailTruncation">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="{Binding Proyecto}" />
+                                                    <Span Text=" • " />
+                                                    <Span Text="{Binding Cliente}" />
+                                                    <Span Text=" • " />
+                                                    <Span Text="{Binding LiderTecnico}" />
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                        <Label Grid.Row="1" Grid.Column="1" Text="Ver todos los detalles" FontSize="10" TextColor="#3B82F6" VerticalOptions="End" />
+                                    </Grid>
+                                </Border>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+            </Grid>
+        </Grid>
+        
+        <!-- NAVBAR INFERIOR (si es necesario) -->
+        <!-- <shared:BottomNavBar Grid.Row="1" /> -->
+        <!-- Como pidieron que sea parecido a los otros, lo pongo: -->
+        <shared:BottomNavBar Grid.Row="1" />
+    </Grid>
+
+</ContentPage>

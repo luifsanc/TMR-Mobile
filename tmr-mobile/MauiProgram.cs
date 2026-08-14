@@ -10,6 +10,7 @@ using tmr_mobile.Views.Reportes;
 using tmr_mobile.Views.Configuracion;
 using tmr_mobile.Views.Home;
 using tmr_mobile.Views;
+using tmr_mobile.Views.Seguimiento;
 
 
 #if ANDROID
@@ -63,6 +64,8 @@ public static class MauiProgram
         builder.Services.AddSingleton<IUsuariosService, UsuariosService>();
         builder.Services.AddSingleton<IRolesService, RolesService>();
         builder.Services.AddSingleton<IFeriadosService, FeriadosService>();
+        builder.Services.AddSingleton<ISeguimientoService, SeguimientoService>();
+        builder.Services.AddSingleton<ExcelExportService>();
 
 
         // ─────────────────────────────────────────────────────────────
@@ -77,6 +80,7 @@ public static class MauiProgram
         builder.Services.AddTransient<CargaActividadesViewModel>();
         builder.Services.AddTransient<NotificacionesViewModel>();
         builder.Services.AddTransient<ProyectosViewModel>();
+        builder.Services.AddTransient<ProyectosFormViewModel>();
         builder.Services.AddTransient<ColaboradoresViewModel>();
         builder.Services.AddTransient<ClientesViewModel>();
         builder.Services.AddTransient<LideresViewModel>();
@@ -106,6 +110,8 @@ public static class MauiProgram
         builder.Services.AddTransient<ReportesViewModel>();
         builder.Services.AddTransient<ProfileViewModel>();
         builder.Services.AddTransient<ChangePasswordViewModel>();
+        builder.Services.AddTransient<SeguimientoViewModel>();
+        builder.Services.AddTransient<SeguimientoDetalleViewModel>();
 
 
         // ─────────────────────────────────────────────────────────────
@@ -120,6 +126,7 @@ public static class MauiProgram
         builder.Services.AddTransient<CargaActividadesPage>();
         builder.Services.AddTransient<NotificacionesPage>();
         builder.Services.AddTransient<ProyectosPage>();
+        builder.Services.AddTransient<ProyectosFormPage>();
         builder.Services.AddTransient<ColaboradoresPage>();
         builder.Services.AddTransient<ClientesPage>();
         builder.Services.AddTransient<LideresPage>();
@@ -149,6 +156,8 @@ public static class MauiProgram
         builder.Services.AddTransient<ReportesPage>();
         builder.Services.AddTransient<ProfilePage>();
         builder.Services.AddTransient<ChangePasswordPage>();
+        builder.Services.AddTransient<SeguimientoPage>();
+        builder.Services.AddTransient<SeguimientoDetallePage>();
 
 
         // ─────────────────────────────────────────────────────────────
@@ -205,6 +214,18 @@ public static class MauiProgram
                         Microsoft.UI.Colors.Transparent
                     );
 
+#endif
+            });
+
+        DatePickerHandler.Mapper.AppendToMapping(
+            "CapitalizedPlaceholderDatePicker",
+            (handler, view) =>
+            {
+#if WINDOWS
+                if (handler.PlatformView is Microsoft.UI.Xaml.Controls.CalendarDatePicker datePicker)
+                {
+                    datePicker.PlaceholderText = "Seleccionar una fecha";
+                }
 #endif
             });
 

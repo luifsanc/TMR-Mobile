@@ -1,0 +1,172 @@
+using System;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Input;
+using Microsoft.Maui.Controls;
+using tmr_mobile.Models.Seguimiento;
+using tmr_mobile.Services;
+
+namespace tmr_mobile.ViewModels;
+
+public class SeguimientoViewModel : BaseViewModel
+{
+    private readonly ISeguimientoService _seguimientoService;
+    private ObservableCollection<SeguimientoColaboradorDto> _colaboradores;
+    private ObservableCollection<SeguimientoColaboradorDto> _colaboradoresFiltrados;
+    private string _busqueda = string.Empty;
+    private DateTime _fechaDesde = DateTime.Now.AddDays(-30);
+    private DateTime _fechaHasta = DateTime.Now;
+
+    public ObservableCollection<SeguimientoColaboradorDto> ColaboradoresFiltrados
+    {
+        get => _colaboradoresFiltrados;
+        set { _colaboradoresFiltrados = value; OnPropertyChanged(); }
+    }
+
+    public string Busqueda
+    {
+        get => _busqueda;
+        set 
+        { 
+            _busqueda = value; 
+            OnPropertyChanged();
+            FiltrarColaboradores();
+        }
+    }
+
+    public DateTime FechaDesde
+    {
+        get => _fechaDesde;
+        set { _fechaDesde = value; OnPropertyChanged(); }
+    }
+
+    public DateTime FechaHasta
+    {
+        get => _fechaHasta;
+        set { _fechaHasta = value; OnPropertyChanged(); }
+    }
+
+    // Indicadores
+    private decimal _horasPorRegistrar;
+    public decimal HorasPorRegistrar { get => _horasPorRegistrar; set { _horasPorRegistrar = value; OnPropertyChanged(); } }
+
+    private decimal _horasRegistradas;
+    public decimal HorasRegistradas { get => _horasRegistradas; set { _horasRegistradas = value; OnPropertyChanged(); } }
+
+    private decimal _promedioPorDia;
+    public decimal PromedioPorDia { get => _promedioPorDia; set { _promedioPorDia = value; OnPropertyChanged(); } }
+
+    private int _colaboradoresActivos;
+    public int ColaboradoresActivos { get => _colaboradoresActivos; set { _colaboradoresActivos = value; OnPropertyChanged(); } }
+
+    private int _colaboradoresConReporte;
+    public int ColaboradoresConReporte { get => _colaboradoresConReporte; set { _colaboradoresConReporte = value; OnPropertyChanged(); } }
+
+    private int _proyectosConActividades;
+    public int ProyectosConActividades { get => _proyectosConActividades; set { _proyectosConActividades = value; OnPropertyChanged(); } }
+
+    public ICommand BuscarCommand { get; }
+    public ICommand AplicarFiltrosCommand { get; }
+    public ICommand ItemTappedCommand { get; }
+
+    public SeguimientoViewModel(ISeguimientoService seguimientoService)
+    {
+        _seguimientoService = seguimientoService;
+        _colaboradores = new ObservableCollection<SeguimientoColaboradorDto>();
+        _colaboradoresFiltrados = new ObservableCollection<SeguimientoColaboradorDto>();
+
+        BuscarCommand = new Command(async () => await CargarDatosAsync());
+        AplicarFiltrosCommand = new Command(async () => await CargarDatosAsync());
+        ItemTappedCommand = new Command<SeguimientoColaboradorDto>(async (item) => await OnItemTapped(item));
+
+        _ = CargarDatosAsync();
+    }
+
+    private async Task CargarDatosAsync()
+    {
+        if (IsBusy) return;
+
+        try
+        {
+            IsBusy = true;
+            
+            var filtro = new FiltroSeguimientoDto
+            {
+                Busqueda = string.IsNullOrWhiteSpace(Busqueda) ? null : Busqueda,
+                FechaDesde = FechaDesde.ToString("yyyy-MM-dd"),
+                FechaHasta = FechaHasta.ToString("yyyy-MM-dd")
+            };
+
+            var data = await _seguimientoService.ObtenerSeguimientoAsync(filtro);
+            _colaboradores = new ObservableCollection<SeguimientoColaboradorDto>(data);
+            
+            CalcularIndicadores();
+            FiltrarColaboradores();
+        }
+        catch (Exception ex)
+        {
+            await Application.Current.MainPage.DisplayAlert("Error", "No fue posible obtener la información.", "OK");
+        }
+        finally
+        {
+            IsBusy = false;
+        }
+    }
+
+    private void CalcularIndicadores()
+    {
+        if (_colaboradores == null || !_colaboradores.Any())
+        {
+            HorasRegistradas = 0;
+            HorasPorRegistrar = 0;
+            PromedioPorDia = 0;
+            ColaboradoresActivos = 0;
+            ColaboradoresConReporte = 0;
+            ProyectosConActividades = 0;
+            return;
+        }
+
+        HorasRegistradas = _colaboradores.Sum(c => c.NroHoras);
+        HorasPorRegistrar = _colaboradores.Sum(c => c.DiasACompletar * 8); // Estimación de 8 horas por día
+        ColaboradoresActivos = _colaboradores.Count;
+        ColaboradoresConReporte = _colaboradores.Count(c => c.DiasConReporte > 0);
+        
+        var totalDiasConReporte = _colaboradores.Sum(c => c.DiasConReporte);
+        PromedioPorDia = totalDiasConReporte > 0 ? Math.Round(HorasRegistradas / totalDiasConReporte, 2) : 0;
+        
+        ProyectosConActividades = _colaboradores
+            .SelectMany(c => c.Proyecto.Split(new[] { ", " }, StringSplitOptions.RemoveEmptyEntries))
+            .Where(p => p != "Sin Proyecto")
+            .Distinct()
+            .Count();
+    }
+
+    private void FiltrarColaboradores()
+    {
+        if (string.IsNullOrWhiteSpace(Busqueda))
+        {
+            ColaboradoresFiltrados = new ObservableCollection<SeguimientoColaboradorDto>(_colaboradores);
+        }
+        else
+        {
+            var term = Busqueda.ToLower();
+            var filtered = _colaboradores.Where(c => 
+                c.Nombre.ToLower().Contains(term) || 
+                c.Proyecto.ToLower().Contains(term) ||
+                c.Cliente.ToLower().Contains(term)
+            );
+            ColaboradoresFiltrados = new ObservableCollection<SeguimientoColaboradorDto>(filtered);
+        }
+    }
+
+    private async Task OnItemTapped(SeguimientoColaboradorDto item)
+    {
+        if (item == null) return;
+        var navigationParameter = new Dictionary<string, object>
+        {
+            { "Colaborador", item }
+        };
+        await Shell.Current.GoToAsync(nameof(tmr_mobile.Views.Seguimiento.SeguimientoDetallePage), true, navigationParameter);
+    }
+}

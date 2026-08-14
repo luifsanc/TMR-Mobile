@@ -1,18 +1,275 @@
-<ContentPage xmlns:shared="clr-namespace:tmr_mobile.Views.Shared" xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:vm="clr-namespace:tmr_mobile.ViewModels"
-             x:Class="tmr_mobile.Views.Reportes.ReporteFechasPage"
-             x:DataType="vm:ReporteFechasViewModel"
-             Title="{Binding Title}">
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:tmr_mobile.ViewModels"
+    xmlns:dto="clr-namespace:tmr_shared.DTOs.Reportes;assembly=tmr-shared"
+    xmlns:shared="clr-namespace:tmr_mobile.Views.Shared"
+    x:Class="tmr_mobile.Views.Reportes.ReporteFechasPage"
+    x:DataType="vm:ReporteFechasViewModel"
+    Title="Reporte por Fechas"
+    Shell.NavBarIsVisible="False"
+    BackgroundColor="#F8FAFC">
+
     <Grid RowDefinitions="*,80">
-        <ContentView Grid.Row="0">
-<VerticalStackLayout Spacing="16" Padding="20">
-        <Label Text="Reporte por Fechas" FontAttributes="Bold" FontSize="18" />
-        <Label Text="Consulta detallada de registros agrupados por fechas." TextColor="#64748B" FontSize="14" />
-    </VerticalStackLayout>
+        <Grid Grid.Row="0">
+            <Grid RowDefinitions="Auto,*" Padding="16,16,16,0" RowSpacing="14">
 
+                <!-- CABECERA FIJA -->
+                <Grid Grid.Row="0" ColumnDefinitions="Auto,*" ColumnSpacing="8" VerticalOptions="Center">
+                    <Button
+                        Grid.Column="0"
+                        Text="‹"
+                        Command="{Binding RegresarCommand}"
+                        BackgroundColor="Transparent"
+                        TextColor="#163572"
+                        FontSize="28"
+                        FontFamily="InterSemiBold"
+                        FontAttributes="Bold"
+                        Padding="0"
+                        WidthRequest="36"
+                        HeightRequest="36"
+                        VerticalOptions="Center" />
 
-        </ContentView>
+                    <Label
+                        Grid.Column="1"
+                        Text="Reporte por Fechas"
+                        FontSize="24"
+                        FontAttributes="Bold"
+                        FontFamily="InterSemiBold"
+                        TextColor="#163572"
+                        VerticalOptions="Center" />
+                </Grid>
+
+                <!-- RESULTADOS CON HEADER SCROLLABLE -->
+                <CollectionView
+                    Grid.Row="1"
+                    ItemsSource="{Binding Resultados}"
+                    RemainingItemsThreshold="3"
+                    RemainingItemsThresholdReachedCommand="{Binding CargarMasReportesCommand}"
+                    SelectionMode="None">
+
+                    <CollectionView.Header>
+                        <VerticalStackLayout Spacing="14" Margin="0,0,0,14">
+                            <!-- CONTROLES DE FILTRO Y DESCARGA -->
+                            <Grid RowDefinitions="Auto,Auto" RowSpacing="8">
+                                <!-- Filtros por Fechas -->
+                                <Grid Grid.Row="0" ColumnDefinitions="*,*,Auto" ColumnSpacing="8">
+                                    <Border Grid.Column="0" HeightRequest="44" BackgroundColor="White" Stroke="#D1D5DB" StrokeThickness="1" Padding="8,0">
+                                        <Border.StrokeShape><RoundRectangle CornerRadius="10" /></Border.StrokeShape>
+                                        <DatePicker Date="{Binding FechaInicio}" Format="dd/MM/yyyy" TextColor="#111827" FontFamily="InterRegular" FontSize="12" VerticalOptions="Center" />
+                                    </Border>
+
+                                    <Border Grid.Column="1" HeightRequest="44" BackgroundColor="White" Stroke="#D1D5DB" StrokeThickness="1" Padding="8,0">
+                                        <Border.StrokeShape><RoundRectangle CornerRadius="10" /></Border.StrokeShape>
+                                        <DatePicker Date="{Binding FechaFin}" Format="dd/MM/yyyy" TextColor="#111827" FontFamily="InterRegular" FontSize="12" VerticalOptions="Center" />
+                                    </Border>
+
+                                    <Border Grid.Column="2" HeightRequest="44" BackgroundColor="#2563EB" Stroke="Transparent" Padding="14,0">
+                                        <Border.StrokeShape><RoundRectangle CornerRadius="10" /></Border.StrokeShape>
+                                        <Border.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding ExportarReporteCommand}" />
+                                        </Border.GestureRecognizers>
+                                        <HorizontalStackLayout Spacing="6" HorizontalOptions="Center" VerticalOptions="Center">
+                                            <Path Data="M12,4 L12,14 M7,9 L12,14 L17,9 M5,19 L19,19"
+                                                  Stroke="White"
+                                                  StrokeThickness="2"
+                                                  StrokeLineCap="Round"
+                                                  StrokeLineJoin="Round"
+                                                  WidthRequest="16"
+                                                  HeightRequest="16"
+                                                  VerticalOptions="Center"
+                                                  Aspect="Uniform" />
+                                            <Label Text="Descargar" TextColor="White" FontSize="12" FontAttributes="Bold" VerticalOptions="Center" />
+                                        </HorizontalStackLayout>
+                                    </Border>
+                                </Grid>
+
+                                <!-- Buscador por Cliente / Líder -->
+                                <Grid Grid.Row="1" ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                                    <Border Grid.Column="0" HeightRequest="44" BackgroundColor="White" Stroke="#D1D5DB" StrokeThickness="1" Padding="12,0">
+                                        <Border.StrokeShape><RoundRectangle CornerRadius="10" /></Border.StrokeShape>
+                                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8" VerticalOptions="Center">
+                                            <Image
+                                                Grid.Column="0"
+                                                Source="buscar_icon.png"
+                                                WidthRequest="18"
+                                                HeightRequest="18"
+                                                VerticalOptions="Center" />
+                                            <Entry Grid.Column="1" Text="{Binding TextoBusqueda}" Placeholder="Filtrar por cliente o líder..." TextColor="#111827" PlaceholderColor="#9CA3AF" FontSize="12" FontFamily="InterRegular" BackgroundColor="Transparent" VerticalOptions="Center" ReturnCommand="{Binding CargarReporteCommand}" />
+                                        </Grid>
+                                    </Border>
+
+                                    <Button Grid.Column="1" Text="Filtrar" Command="{Binding CargarReporteCommand}" BackgroundColor="#163572" TextColor="White" FontSize="12" FontFamily="InterSemiBold" FontAttributes="Bold" HeightRequest="44" CornerRadius="10" Padding="14,0" />
+                                </Grid>
+                            </Grid>
+
+                            <!-- CARDS DE RESUMEN METRICAS (3 CARDS) -->
+                            <Grid ColumnDefinitions="*,*,*" ColumnSpacing="6">
+                                <!-- Asignaciones -->
+                                <Border
+                                    Grid.Column="0"
+                                    BackgroundColor="#EBF3FA"
+                                    Stroke="#D0E3F5"
+                                    StrokeThickness="1"
+                                    Padding="8,8">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="10" />
+                                    </Border.StrokeShape>
+                                    <VerticalStackLayout Spacing="2">
+                                        <Label Text="Asignaciones" FontSize="10" TextColor="#1E40AF" HorizontalTextAlignment="Center" />
+                                        <Label Text="{Binding TotalAsignaciones}" FontSize="16" FontAttributes="Bold" TextColor="#1E3A8A" HorizontalTextAlignment="Center" />
+                                    </VerticalStackLayout>
+                                </Border>
+
+                                <!-- Recursos -->
+                                <Border
+                                    Grid.Column="1"
+                                    BackgroundColor="#F0FDF4"
+                                    Stroke="#DCFCE7"
+                                    StrokeThickness="1"
+                                    Padding="8,8">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="10" />
+                                    </Border.StrokeShape>
+                                    <VerticalStackLayout Spacing="2">
+                                        <Label Text="Recursos" FontSize="10" TextColor="#166534" HorizontalTextAlignment="Center" />
+                                        <Label Text="{Binding TotalRecursosUnicos}" FontSize="16" FontAttributes="Bold" TextColor="#14532D" HorizontalTextAlignment="Center" />
+                                    </VerticalStackLayout>
+                                </Border>
+
+                                <!-- Líderes -->
+                                <Border
+                                    Grid.Column="2"
+                                    BackgroundColor="#F3E8FF"
+                                    Stroke="#E9D5FF"
+                                    StrokeThickness="1"
+                                    Padding="8,8">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="10" />
+                                    </Border.StrokeShape>
+                                    <VerticalStackLayout Spacing="2">
+                                        <Label Text="Líderes" FontSize="10" TextColor="#6B21A8" HorizontalTextAlignment="Center" />
+                                        <Label Text="{Binding TotalLideresUnicos}" FontSize="16" FontAttributes="Bold" TextColor="#581C87" HorizontalTextAlignment="Center" />
+                                    </VerticalStackLayout>
+                                </Border>
+                            </Grid>
+                        </VerticalStackLayout>
+                    </CollectionView.Header>
+                    ItemsSource="{Binding Resultados}"
+                    RemainingItemsThreshold="3"
+                    RemainingItemsThresholdReachedCommand="{Binding CargarMasReportesCommand}"
+                    SelectionMode="None">
+
+                    <CollectionView.EmptyView>
+                        <VerticalStackLayout Padding="40" HorizontalOptions="Center" VerticalOptions="Center">
+                            <Label
+                                Text="No se encontraron actividades en el rango seleccionado."
+                                TextColor="#64748B"
+                                FontSize="14"
+                                HorizontalTextAlignment="Center" />
+                        </VerticalStackLayout>
+                    </CollectionView.EmptyView>
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="dto:ReporteFechasResponse">
+                            <Border
+                                Margin="0,0,0,10"
+                                Padding="14"
+                                BackgroundColor="White"
+                                Stroke="#E2E8F0"
+                                StrokeThickness="1">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="12" />
+                                </Border.StrokeShape>
+
+                                <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="12" VerticalOptions="Center">
+                                    <!-- Avatar Inicial Recurso -->
+                                    <Border
+                                        Grid.Column="0"
+                                        WidthRequest="42"
+                                        HeightRequest="42"
+                                        BackgroundColor="#EBF3FA"
+                                        StrokeThickness="0"
+                                        VerticalOptions="Center">
+                                        <Border.StrokeShape>
+                                            <RoundRectangle CornerRadius="21" />
+                                        </Border.StrokeShape>
+                                        <Label
+                                            Text="{Binding Inicial}"
+                                            FontSize="15"
+                                            FontAttributes="Bold"
+                                            TextColor="#173A54"
+                                            HorizontalTextAlignment="Center"
+                                            VerticalTextAlignment="Center" />
+                                    </Border>
+
+                                    <!-- Datos de Colaborador, Cargo, Cliente y Líder -->
+                                    <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                        <Label
+                                            Text="{Binding Recurso}"
+                                            FontSize="14"
+                                            FontAttributes="Bold"
+                                            TextColor="#173A54"
+                                            MaxLines="1"
+                                            LineBreakMode="TailTruncation" />
+                                        <Label
+                                            Text="{Binding Cargo, StringFormat='💼 {0}'}"
+                                            FontSize="12"
+                                            TextColor="#64748B"
+                                            MaxLines="1"
+                                            LineBreakMode="TailTruncation" />
+                                        <HorizontalStackLayout Spacing="6">
+                                            <Label
+                                                Text="{Binding Cliente, StringFormat='🏢 {0}'}"
+                                                FontSize="11"
+                                                TextColor="#94A3B8" />
+                                            <Label
+                                                Text="•"
+                                                FontSize="11"
+                                                TextColor="#CBD5E1" />
+                                            <Label
+                                                Text="{Binding Lider, StringFormat='👤 {0}'}"
+                                                FontSize="11"
+                                                TextColor="#94A3B8" />
+                                        </HorizontalStackLayout>
+                                    </VerticalStackLayout>
+
+                                    <!-- Periodo de Asignación (Fecha Inicio a Fecha Fin) -->
+                                    <Border
+                                        Grid.Column="2"
+                                        BackgroundColor="#EBF3FA"
+                                        Stroke="#D0E3F5"
+                                        StrokeThickness="1"
+                                        Padding="8,6"
+                                        VerticalOptions="Center">
+                                        <Border.StrokeShape>
+                                            <RoundRectangle CornerRadius="8" />
+                                        </Border.StrokeShape>
+                                        <VerticalStackLayout Spacing="2">
+                                            <Label Text="Periodo" FontSize="10" TextColor="#1E40AF" HorizontalTextAlignment="Center" />
+                                            <Label Text="{Binding PeriodoFormateado}" FontSize="11" FontAttributes="Bold" TextColor="#173A54" HorizontalTextAlignment="Center" />
+                                        </VerticalStackLayout>
+                                    </Border>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+            </Grid>
+        </Grid>
+
+        <!-- BARRA DE NAVEGACIÓN INFERIOR COMPARTIDA -->
         <shared:BottomNavBar Grid.Row="1" />
+
+        <!-- LOADING -->
+        <ActivityIndicator
+            Grid.RowSpan="2"
+            IsVisible="{Binding IsBusy}"
+            IsRunning="{Binding IsBusy}"
+            Color="#173A54"
+            HorizontalOptions="Center"
+            VerticalOptions="Center" />
     </Grid>
 </ContentPage>

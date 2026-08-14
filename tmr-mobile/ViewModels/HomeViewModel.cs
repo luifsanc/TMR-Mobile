@@ -36,6 +36,10 @@ public partial class HomeViewModel : ObservableObject
             {
                 Modulos.Clear();
                 foreach (var item in response) Modulos.Add(item);
+                
+                // Agregar localmente para pruebas hasta que se despliegue en el backend
+                Modulos.Add(new ModuloItem { Nombre = "Seguimiento", Icono = "icon_seguimiento.png", Ruta = "SeguimientoPage" });
+                
                 return;
             }
         }
@@ -50,6 +54,7 @@ public partial class HomeViewModel : ObservableObject
         Modulos.Add(new ModuloItem { Nombre = "Líderes", Icono = "icon_lideres.png", Ruta = "LideresPage" });
         Modulos.Add(new ModuloItem { Nombre = "Colaboradores", Icono = "icon_colaboradores.png", Ruta = "ColaboradoresPage" });
         Modulos.Add(new ModuloItem { Nombre = "Clientes", Icono = "icon_clientes.png", Ruta = "ClientesPage" });
+        Modulos.Add(new ModuloItem { Nombre = "Seguimiento", Icono = "icon_seguimiento.png", Ruta = "SeguimientoPage" });
     }
 
     [RelayCommand]
