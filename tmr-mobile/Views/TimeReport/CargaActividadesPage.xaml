@@ -167,30 +167,72 @@
                 </Border>
             </Grid>
 
+                <!-- ======================== Filtro de fechas ========================== -->
+                <Border BackgroundColor="White">
+                <VerticalStackLayout Spacing="4">
+                    <HorizontalStackLayout Spacing="8">
+                        <CheckBox IsChecked="{Binding FiltroFechaActivo}" />
+                        <Label Text="Filtrar por fecha"
+                            FontSize="14"
+                            VerticalOptions="Center"
+                            FontAttributes="Bold" />        
+                    </HorizontalStackLayout>
 
-            <!-- ======================== Filtro de fechas ========================== -->
-            <Border>
-                    <VerticalStackLayout Spacing="4">
-                        <HorizontalStackLayout Spacing="8">
-                            <CheckBox IsChecked="{Binding FiltroFechaActivo}" />
-                            <Label Text="Filtrar por fecha"
-                                VerticalOptions="Center"
-                                FontAttributes="Bold" />
-                        </HorizontalStackLayout>
+                    <FlexLayout x:Name="FiltroFechaLayout"
+                                IsVisible="{Binding FiltroFechaActivo}"
+                                Direction="Column"
+                                Wrap="Wrap"
+                                JustifyContent="Start"
+                                AlignItems="Stretch">
 
-                        <HorizontalStackLayout Spacing="8" IsVisible="{Binding FiltroFechaActivo}">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup Name="AnchoPantalla">
+                                    <!-- Estado base (angosta): sin StateTriggers, aplica mientras
+                                    ningún otro VisualState del grupo esté activo -->
+                                <VisualState Name="Angosta">
+                                    <VisualState.Setters>
+                                        <Setter Property="Direction" Value="Column" />
+                                    </VisualState.Setters>
+                                </VisualState>
+
+                                <!-- Se activa cuando el ancho de ventana es >= 600;
+                                    por debajo de eso queda en "Angosta" -->
+                                <VisualState Name="Ancha">
+                                    <VisualState.StateTriggers>
+                                        <AdaptiveTrigger MinWindowWidth="600" />
+                                    </VisualState.StateTriggers>
+                                    <VisualState.Setters>
+                                        <Setter Property="Direction" Value="Row" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+
+                        <VerticalStackLayout Spacing="4"
+                                            FlexLayout.Grow="1"
+                                            FlexLayout.Shrink="1"
+                                            FlexLayout.Basis="0"
+                                            Margin="0,0,8,8">
                             <Label Text="Desde" VerticalOptions="Center" />
                             <DatePicker Date="{Binding FechaDesde}"
                                         Format="dd/MM/yyyy"
                                         MaximumDate="{Binding FechaHasta}" />
+                        </VerticalStackLayout>
 
+                        <VerticalStackLayout Spacing="4"
+                                            FlexLayout.Grow="1"
+                                            FlexLayout.Shrink="1"
+                                            FlexLayout.Basis="0"
+                                            Margin="0,0,0,8">
                             <Label Text="Hasta" VerticalOptions="Center" />
                             <DatePicker Date="{Binding FechaHasta}"
-                                    Format="dd/MM/yyyy"
-                                    MinimumDate="{Binding FechaDesde}" />
-                        </HorizontalStackLayout>
-                    </VerticalStackLayout>
-                </Border>
+                                        Format="dd/MM/yyyy"
+                                        MinimumDate="{Binding FechaDesde}" />
+                        </VerticalStackLayout>
+
+                    </FlexLayout>
+                </VerticalStackLayout>
+            </Border>
 
        <!-- ===================== Botón Ordenar (reemplaza el Button de texto plano) ===================== -->
             <Border StrokeShape="RoundRectangle 10"
@@ -327,7 +369,7 @@
 
                                 <Grid ColumnDefinitions="*,Auto">
                                     <VerticalStackLayout Grid.Column="0" Spacing="2">
-                                        <Label Text="{Binding Colaborador}" FontSize="17" FontAttributes="Bold" TextColor="{StaticResource TextPrimary}"/>
+                                        <Label Text="{Binding Colaborador}" FontSize="15" FontAttributes="Bold" TextColor="{StaticResource TextPrimary}"/>
                                         <Label Text="{Binding Proyecto}" FontSize="13" TextColor="{StaticResource TextMuted}"/>
                                     </VerticalStackLayout>
 
