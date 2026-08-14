@@ -12,13 +12,6 @@
     <Grid BackgroundColor="#F8FAFC">
         <ScrollView Margin="0,60,0,80">
             <VerticalStackLayout Padding="20,10,20,32" Spacing="20">
-                
-                <!-- Logo Superior -->
-                <VerticalStackLayout HorizontalOptions="Center" Spacing="0" Margin="0,0,0,10">
-                    <Image Source="appiconfg.png" WidthRequest="24" HeightRequest="24" HorizontalOptions="Center" Margin="0,0,0,4"/>
-                    <Label Text="INTEGRITY" FontSize="11" FontAttributes="Bold" TextColor="#0F172A" HorizontalOptions="Center" CharacterSpacing="1" />
-                    <Label Text="SOLUTIONS" FontSize="9" FontAttributes="Bold" TextColor="#64748B" HorizontalOptions="Center" CharacterSpacing="1" />
-                </VerticalStackLayout>
 
                 <!-- Título -->
                 <Label Text="Actividades" FontAttributes="Bold" FontSize="34" TextColor="#0F172A" Margin="0,0,0,0" />
