@@ -87,7 +87,18 @@
                     <Image Grid.Column="0" Source="icon_clientes.png" WidthRequest="24" HeightRequest="24" />
                     <Label Grid.Column="1" Text="Clientes" VerticalOptions="Center" TextColor="#101828" />
                 </Grid>
+                <BoxView HeightRequest="1" Color="#F5F6FA" />
+                
+                <!-- Seguimiento -->
+                <Grid Padding="15" ColumnDefinitions="40,*" BackgroundColor="Transparent">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnNavigate" CommandParameter="SeguimientoPage" />
+                    </Grid.GestureRecognizers>
+                    <Image Grid.Column="0" Source="icon_seguimiento.png" WidthRequest="24" HeightRequest="24" />
+                    <Label Grid.Column="1" Text="Seguimiento" VerticalOptions="Center" TextColor="#101828" />
+                </Grid>
             </VerticalStackLayout>
+
         </Border>
 
         <!-- Main Top Bar -->

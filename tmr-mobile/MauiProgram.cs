@@ -10,6 +10,7 @@ using tmr_mobile.Views.Reportes;
 using tmr_mobile.Views.Configuracion;
 using tmr_mobile.Views.Home;
 using tmr_mobile.Views;
+using tmr_mobile.Views.Seguimiento;
 
 
 #if ANDROID
@@ -60,6 +61,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<IClientesService, ClientesService>();
         builder.Services.AddSingleton<IColaboradoresService, ColaboradoresService>();
         builder.Services.AddSingleton<ICargaActividadesService, CargaActividadesService>();
+        builder.Services.AddSingleton<ISeguimientoService, SeguimientoService>();
         builder.Services.AddSingleton<ExcelExportService>();
 
 
@@ -99,6 +101,8 @@ public static class MauiProgram
         builder.Services.AddTransient<ReportesViewModel>();
         builder.Services.AddTransient<ProfileViewModel>();
         builder.Services.AddTransient<ChangePasswordViewModel>();
+        builder.Services.AddTransient<SeguimientoViewModel>();
+        builder.Services.AddTransient<SeguimientoDetalleViewModel>();
 
 
         // ─────────────────────────────────────────────────────────────
@@ -137,6 +141,8 @@ public static class MauiProgram
         builder.Services.AddTransient<ReportesPage>();
         builder.Services.AddTransient<ProfilePage>();
         builder.Services.AddTransient<ChangePasswordPage>();
+        builder.Services.AddTransient<SeguimientoPage>();
+        builder.Services.AddTransient<SeguimientoDetallePage>();
 
 
         // ─────────────────────────────────────────────────────────────
