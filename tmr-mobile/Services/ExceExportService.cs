@@ -1,15 +1,15 @@
-// Colores del sistema de diseño TMR.
+// Colores tomados exactamente del archivo Angular (reporte-excel.utils.ts)
 using ClosedXML.Excel;
 using ClosedXML.Excel.Drawings;
 
 public static class ReporteEstilos
 {
     public static readonly XLColor Cabecera = XLColor.FromArgb(0x16, 0x35, 0x72); // COLOR_CABECERA
-    public static readonly XLColor Texto    = XLColor.FromArgb(0x1E, 0x29, 0x3B); // TEXT_MAIN
-    public static readonly XLColor Borde    = XLColor.FromArgb(0xE5, 0xE7, 0xEB); // BORDER_COLOR
+    public static readonly XLColor Texto    = XLColor.FromArgb(0x33, 0x41, 0x55); // COLOR_TEXTO
+    public static readonly XLColor Borde    = XLColor.FromArgb(0xE2, 0xE8, 0xF0); // COLOR_BORDE
     public static readonly XLColor Alterno  = XLColor.FromArgb(0xF8, 0xFA, 0xFC); // COLOR_ALTERNO
     public static readonly XLColor Blanco   = XLColor.White;
-    public static readonly XLColor Verde    = XLColor.FromArgb(0x4C, 0xAF, 0x50); // ACCENT
+    public static readonly XLColor Verde    = XLColor.FromArgb(0x16, 0xA3, 0x4A); // activo/cargado
     public static readonly XLColor Gris     = XLColor.FromArgb(0x6B, 0x72, 0x80); // inactivo
 }
 
@@ -22,6 +22,9 @@ public class ReporteColumna
 
 public class ExcelExportService
 {
+    // Tope máximo de ancho de columna (ajusta a gusto)
+    private const double ANCHO_MAXIMO = 45;
+
     public byte[] GenerarReporteExcel(
         string titulo,
         string nombreHoja,
@@ -34,7 +37,8 @@ public class ExcelExportService
 
         int ultimaColumna = columnas.Count;
 
-        // --- Anchos de columna (equivalente a worksheet.columns) ---
+        // --- Anchos de columna iniciales (equivalente a worksheet.columns) ---
+        // Estos se usan como "piso mínimo"; el ajuste final se hace después de llenar los datos
         for (int i = 0; i < columnas.Count; i++)
             ws.Column(i + 1).Width = columnas[i].AnchoExcel;
 
@@ -112,8 +116,13 @@ public class ExcelExportService
                     cell.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Left;
                 }
             }
-            ws.Row(filaExcel).Height = 18;
+            // Nota: ya NO fijamos ws.Row(filaExcel).Height aquí.
+            // El alto final se calcula en AjustarAltoFilas() después del loop.
         }
+
+        // --- Ajuste automático de ancho y alto (nuevo) ---
+        AjustarAnchoColumnas(ws, columnas, ultimaColumna, filas.Count);
+        AjustarAltoFilas(ws, filas.Count);
 
         // --- Freeze panes + autofiltro (igual que views/autoFilter en Angular) ---
         ws.SheetView.FreezeRows(3);
@@ -128,6 +137,50 @@ public class ExcelExportService
         using var stream = new MemoryStream();
         workbook.SaveAs(stream);
         return stream.ToArray();
+    }
+
+    /// <summary>
+    /// Autoajusta el ancho de cada columna al contenido real (encabezado + datos),
+    /// respetando un mínimo (AnchoExcel de cada ReporteColumna) y un máximo (ANCHO_MAXIMO)
+    /// para que ninguna columna quede angostísima ni se dispare de tamaño.
+    /// Debe llamarse DESPUÉS de llenar encabezados y datos.
+    /// </summary>
+    private void AjustarAnchoColumnas(
+        IXLWorksheet ws,
+        List<ReporteColumna> columnas,
+        int ultimaColumna,
+        int cantidadFilas)
+    {
+        // Autoajuste base sobre encabezados (fila 3) + filas de datos
+        // Nota: se usa ws.Columns(...).AdjustToContents(filaInicio, filaFin) en vez de
+        // range.Columns().AdjustToContents() porque IXLRangeColumns no expone ese método
+        // en algunas versiones de ClosedXML; IXLColumns (a nivel de hoja) sí lo tiene.
+        int filaFinAutoajuste = cantidadFilas + 3;
+        ws.Columns(1, ultimaColumna).AdjustToContents(3, filaFinAutoajuste);
+
+        // Aplicar piso mínimo y techo máximo por columna
+        for (int i = 0; i < columnas.Count; i++)
+        {
+            var columna = ws.Column(i + 1);
+
+            if (columna.Width < columnas[i].AnchoExcel)
+                columna.Width = columnas[i].AnchoExcel;
+
+            if (columna.Width > ANCHO_MAXIMO)
+                columna.Width = ANCHO_MAXIMO;
+        }
+    }
+
+    /// <summary>
+    /// Autoajusta el alto de las filas de datos (desde la fila 4) según el contenido
+    /// envuelto (WrapText), para que el texto largo no se monte una línea encima de otra.
+    /// Debe llamarse DESPUÉS de fijar los anchos finales de columna.
+    /// </summary>
+    private void AjustarAltoFilas(IXLWorksheet ws, int cantidadFilas)
+    {
+        if (cantidadFilas <= 0) return;
+
+        ws.Rows(4, cantidadFilas + 3).AdjustToContents();
     }
 
     private void AplicarBorde(IXLCell cell, XLColor color)
