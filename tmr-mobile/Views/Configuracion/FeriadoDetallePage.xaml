@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:tmr_mobile.ViewModels"
+    x:Class="tmr_mobile.Views.Configuracion.FeriadoDetallePage"
+    x:DataType="vm:FeriadoDetalleViewModel"
+    Title="Detalle de Feriado"
+    Shell.NavBarIsVisible="False"
+    BackgroundColor="#F8FAFC">
+
+    <Grid>
+        <!-- CONTENIDO SCROLLABLE -->
+        <ScrollView VerticalScrollBarVisibility="Never">
+            <VerticalStackLayout Padding="16" Spacing="16">
+                
+                <!-- HEADER CON BOTÓN ATRÁS Y TÍTULO -->
+                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12" VerticalOptions="Center" Margin="0,4,0,4">
+                    <Button
+                        Grid.Column="0"
+                        Text="‹"
+                        Command="{Binding RegresarCommand}"
+                        BackgroundColor="Transparent"
+                        TextColor="#163572"
+                        FontSize="28"
+                        FontAttributes="Bold"
+                        FontFamily="InterSemiBold"
+                        Padding="0"
+                        WidthRequest="36"
+                        HeightRequest="36"
+                        VerticalOptions="Center" />
+                    
+                    <VerticalStackLayout Grid.Column="1" Spacing="1" VerticalOptions="Center">
+                        <Label Text="{Binding NombreMostrado}" FontSize="20" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#163572" MaxLines="2" LineBreakMode="TailTruncation" />
+                        <Label Text="Detalle del feriado configurado." FontSize="11" FontFamily="InterRegular" TextColor="#6B7280" />
+                    </VerticalStackLayout>
+                        
+                    <!-- BADGE DE ESTADO CON PUNTO (•) -->
+                    <Border
+                        Grid.Column="2"
+                        BackgroundColor="{Binding Feriado.ColorFondoEstado}"
+                        StrokeThickness="0"
+                        Padding="10,4"
+                        VerticalOptions="Center">
+                        <Border.StrokeShape><RoundRectangle CornerRadius="12" /></Border.StrokeShape>
+                        <HorizontalStackLayout Spacing="4" VerticalOptions="Center">
+                            <Label Text="•" FontSize="14" FontAttributes="Bold" TextColor="{Binding Feriado.ColorTextoEstado}" VerticalOptions="Center" />
+                            <Label Text="{Binding Feriado.EstadoTexto}" FontSize="11" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="{Binding Feriado.ColorTextoEstado}" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+                    </Border>
+                </Grid>
+
+                <!-- CARD DE INFORMACIÓN DEL FERIADO -->
+                <Border
+                    BackgroundColor="White"
+                    Stroke="#E5E7EB"
+                    StrokeThickness="1"
+                    Padding="18">
+                    <Border.StrokeShape><RoundRectangle CornerRadius="14" /></Border.StrokeShape>
+                    <Border.Shadow><Shadow Brush="Black" Offset="0,2" Radius="6" Opacity="0.04" /></Border.Shadow>
+
+                    <VerticalStackLayout Spacing="16">
+                        <!-- Tipo de feriado -->
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="Tipo de feriado *" FontSize="12" FontFamily="InterRegular" TextColor="#6B7280" />
+                            <Border BackgroundColor="{Binding Feriado.TipoBadgeFondo}" StrokeThickness="0" Padding="10,4" HorizontalOptions="Start">
+                                <Border.StrokeShape><RoundRectangle CornerRadius="8" /></Border.StrokeShape>
+                                <Label Text="{Binding Feriado.TipoFeriado}" FontSize="12" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="{Binding Feriado.TipoBadgeTexto}" />
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <!-- Nombre y Fecha -->
+                        <Grid ColumnDefinitions="*,*" RowDefinitions="Auto" RowSpacing="12" ColumnSpacing="12">
+                            <!-- Nombre del feriado -->
+                            <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="2">
+                                <Label Text="Nombre del feriado *" FontSize="12" FontFamily="InterRegular" TextColor="#6B7280" />
+                                <Label Text="{Binding Feriado.NombreFeriado}" FontSize="14" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#163572" />
+                            </VerticalStackLayout>
+
+                            <!-- Fecha -->
+                            <VerticalStackLayout Grid.Row="0" Grid.Column="1" Spacing="2">
+                                <Label Text="Fecha *" FontSize="12" FontFamily="InterRegular" TextColor="#6B7280" />
+                                <Label Text="{Binding Feriado.FechaTextoFormat}" FontSize="14" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#163572" />
+                            </VerticalStackLayout>
+                        </Grid>
+
+                        <!-- Descripción -->
+                        <VerticalStackLayout Spacing="2">
+                            <Label Text="Descripción (opcional)" FontSize="12" FontFamily="InterRegular" TextColor="#6B7280" />
+                            <Label Text="{Binding Feriado.Descripcion}" FontSize="13" FontFamily="InterRegular" TextColor="#1A1A2E" LineBreakMode="WordWrap" />
+                        </VerticalStackLayout>
+
+                        <!-- Recurrencia y Estado -->
+                        <Grid ColumnDefinitions="*,*" RowDefinitions="Auto" RowSpacing="12" ColumnSpacing="12">
+                            <!-- Recurrencia -->
+                            <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="4">
+                                <HorizontalStackLayout Spacing="6" VerticalOptions="Center">
+                                    <Label Text="{Binding Feriado.RecurrenciaIcono}" FontSize="14" TextColor="#163572" VerticalOptions="Center" />
+                                    <Label Text="{Binding Feriado.RecurrenciaTexto}" FontSize="12" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#163572" VerticalOptions="Center" />
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
+
+                            <!-- Estado -->
+                            <VerticalStackLayout Grid.Row="0" Grid.Column="1" Spacing="4">
+                                <Label Text="Estado *" FontSize="12" FontFamily="InterRegular" TextColor="#6B7280" />
+                                <Border BackgroundColor="{Binding Feriado.ColorFondoEstado}" StrokeThickness="0" Padding="8,3" HorizontalOptions="Start">
+                                    <Border.StrokeShape><RoundRectangle CornerRadius="8" /></Border.StrokeShape>
+                                    <Label Text="{Binding Feriado.EstadoTexto}" FontSize="12" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="{Binding Feriado.ColorTextoEstado}" />
+                                </Border>
+                            </VerticalStackLayout>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+                
+                <!-- ACCIONES (Botones abajo) -->
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="12" Margin="0,8,0,24">
+                    <!-- Botón Editar -->
+                    <Button
+                        Grid.Column="0"
+                        Text="Editar"
+                        Command="{Binding EditarCommand}"
+                        BackgroundColor="#163572"
+                        TextColor="White"
+                        CornerRadius="8"
+                        HeightRequest="48"
+                        FontSize="14"
+                        FontAttributes="Bold"
+                        FontFamily="InterSemiBold" />
+                        
+                    <!-- Botón Eliminar -->
+                    <Button
+                        Grid.Column="1"
+                        Text="Eliminar"
+                        Command="{Binding EliminarCommand}"
+                        BackgroundColor="#DC2626"
+                        TextColor="White"
+                        CornerRadius="8"
+                        HeightRequest="48"
+                        FontSize="14"
+                        FontAttributes="Bold"
+                        FontFamily="InterSemiBold" />
+                </Grid>
+            </VerticalStackLayout>
+        </ScrollView>
+        
+        <!-- INDICADOR DE CARGA -->
+        <ActivityIndicator
+            IsVisible="{Binding IsBusy}"
+            IsRunning="{Binding IsBusy}"
+            Color="#163572"
+            HorizontalOptions="Center"
+            VerticalOptions="Center" />
+            
+        <!-- ERROR -->
+        <VerticalStackLayout
+            IsVisible="{Binding ErrorMessage, Converter={StaticResource IsStringNotNullOrEmptyConverter}}"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            Spacing="16"
+            Padding="32">
+            <Label
+                Text="{Binding ErrorMessage}"
+                TextColor="#DC2626"
+                FontSize="14"
+                FontFamily="InterRegular"
+                HorizontalTextAlignment="Center" />
+            <Button
+                Text="Regresar"
+                Command="{Binding RegresarCommand}"
+                BackgroundColor="#163572"
+                TextColor="White"
+                CornerRadius="8"
+                FontFamily="InterSemiBold" />
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

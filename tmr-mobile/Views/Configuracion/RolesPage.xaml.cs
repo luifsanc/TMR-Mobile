@@ -4,9 +4,18 @@ namespace tmr_mobile.Views.Configuracion;
 
 public partial class RolesPage : ContentPage
 {
+    private readonly RolesConfigViewModel _viewModel;
+
     public RolesPage(RolesConfigViewModel viewModel)
     {
         InitializeComponent();
+        _viewModel = viewModel;
         BindingContext = viewModel;
+    }
+
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+        await _viewModel.InicializarAsync();
     }
 }

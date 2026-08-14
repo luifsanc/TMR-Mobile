@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:tmr_mobile.ViewModels"
+    xmlns:model="clr-namespace:tmr_mobile.Models.Configuracion"
+    x:Class="tmr_mobile.Views.Configuracion.RolDetallePage"
+    x:DataType="vm:RolDetalleViewModel"
+    Title="Detalle de Rol"
+    Shell.NavBarIsVisible="False"
+    BackgroundColor="#F8FAFC">
+
+    <Grid>
+        <!-- CONTENIDO SCROLLABLE -->
+        <ScrollView VerticalScrollBarVisibility="Never">
+            <VerticalStackLayout Padding="16" Spacing="16">
+                
+                <!-- HEADER CON BOTÓN ATRÁS Y TÍTULO -->
+                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12" VerticalOptions="Center" Margin="0,4,0,4">
+                    <Button
+                        Grid.Column="0"
+                        Text="‹"
+                        Command="{Binding RegresarCommand}"
+                        BackgroundColor="Transparent"
+                        TextColor="#163572"
+                        FontSize="28"
+                        FontAttributes="Bold"
+                        FontFamily="InterSemiBold"
+                        Padding="0"
+                        WidthRequest="36"
+                        HeightRequest="36"
+                        VerticalOptions="Center" />
+                    
+                    <Label
+                        Grid.Column="1"
+                        Text="{Binding Rol.Nombre}"
+                        FontSize="22"
+                        FontAttributes="Bold"
+                        FontFamily="InterSemiBold"
+                        TextColor="#163572"
+                        VerticalOptions="Center"
+                        LineBreakMode="TailTruncation"
+                        MaxLines="1" />
+                        
+                    <!-- BADGE DE ESTADO CON PUNTO (•) -->
+                    <Border
+                        Grid.Column="2"
+                        BackgroundColor="{Binding Rol.ColorFondoEstado}"
+                        StrokeThickness="0"
+                        Padding="10,4"
+                        VerticalOptions="Center">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="12" />
+                        </Border.StrokeShape>
+                        <HorizontalStackLayout Spacing="4" VerticalOptions="Center">
+                            <Label
+                                Text="•"
+                                FontSize="14"
+                                FontAttributes="Bold"
+                                TextColor="{Binding Rol.ColorTextoEstado}"
+                                VerticalOptions="Center" />
+                            <Label
+                                Text="{Binding Rol.EstadoTexto}"
+                                FontSize="11"
+                                FontAttributes="Bold"
+                                FontFamily="InterSemiBold"
+                                TextColor="{Binding Rol.ColorTextoEstado}"
+                                VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+                    </Border>
+                </Grid>
+
+                <!-- CARD 1: INFORMACIÓN DEL ROL -->
+                <Border
+                    BackgroundColor="White"
+                    Stroke="#E5E7EB"
+                    StrokeThickness="1"
+                    Padding="18">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="14" />
+                    </Border.StrokeShape>
+                    <Border.Shadow>
+                        <Shadow Brush="Black" Offset="0,2" Radius="6" Opacity="0.04" />
+                    </Border.Shadow>
+
+                    <VerticalStackLayout Spacing="16">
+                        <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
+                            <BoxView WidthRequest="3" HeightRequest="14" Color="#163572" CornerRadius="1.5" VerticalOptions="Center" />
+                            <Label Text="Información del rol" FontSize="14" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#163572" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+                        
+                        <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" RowSpacing="12" ColumnSpacing="12">
+                            <!-- Nombre del rol -->
+                            <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="2">
+                                <Label Text="Nombre del rol" FontSize="12" FontFamily="InterRegular" TextColor="#6B7280" />
+                                <Label Text="{Binding Rol.Nombre}" FontSize="14" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#163572" />
+                            </VerticalStackLayout>
+
+                            <!-- Estado -->
+                            <VerticalStackLayout Grid.Row="0" Grid.Column="1" Spacing="2">
+                                <Label Text="Estado" FontSize="12" FontFamily="InterRegular" TextColor="#6B7280" />
+                                <Border BackgroundColor="{Binding Rol.ColorFondoEstado}" StrokeThickness="0" Padding="8,3" HorizontalOptions="Start">
+                                    <Border.StrokeShape><RoundRectangle CornerRadius="8" /></Border.StrokeShape>
+                                    <Label Text="{Binding Rol.EstadoTexto}" FontSize="12" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="{Binding Rol.ColorTextoEstado}" />
+                                </Border>
+                            </VerticalStackLayout>
+
+                            <!-- Descripción -->
+                            <VerticalStackLayout Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Spacing="2">
+                                <Label Text="Descripción" FontSize="12" FontFamily="InterRegular" TextColor="#6B7280" />
+                                <Label Text="{Binding Rol.Descripcion}" FontSize="13" FontFamily="InterRegular" TextColor="#1A1A2E" LineBreakMode="WordWrap" />
+                            </VerticalStackLayout>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- CARD 2: MÓDULOS HABILITADOS -->
+                <Border
+                    BackgroundColor="White"
+                    Stroke="#E5E7EB"
+                    StrokeThickness="1"
+                    Padding="18">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="14" />
+                    </Border.StrokeShape>
+                    <Border.Shadow>
+                        <Shadow Brush="Black" Offset="0,2" Radius="6" Opacity="0.04" />
+                    </Border.Shadow>
+
+                    <VerticalStackLayout Spacing="16">
+                        <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
+                            <BoxView WidthRequest="3" HeightRequest="14" Color="#163572" CornerRadius="1.5" VerticalOptions="Center" />
+                            <Label Text="Módulos habilitados" FontSize="14" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#163572" VerticalOptions="Center" />
+                            
+                            <Border BackgroundColor="#EEF4FF" StrokeThickness="0" Padding="8,2" VerticalOptions="Center">
+                                <Border.StrokeShape><RoundRectangle CornerRadius="6" /></Border.StrokeShape>
+                                <Label Text="{Binding ModulosHabilitados.Count}" FontSize="11" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#163572" />
+                            </Border>
+                        </HorizontalStackLayout>
+                        
+                        <!-- GRID DE CHIPS DE MÓDULOS -->
+                        <CollectionView ItemsSource="{Binding ModulosHabilitados}" SelectionMode="None">
+                            <CollectionView.ItemsLayout>
+                                <GridItemsLayout Orientation="Vertical" Span="2" HorizontalItemSpacing="8" VerticalItemSpacing="8" />
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.EmptyView>
+                                <Label Text="Sin módulos habilitados" FontSize="12" FontFamily="InterRegular" TextColor="#9CA3AF" />
+                            </CollectionView.EmptyView>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="model:RolModuloItem">
+                                    <Border BackgroundColor="#EEF4FF" Stroke="#D1D5DB" StrokeThickness="1" Padding="10,8">
+                                        <Border.StrokeShape>
+                                            <RoundRectangle CornerRadius="8" />
+                                        </Border.StrokeShape>
+                                        <HorizontalStackLayout Spacing="6" VerticalOptions="Center">
+                                            <Label Text="✔" FontSize="12" TextColor="#163572" VerticalOptions="Center" />
+                                            <Label Text="{Binding Nombre}" FontSize="12" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#163572" VerticalOptions="Center" MaxLines="1" LineBreakMode="TailTruncation" />
+                                        </HorizontalStackLayout>
+                                    </Border>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </VerticalStackLayout>
+                </Border>
+                
+                <!-- ACCIONES (Botones abajo) -->
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="12" Margin="0,8,0,24">
+                    <!-- Botón Editar -->
+                    <Button
+                        Grid.Column="0"
+                        Text="Editar"
+                        Command="{Binding EditarCommand}"
+                        BackgroundColor="#163572"
+                        TextColor="White"
+                        CornerRadius="8"
+                        HeightRequest="48"
+                        FontSize="14"
+                        FontAttributes="Bold"
+                        FontFamily="InterSemiBold" />
+                        
+                    <!-- Botón Cambiar Estado (Desactivar/Activar) -->
+                    <Button
+                        Grid.Column="1"
+                        Text="{Binding TextoBotonEstado}"
+                        Command="{Binding CambiarEstadoCommand}"
+                        BackgroundColor="#DC2626"
+                        TextColor="White"
+                        CornerRadius="8"
+                        HeightRequest="48"
+                        FontSize="14"
+                        FontAttributes="Bold"
+                        FontFamily="InterSemiBold">
+                        <Button.Triggers>
+                            <DataTrigger TargetType="Button" Binding="{Binding EsInactivo}" Value="True">
+                                <Setter Property="BackgroundColor" Value="#16A34A" />
+                            </DataTrigger>
+                        </Button.Triggers>
+                    </Button>
+                </Grid>
+            </VerticalStackLayout>
+        </ScrollView>
+        
+        <!-- INDICADOR DE CARGA -->
+        <ActivityIndicator
+            IsVisible="{Binding IsBusy}"
+            IsRunning="{Binding IsBusy}"
+            Color="#163572"
+            HorizontalOptions="Center"
+            VerticalOptions="Center" />
+            
+        <!-- ERROR -->
+        <VerticalStackLayout
+            IsVisible="{Binding ErrorMessage, Converter={StaticResource IsStringNotNullOrEmptyConverter}}"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            Spacing="16"
+            Padding="32">
+            <Label
+                Text="{Binding ErrorMessage}"
+                TextColor="#DC2626"
+                FontSize="14"
+                FontFamily="InterRegular"
+                HorizontalTextAlignment="Center" />
+            <Button
+                Text="Regresar"
+                Command="{Binding RegresarCommand}"
+                BackgroundColor="#163572"
+                TextColor="White"
+                CornerRadius="8"
+                FontFamily="InterSemiBold" />
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>
