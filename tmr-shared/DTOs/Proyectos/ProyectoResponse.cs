@@ -1,68 +1,64 @@
 namespace tmr_shared.DTOs.Proyectos;
 
 /// <summary>
-/// Response del endpoint GET /api/proyectos
-/// Contiene toda la información de un proyecto para visualización en lista
+/// Datos de un proyecto devueltos por GET /api/proyectos.
+/// Mantiene el contrato del backend y expone alias usados por la interfaz móvil.
 /// </summary>
 public record ProyectoResponse
 {
-    /// <summary>
-    /// Identificador único del proyecto
-    /// </summary>
     public int Id { get; init; }
-
-    /// <summary>
-    /// Código único del proyecto (ej: PROJ-001, PRJ-2023-084)
-    /// </summary>
     public string Codigo { get; init; } = string.Empty;
-
-    /// <summary>
-    /// Nombre o título del proyecto
-    /// </summary>
     public string Nombre { get; init; } = string.Empty;
-
-    /// <summary>
-    /// Nombre del cliente asociado al proyecto
-    /// </summary>
+    public string Descripcion { get; init; } = string.Empty;
+    public int? IdCliente { get; init; }
     public string Cliente { get; init; } = string.Empty;
-
-    /// <summary>
-    /// Estado del proyecto: "Activo", "Inactivo", "Completado", "En Progreso", "En Riesgo", etc.
-    /// </summary>
-    public string Estado { get; init; } = string.Empty;
-
-    /// <summary>
-    /// Presupuesto asignado al proyecto en USD
-    /// </summary>
-    public decimal? Presupuesto { get; init; }
-
-    /// <summary>
-    /// Horas totales estimadas o registradas para el proyecto
-    /// </summary>
-    public decimal? Horas { get; init; }
-
-    /// <summary>
-    /// Nombre completo del líder/responsable del proyecto
-    /// </summary>
-    public string Lider { get; init; } = string.Empty;
-
-    /// <summary>
-    /// Cantidad de recursos/colaboradores asignados al proyecto
-    /// </summary>
-    public int NumeroRecursos { get; init; }
-
-    /// <summary>
-    /// Tipo de proyecto: "Cloud Migration", "Desarrollo Web", etc.
-    /// </summary>
+    public int? IdTipoProyecto { get; init; }
     public string Tipo { get; init; } = string.Empty;
-
-    /// <summary>
-    /// Fecha de inicio del proyecto (formato: YYYY-MM-DD)
-    /// </summary>
+    public string? Observacion { get; init; }
+    public DateOnly? FechaInicioReal { get; init; }
+    public DateOnly? FechaFinReal { get; init; }
+    public DateOnly? FechaInicioEspera { get; init; }
+    public DateOnly? FechaFinEspera { get; init; }
+    public int? IdLider { get; init; }
+    public string Lider { get; init; } = string.Empty;
+    public string CargoLider { get; init; } = string.Empty;
+    public decimal? CostoHoraLider { get; init; }
+    public decimal? HorasLider { get; init; }
+    public int IdEstadoProyecto { get; init; }
+    public string Estado { get; init; } = string.Empty;
     public DateOnly? FechaInicio { get; init; }
-
-    /// <summary>
-    /// Fecha de finalización del proyecto (formato: YYYY-MM-DD)
-    /// </summary>
     public DateOnly? FechaFin { get; init; }
+    public decimal? Presupuesto { get; init; }
+    public decimal? Horas { get; init; }
+    public int NumeroRecursos { get; init; }
+    public bool Activo { get; init; }
+    public DateTime FechaCreacion { get; init; }
+    public List<ProyectoRecursoResponse> Recursos { get; init; } = new();
+    public List<ProyectoLiderResponse> Lideres { get; init; } = new();
+
+    public string LiderAsignado => Lider;
+}
+
+public record ProyectoLiderResponse
+{
+    public int? IdLider { get; init; }
+    public string Lider { get; init; } = string.Empty;
+    public string CargoLider { get; init; } = string.Empty;
+    public decimal? CostoHoraLider { get; init; }
+    public decimal? HorasLider { get; init; }
+    public List<ProyectoRecursoResponse> Recursos { get; init; } = new();
+}
+
+public record ProyectoRecursoResponse
+{
+    public int Id { get; init; }
+    public int? IdEmpleado { get; init; }
+    public string Tipo { get; init; } = string.Empty;
+    public string Nombre { get; init; } = string.Empty;
+    public string Rol { get; init; } = string.Empty;
+    public DateOnly? Entrada { get; init; }
+    public DateOnly? Salida { get; init; }
+    public decimal? CostoHora { get; init; }
+    public decimal? Horas { get; init; }
+    public int? IdDepartamento { get; init; }
 }
