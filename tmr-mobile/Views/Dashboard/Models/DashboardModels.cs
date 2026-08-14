@@ -1,10 +1,12 @@
+using tmr_mobile.Resources.Styles;
+
 namespace tmr_mobile.Views.Dashboard.Models;
 
 public class StatCard
 {
     public string Icon { get; set; } = string.Empty;      // ej: "icon_projects.png"
-    public string IconBackground { get; set; } = "#E7EEFF";
-    public string IconColor { get; set; } = "#101828";
+    public string IconBackground { get; set; } = DesignColors.PrimaryLight;
+    public string IconColor { get; set; } = DesignColors.TextPrimary;
     public string Value { get; set; } = string.Empty;
     public string Label { get; set; } = string.Empty;
 }
@@ -33,14 +35,14 @@ public class MetricMini
 public class ActivityItem
 {
     public string Icon { get; set; } = string.Empty;
-    public string IconBackground { get; set; } = "#F1E9FF";
+    public string IconBackground { get; set; } = DesignColors.PrimaryLight;
     public string Descripcion { get; set; } = string.Empty;
     public string Tiempo { get; set; } = string.Empty;   // "hace 2 horas"
 }
 
 public class HourDetail
 {
-    public string Color { get; set; } = "#2E5BFF";
+    public string Color { get; set; } = DesignColors.Primary;
     public string Proyecto { get; set; } = string.Empty;
     public double Horas { get; set; }
 }

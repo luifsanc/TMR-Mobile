@@ -3,14 +3,14 @@
     cx="9"
     cy="8"
     r="3"
-    stroke="#f97316"
+    stroke="#FF9800"
     stroke-width="1.8"
     stroke-linecap="round"
     stroke-linejoin="round"
   />
   <path
     d="M3 21v-1a6 6 0 0 1 12 0v1"
-    stroke="#f97316"
+    stroke="#FF9800"
     stroke-width="1.8"
     stroke-linecap="round"
     stroke-linejoin="round"
@@ -19,14 +19,14 @@
     cx="18"
     cy="14"
     r="2.5"
-    stroke="#f97316"
+    stroke="#FF9800"
     stroke-width="1.8"
     stroke-linecap="round"
     stroke-linejoin="round"
   />
   <path
     d="M15 21v-.5A4.5 4.5 0 0 1 21 21"
-    stroke="#f97316"
+    stroke="#FF9800"
     stroke-width="1.8"
     stroke-linecap="round"
     stroke-linejoin="round"

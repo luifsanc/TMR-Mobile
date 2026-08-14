@@ -30,16 +30,6 @@ public static class MauiProgram
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont(
-                    "OpenSans-Regular.ttf",
-                    "OpenSansRegular"
-                );
-
-                fonts.AddFont(
-                    "OpenSans-Semibold.ttf",
-                    "OpenSansSemibold"
-                );
-
-                fonts.AddFont(
                     "Inter-Regular.ttf",
                     "InterRegular"
                 );
@@ -61,6 +51,9 @@ public static class MauiProgram
         builder.Services.AddSingleton<IClientesService, ClientesService>();
         builder.Services.AddSingleton<IColaboradoresService, ColaboradoresService>();
         builder.Services.AddSingleton<ICargaActividadesService, CargaActividadesService>();
+        builder.Services.AddSingleton<IUsuariosService, UsuariosService>();
+        builder.Services.AddSingleton<IRolesService, RolesService>();
+        builder.Services.AddSingleton<IFeriadosService, FeriadosService>();
         builder.Services.AddSingleton<ISeguimientoService, SeguimientoService>();
         builder.Services.AddSingleton<ExcelExportService>();
 
@@ -84,8 +77,14 @@ public static class MauiProgram
         builder.Services.AddTransient<ReporteHorasViewModel>();
         builder.Services.AddTransient<ReporteFechasViewModel>();
         builder.Services.AddTransient<UsuariosConfigViewModel>();
+        builder.Services.AddTransient<UsuarioDetalleViewModel>();
+        builder.Services.AddTransient<UsuarioFormViewModel>();
         builder.Services.AddTransient<RolesConfigViewModel>();
+        builder.Services.AddTransient<RolDetalleViewModel>();
+        builder.Services.AddTransient<RolFormViewModel>();
         builder.Services.AddTransient<FeriadosConfigViewModel>();
+        builder.Services.AddTransient<FeriadoDetalleViewModel>();
+        builder.Services.AddTransient<FeriadoFormViewModel>();
         builder.Services.AddTransient<CatalogosConfigViewModel>();
         builder.Services.AddTransient<ConfiguracionViewModel>();
         builder.Services.AddTransient<CatalogoDetalleViewModel>();
@@ -124,8 +123,14 @@ public static class MauiProgram
         builder.Services.AddTransient<ReporteHorasPage>();
         builder.Services.AddTransient<ReporteFechasPage>();
         builder.Services.AddTransient<UsuariosPage>();
+        builder.Services.AddTransient<UsuarioDetallePage>();
+        builder.Services.AddTransient<UsuarioFormPage>();
         builder.Services.AddTransient<RolesPage>();
+        builder.Services.AddTransient<RolDetallePage>();
+        builder.Services.AddTransient<RolFormPage>();
         builder.Services.AddTransient<FeriadosPage>();
+        builder.Services.AddTransient<FeriadoDetallePage>();
+        builder.Services.AddTransient<FeriadoFormPage>();
         builder.Services.AddTransient<ConfiguracionPage>();
         builder.Services.AddTransient<CatalogosPage>();
         builder.Services.AddTransient<CatalogoDetallePage>();

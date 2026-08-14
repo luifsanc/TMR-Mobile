@@ -7,22 +7,22 @@
              x:DataType="vm:NotificacionesViewModel"
              Title="{Binding Title}">
 
-    <Grid BackgroundColor="#F0F2F6">
+    <Grid BackgroundColor="{StaticResource BackgroundLight}">
         
-        <ScrollView Margin="0,60,0,80">
+        <ScrollView Margin="0,0,0,80">
             <VerticalStackLayout Padding="20,24,20,32">
                 <!-- Tarjeta Notificaciones -->
-                <Border StrokeShape="RoundRectangle 8" Stroke="#EAECF0" StrokeThickness="1" BackgroundColor="White" Padding="0">
+                <Border StrokeShape="RoundRectangle 8" Stroke="{StaticResource BorderColor}" StrokeThickness="1" BackgroundColor="{StaticResource White}" Padding="0">
                     <Border.Shadow>
-                        <Shadow Brush="#101828" Offset="0,2" Radius="4" Opacity="0.05" />
+                        <Shadow Brush="{StaticResource TextPrimary}" Offset="0,2" Radius="4" Opacity="0.05" />
                     </Border.Shadow>
                     
                     <VerticalStackLayout>
                         <!-- Header -->
-                        <Label Text="Notificaciones" FontAttributes="Bold" FontSize="18" TextColor="#173968" Margin="16,16,16,12" />
+                        <Label Text="Notificaciones" FontAttributes="Bold" FontSize="18" TextColor="{StaticResource Primary}" Margin="16,16,16,12" />
                         
                         <!-- Separator -->
-                        <BoxView HeightRequest="1" Color="#EAECF0" />
+                        <BoxView HeightRequest="1" Color="{StaticResource BorderColor}" />
                         
                         <!-- Lista de Notificaciones -->
                         <CollectionView ItemsSource="{Binding Notificaciones}" SelectionMode="None">
@@ -32,19 +32,19 @@
                                         <!-- Icono de Alerta -->
                                         <Grid Grid.Column="0" WidthRequest="22" HeightRequest="22" VerticalOptions="Start" Margin="0,2,0,0">
                                             <!-- Triángulo de advertencia -->
-                                            <Polygon Points="11,0 22,20 0,20" Stroke="#F04438" StrokeThickness="1.5" Fill="Transparent" IsVisible="{Binding IsAlert}" />
-                                            <Label Text="!" TextColor="#F04438" FontAttributes="Bold" FontSize="13" HorizontalOptions="Center" VerticalOptions="Center" Margin="0,4,0,0" IsVisible="{Binding IsAlert}" />
+                                            <Polygon Points="11,0 22,20 0,20" Stroke="{StaticResource Error}" StrokeThickness="1.5" Fill="Transparent" IsVisible="{Binding IsAlert}" />
+                                            <Label Text="!" TextColor="{StaticResource Error}" FontAttributes="Bold" FontSize="13" HorizontalOptions="Center" VerticalOptions="Center" Margin="0,4,0,0" IsVisible="{Binding IsAlert}" />
                                         </Grid>
                                         
                                         <!-- Contenido -->
                                         <VerticalStackLayout Grid.Column="1" Spacing="4">
-                                            <Label Text="{Binding Titulo}" FontAttributes="Bold" FontSize="16" TextColor="#173968" />
+                                            <Label Text="{Binding Titulo}" FontAttributes="Bold" FontSize="16" TextColor="{StaticResource Primary}" />
                                             <Label FontSize="14" LineHeight="1.2">
                                                 <Label.FormattedText>
                                                     <FormattedString>
-                                                        <Span Text="{Binding MensajePart1}" TextColor="#667085" />
-                                                        <Span Text="{Binding MensajeHighlight}" TextColor="#F04438" FontAttributes="Bold" />
-                                                        <Span Text="{Binding MensajePart2}" TextColor="#667085" />
+                                                        <Span Text="{Binding MensajePart1}" TextColor="{StaticResource TextMuted}" />
+                                                        <Span Text="{Binding MensajeHighlight}" TextColor="{StaticResource Error}" FontAttributes="Bold" />
+                                                        <Span Text="{Binding MensajePart2}" TextColor="{StaticResource TextMuted}" />
                                                     </FormattedString>
                                                 </Label.FormattedText>
                                             </Label>
@@ -59,7 +59,6 @@
             </VerticalStackLayout>
         </ScrollView>
 
-        <shared:TopNavBar VerticalOptions="Start" />
         <shared:BottomNavBar VerticalOptions="End" />
     </Grid>
 </ContentPage>

@@ -1,4 +1,5 @@
 using CommunityToolkit.Mvvm.ComponentModel;
+using tmr_mobile.Resources.Styles;
 
 namespace tmr_mobile.Models.Configuracion;
 
@@ -44,8 +45,8 @@ public class CatalogoDetalle
 
     public string ColorEstado =>
         Activo
-            ? "#43A047"
-            : "#E53935";
+            ? DesignColors.Accent
+            : DesignColors.Error;
 
     public bool TieneDescripcion =>
         !string.IsNullOrWhiteSpace(Descripcion);

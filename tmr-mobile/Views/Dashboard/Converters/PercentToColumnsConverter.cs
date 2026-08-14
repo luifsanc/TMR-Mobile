@@ -10,7 +10,7 @@ namespace tmr_mobile.Views.Dashboard.Converters;
 ///
 /// Uso en XAML:
 ///   <Grid ColumnDefinitions="{Binding Porcentaje, Converter={StaticResource PercentToColumns}}">
-///       <Border Grid.Column="0" BackgroundColor="#2E5BFF" .../>  <!-- parte llena -->
+///       <Border Grid.Column="0" BackgroundColor="{StaticResource Primary}" .../>  <!-- parte llena -->
 ///       <!-- Grid.Column="1" se deja vacío/transparente: es el resto de la barra -->
 ///   </Grid>
 /// </summary>

@@ -9,21 +9,21 @@
     x:DataType="vm:LideresViewModel"
     Title="Líderes"
     Shell.NavBarIsVisible="False"
-    BackgroundColor="#F8FAFC">
+    BackgroundColor="{StaticResource BackgroundLight}">
 
     <Grid RowDefinitions="*,80">
         <!-- Contenido principal y Botón Flotante en la fila superior -->
         <Grid Grid.Row="0">
             <Grid RowDefinitions="Auto,*" Padding="16,16,16,0" RowSpacing="14">
 
-                <!-- TÍTULO DE LA PÁGINA (Sin fondo, texto azul corporativo #163572 con fuente Inter) -->
+                <!-- TÍTULO DE LA PÁGINA (Sin fondo, texto azul corporativo {StaticResource Primary} con fuente Inter) -->
                 <Label
                     Grid.Row="0"
                     Text="Líderes de Proyecto"
                     FontSize="28"
                     FontAttributes="Bold"
                     FontFamily="InterSemiBold"
-                    TextColor="#163572"
+                    TextColor="{StaticResource Primary}"
                     Margin="0,4,0,4" />
 
                 <!-- LISTA DE LÍDERES CON HEADER SCROLLABLE -->
@@ -42,8 +42,8 @@
                                 <Border
                                     Grid.Column="0"
                                     HeightRequest="44"
-                                    BackgroundColor="White"
-                                    Stroke="#D1D5DB"
+                                    BackgroundColor="{StaticResource White}"
+                                    Stroke="{StaticResource BorderColor}"
                                     StrokeThickness="1"
                                     Padding="12,0">
                                     <Border.StrokeShape>
@@ -60,8 +60,8 @@
                                             Grid.Column="1"
                                             Text="{Binding TextoBusqueda}"
                                             Placeholder="Buscar por nombre, correo o cliente..."
-                                            PlaceholderColor="#9CA3AF"
-                                            TextColor="#111827"
+                                            PlaceholderColor="{StaticResource TextLight}"
+                                            TextColor="{StaticResource TextPrimary}"
                                             FontSize="13"
                                             FontFamily="InterRegular"
                                             BackgroundColor="Transparent"
@@ -73,7 +73,7 @@
                                 <Border
                                     Grid.Column="1"
                                     HeightRequest="44"
-                                    BackgroundColor="#2563EB"
+                                    BackgroundColor="{StaticResource Primary}"
                                     Stroke="Transparent"
                                     Padding="14,0">
                                     <Border.StrokeShape>
@@ -84,7 +84,7 @@
                                     </Border.GestureRecognizers>
                                     <HorizontalStackLayout Spacing="6" HorizontalOptions="Center" VerticalOptions="Center">
                                         <Path Data="M12,4 L12,14 M7,9 L12,14 L17,9 M5,19 L19,19"
-                                              Stroke="White"
+                                              Stroke="{StaticResource White}"
                                               StrokeThickness="2"
                                               StrokeLineCap="Round"
                                               StrokeLineJoin="Round"
@@ -93,7 +93,7 @@
                                               VerticalOptions="Center"
                                               Aspect="Uniform" />
                                         <Label Text="Descargar"
-                                               TextColor="White"
+                                               TextColor="{StaticResource White}"
                                                FontSize="13"
                                                FontAttributes="Bold"
                                                VerticalOptions="Center" />
@@ -106,64 +106,64 @@
                                 <!-- Internos -->
                                 <Border
                                     Grid.Column="0"
-                                    BackgroundColor="#EBF3FA"
-                                    Stroke="#D0E3F5"
+                                    BackgroundColor="{StaticResource PrimaryLight}"
+                                    Stroke="{StaticResource PrimaryLight}"
                                     StrokeThickness="1"
                                     Padding="6,8">
                                     <Border.StrokeShape>
                                         <RoundRectangle CornerRadius="10" />
                                     </Border.StrokeShape>
                                     <VerticalStackLayout Spacing="2">
-                                        <Label Text="Internos" FontSize="10" TextColor="#1E40AF" HorizontalTextAlignment="Center" />
-                                        <Label Text="{Binding TotalInternos}" FontSize="16" FontAttributes="Bold" TextColor="#1E3A8A" HorizontalTextAlignment="Center" />
+                                        <Label Text="Internos" FontSize="10" TextColor="{StaticResource Primary}" HorizontalTextAlignment="Center" />
+                                        <Label Text="{Binding TotalInternos}" FontSize="16" FontAttributes="Bold" TextColor="{StaticResource Primary}" HorizontalTextAlignment="Center" />
                                     </VerticalStackLayout>
                                 </Border>
 
                                 <!-- Externos -->
                                 <Border
                                     Grid.Column="1"
-                                    BackgroundColor="#F3E8FF"
-                                    Stroke="#E9D5FF"
+                                    BackgroundColor="{StaticResource PrimaryLight}"
+                                    Stroke="{StaticResource BorderColor}"
                                     StrokeThickness="1"
                                     Padding="6,8">
                                     <Border.StrokeShape>
                                         <RoundRectangle CornerRadius="10" />
                                     </Border.StrokeShape>
                                     <VerticalStackLayout Spacing="2">
-                                        <Label Text="Externos" FontSize="10" TextColor="#6B21A8" HorizontalTextAlignment="Center" />
-                                        <Label Text="{Binding TotalExternos}" FontSize="16" FontAttributes="Bold" TextColor="#581C87" HorizontalTextAlignment="Center" />
+                                        <Label Text="Externos" FontSize="10" TextColor="{StaticResource Primary}" HorizontalTextAlignment="Center" />
+                                        <Label Text="{Binding TotalExternos}" FontSize="16" FontAttributes="Bold" TextColor="{StaticResource PrimaryDark}" HorizontalTextAlignment="Center" />
                                     </VerticalStackLayout>
                                 </Border>
 
                                 <!-- Activos -->
                                 <Border
                                     Grid.Column="2"
-                                    BackgroundColor="#E8F5E9"
-                                    Stroke="#C8E6C9"
+                                    BackgroundColor="{StaticResource SuccessSurface}"
+                                    Stroke="{StaticResource SuccessSurface}"
                                     StrokeThickness="1"
                                     Padding="6,8">
                                     <Border.StrokeShape>
                                         <RoundRectangle CornerRadius="10" />
                                     </Border.StrokeShape>
                                     <VerticalStackLayout Spacing="2">
-                                        <Label Text="Activos" FontSize="10" TextColor="#2E7D32" HorizontalTextAlignment="Center" />
-                                        <Label Text="{Binding TotalActivos}" FontSize="16" FontAttributes="Bold" TextColor="#2E7D32" HorizontalTextAlignment="Center" />
+                                        <Label Text="Activos" FontSize="10" TextColor="{StaticResource SuccessText}" HorizontalTextAlignment="Center" />
+                                        <Label Text="{Binding TotalActivos}" FontSize="16" FontAttributes="Bold" TextColor="{StaticResource SuccessText}" HorizontalTextAlignment="Center" />
                                     </VerticalStackLayout>
                                 </Border>
 
                                 <!-- Inactivos -->
                                 <Border
                                     Grid.Column="3"
-                                    BackgroundColor="#FFEBEE"
-                                    Stroke="#FFCDD2"
+                                    BackgroundColor="{StaticResource ErrorSurface}"
+                                    Stroke="{StaticResource ErrorSurface}"
                                     StrokeThickness="1"
                                     Padding="6,8">
                                     <Border.StrokeShape>
                                         <RoundRectangle CornerRadius="10" />
                                     </Border.StrokeShape>
                                     <VerticalStackLayout Spacing="2">
-                                        <Label Text="Inactivos" FontSize="10" TextColor="#C62828" HorizontalTextAlignment="Center" />
-                                        <Label Text="{Binding TotalInactivos}" FontSize="16" FontAttributes="Bold" TextColor="#C62828" HorizontalTextAlignment="Center" />
+                                        <Label Text="Inactivos" FontSize="10" TextColor="{StaticResource ErrorText}" HorizontalTextAlignment="Center" />
+                                        <Label Text="{Binding TotalInactivos}" FontSize="16" FontAttributes="Bold" TextColor="{StaticResource ErrorText}" HorizontalTextAlignment="Center" />
                                     </VerticalStackLayout>
                                 </Border>
                             </Grid>
@@ -178,7 +178,7 @@
                         <VerticalStackLayout Padding="40" HorizontalOptions="Center" VerticalOptions="Center">
                             <Label
                                 Text="No se encontraron líderes de proyecto."
-                                TextColor="#64748B"
+                                TextColor="{StaticResource TextMuted}"
                                 FontSize="14"
                                 HorizontalTextAlignment="Center" />
                         </VerticalStackLayout>
@@ -189,8 +189,8 @@
                             <Border
                                 Margin="0,0,0,10"
                                 Padding="14"
-                                BackgroundColor="White"
-                                Stroke="#E2E8F0"
+                                BackgroundColor="{StaticResource White}"
+                                Stroke="{StaticResource BorderColor}"
                                 StrokeThickness="1">
                                 <Border.StrokeShape>
                                     <RoundRectangle CornerRadius="12" />
@@ -207,7 +207,7 @@
                                         Grid.Column="0"
                                         WidthRequest="42"
                                         HeightRequest="42"
-                                        BackgroundColor="#EBF3FA"
+                                        BackgroundColor="{StaticResource PrimaryLight}"
                                         StrokeThickness="0"
                                         VerticalOptions="Center">
                                         <Border.StrokeShape>
@@ -217,7 +217,7 @@
                                             Text="{Binding Inicial}"
                                             FontSize="14"
                                             FontAttributes="Bold"
-                                            TextColor="#173A54"
+                                            TextColor="{StaticResource Primary}"
                                             HorizontalTextAlignment="Center"
                                             VerticalTextAlignment="Center" />
                                     </Border>
@@ -228,19 +228,19 @@
                                             Text="{Binding NombreCompleto}"
                                             FontSize="14"
                                             FontAttributes="Bold"
-                                            TextColor="#173A54"
+                                            TextColor="{StaticResource Primary}"
                                             MaxLines="1"
                                             LineBreakMode="TailTruncation" />
                                         <Label
                                             Text="{Binding Email}"
                                             FontSize="12"
-                                            TextColor="#64748B"
+                                            TextColor="{StaticResource TextMuted}"
                                             MaxLines="1"
                                             LineBreakMode="TailTruncation" />
                                         <Label
                                             Text="{Binding ClientesResumen}"
                                             FontSize="11"
-                                            TextColor="#94A3B8"
+                                            TextColor="{StaticResource TextLight}"
                                             MaxLines="1"
                                             LineBreakMode="TailTruncation" />
                                     </VerticalStackLayout>
@@ -263,7 +263,7 @@
                                         </Border>
 
                                         <Border
-                                            BackgroundColor="#F1F5F9"
+                                            BackgroundColor="{StaticResource Secondary}"
                                             Stroke="Transparent"
                                             Padding="6,2"
                                             HorizontalOptions="End">
@@ -273,7 +273,7 @@
                                             <Label
                                                 Text="{Binding TipoBadge}"
                                                 FontSize="10"
-                                                TextColor="#475569" />
+                                                TextColor="{StaticResource TextMuted}" />
                                         </Border>
                                     </VerticalStackLayout>
                                 </Grid>
@@ -291,8 +291,8 @@
                 WidthRequest="56"
                 HeightRequest="56"
                 CornerRadius="28"
-                BackgroundColor="#173A54"
-                TextColor="White"
+                BackgroundColor="{StaticResource Primary}"
+                TextColor="{StaticResource White}"
                 FontSize="24"
                 FontAttributes="Bold"
                 HorizontalOptions="End"
@@ -300,7 +300,7 @@
                 Margin="20"
                 Padding="0">
                 <Button.Shadow>
-                    <Shadow Brush="Black" Offset="0,4" Radius="6" Opacity="0.2" />
+                    <Shadow Brush="{StaticResource TextPrimary}" Offset="0,4" Radius="6" Opacity="0.2" />
                 </Button.Shadow>
             </Button>
         </Grid>
@@ -313,7 +313,7 @@
             Grid.RowSpan="2"
             IsVisible="{Binding IsBusy}"
             IsRunning="{Binding IsBusy}"
-            Color="#173A54"
+            Color="{StaticResource Primary}"
             HorizontalOptions="Center"
             VerticalOptions="Center" />
     </Grid>

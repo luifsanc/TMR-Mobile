@@ -8,7 +8,7 @@
     x:DataType="vm:ClienteDetalleViewModel"
     Title="Detalle de Cliente"
     Shell.NavBarIsVisible="False"
-    BackgroundColor="#F8FAFC">
+    BackgroundColor="{StaticResource BackgroundLight}">
 
     <Grid>
         <!-- CONTENIDO SCROLLABLE -->
@@ -22,7 +22,7 @@
                         Text="‹"
                         Command="{Binding RegresarCommand}"
                         BackgroundColor="Transparent"
-                        TextColor="#163572"
+                        TextColor="{StaticResource Primary}"
                         FontSize="28"
                         FontAttributes="Bold"
                         FontFamily="InterSemiBold"
@@ -37,7 +37,7 @@
                         FontSize="22"
                         FontAttributes="Bold"
                         FontFamily="InterSemiBold"
-                        TextColor="#163572"
+                        TextColor="{StaticResource Primary}"
                         VerticalOptions="Center"
                         LineBreakMode="TailTruncation"
                         MaxLines="1" />
@@ -72,40 +72,40 @@
 
                 <!-- CARD INFORMACIÓN GENERAL -->
                 <Border
-                    BackgroundColor="White"
-                    Stroke="#E5E7EB"
+                    BackgroundColor="{StaticResource White}"
+                    Stroke="{StaticResource BorderColor}"
                     StrokeThickness="1"
                     Padding="18">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="14" />
                     </Border.StrokeShape>
                     <Border.Shadow>
-                        <Shadow Brush="Black" Offset="0,2" Radius="6" Opacity="0.04" />
+                        <Shadow Brush="{StaticResource TextPrimary}" Offset="0,2" Radius="6" Opacity="0.04" />
                     </Border.Shadow>
 
                     <VerticalStackLayout Spacing="16">
                         <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
-                            <BoxView WidthRequest="3" HeightRequest="14" Color="#163572" CornerRadius="1.5" VerticalOptions="Center" />
-                            <Label Text="Información General" FontSize="14" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#163572" VerticalOptions="Center" />
+                            <BoxView WidthRequest="3" HeightRequest="14" Color="{StaticResource Primary}" CornerRadius="1.5" VerticalOptions="Center" />
+                            <Label Text="Información General" FontSize="14" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="{StaticResource Primary}" VerticalOptions="Center" />
                         </HorizontalStackLayout>
                         
                         <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" RowSpacing="12" ColumnSpacing="12">
                             <!-- Tipo de Identificación -->
                             <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="2">
-                                <Label Text="Tipo de Identificador" FontSize="12" FontFamily="InterRegular" TextColor="#6B7280" />
-                                <Label Text="{Binding Cliente.TipoIdentificacion}" FontSize="14" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#1A1A2E" />
+                                <Label Text="Tipo de Identificador" FontSize="12" FontFamily="InterRegular" TextColor="{StaticResource TextSecondary}" />
+                                <Label Text="{Binding Cliente.TipoIdentificacion}" FontSize="14" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="{StaticResource TextPrimary}" />
                             </VerticalStackLayout>
 
                             <!-- Número de Identificación -->
                             <VerticalStackLayout Grid.Row="0" Grid.Column="1" Spacing="2">
-                                <Label Text="Núm. Identificación" FontSize="12" FontFamily="InterRegular" TextColor="#6B7280" />
-                                <Label Text="{Binding Cliente.NumeroIdentificacion}" FontSize="14" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#1A1A2E" />
+                                <Label Text="Núm. Identificación" FontSize="12" FontFamily="InterRegular" TextColor="{StaticResource TextSecondary}" />
+                                <Label Text="{Binding Cliente.NumeroIdentificacion}" FontSize="14" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="{StaticResource TextPrimary}" />
                             </VerticalStackLayout>
 
                             <!-- Nombre Comercial -->
                             <VerticalStackLayout Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Spacing="2">
-                                <Label Text="Nombre Comercial" FontSize="12" FontFamily="InterRegular" TextColor="#6B7280" />
-                                <Label Text="{Binding Cliente.NombreComercial}" FontSize="14" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#163572" />
+                                <Label Text="Nombre Comercial" FontSize="12" FontFamily="InterRegular" TextColor="{StaticResource TextSecondary}" />
+                                <Label Text="{Binding Cliente.NombreComercial}" FontSize="14" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="{StaticResource Primary}" />
                             </VerticalStackLayout>
                         </Grid>
                     </VerticalStackLayout>
@@ -113,52 +113,52 @@
 
                 <!-- CARD DATOS DE CONTACTO -->
                 <Border
-                    BackgroundColor="White"
-                    Stroke="#E5E7EB"
+                    BackgroundColor="{StaticResource White}"
+                    Stroke="{StaticResource BorderColor}"
                     StrokeThickness="1"
                     Padding="18">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="14" />
                     </Border.StrokeShape>
                     <Border.Shadow>
-                        <Shadow Brush="Black" Offset="0,2" Radius="6" Opacity="0.04" />
+                        <Shadow Brush="{StaticResource TextPrimary}" Offset="0,2" Radius="6" Opacity="0.04" />
                     </Border.Shadow>
 
                     <VerticalStackLayout Spacing="16">
                         <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
-                            <BoxView WidthRequest="3" HeightRequest="14" Color="#163572" CornerRadius="1.5" VerticalOptions="Center" />
-                            <Label Text="Datos de Contacto" FontSize="14" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#163572" VerticalOptions="Center" />
+                            <BoxView WidthRequest="3" HeightRequest="14" Color="{StaticResource Primary}" CornerRadius="1.5" VerticalOptions="Center" />
+                            <Label Text="Datos de Contacto" FontSize="14" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="{StaticResource Primary}" VerticalOptions="Center" />
                         </HorizontalStackLayout>
                         
                         <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto" RowSpacing="12" ColumnSpacing="12">
                             <!-- Nombres -->
                             <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="2">
-                                <Label Text="Nombres" FontSize="12" FontFamily="InterRegular" TextColor="#6B7280" />
-                                <Label Text="{Binding Cliente.Nombres}" FontSize="14" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#1A1A2E" />
+                                <Label Text="Nombres" FontSize="12" FontFamily="InterRegular" TextColor="{StaticResource TextSecondary}" />
+                                <Label Text="{Binding Cliente.Nombres}" FontSize="14" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="{StaticResource TextPrimary}" />
                             </VerticalStackLayout>
 
                             <!-- Apellidos -->
                             <VerticalStackLayout Grid.Row="0" Grid.Column="1" Spacing="2">
-                                <Label Text="Apellidos" FontSize="12" FontFamily="InterRegular" TextColor="#6B7280" />
-                                <Label Text="{Binding Cliente.Apellidos}" FontSize="14" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#1A1A2E" />
+                                <Label Text="Apellidos" FontSize="12" FontFamily="InterRegular" TextColor="{StaticResource TextSecondary}" />
+                                <Label Text="{Binding Cliente.Apellidos}" FontSize="14" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="{StaticResource TextPrimary}" />
                             </VerticalStackLayout>
 
                             <!-- Correo Electrónico -->
                             <VerticalStackLayout Grid.Row="1" Grid.Column="0" Spacing="2">
-                                <Label Text="Correo Electrónico" FontSize="12" FontFamily="InterRegular" TextColor="#6B7280" />
-                                <Label Text="{Binding Cliente.Email}" FontSize="13" FontFamily="InterRegular" TextColor="#1A1A2E" LineBreakMode="TailTruncation" MaxLines="1" />
+                                <Label Text="Correo Electrónico" FontSize="12" FontFamily="InterRegular" TextColor="{StaticResource TextSecondary}" />
+                                <Label Text="{Binding Cliente.Email}" FontSize="13" FontFamily="InterRegular" TextColor="{StaticResource TextPrimary}" LineBreakMode="TailTruncation" MaxLines="1" />
                             </VerticalStackLayout>
 
                             <!-- Teléfono -->
                             <VerticalStackLayout Grid.Row="1" Grid.Column="1" Spacing="2">
-                                <Label Text="Teléfono" FontSize="12" FontFamily="InterRegular" TextColor="#6B7280" />
-                                <Label Text="{Binding Cliente.Telefono}" FontSize="13" FontFamily="InterRegular" TextColor="#1A1A2E" />
+                                <Label Text="Teléfono" FontSize="12" FontFamily="InterRegular" TextColor="{StaticResource TextSecondary}" />
+                                <Label Text="{Binding Cliente.Telefono}" FontSize="13" FontFamily="InterRegular" TextColor="{StaticResource TextPrimary}" />
                             </VerticalStackLayout>
 
                             <!-- Dirección -->
                             <VerticalStackLayout Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Spacing="2">
-                                <Label Text="Dirección" FontSize="12" FontFamily="InterRegular" TextColor="#6B7280" />
-                                <Label Text="{Binding Cliente.Direccion}" FontSize="13" FontFamily="InterRegular" TextColor="#1A1A2E" />
+                                <Label Text="Dirección" FontSize="12" FontFamily="InterRegular" TextColor="{StaticResource TextSecondary}" />
+                                <Label Text="{Binding Cliente.Direccion}" FontSize="13" FontFamily="InterRegular" TextColor="{StaticResource TextPrimary}" />
                             </VerticalStackLayout>
                         </Grid>
                     </VerticalStackLayout>
@@ -166,25 +166,25 @@
 
                 <!-- CARD PROYECTOS ASIGNADOS -->
                 <Border
-                    BackgroundColor="White"
-                    Stroke="#E5E7EB"
+                    BackgroundColor="{StaticResource White}"
+                    Stroke="{StaticResource BorderColor}"
                     StrokeThickness="1"
                     Padding="18">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="14" />
                     </Border.StrokeShape>
                     <Border.Shadow>
-                        <Shadow Brush="Black" Offset="0,2" Radius="6" Opacity="0.04" />
+                        <Shadow Brush="{StaticResource TextPrimary}" Offset="0,2" Radius="6" Opacity="0.04" />
                     </Border.Shadow>
 
                     <VerticalStackLayout Spacing="16">
                         <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
-                            <BoxView WidthRequest="3" HeightRequest="14" Color="#163572" CornerRadius="1.5" VerticalOptions="Center" />
-                            <Label Text="Proyectos Asignados" FontSize="14" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#163572" VerticalOptions="Center" />
+                            <BoxView WidthRequest="3" HeightRequest="14" Color="{StaticResource Primary}" CornerRadius="1.5" VerticalOptions="Center" />
+                            <Label Text="Proyectos Asignados" FontSize="14" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="{StaticResource Primary}" VerticalOptions="Center" />
                             
-                            <Border BackgroundColor="#EEF4FF" StrokeThickness="0" Padding="8,2" VerticalOptions="Center">
+                            <Border BackgroundColor="{StaticResource PrimaryLight}" StrokeThickness="0" Padding="8,2" VerticalOptions="Center">
                                 <Border.StrokeShape><RoundRectangle CornerRadius="6" /></Border.StrokeShape>
-                                <Label Text="{Binding Cliente.Proyectos.Count}" FontSize="11" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#163572" />
+                                <Label Text="{Binding Cliente.Proyectos.Count}" FontSize="11" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="{StaticResource Primary}" />
                             </Border>
                         </HorizontalStackLayout>
 
@@ -192,19 +192,19 @@
                         <VerticalStackLayout BindableLayout.ItemsSource="{Binding Cliente.Proyectos}" Spacing="8">
                             <BindableLayout.EmptyViewTemplate>
                                 <DataTemplate>
-                                    <Label Text="Sin proyectos asignados" FontSize="13" FontFamily="InterRegular" TextColor="#9CA3AF" Margin="0,4" />
+                                    <Label Text="Sin proyectos asignados" FontSize="13" FontFamily="InterRegular" TextColor="{StaticResource TextLight}" Margin="0,4" />
                                 </DataTemplate>
                             </BindableLayout.EmptyViewTemplate>
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate x:DataType="model:ProyectoClienteModel">
-                                    <Border BackgroundColor="#F8FAFC" Stroke="#E5E7EB" StrokeThickness="1" Padding="12">
+                                    <Border BackgroundColor="{StaticResource BackgroundLight}" Stroke="{StaticResource BorderColor}" StrokeThickness="1" Padding="12">
                                         <Border.StrokeShape><RoundRectangle CornerRadius="10" /></Border.StrokeShape>
                                         <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" RowSpacing="2">
-                                            <Label Grid.Row="0" Grid.Column="0" Text="{Binding Nombre}" FontSize="13" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#163572" />
-                                            <Label Grid.Row="1" Grid.Column="0" Text="{Binding Cliente}" FontSize="11" FontFamily="InterRegular" TextColor="#6B7280" />
-                                            <Border Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" BackgroundColor="#E6FDEE" StrokeThickness="0" Padding="8,3" VerticalOptions="Center">
+                                            <Label Grid.Row="0" Grid.Column="0" Text="{Binding Nombre}" FontSize="13" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="{StaticResource Primary}" />
+                                            <Label Grid.Row="1" Grid.Column="0" Text="{Binding Cliente}" FontSize="11" FontFamily="InterRegular" TextColor="{StaticResource TextSecondary}" />
+                                            <Border Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" BackgroundColor="{StaticResource SuccessSurface}" StrokeThickness="0" Padding="8,3" VerticalOptions="Center">
                                                 <Border.StrokeShape><RoundRectangle CornerRadius="8" /></Border.StrokeShape>
-                                                <Label Text="{Binding Estado}" FontSize="10" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#16A34A" />
+                                                <Label Text="{Binding Estado}" FontSize="10" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="{StaticResource Accent}" />
                                             </Border>
                                         </Grid>
                                     </Border>
@@ -221,8 +221,8 @@
                         Grid.Column="0"
                         Text="Editar"
                         Command="{Binding EditarCommand}"
-                        BackgroundColor="#163572"
-                        TextColor="White"
+                        BackgroundColor="{StaticResource Primary}"
+                        TextColor="{StaticResource White}"
                         CornerRadius="8"
                         HeightRequest="48"
                         FontSize="14"
@@ -234,8 +234,8 @@
                         Grid.Column="1"
                         Text="{Binding TextoBotonEstado}"
                         Command="{Binding CambiarEstadoCommand}"
-                        BackgroundColor="#DC2626"
-                        TextColor="White"
+                        BackgroundColor="{StaticResource Error}"
+                        TextColor="{StaticResource White}"
                         CornerRadius="8"
                         HeightRequest="48"
                         FontSize="14"
@@ -243,7 +243,7 @@
                         FontFamily="InterSemiBold">
                         <Button.Triggers>
                             <DataTrigger TargetType="Button" Binding="{Binding EsInactivo}" Value="True">
-                                <Setter Property="BackgroundColor" Value="#16A34A" />
+                                <Setter Property="BackgroundColor" Value="{StaticResource Accent}" />
                             </DataTrigger>
                         </Button.Triggers>
                     </Button>
@@ -255,7 +255,7 @@
         <ActivityIndicator
             IsVisible="{Binding IsBusy}"
             IsRunning="{Binding IsBusy}"
-            Color="#163572"
+            Color="{StaticResource Primary}"
             HorizontalOptions="Center"
             VerticalOptions="Center" />
             
@@ -268,15 +268,15 @@
             Padding="32">
             <Label
                 Text="{Binding ErrorMessage}"
-                TextColor="#DC2626"
+                TextColor="{StaticResource Error}"
                 FontSize="14"
                 FontFamily="InterRegular"
                 HorizontalTextAlignment="Center" />
             <Button
                 Text="Regresar"
                 Command="{Binding RegresarCommand}"
-                BackgroundColor="#163572"
-                TextColor="White"
+                BackgroundColor="{StaticResource Primary}"
+                TextColor="{StaticResource White}"
                 CornerRadius="8"
                 FontFamily="InterSemiBold" />
         </VerticalStackLayout>

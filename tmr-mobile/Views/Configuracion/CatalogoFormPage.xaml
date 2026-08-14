@@ -6,7 +6,7 @@
     x:Class="tmr_mobile.Views.Configuracion.CatalogoFormPage"
     x:DataType="vm:CatalogoFormViewModel"
     Title="{Binding TituloFormulario}"
-    BackgroundColor="{StaticResource CatalogBackground}">
+    BackgroundColor="{StaticResource BackgroundLight}">
 
     <Grid RowDefinitions="*,Auto">
         <ScrollView Grid.Row="0">
@@ -36,7 +36,7 @@
                                 <Label.FormattedText>
                                     <FormattedString>
                                         <Span Text="Nombre / Valor " />
-                                        <Span Text="*" TextColor="{StaticResource CatalogError}" />
+                                        <Span Text="*" TextColor="{StaticResource Error}" />
                                     </FormattedString>
                                 </Label.FormattedText>
                             </Label>
@@ -76,38 +76,38 @@
 
                         <Border IsVisible="{Binding EsEdicion}"
                                 Padding="14,10"
-                                BackgroundColor="{StaticResource CatalogPrimaryLight}"
-                                Stroke="{StaticResource CatalogBorder}"
+                                BackgroundColor="{StaticResource PrimaryLight}"
+                                Stroke="{StaticResource BorderColor}"
                                 StrokeThickness="1"
                                 StrokeShape="RoundRectangle 8">
                             <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
                                 <VerticalStackLayout Grid.Column="0" Spacing="2">
                                     <Label Text="Estado" Style="{StaticResource CatalogHeadingText}" FontSize="13"
-                                           TextColor="{StaticResource CatalogTextMain}" />
-                                    <Label Text="Activar o desactivar el registro" FontFamily="Inter" FontSize="11"
-                                           TextColor="{StaticResource CatalogTextSecondary}" />
+                                           TextColor="{StaticResource TextMain}" />
+                                    <Label Text="Activar o desactivar el registro" FontFamily="InterRegular" FontSize="11"
+                                           TextColor="{StaticResource TextSecondary}" />
                                 </VerticalStackLayout>
                                 <Switch Grid.Column="1" IsToggled="{Binding Activo}"
-                                        OnColor="{StaticResource CatalogAccent}" VerticalOptions="Center" />
+                                        OnColor="{StaticResource Accent}" VerticalOptions="Center" />
                             </Grid>
                         </Border>
 
                         <Label Text="{Binding ErrorMessage}"
-                               FontFamily="Inter"
-                               TextColor="{StaticResource CatalogError}"
+                               FontFamily="InterRegular"
+                               TextColor="{StaticResource Error}"
                                FontSize="12" LineBreakMode="WordWrap" />
                     </VerticalStackLayout>
                 </Border>
             </VerticalStackLayout>
         </ScrollView>
 
-        <Grid Grid.Row="1" Padding="18,12,18,18" BackgroundColor="{StaticResource CatalogBackground}">
+        <Grid Grid.Row="1" Padding="18,12,18,18" BackgroundColor="{StaticResource BackgroundLight}">
             <Button Text="{Binding TextoBoton}" Command="{Binding GuardarCommand}"
-                    Style="{StaticResource CatalogPrimaryButton}" />
+                    Style="{StaticResource PrimaryButton}" />
         </Grid>
 
-        <Grid Grid.RowSpan="2" IsVisible="{Binding IsBusy}" BackgroundColor="#66FFFFFF">
-            <ActivityIndicator IsRunning="{Binding IsBusy}" Color="{StaticResource CatalogPrimary}"
+        <Grid Grid.RowSpan="2" IsVisible="{Binding IsBusy}" BackgroundColor="{StaticResource WhiteTranslucent}">
+            <ActivityIndicator IsRunning="{Binding IsBusy}" Color="{StaticResource Primary}"
                                HorizontalOptions="Center" VerticalOptions="Center" />
         </Grid>
     </Grid>

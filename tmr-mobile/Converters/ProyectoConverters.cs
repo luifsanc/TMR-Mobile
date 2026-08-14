@@ -1,4 +1,5 @@
 using System.Globalization;
+using tmr_mobile.Resources.Styles;
 
 namespace tmr_mobile.Converters;
 
@@ -32,14 +33,14 @@ public class EstadoColorConverter : IValueConverter
         {
             return estado?.ToLower() switch
             {
-                "activo" or "en progreso" => Color.FromArgb("#DCFCE7"),      // Verde claro
-                "inactivo" or "cancelado" => Color.FromArgb("#FEE2E2"),      // Rojo claro
-                "completado" => Color.FromArgb("#E0E7FF"),                    // Azul claro
-                "en riesgo" => Color.FromArgb("#FEF08A"),                     // Amarillo claro
-                _ => Color.FromArgb("#F3F4F6")                                // Gris por defecto
+                "activo" or "en progreso" => Color.FromArgb(DesignColors.SuccessSurface),
+                "inactivo" or "cancelado" => Color.FromArgb(DesignColors.ErrorSurface),
+                "completado" => Color.FromArgb(DesignColors.PrimaryLight),
+                "en riesgo" => Color.FromArgb(DesignColors.WarningSurface),
+                _ => Color.FromArgb(DesignColors.Secondary)
             };
         }
-        return Color.FromArgb("#F3F4F6");
+        return Color.FromArgb(DesignColors.Secondary);
     }
 
     public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
@@ -57,14 +58,14 @@ public class EstadoTextColorConverter : IValueConverter
         {
             return estado?.ToLower() switch
             {
-                "activo" or "en progreso" => Color.FromArgb("#166534"),      // Verde oscuro
-                "inactivo" or "cancelado" => Color.FromArgb("#991B1B"),      // Rojo oscuro
-                "completado" => Color.FromArgb("#3730A3"),                    // Azul oscuro
-                "en riesgo" => Color.FromArgb("#854D0E"),                     // Amarillo oscuro
-                _ => Color.FromArgb("#374151")                                // Gris por defecto
+                "activo" or "en progreso" => Color.FromArgb(DesignColors.SuccessText),
+                "inactivo" or "cancelado" => Color.FromArgb(DesignColors.ErrorText),
+                "completado" => Color.FromArgb(DesignColors.Primary),
+                "en riesgo" => Color.FromArgb(DesignColors.WarningText),
+                _ => Color.FromArgb(DesignColors.TextMain)
             };
         }
-        return Color.FromArgb("#374151");
+        return Color.FromArgb(DesignColors.TextMain);
     }
 
     public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
