@@ -48,6 +48,11 @@ public partial class AppShell : Shell
             typeof(ColaboradorFormPage)
         );
 
+        Routing.RegisterRoute(
+            nameof(ProyectosFormPage),
+            typeof(ProyectosFormPage)
+        );
+
         // Subpáginas y configuraciones que no son items raíz del Shell
         Routing.RegisterRoute(nameof(ReporteHorasPage), typeof(ReporteHorasPage));
         Routing.RegisterRoute(nameof(ReporteFechasPage), typeof(ReporteFechasPage));
