@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:tmr_mobile.ViewModels"
+    x:Class="tmr_mobile.Views.Seguimiento.SeguimientoDetallePage"
+    x:DataType="vm:SeguimientoDetalleViewModel"
+    Title="Detalle del Colaborador"
+    BackgroundColor="#F4F6FA">
+
+    <ScrollView>
+        <Grid RowDefinitions="Auto,*" Padding="16">
+
+            <!-- HEADER / NAVEGACIÓN -->
+            <Grid Grid.Row="0" ColumnDefinitions="Auto,*" Margin="0,0,0,20">
+                <ImageButton Grid.Column="0" Source="icon_back.png" WidthRequest="24" HeightRequest="24" Command="{Binding GoBackCommand}" VerticalOptions="Center" Margin="0,0,10,0"/>
+                <Label Grid.Column="1" Text="{Binding Colaborador.Nombre, StringFormat='Detalles: {0}'}" FontSize="18" FontAttributes="Bold" TextColor="#173A54" VerticalOptions="Center" LineBreakMode="TailTruncation" />
+            </Grid>
+
+            <!-- DETALLES -->
+            <Border Grid.Row="1" BackgroundColor="White" Stroke="#E4E7EC" StrokeThickness="1" Padding="0">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="12" />
+                </Border.StrokeShape>
+                
+                <VerticalStackLayout Spacing="0">
+                    
+                    <!-- Colaborador -->
+                    <Grid RowDefinitions="Auto,Auto" Padding="16,12">
+                        <Label Grid.Row="0" Text="Colaborador" FontSize="11" TextColor="#64748B" />
+                        <Label Grid.Row="1" Text="{Binding Colaborador.Nombre}" FontSize="14" TextColor="#1E293B" FontAttributes="Bold" />
+                    </Grid>
+                    <BoxView HeightRequest="1" Color="#F1F5F9" />
+
+                    <!-- Proyecto -->
+                    <Grid RowDefinitions="Auto,Auto" Padding="16,12">
+                        <Label Grid.Row="0" Text="Proyecto" FontSize="11" TextColor="#64748B" />
+                        <Label Grid.Row="1" Text="{Binding Colaborador.Proyecto}" FontSize="14" TextColor="#1E293B" />
+                    </Grid>
+                    <BoxView HeightRequest="1" Color="#F1F5F9" />
+
+                    <!-- Cliente -->
+                    <Grid RowDefinitions="Auto,Auto" Padding="16,12">
+                        <Label Grid.Row="0" Text="Cliente" FontSize="11" TextColor="#64748B" />
+                        <Label Grid.Row="1" Text="{Binding Colaborador.Cliente}" FontSize="14" TextColor="#1E293B" />
+                    </Grid>
+                    <BoxView HeightRequest="1" Color="#F1F5F9" />
+
+                    <!-- Lider Tecnico -->
+                    <Grid RowDefinitions="Auto,Auto" Padding="16,12">
+                        <Label Grid.Row="0" Text="Líder Técnico" FontSize="11" TextColor="#64748B" />
+                        <Label Grid.Row="1" Text="{Binding Colaborador.LiderTecnico}" FontSize="14" TextColor="#1E293B" />
+                    </Grid>
+                    <BoxView HeightRequest="1" Color="#F1F5F9" />
+
+                    <!-- Nro de Horas -->
+                    <Grid RowDefinitions="Auto,Auto" Padding="16,12">
+                        <Label Grid.Row="0" Text="Nro de Horas" FontSize="11" TextColor="#64748B" />
+                        <Label Grid.Row="1" Text="{Binding Colaborador.NroHoras, StringFormat='{0} h'}" FontSize="14" TextColor="#1E293B" />
+                    </Grid>
+                    <BoxView HeightRequest="1" Color="#F1F5F9" />
+
+                    <!-- Seguimiento (Estado) -->
+                    <Grid ColumnDefinitions="*,Auto" Padding="16,12">
+                        <Label Grid.Column="0" Text="Seguimiento" FontSize="14" TextColor="#1E293B" VerticalOptions="Center" />
+                        
+                        <Border Grid.Column="1" BackgroundColor="{Binding Colaborador.ColorFondoEstado}" Stroke="Transparent" Padding="8,4">
+                            <Border.StrokeShape><RoundRectangle CornerRadius="6" /></Border.StrokeShape>
+                            <HorizontalStackLayout Spacing="6" VerticalOptions="Center">
+                                <BoxView WidthRequest="8" HeightRequest="8" CornerRadius="4" Color="{Binding Colaborador.ColorEstado}" VerticalOptions="Center" />
+                                <Label Text="{Binding Colaborador.Estado}" FontSize="12" TextColor="{Binding Colaborador.ColorEstado}" FontAttributes="Bold" VerticalOptions="Center" />
+                            </HorizontalStackLayout>
+                        </Border>
+                    </Grid>
+                    <BoxView HeightRequest="1" Color="#F1F5F9" />
+
+                    <!-- Dias con Reporte -->
+                    <Grid RowDefinitions="Auto,Auto" Padding="16,12">
+                        <Label Grid.Row="0" Text="Días con Reporte" FontSize="11" TextColor="#64748B" />
+                        <Label Grid.Row="1" Text="{Binding Colaborador.DiasConReporte}" FontSize="14" TextColor="#1E293B" />
+                    </Grid>
+                    <BoxView HeightRequest="1" Color="#F1F5F9" />
+
+                    <!-- Dias a Completar -->
+                    <Grid RowDefinitions="Auto,Auto" Padding="16,12">
+                        <Label Grid.Row="0" Text="Días a Completar" FontSize="11" TextColor="#64748B" />
+                        <Label Grid.Row="1" Text="{Binding Colaborador.DiasACompletar}" FontSize="14" TextColor="#1E293B" />
+                    </Grid>
+
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
+    </ScrollView>
+</ContentPage>

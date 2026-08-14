@@ -1,6 +1,7 @@
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using tmr_mobile.Models.Operaciones;
 using tmr_mobile.Services;
 using tmr_mobile.Views.Operaciones;
 using tmr_shared.DTOs.Proyectos;
@@ -12,7 +13,7 @@ public partial class ProyectosViewModel : BaseViewModel
     private readonly ApiService _apiService;
 
     public ObservableCollection<ProyectoResponse> Proyectos { get; } = new();
-    
+
     [ObservableProperty]
     private string textoBusqueda = string.Empty;
 
@@ -20,6 +21,7 @@ public partial class ProyectosViewModel : BaseViewModel
     private bool mostrarFiltroEstado = false;
 
     private List<ProyectoResponse> _listaCompleta = new();
+    private string _filtroEstado = "Todos";
 
     public ProyectosViewModel(ApiService apiService)
     {
@@ -34,8 +36,7 @@ public partial class ProyectosViewModel : BaseViewModel
         ErrorMessage = string.Empty;
         try
         {
-            // GET /api/proyectos
-            var lista = await _apiService.GetAsync<List<ProyectoResponse>>("api/proyectos");
+            var lista = await _apiService.GetAsync<List<ProyectoResponse>>("proyectos");
             _listaCompleta = lista ?? new();
             Proyectos.Clear();
             Console.WriteLine($"[ProyectosViewModel] GET /api/proyectos -> {(lista == null ? "null" : lista.Count.ToString())} items");
@@ -77,7 +78,18 @@ public partial class ProyectosViewModel : BaseViewModel
     [RelayCommand]
     private async Task FiltrarEstadoAsync()
     {
-        MostrarFiltroEstado = !MostrarFiltroEstado;
+        var opcion = await Shell.Current.DisplayActionSheetAsync(
+            "Filtrar por estado",
+            "Cancelar",
+            null,
+            "Todos",
+            "Activos",
+            "Inactivos");
+
+        if (string.IsNullOrWhiteSpace(opcion) || opcion == "Cancelar") return;
+
+        _filtroEstado = opcion;
+        FiltrarProyectos();
     }
 
     [RelayCommand]
@@ -88,21 +100,20 @@ public partial class ProyectosViewModel : BaseViewModel
             IsBusy = true;
             ErrorMessage = string.Empty;
 
-            // Crear CSV con los proyectos
-            var csv = "ID,Nombre,Cliente,Estado,Fechas\n";
-            foreach (var p in Proyectos)
+            var encabezados = new[] { "Código", "Nombre", "Cliente", "Líder", "Estado", "Inicio", "Fin" };
+            var filas = Proyectos.Select(p => new[]
             {
-                csv += $"{p.Id},\"{p.Nombre}\",\"{p.Cliente}\",{p.Estado},\"{p.FechaInicio:dd/MM/yyyy} - {p.FechaFin:dd/MM/yyyy}\"\n";
-            }
+                p.Codigo,
+                p.Nombre,
+                p.Cliente,
+                p.LiderAsignado,
+                p.Estado,
+                p.FechaInicio?.ToString("dd/MM/yyyy") ?? "-",
+                p.FechaFin?.ToString("dd/MM/yyyy") ?? "-"
+            }).ToList();
 
-            // Guardar archivo en documentos
-            var rutaDocumentos = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            var nombreArchivo = $"Proyectos_{DateTime.Now:yyyyMMdd_HHmmss}.csv";
-            var rutaArchivo = Path.Combine(rutaDocumentos, nombreArchivo);
-            
-            await File.WriteAllTextAsync(rutaArchivo, csv);
-            
-            await Application.Current!.MainPage!.DisplayAlert("Éxito", $"Archivo descargado en:\n{rutaArchivo}", "OK");
+            await ReportService.SeleccionarYExportarAsync(
+                "Reporte de Proyectos", encabezados, filas, "Proyectos");
         }
         catch (Exception ex)
         {
@@ -123,11 +134,16 @@ public partial class ProyectosViewModel : BaseViewModel
         if (!string.IsNullOrWhiteSpace(TextoBusqueda))
         {
             var texto = TextoBusqueda.ToLower();
-            filtrados = filtrados.Where(p => 
-                p.Nombre.ToLower().Contains(texto) || 
+            filtrados = filtrados.Where(p =>
+                p.Nombre.ToLower().Contains(texto) ||
                 p.Cliente.ToLower().Contains(texto)
             );
         }
+
+        if (_filtroEstado == "Activos")
+            filtrados = filtrados.Where(p => p.Activo || p.Estado.Equals("Activo", StringComparison.OrdinalIgnoreCase));
+        else if (_filtroEstado == "Inactivos")
+            filtrados = filtrados.Where(p => !p.Activo || p.Estado.Equals("Inactivo", StringComparison.OrdinalIgnoreCase));
 
         Proyectos.Clear();
         foreach (var p in filtrados)
@@ -146,12 +162,12 @@ public partial class ProyectosViewModel : BaseViewModel
     private async Task AbrirDetalleAsync(ProyectoResponse proyecto)
     {
         if (proyecto == null) return;
-        
+
         var parametros = new Dictionary<string, object>
         {
             ["IdProyecto"] = proyecto.Id
         };
-        
+
         await Shell.Current.GoToAsync(nameof(ProyectosFormPage), parametros);
     }
 
@@ -165,16 +181,16 @@ public partial class ProyectosViewModel : BaseViewModel
 
             // Intentamos llamar al endpoint de inactivación. Si el backend no tiene este endpoint,
             // el resultado será null y mostraremos el mensaje de error.
-            var result = await _apiService.PostForResultAsync<object>($"api/proyectos/{id}/inactivate", new { });
+            var eliminado = await _apiService.DeleteAsync($"proyectos/{id}");
 
-            if (result.Success)
+            if (eliminado)
             {
                 // Refrescar lista
                 CargarProyectosCommand.Execute(null);
             }
             else
             {
-                ErrorMessage = string.IsNullOrEmpty(result.Message) ? "No se pudo inactivar el proyecto." : result.Message;
+                ErrorMessage = "No se pudo inactivar el proyecto.";
             }
         }
         catch (Exception ex)
@@ -187,4 +203,16 @@ public partial class ProyectosViewModel : BaseViewModel
             IsBusy = false;
         }
     }
+
+    public void AbrirEditar(ProyectoItem proyecto)
+    {
+        if (proyecto is null) return;
+        _ = Shell.Current.GoToAsync(nameof(ProyectosFormPage), new Dictionary<string, object>
+        {
+            ["IdProyecto"] = proyecto.Id
+        });
+    }
+
+    public Task InactivarProyectoAsync(ProyectoItem proyecto) =>
+        proyecto is null ? Task.CompletedTask : InactivarProyectoAsync(proyecto.Id);
 }

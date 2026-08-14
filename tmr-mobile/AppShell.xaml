@@ -10,6 +10,7 @@
     xmlns:ops="clr-namespace:tmr_mobile.Views.Operaciones"
     xmlns:rep="clr-namespace:tmr_mobile.Views.Reportes"
     xmlns:cfg="clr-namespace:tmr_mobile.Views.Configuracion"
+    xmlns:seg="clr-namespace:tmr_mobile.Views.Seguimiento"
     Title="TMR Móvil"
     Shell.NavBarIsVisible="False"
     FlyoutBehavior="Disabled">
@@ -82,6 +83,10 @@
     </ShellItem>
     <ShellItem Route="CatalogosPage" Shell.TabBarIsVisible="False">
         <ShellContent ContentTemplate="{DataTemplate cfg:CatalogosPage}" />
+    </ShellItem>
+
+    <ShellItem Route="SeguimientoPage" Shell.TabBarIsVisible="False">
+        <ShellContent ContentTemplate="{DataTemplate seg:SeguimientoPage}" />
     </ShellItem>
 
 </Shell>

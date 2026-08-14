@@ -1,5 +1,4 @@
 using System.Collections.ObjectModel;
-using System.Globalization;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using tmr_mobile.Services;
@@ -10,6 +9,7 @@ namespace tmr_mobile.ViewModels;
 public partial class ProyectosFormViewModel : BaseViewModel, IQueryAttributable
 {
     private readonly ApiService _apiService;
+    private ProyectoResponse? _proyectoOriginal;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(EsEdicion))]
@@ -27,7 +27,7 @@ public partial class ProyectosFormViewModel : BaseViewModel, IQueryAttributable
     public partial string Cliente { get; set; } = string.Empty;
 
     [ObservableProperty]
-    public partial string Estado { get; set; } = string.Empty;
+    public partial string Estado { get; set; } = "Activo";
 
     [ObservableProperty]
     public partial string LiderAsignado { get; set; } = string.Empty;
@@ -44,10 +44,8 @@ public partial class ProyectosFormViewModel : BaseViewModel, IQueryAttributable
     // Catálogos
     public ObservableCollection<string> Estados { get; } = new()
     {
-        "En progreso",
-        "Completado",
-        "En pausa",
-        "Cancelado"
+        "Activo",
+        "Inactivo"
     };
 
     public ObservableCollection<string> Lideres { get; } = new();
@@ -64,7 +62,7 @@ public partial class ProyectosFormViewModel : BaseViewModel, IQueryAttributable
             IdProyecto = id;
             TituloPagina = "Editar Proyecto";
         }
-        
+
         _ = CargarDatosInicialesAsync();
     }
 
@@ -81,16 +79,17 @@ public partial class ProyectosFormViewModel : BaseViewModel, IQueryAttributable
             // Si es edición, cargar datos del proyecto
             if (EsEdicion && IdProyecto.HasValue)
             {
-                var proyecto = await _apiService.GetAsync<ProyectoResponse>($"api/proyectos/{IdProyecto.Value}");
+                var proyecto = await _apiService.GetAsync<ProyectoResponse>($"proyectos/{IdProyecto.Value}");
                 if (proyecto != null)
                 {
+                    _proyectoOriginal = proyecto;
                     Nombre = proyecto.Nombre;
                     Cliente = proyecto.Cliente;
                     Estado = proyecto.Estado;
                     LiderAsignado = proyecto.LiderAsignado;
-                    Recursos = proyecto.Recursos;
-                    FechaInicio = proyecto.FechaInicio;
-                    FechaFin = proyecto.FechaFin;
+                    Recursos = proyecto.NumeroRecursos;
+                    FechaInicio = proyecto.FechaInicio?.ToDateTime(TimeOnly.MinValue);
+                    FechaFin = proyecto.FechaFin?.ToDateTime(TimeOnly.MinValue);
                 }
                 else
                 {
@@ -119,21 +118,55 @@ public partial class ProyectosFormViewModel : BaseViewModel, IQueryAttributable
             IsBusy = true;
             ErrorMessage = string.Empty;
 
-            var dto = new ProyectoResponse
+            var request = new
             {
-                Id = IdProyecto ?? 0,
+                Codigo = _proyectoOriginal?.Codigo,
                 Nombre = Nombre.Trim(),
+                Descripcion = _proyectoOriginal?.Descripcion,
+                IdCliente = _proyectoOriginal?.IdCliente,
                 Cliente = Cliente.Trim(),
+                IdTipoProyecto = _proyectoOriginal?.IdTipoProyecto,
+                Tipo = _proyectoOriginal?.Tipo,
+                Observacion = _proyectoOriginal?.Observacion,
+                FechaInicioReal = _proyectoOriginal?.FechaInicioReal,
+                FechaFinReal = _proyectoOriginal?.FechaFinReal,
+                FechaInicioEspera = _proyectoOriginal?.FechaInicioEspera,
+                FechaFinEspera = _proyectoOriginal?.FechaFinEspera,
+                IdLider = _proyectoOriginal?.IdLider,
                 Estado = Estado,
-                LiderAsignado = LiderAsignado.Trim(),
-                Recursos = Recursos,
-                FechaInicio = FechaInicio,
-                FechaFin = FechaFin
+                Lider = LiderAsignado.Trim(),
+                IdEstadoProyecto = _proyectoOriginal?.IdEstadoProyecto,
+                FechaInicio = FechaInicio.HasValue ? DateOnly.FromDateTime(FechaInicio.Value) : (DateOnly?)null,
+                FechaFin = FechaFin.HasValue ? DateOnly.FromDateTime(FechaFin.Value) : (DateOnly?)null,
+                Presupuesto = _proyectoOriginal?.Presupuesto,
+                Horas = _proyectoOriginal?.Horas,
+                LiderCosto = _proyectoOriginal?.CostoHoraLider,
+                LiderHoras = _proyectoOriginal?.HorasLider,
+                Lideres = _proyectoOriginal?.Lideres.Select(l => new
+                {
+                    IdLider = string.Equals(l.Lider, LiderAsignado, StringComparison.OrdinalIgnoreCase)
+                        ? l.IdLider
+                        : null,
+                    Lider = l == _proyectoOriginal.Lideres.First() ? LiderAsignado.Trim() : l.Lider,
+                    LiderCosto = l.CostoHoraLider,
+                    LiderHoras = l.HorasLider,
+                    Recursos = l.Recursos.Select(r => new
+                    {
+                        r.IdEmpleado,
+                        r.Tipo,
+                        r.Nombre,
+                        r.Rol,
+                        r.Entrada,
+                        r.Salida,
+                        r.CostoHora,
+                        r.Horas
+                    }).ToList()
+                }).ToList()
             };
 
             if (!EsEdicion)
             {
-                var created = await _apiService.PostAsync<ProyectoResponse, ProyectoResponse>("api/proyectos", dto);
+                var created = await _apiService.PostAsync<object, ProyectoResponse>("proyectos", request);
                 if (created != null)
                 {
                     await Shell.Current.GoToAsync("..");
@@ -145,7 +178,7 @@ public partial class ProyectosFormViewModel : BaseViewModel, IQueryAttributable
             }
             else
             {
-                var updated = await _apiService.PutAsync<ProyectoResponse, ProyectoResponse>($"api/proyectos/{IdProyecto}", dto);
+                var updated = await _apiService.PutAsync<object, ProyectoResponse>($"proyectos/{IdProyecto}", request);
                 if (updated != null)
                 {
                     await Shell.Current.GoToAsync("..");
@@ -198,12 +231,6 @@ public partial class ProyectosFormViewModel : BaseViewModel, IQueryAttributable
         if (string.IsNullOrWhiteSpace(LiderAsignado))
         {
             ErrorMessage = "El líder asignado es requerido.";
-            return false;
-        }
-
-        if (Recursos <= 0)
-        {
-            ErrorMessage = "Los recursos deben ser mayor a 0.";
             return false;
         }
 

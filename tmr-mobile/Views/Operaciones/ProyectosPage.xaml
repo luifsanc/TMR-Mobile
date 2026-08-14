@@ -186,7 +186,7 @@
                                             <Label Grid.Column="1" Text="Recursos:" FontSize="11" TextColor="#6B7280" VerticalOptions="Center" />
                                             <Label
                                                 Grid.Column="2"
-                                                Text="{Binding Recursos}"
+                                                Text="{Binding NumeroRecursos}"
                                                 FontSize="11"
                                                 FontAttributes="Bold"
                                                 TextColor="#163572"

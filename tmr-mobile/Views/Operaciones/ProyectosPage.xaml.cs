@@ -1,3 +1,4 @@
+using tmr_mobile.Models.Operaciones;
 using tmr_mobile.ViewModels;
 
 namespace tmr_mobile.Views.Operaciones;
@@ -69,7 +70,7 @@ public partial class ProyectosPage : ContentPage
         ProjectDetailClient.Text = proyecto.Cliente;
         ProjectDetailStatus.Text = proyecto.Estado;
         ProjectDetailLeader.Text = string.IsNullOrWhiteSpace(proyecto.LiderAsignado) ? "No asignado" : proyecto.LiderAsignado;
-        ProjectDetailResources.Text = proyecto.Recursos.ToString();
+        ProjectDetailResources.Text = proyecto.NumeroRecursos.ToString();
 
         var fechaInicio = proyecto.FechaInicio.HasValue ? proyecto.FechaInicio.Value.ToString("dd/MM/yyyy") : "-";
         var fechaFin = proyecto.FechaFin.HasValue ? proyecto.FechaFin.Value.ToString("dd/MM/yyyy") : "-";
@@ -131,6 +132,37 @@ public partial class ProyectosPage : ContentPage
         if (BindingContext is ProyectosViewModel vm)
         {
             await vm.InactivarProyectoAsync(_proyectoSeleccionado.Id);
+        }
+    }
+
+    private async void OnProjectOptionsClicked(object? sender, EventArgs e)
+    {
+        if (BindingContext is not ProyectosViewModel vm) return;
+        if (sender is Button btn && btn.CommandParameter is ProyectoItem item)
+        {
+            var action = await DisplayActionSheetAsync("Opciones", "Cancelar", null, "Editar", "Inactivar");
+            if (action == "Editar")
+            {
+                vm.AbrirEditar(item);
+            }
+            else if (action == "Inactivar")
+            {
+                var confirmar = await DisplayAlertAsync("Inactivar proyecto", $"¿Deseas inactivar el proyecto '{item.Nombre}'?", "Sí", "No");
+                if (confirmar)
+                {
+                    await vm.InactivarProyectoAsync(item);
+                }
+            }
+        }
+    }
+
+    private async void OnProjectDetailsClicked(object? sender, EventArgs e)
+    {
+        if (BindingContext is not ProyectosViewModel vm) return;
+        if (sender is Button btn && btn.CommandParameter is ProyectoItem item)
+        {
+            // Abre los detalles del proyecto o edición
+            vm.AbrirEditar(item);
         }
     }
 }
