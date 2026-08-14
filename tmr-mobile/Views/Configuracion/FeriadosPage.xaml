@@ -1,18 +1,276 @@
-<ContentPage xmlns:shared="clr-namespace:tmr_mobile.Views.Shared" xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:vm="clr-namespace:tmr_mobile.ViewModels"
-             x:Class="tmr_mobile.Views.Configuracion.FeriadosPage"
-             x:DataType="vm:FeriadosConfigViewModel"
-             Title="{Binding Title}">
-    <Grid RowDefinitions="*,80">
-        <ContentView Grid.Row="0">
-<VerticalStackLayout Spacing="16" Padding="20">
-        <Label Text="Gestión de Días Feriados" FontAttributes="Bold" FontSize="18" />
-        <Label Text="Calendario de días no laborables registrados." TextColor="#64748B" FontSize="14" />
-    </VerticalStackLayout>
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:tmr_mobile.ViewModels"
+    xmlns:model="clr-namespace:tmr_mobile.Models.Configuracion"
+    xmlns:shared="clr-namespace:tmr_mobile.Views.Shared"
+    x:Class="tmr_mobile.Views.Configuracion.FeriadosPage"
+    x:DataType="vm:FeriadosConfigViewModel"
+    Title="{Binding Title}"
+    Shell.NavBarIsVisible="False"
+    BackgroundColor="#F8FAFC">
 
+    <Grid RowDefinitions="*,Auto">
+        <ScrollView Grid.Row="0" VerticalScrollBarVisibility="Never">
+            <VerticalStackLayout Padding="16" Spacing="16">
 
-        </ContentView>
+                <!-- CABECERA -->
+                <Grid ColumnDefinitions="*,Auto" VerticalOptions="Center">
+                    <VerticalStackLayout Grid.Column="0" Spacing="2">
+                        <Label Text="Días Festivos" FontSize="22" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#163572" />
+                        <Label Text="Gestión de feriados nacionales, locales y religiosos" FontSize="12" FontFamily="InterRegular" TextColor="#6B7280" />
+                    </VerticalStackLayout>
+
+                    <Button
+                        Grid.Column="1"
+                        Text="+ Nuevo Feriado"
+                        Command="{Binding NuevoFeriadoCommand}"
+                        BackgroundColor="#163572"
+                        TextColor="White"
+                        CornerRadius="8"
+                        FontSize="12"
+                        FontAttributes="Bold"
+                        FontFamily="InterSemiBold"
+                        HeightRequest="40"
+                        Padding="14,0"
+                        VerticalOptions="Center" />
+                </Grid>
+
+                <!-- MÉTRICAS EN GRID RESPONSIVO (2 FILAS ADAPTATIVAS) -->
+                <Grid RowDefinitions="Auto,Auto" RowSpacing="10">
+                    <!-- Fila 1: Total Feriados (50%) | Activos (50%) -->
+                    <Grid Grid.Row="0" ColumnDefinitions="*,*" ColumnSpacing="10">
+                        <!-- Total Feriados -->
+                        <Border Grid.Column="0" BackgroundColor="White" Stroke="#E5E7EB" StrokeThickness="1" Padding="12">
+                            <Border.StrokeShape><RoundRectangle CornerRadius="14" /></Border.StrokeShape>
+                            <Border.Shadow><Shadow Brush="Black" Offset="0,2" Radius="6" Opacity="0.04" /></Border.Shadow>
+                            <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                                <Border WidthRequest="34" HeightRequest="34" BackgroundColor="#EEF4FF" StrokeThickness="0">
+                                    <Border.StrokeShape><RoundRectangle CornerRadius="10" /></Border.StrokeShape>
+                                    <Label Text="📅" FontSize="14" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                                </Border>
+                                <VerticalStackLayout Spacing="0" VerticalOptions="Center">
+                                    <Label Text="{Binding TotalFeriados}" FontSize="18" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#163572" />
+                                    <Label Text="Total Feriados" FontSize="11" FontFamily="InterRegular" TextColor="#6B7280" />
+                                </VerticalStackLayout>
+                            </HorizontalStackLayout>
+                        </Border>
+
+                        <!-- Activos -->
+                        <Border Grid.Column="1" BackgroundColor="White" Stroke="#E5E7EB" StrokeThickness="1" Padding="12">
+                            <Border.StrokeShape><RoundRectangle CornerRadius="14" /></Border.StrokeShape>
+                            <Border.Shadow><Shadow Brush="Black" Offset="0,2" Radius="6" Opacity="0.04" /></Border.Shadow>
+                            <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                                <Border WidthRequest="34" HeightRequest="34" BackgroundColor="#E6FDEE" StrokeThickness="0">
+                                    <Border.StrokeShape><RoundRectangle CornerRadius="10" /></Border.StrokeShape>
+                                    <Label Text="✔" FontSize="14" TextColor="#16A34A" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                                </Border>
+                                <VerticalStackLayout Spacing="0" VerticalOptions="Center">
+                                    <Label Text="{Binding TotalActivos}" FontSize="18" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#163572" />
+                                    <Label Text="Activos" FontSize="11" FontFamily="InterRegular" TextColor="#6B7280" />
+                                </VerticalStackLayout>
+                            </HorizontalStackLayout>
+                        </Border>
+                    </Grid>
+
+                    <!-- Fila 2: Nacionales (33%) | Locales (33%) | Religiosos (33%) -->
+                    <Grid Grid.Row="1" ColumnDefinitions="*,*,*" ColumnSpacing="8">
+                        <!-- Nacionales -->
+                        <Border Grid.Column="0" BackgroundColor="White" Stroke="#E5E7EB" StrokeThickness="1" Padding="6,8">
+                            <Border.StrokeShape><RoundRectangle CornerRadius="14" /></Border.StrokeShape>
+                            <Border.Shadow><Shadow Brush="Black" Offset="0,2" Radius="6" Opacity="0.04" /></Border.Shadow>
+                            <HorizontalStackLayout Spacing="6" VerticalOptions="Center" HorizontalOptions="Center">
+                                <Border WidthRequest="28" HeightRequest="28" BackgroundColor="#EEF4FF" StrokeThickness="0">
+                                    <Border.StrokeShape><RoundRectangle CornerRadius="8" /></Border.StrokeShape>
+                                    <Label Text="🌐" FontSize="12" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                                </Border>
+                                <VerticalStackLayout Spacing="0" VerticalOptions="Center">
+                                    <Label Text="{Binding TotalNacionales}" FontSize="16" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#163572" />
+                                    <Label Text="Nacionales" FontSize="9" FontFamily="InterRegular" TextColor="#6B7280" />
+                                </VerticalStackLayout>
+                            </HorizontalStackLayout>
+                        </Border>
+
+                        <!-- Locales -->
+                        <Border Grid.Column="1" BackgroundColor="White" Stroke="#E5E7EB" StrokeThickness="1" Padding="6,8">
+                            <Border.StrokeShape><RoundRectangle CornerRadius="14" /></Border.StrokeShape>
+                            <Border.Shadow><Shadow Brush="Black" Offset="0,2" Radius="6" Opacity="0.04" /></Border.Shadow>
+                            <HorizontalStackLayout Spacing="6" VerticalOptions="Center" HorizontalOptions="Center">
+                                <Border WidthRequest="28" HeightRequest="28" BackgroundColor="#FFEDD5" StrokeThickness="0">
+                                    <Border.StrokeShape><RoundRectangle CornerRadius="8" /></Border.StrokeShape>
+                                    <Label Text="📍" FontSize="12" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                                </Border>
+                                <VerticalStackLayout Spacing="0" VerticalOptions="Center">
+                                    <Label Text="{Binding TotalLocales}" FontSize="16" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#163572" />
+                                    <Label Text="Locales" FontSize="9" FontFamily="InterRegular" TextColor="#6B7280" />
+                                </VerticalStackLayout>
+                            </HorizontalStackLayout>
+                        </Border>
+
+                        <!-- Religiosos -->
+                        <Border Grid.Column="2" BackgroundColor="White" Stroke="#E5E7EB" StrokeThickness="1" Padding="6,8">
+                            <Border.StrokeShape><RoundRectangle CornerRadius="14" /></Border.StrokeShape>
+                            <Border.Shadow><Shadow Brush="Black" Offset="0,2" Radius="6" Opacity="0.04" /></Border.Shadow>
+                            <HorizontalStackLayout Spacing="6" VerticalOptions="Center" HorizontalOptions="Center">
+                                <Border WidthRequest="28" HeightRequest="28" BackgroundColor="#F3E8FF" StrokeThickness="0">
+                                    <Border.StrokeShape><RoundRectangle CornerRadius="8" /></Border.StrokeShape>
+                                    <Label Text="🎉" FontSize="12" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                                </Border>
+                                <VerticalStackLayout Spacing="0" VerticalOptions="Center">
+                                    <Label Text="{Binding TotalReligiosos}" FontSize="16" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#163572" />
+                                    <Label Text="Religiosos" FontSize="9" FontFamily="InterRegular" TextColor="#6B7280" />
+                                </VerticalStackLayout>
+                            </HorizontalStackLayout>
+                        </Border>
+                    </Grid>
+                </Grid>
+
+                <!-- CALENDARIO LABORAL -->
+                <Border BackgroundColor="White" Stroke="#E5E7EB" StrokeThickness="1" Padding="16">
+                    <Border.StrokeShape><RoundRectangle CornerRadius="14" /></Border.StrokeShape>
+                    <Border.Shadow><Shadow Brush="Black" Offset="0,2" Radius="6" Opacity="0.04" /></Border.Shadow>
+
+                    <VerticalStackLayout Spacing="14">
+                        <!-- NAVEGACIÓN DE MES -->
+                        <Grid ColumnDefinitions="*,Auto" VerticalOptions="Center">
+                            <Label
+                                Grid.Column="0"
+                                Text="{Binding MesActualTexto}"
+                                FontSize="18"
+                                FontAttributes="Bold"
+                                FontFamily="InterSemiBold"
+                                TextColor="#163572"
+                                VerticalOptions="Center" />
+
+                            <HorizontalStackLayout Grid.Column="1" Spacing="6" VerticalOptions="Center">
+                                <Button
+                                    Text="‹ Anterior"
+                                    Command="{Binding NavegarMesAnteriorCommand}"
+                                    BackgroundColor="#F8FAFC"
+                                    TextColor="#374151"
+                                    BorderColor="#D1D5DB"
+                                    BorderWidth="1"
+                                    CornerRadius="8"
+                                    FontSize="11"
+                                    FontFamily="InterRegular"
+                                    HeightRequest="34"
+                                    Padding="10,0" />
+                                <Button
+                                    Text="Hoy"
+                                    Command="{Binding IrAHoyCommand}"
+                                    BackgroundColor="#F8FAFC"
+                                    TextColor="#374151"
+                                    BorderColor="#D1D5DB"
+                                    BorderWidth="1"
+                                    CornerRadius="8"
+                                    FontSize="11"
+                                    FontFamily="InterRegular"
+                                    HeightRequest="34"
+                                    Padding="10,0" />
+                                <Button
+                                    Text="Siguiente ›"
+                                    Command="{Binding NavegarMesSiguienteCommand}"
+                                    BackgroundColor="#F8FAFC"
+                                    TextColor="#374151"
+                                    BorderColor="#D1D5DB"
+                                    BorderWidth="1"
+                                    CornerRadius="8"
+                                    FontSize="11"
+                                    FontFamily="InterRegular"
+                                    HeightRequest="34"
+                                    Padding="10,0" />
+                            </HorizontalStackLayout>
+                        </Grid>
+
+                        <!-- DÍAS DE LA SEMANA HEADER -->
+                        <Grid ColumnDefinitions="*,*,*,*,*,*,*" Margin="0,4,0,0">
+                            <Label Grid.Column="0" Text="LUN" FontSize="11" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#9CA3AF" HorizontalTextAlignment="Center" />
+                            <Label Grid.Column="1" Text="MAR" FontSize="11" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#9CA3AF" HorizontalTextAlignment="Center" />
+                            <Label Grid.Column="2" Text="MIE" FontSize="11" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#9CA3AF" HorizontalTextAlignment="Center" />
+                            <Label Grid.Column="3" Text="JUE" FontSize="11" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#9CA3AF" HorizontalTextAlignment="Center" />
+                            <Label Grid.Column="4" Text="VIE" FontSize="11" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#9CA3AF" HorizontalTextAlignment="Center" />
+                            <Label Grid.Column="5" Text="SAB" FontSize="11" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#9CA3AF" HorizontalTextAlignment="Center" />
+                            <Label Grid.Column="6" Text="DOM" FontSize="11" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#9CA3AF" HorizontalTextAlignment="Center" />
+                        </Grid>
+
+                        <!-- CUADRÍCULA DE 42 DÍAS DEL CALENDARIO EN FLEXLAYOUT RESPONSIVO (7 COLUMNAS FIJAS DE 14.28%) -->
+                        <FlexLayout
+                            BindableLayout.ItemsSource="{Binding DiasCalendario}"
+                            Wrap="Wrap"
+                            Direction="Row"
+                            JustifyContent="Start"
+                            AlignItems="Start">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="model:DiaCalendarioItem">
+                                    <Border
+                                        FlexLayout.Basis="14.28%"
+                                        BackgroundColor="{Binding ColorFondoDia}"
+                                        Stroke="{Binding ColorBordeDia}"
+                                        StrokeThickness="1"
+                                        HeightRequest="54"
+                                        Margin="0,1"
+                                        Padding="2">
+                                        <Border.StrokeShape><RoundRectangle CornerRadius="6" /></Border.StrokeShape>
+                                        
+                                        <Grid RowDefinitions="Auto,*">
+                                            <!-- Número de día -->
+                                            <Label
+                                                Grid.Row="0"
+                                                Text="{Binding NumeroDia}"
+                                                FontSize="11"
+                                                FontAttributes="Bold"
+                                                FontFamily="InterSemiBold"
+                                                TextColor="{Binding ColorNumeroDia}"
+                                                HorizontalOptions="Center" />
+
+                                            <!-- Badge Feriado en el día -->
+                                            <Border
+                                                Grid.Row="1"
+                                                IsVisible="{Binding TieneFeriados}"
+                                                BackgroundColor="#E6FDEE"
+                                                Stroke="#16A34A"
+                                                StrokeThickness="1"
+                                                Padding="2,1"
+                                                VerticalOptions="End"
+                                                Margin="1">
+                                                <Border.StrokeShape><RoundRectangle CornerRadius="4" /></Border.StrokeShape>
+                                                <Border.GestureRecognizers>
+                                                    <TapGestureRecognizer
+                                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.AbrirDetalleCommand}"
+                                                        CommandParameter="{Binding PrimerFeriado}" />
+                                                </Border.GestureRecognizers>
+                                                <Label
+                                                    Text="{Binding PrimerFeriado.NombreFeriado}"
+                                                    FontSize="8"
+                                                    FontAttributes="Bold"
+                                                    FontFamily="InterSemiBold"
+                                                    TextColor="#163572"
+                                                    MaxLines="1"
+                                                    LineBreakMode="TailTruncation"
+                                                    HorizontalTextAlignment="Center" />
+                                            </Border>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </FlexLayout>
+                    </VerticalStackLayout>
+                </Border>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- INDICADOR DE CARGA -->
+        <ActivityIndicator
+            IsVisible="{Binding IsBusy}"
+            IsRunning="{Binding IsBusy}"
+            Color="#163572"
+            HorizontalOptions="Center"
+            VerticalOptions="Center" />
+
+        <!-- BARRA DE NAVEGACIÓN INFERIOR DE LA APP MÓVIL -->
         <shared:BottomNavBar Grid.Row="1" />
     </Grid>
+
 </ContentPage>

@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:tmr_mobile.ViewModels"
+    xmlns:operaciones="clr-namespace:tmr_mobile.Models.Operaciones"
+    xmlns:config="clr-namespace:tmr_mobile.Models.Configuracion"
+    x:Class="tmr_mobile.Views.Configuracion.UsuarioFormPage"
+    x:DataType="vm:UsuarioFormViewModel"
+    Title="{Binding TituloPagina}"
+    Shell.NavBarIsVisible="False"
+    BackgroundColor="#F8FAFC">
+
+    <Grid>
+        <ScrollView VerticalScrollBarVisibility="Never">
+            <VerticalStackLayout Padding="16" Spacing="16">
+
+                <!-- CABECERA CON BOTÓN ATRÁS -->
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12" VerticalOptions="Center" Margin="0,4,0,4">
+                    <Button
+                        Grid.Column="0"
+                        Text="‹"
+                        Command="{Binding RegresarCommand}"
+                        BackgroundColor="Transparent"
+                        TextColor="#163572"
+                        FontSize="28"
+                        FontAttributes="Bold"
+                        FontFamily="InterSemiBold"
+                        Padding="0"
+                        WidthRequest="36"
+                        HeightRequest="36"
+                        VerticalOptions="Center" />
+                    
+                    <Label
+                        Grid.Column="1"
+                        Text="{Binding TituloPagina}"
+                        FontSize="22"
+                        FontAttributes="Bold"
+                        FontFamily="InterSemiBold"
+                        TextColor="#163572"
+                        VerticalOptions="Center" />
+                </Grid>
+
+                <!-- SECCIÓN 1: TIPO DE USUARIO -->
+                <Border BackgroundColor="White" Stroke="#E5E7EB" StrokeThickness="1" Padding="18">
+                    <Border.StrokeShape><RoundRectangle CornerRadius="14" /></Border.StrokeShape>
+                    <Border.Shadow><Shadow Brush="Black" Offset="0,2" Radius="6" Opacity="0.04" /></Border.Shadow>
+
+                    <VerticalStackLayout Spacing="14">
+                        <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
+                            <BoxView WidthRequest="3" HeightRequest="14" Color="#163572" CornerRadius="1.5" VerticalOptions="Center" />
+                            <Label Text="Tipo de usuario" FontSize="14" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#163572" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12" RowDefinitions="Auto">
+                            <!-- Casilla / Toggle Usuario Interno -->
+                            <Border Grid.Column="0" Padding="12,8" BackgroundColor="White" Stroke="#D1D5DB" StrokeThickness="1" VerticalOptions="Center">
+                                <Border.StrokeShape><RoundRectangle CornerRadius="10" /></Border.StrokeShape>
+                                <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
+                                    <CheckBox IsChecked="{Binding EsInterno}" Color="#163572" VerticalOptions="Center" />
+                                    <Label Text="Usuario Interno" FontSize="13" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#163572" VerticalOptions="Center" />
+                                </HorizontalStackLayout>
+                            </Border>
+
+                            <!-- Dropdown Colaborador (Visible cuando EsInterno es true) -->
+                            <VerticalStackLayout Grid.Column="1" Spacing="4" IsVisible="{Binding EsInterno}">
+                                <Label FontSize="12" FontFamily="InterRegular" TextColor="#6B7280">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="Colaborador" />
+                                            <Span Text=" *" TextColor="#DC2626" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                                <Border Stroke="#D1D5DB" StrokeThickness="1" BackgroundColor="White" Padding="8,0" HeightRequest="46">
+                                    <Border.StrokeShape><RoundRectangle CornerRadius="10" /></Border.StrokeShape>
+                                    <Picker
+                                        ItemsSource="{Binding Colaboradores}"
+                                        SelectedItem="{Binding ColaboradorSeleccionado}"
+                                        ItemDisplayBinding="{Binding NombreCompleto}"
+                                        Title="Seleccione un colaborador"
+                                        TextColor="#374151"
+                                        TitleColor="#9CA3AF"
+                                        FontFamily="InterRegular"
+                                        FontSize="13"
+                                        VerticalOptions="Center" />
+                                </Border>
+                            </VerticalStackLayout>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- SECCIÓN 2: DATOS DE ACCESO -->
+                <Border BackgroundColor="White" Stroke="#E5E7EB" StrokeThickness="1" Padding="18">
+                    <Border.StrokeShape><RoundRectangle CornerRadius="14" /></Border.StrokeShape>
+                    <Border.Shadow><Shadow Brush="Black" Offset="0,2" Radius="6" Opacity="0.04" /></Border.Shadow>
+
+                    <VerticalStackLayout Spacing="16">
+                        <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
+                            <BoxView WidthRequest="3" HeightRequest="14" Color="#163572" CornerRadius="1.5" VerticalOptions="Center" />
+                            <Label Text="Datos de acceso" FontSize="14" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#163572" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+
+                        <!-- Correo Electrónico + Suffix si es Interno y Rol -->
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                            <VerticalStackLayout Grid.Column="0" Spacing="5">
+                                <Label FontSize="12" FontFamily="InterRegular" TextColor="#6B7280">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="Correo electrónico" />
+                                            <Span Text=" *" TextColor="#DC2626" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+
+                                <!-- Si es Usuario Interno: Campo Prefijo + Badge Sufijo -->
+                                <Border IsVisible="{Binding EsInterno}" Stroke="#D1D5DB" StrokeThickness="1" BackgroundColor="White" Padding="0" HeightRequest="46">
+                                    <Border.StrokeShape><RoundRectangle CornerRadius="10" /></Border.StrokeShape>
+                                    <Grid ColumnDefinitions="*,Auto">
+                                        <Entry
+                                            Grid.Column="0"
+                                            Text="{Binding EmailPrefix}"
+                                            Placeholder="Correo electrónico"
+                                            Margin="10,0,0,0"
+                                            TextColor="#374151"
+                                            PlaceholderColor="#9CA3AF"
+                                            FontFamily="InterRegular"
+                                            FontSize="13"
+                                            VerticalOptions="Center" />
+                                        <Border Grid.Column="1" BackgroundColor="#F3F4F6" StrokeThickness="0" Padding="8,0" Margin="0,1,1,1">
+                                            <Border.StrokeShape><RoundRectangle CornerRadius="0,9,9,0" /></Border.StrokeShape>
+                                            <Label Text="@integritysolutions.com.ec" FontSize="11" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#4B5563" VerticalOptions="Center" HorizontalOptions="Center" />
+                                        </Border>
+                                    </Grid>
+                                </Border>
+
+                                <!-- Si es Usuario Externo: Campo Completo -->
+                                <Border IsVisible="{Binding EsInterno, Converter={StaticResource InvertedBoolConverter}}" Stroke="#D1D5DB" StrokeThickness="1" BackgroundColor="White" Padding="12,0" HeightRequest="46">
+                                    <Border.StrokeShape><RoundRectangle CornerRadius="10" /></Border.StrokeShape>
+                                    <Entry
+                                        Text="{Binding Email}"
+                                        Placeholder="usuario@empresa.com"
+                                        Keyboard="Email"
+                                        TextColor="#374151"
+                                        PlaceholderColor="#9CA3AF"
+                                        FontFamily="InterRegular"
+                                        FontSize="13"
+                                        VerticalOptions="Center" />
+                                </Border>
+                            </VerticalStackLayout>
+
+                            <!-- Rol -->
+                            <VerticalStackLayout Grid.Column="1" Spacing="5">
+                                <Label FontSize="12" FontFamily="InterRegular" TextColor="#6B7280">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="Rol" />
+                                            <Span Text=" *" TextColor="#DC2626" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                                <Border Stroke="#D1D5DB" StrokeThickness="1" BackgroundColor="White" Padding="8,0" HeightRequest="46">
+                                    <Border.StrokeShape><RoundRectangle CornerRadius="10" /></Border.StrokeShape>
+                                    <Picker
+                                        ItemsSource="{Binding Roles}"
+                                        SelectedItem="{Binding RolSeleccionado}"
+                                        ItemDisplayBinding="{Binding Nombre}"
+                                        Title="Seleccione un rol"
+                                        TextColor="#374151"
+                                        TitleColor="#9CA3AF"
+                                        FontFamily="InterRegular"
+                                        FontSize="13"
+                                        VerticalOptions="Center" />
+                                </Border>
+                            </VerticalStackLayout>
+                        </Grid>
+
+                        <!-- Fila Inferior: Checkbox y Campo Contraseña -->
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="12" VerticalOptions="Center">
+                            <!-- Checkbox Debe cambiar contraseña en el próximo acceso -->
+                            <Border Grid.Column="0" Padding="12,10" BackgroundColor="White" Stroke="#D1D5DB" StrokeThickness="1" VerticalOptions="Center">
+                                <Border.StrokeShape><RoundRectangle CornerRadius="10" /></Border.StrokeShape>
+                                <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
+                                    <CheckBox IsChecked="{Binding DebeCambiarPassword}" Color="#163572" VerticalOptions="Center" />
+                                    <Label Text="Debe cambiar contraseña en el próximo acceso" FontSize="11" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#163572" VerticalOptions="Center" />
+                                </HorizontalStackLayout>
+                            </Border>
+
+                            <!-- Contraseña (Temporal al crear / Nueva contraseña al editar) -->
+                            <VerticalStackLayout Grid.Column="1" Spacing="5">
+                                <Label IsVisible="{Binding EsEdicion}" Text="Nueva contraseña" FontSize="12" FontFamily="InterRegular" TextColor="#6B7280" />
+                                <Label IsVisible="{Binding EsEdicion, Converter={StaticResource InvertedBoolConverter}}" FontSize="12" FontFamily="InterRegular" TextColor="#6B7280">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="Contraseña temporal" />
+                                            <Span Text=" *" TextColor="#DC2626" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+
+                                <Border Stroke="#D1D5DB" StrokeThickness="1" BackgroundColor="White" Padding="12,0" HeightRequest="46">
+                                    <Border.StrokeShape><RoundRectangle CornerRadius="10" /></Border.StrokeShape>
+                                    <Grid ColumnDefinitions="*,Auto">
+                                        <Entry
+                                            Grid.Column="0"
+                                            Text="{Binding Password}"
+                                            Placeholder="{Binding EsEdicion, Converter={StaticResource BoolToStringConverter}, ConverterParameter='Nueva contraseña|••••••••••••'}"
+                                            IsPassword="{Binding MostrarPassword, Converter={StaticResource InvertedBoolConverter}}"
+                                            TextColor="#374151"
+                                            PlaceholderColor="#9CA3AF"
+                                            FontFamily="InterRegular"
+                                            FontSize="13"
+                                            VerticalOptions="Center" />
+                                        <Button
+                                            Grid.Column="1"
+                                            Text="👁"
+                                            Command="{Binding ToggleMostrarPasswordCommand}"
+                                            BackgroundColor="Transparent"
+                                            TextColor="#6B7280"
+                                            FontSize="16"
+                                            Padding="0"
+                                            WidthRequest="36"
+                                            VerticalOptions="Center" />
+                                    </Grid>
+                                </Border>
+
+                                <!-- Subtítulo Regenerar (Solo al crear) -->
+                                <HorizontalStackLayout Spacing="6" Margin="0,2,0,0" IsVisible="{Binding EsEdicion, Converter={StaticResource InvertedBoolConverter}}">
+                                    <Label Text="Copie esta contraseña antes de guardar." FontSize="11" FontFamily="InterRegular" TextColor="#9CA3AF" VerticalOptions="Center" />
+                                    <Label Text="↺ Regenerar" FontSize="11" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#163572" TextDecorations="Underline" VerticalOptions="Center">
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding RegenerarPasswordCommand}" />
+                                        </Label.GestureRecognizers>
+                                    </Label>
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- BOTÓN GUARDAR -->
+                <Button
+                    Text="{Binding TextoBoton}"
+                    Command="{Binding GuardarCommand}"
+                    BackgroundColor="#163572"
+                    TextColor="White"
+                    CornerRadius="8"
+                    HeightRequest="48"
+                    FontSize="15"
+                    FontAttributes="Bold"
+                    FontFamily="InterSemiBold"
+                    Margin="0,8,0,24" />
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- INDICADOR DE CARGA -->
+        <ActivityIndicator
+            IsVisible="{Binding IsBusy}"
+            IsRunning="{Binding IsBusy}"
+            Color="#163572"
+            HorizontalOptions="Center"
+            VerticalOptions="Center" />
+
+        <!-- MODAL OVERLAY DE ERROR DE VALIDACIÓN -->
+        <ContentView
+            IsVisible="{Binding ErrorMessage, Converter={StaticResource IsStringNotNullOrEmptyConverter}}"
+            BackgroundColor="#80000000"
+            AbsoluteLayout.LayoutFlags="All"
+            AbsoluteLayout.LayoutBounds="0,0,1,1"
+            InputTransparent="False">
+            <Border BackgroundColor="White" Padding="24" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="320" StrokeThickness="0">
+                <Border.StrokeShape><RoundRectangle CornerRadius="14" /></Border.StrokeShape>
+                <Border.Shadow><Shadow Brush="Black" Offset="0,4" Radius="12" Opacity="0.15" /></Border.Shadow>
+                <VerticalStackLayout Spacing="16">
+                    <Label Text="Error de Validación" FontSize="17" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#DC2626" HorizontalTextAlignment="Center" />
+                    <Label Text="{Binding ErrorMessage}" TextColor="#374151" FontSize="13" FontFamily="InterRegular" HorizontalTextAlignment="Center" />
+                    <Button Text="Entendido" Command="{Binding LimpiarErrorCommand}" BackgroundColor="#163572" TextColor="White" CornerRadius="8" FontFamily="InterSemiBold" HeightRequest="40" />
+                </VerticalStackLayout>
+            </Border>
+        </ContentView>
+    </Grid>
+</ContentPage>

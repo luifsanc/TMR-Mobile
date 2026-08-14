@@ -165,6 +165,14 @@ public class ApiService
         return await HandleResponseAsync<TResponse>(response, endpoint, "PUT", data, ct);
     }
 
+    public async Task<TResponse?> PatchAsync<TRequest, TResponse>(string endpoint, TRequest data,
+        CancellationToken ct = default)
+    {
+        await AddAuthHeaderAsync();
+        var response = await _httpClient.PatchAsJsonAsync(endpoint, data, JsonOptions, ct);
+        return await HandleResponseAsync<TResponse>(response, endpoint, "PATCH", data, ct);
+    }
+
     public async Task<bool> DeleteAsync(string endpoint,
         CancellationToken ct = default)
     {
@@ -271,6 +279,8 @@ public class ApiService
                     retry = await _httpClient.GetAsync(endpoint, ct);
                 else if (method == "POST")
                     retry = await _httpClient.PostAsJsonAsync(endpoint, body, JsonOptions, ct);
+                else if (method == "PATCH")
+                    retry = await _httpClient.PatchAsJsonAsync(endpoint, body, JsonOptions, ct);
                 else
                     retry = await _httpClient.PutAsJsonAsync(endpoint, body, JsonOptions, ct);
 
