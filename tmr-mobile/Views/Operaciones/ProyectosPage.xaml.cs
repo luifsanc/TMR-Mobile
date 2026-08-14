@@ -1,4 +1,5 @@
 using tmr_mobile.Models.Operaciones;
+using tmr_mobile.Resources.Styles;
 using tmr_mobile.ViewModels;
 
 namespace tmr_mobile.Views.Operaciones;
@@ -78,18 +79,18 @@ public partial class ProyectosPage : ContentPage
 
         if (proyecto.Estado.Equals("Activo", StringComparison.OrdinalIgnoreCase))
         {
-            ProjectDetailStatusBadge.BackgroundColor = Color.FromArgb("#DCFCE7");
-            ProjectDetailStatus.TextColor = Color.FromArgb("#166534");
+            ProjectDetailStatusBadge.BackgroundColor = Color.FromArgb(DesignColors.SuccessSurface);
+            ProjectDetailStatus.TextColor = Color.FromArgb(DesignColors.SuccessText);
         }
         else if (proyecto.Estado.Equals("Inactivo", StringComparison.OrdinalIgnoreCase))
         {
-            ProjectDetailStatusBadge.BackgroundColor = Color.FromArgb("#FEE2E2");
-            ProjectDetailStatus.TextColor = Color.FromArgb("#991B1B");
+            ProjectDetailStatusBadge.BackgroundColor = Color.FromArgb(DesignColors.ErrorSurface);
+            ProjectDetailStatus.TextColor = Color.FromArgb(DesignColors.ErrorText);
         }
         else
         {
-            ProjectDetailStatusBadge.BackgroundColor = Color.FromArgb("#E0F2FE");
-            ProjectDetailStatus.TextColor = Color.FromArgb("#0F766E");
+            ProjectDetailStatusBadge.BackgroundColor = Color.FromArgb(DesignColors.PrimaryLight);
+            ProjectDetailStatus.TextColor = Color.FromArgb(DesignColors.Primary);
         }
 
         ProjectDetailOverlay.IsVisible = true;

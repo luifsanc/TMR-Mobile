@@ -1,6 +1,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using tmr_mobile.Models.Configuracion;
+using tmr_mobile.Resources.Styles;
 using tmr_mobile.Services;
 using tmr_mobile.Views.Configuracion;
 
@@ -26,8 +27,8 @@ public partial class CatalogoDetalleViewModel :
 
     public string EstadoColor =>
         Detalle?.Activo == true
-            ? "#43A047"
-            : "#E53935";
+            ? DesignColors.Accent
+            : DesignColors.Error;
 
     public bool TieneDescripcion =>
         !string.IsNullOrWhiteSpace(

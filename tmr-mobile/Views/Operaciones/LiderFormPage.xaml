@@ -5,7 +5,7 @@
     x:Class="tmr_mobile.Views.Operaciones.LiderFormPage"
     Title="Formulario de Líder"
     Shell.NavBarIsVisible="False"
-    BackgroundColor="#F8FAFC">
+    BackgroundColor="{StaticResource BackgroundLight}">
 
     <Grid>
         <ScrollView VerticalScrollBarVisibility="Never">
@@ -18,7 +18,7 @@
                         Text="‹"
                         Clicked="OnCancelarClicked"
                         BackgroundColor="Transparent"
-                        TextColor="#173A54"
+                        TextColor="{StaticResource Primary}"
                         FontSize="28"
                         FontAttributes="Bold"
                         Padding="0"
@@ -32,54 +32,54 @@
                         Text="Agregar Nuevo Líder"
                         FontSize="22"
                         FontAttributes="Bold"
-                        TextColor="#173A54"
+                        TextColor="{StaticResource Primary}"
                         VerticalOptions="Center" />
                 </Grid>
 
                 <!-- CARD DE FORMULARIO -->
                 <Border
-                    BackgroundColor="White"
-                    Stroke="#E5E7EB"
+                    BackgroundColor="{StaticResource White}"
+                    Stroke="{StaticResource BorderColor}"
                     StrokeThickness="1"
                     Padding="18">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="14" />
                     </Border.StrokeShape>
                     <Border.Shadow>
-                        <Shadow Brush="Black" Offset="0,2" Radius="6" Opacity="0.04" />
+                        <Shadow Brush="{StaticResource TextPrimary}" Offset="0,2" Radius="6" Opacity="0.04" />
                     </Border.Shadow>
 
                     <VerticalStackLayout Spacing="16">
                         <!-- Indicador de Sección -->
                         <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
-                            <BoxView WidthRequest="3" HeightRequest="14" Color="#173A54" CornerRadius="1.5" VerticalOptions="Center" />
-                            <Label Text="Información del Líder" FontSize="14" FontAttributes="Bold" TextColor="#173A54" VerticalOptions="Center" />
+                            <BoxView WidthRequest="3" HeightRequest="14" Color="{StaticResource Primary}" CornerRadius="1.5" VerticalOptions="Center" />
+                            <Label Text="Información del Líder" FontSize="14" FontAttributes="Bold" TextColor="{StaticResource Primary}" VerticalOptions="Center" />
                         </HorizontalStackLayout>
 
                         <!-- Nombres -->
                         <VerticalStackLayout Spacing="6">
-                            <Label Text="Nombres *" FontSize="12" TextColor="#64748B" />
-                            <Border Stroke="#DCE3EC" StrokeThickness="1" BackgroundColor="Transparent" Padding="12,0" HeightRequest="44">
+                            <Label Text="Nombres *" FontSize="12" TextColor="{StaticResource TextMuted}" />
+                            <Border Stroke="{StaticResource BorderColor}" StrokeThickness="1" BackgroundColor="Transparent" Padding="12,0" HeightRequest="44">
                                 <Border.StrokeShape><RoundRectangle CornerRadius="8" /></Border.StrokeShape>
-                                <Entry x:Name="NombresEntry" Placeholder="Ej. Roberto" TextColor="#334155" PlaceholderColor="#9CA3AF" FontSize="13" BackgroundColor="Transparent" VerticalOptions="Center" />
+                                <Entry x:Name="NombresEntry" Placeholder="Ej. Roberto" TextColor="{StaticResource TextMain}" PlaceholderColor="{StaticResource TextLight}" FontSize="13" BackgroundColor="Transparent" VerticalOptions="Center" />
                             </Border>
                         </VerticalStackLayout>
 
                         <!-- Apellidos -->
                         <VerticalStackLayout Spacing="6">
-                            <Label Text="Apellidos *" FontSize="12" TextColor="#64748B" />
-                            <Border Stroke="#DCE3EC" StrokeThickness="1" BackgroundColor="Transparent" Padding="12,0" HeightRequest="44">
+                            <Label Text="Apellidos *" FontSize="12" TextColor="{StaticResource TextMuted}" />
+                            <Border Stroke="{StaticResource BorderColor}" StrokeThickness="1" BackgroundColor="Transparent" Padding="12,0" HeightRequest="44">
                                 <Border.StrokeShape><RoundRectangle CornerRadius="8" /></Border.StrokeShape>
-                                <Entry x:Name="ApellidosEntry" Placeholder="Ej. Gómez" TextColor="#334155" PlaceholderColor="#9CA3AF" FontSize="13" BackgroundColor="Transparent" VerticalOptions="Center" />
+                                <Entry x:Name="ApellidosEntry" Placeholder="Ej. Gómez" TextColor="{StaticResource TextMain}" PlaceholderColor="{StaticResource TextLight}" FontSize="13" BackgroundColor="Transparent" VerticalOptions="Center" />
                             </Border>
                         </VerticalStackLayout>
 
                         <!-- Tipo de Líder -->
                         <VerticalStackLayout Spacing="6">
-                            <Label Text="Tipo de Líder" FontSize="12" TextColor="#64748B" />
-                            <Border Stroke="#DCE3EC" StrokeThickness="1" BackgroundColor="Transparent" Padding="8,0" HeightRequest="44">
+                            <Label Text="Tipo de Líder" FontSize="12" TextColor="{StaticResource TextMuted}" />
+                            <Border Stroke="{StaticResource BorderColor}" StrokeThickness="1" BackgroundColor="Transparent" Padding="8,0" HeightRequest="44">
                                 <Border.StrokeShape><RoundRectangle CornerRadius="8" /></Border.StrokeShape>
-                                <Picker x:Name="TipoPicker" Title="Seleccione tipo" TextColor="#334155" TitleColor="#9CA3AF" FontSize="13" VerticalOptions="Center">
+                                <Picker x:Name="TipoPicker" Title="Seleccione tipo" TextColor="{StaticResource TextMain}" TitleColor="{StaticResource TextLight}" FontSize="13" VerticalOptions="Center">
                                     <Picker.ItemsSource>
                                         <x:Array Type="{x:Type x:String}">
                                             <x:String>Interno</x:String>
@@ -92,33 +92,33 @@
 
                         <!-- Correo Electrónico -->
                         <VerticalStackLayout Spacing="6">
-                            <Label Text="Correo Electrónico" FontSize="12" TextColor="#64748B" />
-                            <Border Stroke="#DCE3EC" StrokeThickness="1" BackgroundColor="Transparent" Padding="12,0" HeightRequest="44">
+                            <Label Text="Correo Electrónico" FontSize="12" TextColor="{StaticResource TextMuted}" />
+                            <Border Stroke="{StaticResource BorderColor}" StrokeThickness="1" BackgroundColor="Transparent" Padding="12,0" HeightRequest="44">
                                 <Border.StrokeShape><RoundRectangle CornerRadius="8" /></Border.StrokeShape>
-                                <Entry x:Name="EmailEntry" Placeholder="ejemplo@tmr.com" Keyboard="Email" TextColor="#334155" PlaceholderColor="#9CA3AF" FontSize="13" BackgroundColor="Transparent" VerticalOptions="Center" />
+                                <Entry x:Name="EmailEntry" Placeholder="ejemplo@tmr.com" Keyboard="Email" TextColor="{StaticResource TextMain}" PlaceholderColor="{StaticResource TextLight}" FontSize="13" BackgroundColor="Transparent" VerticalOptions="Center" />
                             </Border>
                         </VerticalStackLayout>
 
                         <!-- Teléfono -->
                         <VerticalStackLayout Spacing="6">
-                            <Label Text="Teléfono" FontSize="12" TextColor="#64748B" />
-                            <Border Stroke="#DCE3EC" StrokeThickness="1" BackgroundColor="Transparent" Padding="12,0" HeightRequest="44">
+                            <Label Text="Teléfono" FontSize="12" TextColor="{StaticResource TextMuted}" />
+                            <Border Stroke="{StaticResource BorderColor}" StrokeThickness="1" BackgroundColor="Transparent" Padding="12,0" HeightRequest="44">
                                 <Border.StrokeShape><RoundRectangle CornerRadius="8" /></Border.StrokeShape>
-                                <Entry x:Name="TelefonoEntry" Placeholder="Ej. 0991234567" Keyboard="Telephone" TextColor="#334155" PlaceholderColor="#9CA3AF" FontSize="13" BackgroundColor="Transparent" VerticalOptions="Center" />
+                                <Entry x:Name="TelefonoEntry" Placeholder="Ej. 0991234567" Keyboard="Telephone" TextColor="{StaticResource TextMain}" PlaceholderColor="{StaticResource TextLight}" FontSize="13" BackgroundColor="Transparent" VerticalOptions="Center" />
                             </Border>
                         </VerticalStackLayout>
 
                         <!-- Documento de Identificación -->
                         <VerticalStackLayout Spacing="6">
-                            <Label Text="Número de Identificación / Cédula" FontSize="12" TextColor="#64748B" />
-                            <Border Stroke="#DCE3EC" StrokeThickness="1" BackgroundColor="Transparent" Padding="12,0" HeightRequest="44">
+                            <Label Text="Número de Identificación / Cédula" FontSize="12" TextColor="{StaticResource TextMuted}" />
+                            <Border Stroke="{StaticResource BorderColor}" StrokeThickness="1" BackgroundColor="Transparent" Padding="12,0" HeightRequest="44">
                                 <Border.StrokeShape><RoundRectangle CornerRadius="8" /></Border.StrokeShape>
-                                <Entry x:Name="IdentificacionEntry" Placeholder="Ej. 0912345678" TextColor="#334155" PlaceholderColor="#9CA3AF" FontSize="13" BackgroundColor="Transparent" VerticalOptions="Center" />
+                                <Entry x:Name="IdentificacionEntry" Placeholder="Ej. 0912345678" TextColor="{StaticResource TextMain}" PlaceholderColor="{StaticResource TextLight}" FontSize="13" BackgroundColor="Transparent" VerticalOptions="Center" />
                             </Border>
                         </VerticalStackLayout>
 
                         <!-- Error Label -->
-                        <Label x:Name="ErrorLabel" TextColor="#EF4444" FontSize="13" IsVisible="False" />
+                        <Label x:Name="ErrorLabel" TextColor="{StaticResource Error}" FontSize="13" IsVisible="False" />
 
                         <!-- BOTONES DE ACCIÓN -->
                         <Grid ColumnDefinitions="*,*" ColumnSpacing="12" Margin="0,8,0,0">
@@ -126,8 +126,8 @@
                                 Grid.Column="0"
                                 Text="Cancelar"
                                 Clicked="OnCancelarClicked"
-                                BackgroundColor="#F1F5F9"
-                                TextColor="#475569"
+                                BackgroundColor="{StaticResource Secondary}"
+                                TextColor="{StaticResource TextMuted}"
                                 FontSize="14"
                                 FontAttributes="Bold"
                                 HeightRequest="46"
@@ -138,8 +138,8 @@
                                 x:Name="GuardarBtn"
                                 Text="Guardar Líder"
                                 Clicked="OnGuardarClicked"
-                                BackgroundColor="#173A54"
-                                TextColor="White"
+                                BackgroundColor="{StaticResource Primary}"
+                                TextColor="{StaticResource White}"
                                 FontSize="14"
                                 FontAttributes="Bold"
                                 HeightRequest="46"

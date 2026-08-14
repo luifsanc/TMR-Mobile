@@ -22,7 +22,7 @@
                 <!-- Proyectos -->
                 <Grid Padding="15" ColumnDefinitions="40,*" BackgroundColor="Transparent">
                     <Grid.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnNavigate" CommandParameter="proyectos" />
+                        <TapGestureRecognizer Tapped="OnNavigate" CommandParameter="ProyectosPage" />
                     </Grid.GestureRecognizers>
                     <Image Grid.Column="0" Source="icon_proyectos.png" WidthRequest="24" HeightRequest="24" />
                     <Label Grid.Column="1" Text="Proyectos" VerticalOptions="Center" TextColor="#101828" />
@@ -32,7 +32,7 @@
                 <!-- Time Report -->
                 <Grid Padding="15" ColumnDefinitions="40,*" BackgroundColor="Transparent">
                     <Grid.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnNavigate" CommandParameter="timereport" />
+                        <TapGestureRecognizer Tapped="OnNavigate" CommandParameter="TimeReportPage" />
                     </Grid.GestureRecognizers>
                     <Image Grid.Column="0" Source="icon_timereport.png" WidthRequest="24" HeightRequest="24" />
                     <Label Grid.Column="1" Text="Time Report" VerticalOptions="Center" TextColor="#101828" />
@@ -42,7 +42,7 @@
                 <!-- Carga Actividades -->
                 <Grid Padding="15" ColumnDefinitions="40,*" BackgroundColor="Transparent">
                     <Grid.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnNavigate" CommandParameter="carga" />
+                        <TapGestureRecognizer Tapped="OnNavigate" CommandParameter="CargaActividadesPage" />
                     </Grid.GestureRecognizers>
                     <Image Grid.Column="0" Source="icon_carga.png" WidthRequest="24" HeightRequest="24" />
                     <Label Grid.Column="1" Text="Carga Actividades" VerticalOptions="Center" TextColor="#101828" />
@@ -52,7 +52,7 @@
                 <!-- Reportes -->
                 <Grid Padding="15" ColumnDefinitions="40,*" BackgroundColor="Transparent">
                     <Grid.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnNavigate" CommandParameter="reportes" />
+                        <TapGestureRecognizer Tapped="OnNavigate" CommandParameter="ReportesPage" />
                     </Grid.GestureRecognizers>
                     <Image Grid.Column="0" Source="icon_reportes.png" WidthRequest="24" HeightRequest="24" />
                     <Label Grid.Column="1" Text="Reportes" VerticalOptions="Center" TextColor="#101828" />
@@ -62,7 +62,7 @@
                 <!-- Líderes -->
                 <Grid Padding="15" ColumnDefinitions="40,*" BackgroundColor="Transparent">
                     <Grid.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnNavigate" CommandParameter="lideres" />
+                        <TapGestureRecognizer Tapped="OnNavigate" CommandParameter="LideresPage" />
                     </Grid.GestureRecognizers>
                     <Image Grid.Column="0" Source="icon_lideres.png" WidthRequest="24" HeightRequest="24" />
                     <Label Grid.Column="1" Text="Líderes" VerticalOptions="Center" TextColor="#101828" />
@@ -72,7 +72,7 @@
                 <!-- Colaboradores -->
                 <Grid Padding="15" ColumnDefinitions="40,*" BackgroundColor="Transparent">
                     <Grid.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnNavigate" CommandParameter="colaboradores" />
+                        <TapGestureRecognizer Tapped="OnNavigate" CommandParameter="ColaboradoresPage" />
                     </Grid.GestureRecognizers>
                     <Image Grid.Column="0" Source="icon_colaboradores.png" WidthRequest="24" HeightRequest="24" />
                     <Label Grid.Column="1" Text="Colaboradores" VerticalOptions="Center" TextColor="#101828" />
@@ -82,7 +82,7 @@
                 <!-- Clientes -->
                 <Grid Padding="15" ColumnDefinitions="40,*" BackgroundColor="Transparent">
                     <Grid.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnNavigate" CommandParameter="clientes" />
+                        <TapGestureRecognizer Tapped="OnNavigate" CommandParameter="ClientesPage" />
                     </Grid.GestureRecognizers>
                     <Image Grid.Column="0" Source="icon_clientes.png" WidthRequest="24" HeightRequest="24" />
                     <Label Grid.Column="1" Text="Clientes" VerticalOptions="Center" TextColor="#101828" />

@@ -8,7 +8,7 @@
     x:DataType="vm:ReportesViewModel"
     Title="Reportes"
     Shell.NavBarIsVisible="False"
-    BackgroundColor="#F8FAFC">
+    BackgroundColor="{StaticResource BackgroundLight}">
 
     <Grid RowDefinitions="*,80">
         <!-- Contenido principal -->
@@ -21,7 +21,7 @@
                     FontSize="28"
                     FontAttributes="Bold"
                     FontFamily="InterSemiBold"
-                    TextColor="#163572"
+                    TextColor="{StaticResource Primary}"
                     Margin="0,4,0,4" />
 
                 <!-- SUBTÍTULO -->
@@ -29,19 +29,19 @@
                     Text="Seleccione el tipo de informe operacional que desea consultar o exportar:"
                     FontSize="13"
                     FontFamily="InterRegular"
-                    TextColor="#64748B" />
+                    TextColor="{StaticResource TextMuted}" />
 
                 <!-- TARJETA 1: REPORTE POR HORAS -->
                 <Border
-                    BackgroundColor="White"
-                    Stroke="#E2E8F0"
+                    BackgroundColor="{StaticResource White}"
+                    Stroke="{StaticResource BorderColor}"
                     StrokeThickness="1"
                     Padding="18">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="14" />
                     </Border.StrokeShape>
                     <Border.Shadow>
-                        <Shadow Brush="Black" Offset="0,2" Radius="6" Opacity="0.04" />
+                        <Shadow Brush="{StaticResource TextPrimary}" Offset="0,2" Radius="6" Opacity="0.04" />
                     </Border.Shadow>
                     <Border.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding IrAReporteHorasCommand}" />
@@ -53,7 +53,7 @@
                             Grid.Column="0"
                             WidthRequest="48"
                             HeightRequest="48"
-                            BackgroundColor="#EBF3FA"
+                            BackgroundColor="{StaticResource PrimaryLight}"
                             StrokeThickness="0"
                             VerticalOptions="Center">
                             <Border.StrokeShape>
@@ -72,11 +72,11 @@
                                 Text="Reporte por Horas"
                                 FontSize="16"
                                 FontAttributes="Bold"
-                                TextColor="#173A54" />
+                                TextColor="{StaticResource Primary}" />
                             <Label
                                 Text="Consolidado de horas ejecutadas por cliente, mes y recursos asignados."
                                 FontSize="12"
-                                TextColor="#64748B" />
+                                TextColor="{StaticResource TextMuted}" />
                         </VerticalStackLayout>
 
                         <!-- Arrow Icon -->
@@ -85,22 +85,22 @@
                             Text="›"
                             FontSize="28"
                             FontAttributes="Bold"
-                            TextColor="#94A3B8"
+                            TextColor="{StaticResource TextLight}"
                             VerticalOptions="Center" />
                     </Grid>
                 </Border>
 
                 <!-- TARJETA 2: REPORTE POR FECHAS -->
                 <Border
-                    BackgroundColor="White"
-                    Stroke="#E2E8F0"
+                    BackgroundColor="{StaticResource White}"
+                    Stroke="{StaticResource BorderColor}"
                     StrokeThickness="1"
                     Padding="18">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="14" />
                     </Border.StrokeShape>
                     <Border.Shadow>
-                        <Shadow Brush="Black" Offset="0,2" Radius="6" Opacity="0.04" />
+                        <Shadow Brush="{StaticResource TextPrimary}" Offset="0,2" Radius="6" Opacity="0.04" />
                     </Border.Shadow>
                     <Border.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding IrAReporteFechasCommand}" />
@@ -112,7 +112,7 @@
                             Grid.Column="0"
                             WidthRequest="48"
                             HeightRequest="48"
-                            BackgroundColor="#F3E8FF"
+                            BackgroundColor="{StaticResource PrimaryLight}"
                             StrokeThickness="0"
                             VerticalOptions="Center">
                             <Border.StrokeShape>
@@ -131,11 +131,11 @@
                                 Text="Reporte por Fechas"
                                 FontSize="16"
                                 FontAttributes="Bold"
-                                TextColor="#173A54" />
+                                TextColor="{StaticResource Primary}" />
                             <Label
                                 Text="Detalle cronológico de registros de actividades por rango de fechas, líder y colaborador."
                                 FontSize="12"
-                                TextColor="#64748B" />
+                                TextColor="{StaticResource TextMuted}" />
                         </VerticalStackLayout>
 
                         <!-- Arrow Icon -->
@@ -144,7 +144,7 @@
                             Text="›"
                             FontSize="28"
                             FontAttributes="Bold"
-                            TextColor="#94A3B8"
+                            TextColor="{StaticResource TextLight}"
                             VerticalOptions="Center" />
                     </Grid>
                 </Border>

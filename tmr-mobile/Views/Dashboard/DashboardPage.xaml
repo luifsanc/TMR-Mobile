@@ -8,7 +8,7 @@
              x:Class="tmr_mobile.Views.Dashboard.DashboardPage"
              x:DataType="vm:DashboardViewModel"
              Title="Dashboard"
-             BackgroundColor="{StaticResource DashboardPageBg}">
+             BackgroundColor="{StaticResource BackgroundLight}">
 
     <ContentPage.Resources>
         <conv:StatusToBackgroundColorConverter x:Key="StatusBg"/>
@@ -16,19 +16,11 @@
         <conv:PercentToColumnsConverter x:Key="PercentToColumns"/>
         <conv:SelectedBackgroundConverter x:Key="SelectedBg"/>
         <conv:SelectedTextColorConverter x:Key="SelectedText"/>
-        <Color x:Key="DashboardPageBg">#F4F7FC</Color>
-        <Color x:Key="DashboardSurface">#FFFFFF</Color>
-        <Color x:Key="DashboardText">#0F172A</Color>
-        <Color x:Key="DashboardMuted">#667085</Color>
-        <Color x:Key="DashboardBorder">#E6ECF5</Color>
-        <Color x:Key="DashboardPrimary">#2347C6</Color>
-        <Color x:Key="DashboardHeroStart">#F8FBFF</Color>
-        <Color x:Key="DashboardHeroEnd">#EEF4FF</Color>
     </ContentPage.Resources>
 
     <Grid>
         <!-- ===================== TODO EN UN SOLO SCROLL ===================== -->
-        <ScrollView Margin="0,60,0,80">
+        <ScrollView Margin="0,0,0,80">
             <VerticalStackLayout Spacing="14"
                                  Padding="16,12,16,32">
 
@@ -37,11 +29,11 @@
                   VerticalOptions="Center">
 
                 <Label Grid.Column="1"
-                       Text="Dashboard"
+                       Text="TMR-Mobile"
                        FontSize="22"
                        FontAttributes="Bold"
                        HorizontalOptions="Center"
-                       TextColor="{StaticResource DashboardText}"/>
+                       TextColor="{StaticResource TextPrimary}"/>
             </Grid> 
 
             <!-- ===================== cuadro donde saluda la usuario ===================== -->
@@ -50,9 +42,9 @@
                     Padding="18,18,18,16">
                 <Border.Background>
                     <LinearGradientBrush EndPoint="1,1">
-                        <GradientStop Color="{StaticResource DashboardHeroStart}"
+                        <GradientStop Color="{StaticResource BackgroundLight}"
                                       Offset="0.0"/>
-                        <GradientStop Color="{StaticResource DashboardHeroEnd}"
+                        <GradientStop Color="{StaticResource PrimaryLight}"
                                       Offset="1.0"/>
                     </LinearGradientBrush>
                 </Border.Background>
@@ -60,7 +52,7 @@
                       ColumnSpacing="14">
                     <VerticalStackLayout Grid.Column="0"
                                          Spacing="6">
-                        <Border BackgroundColor="#FFFFFFAA"
+                        <Border BackgroundColor="{StaticResource WhiteTranslucent}"
                                 Stroke="Transparent"
                                 StrokeShape="RoundRectangle 14"
                                 Padding="10,5"
@@ -68,12 +60,12 @@
                             <Label Text="Resumen general"
                                    FontSize="11"
                                    FontAttributes="Bold"
-                                   TextColor="{StaticResource DashboardPrimary}"/>
+                                   TextColor="{StaticResource Primary}"/>
                         </Border>
 
                         <Label FontSize="24"
                                FontAttributes="Bold"
-                               TextColor="{StaticResource DashboardText}">
+                               TextColor="{StaticResource TextPrimary}">
                             <Label.FormattedText>
                                 <FormattedString>
                                     <Span Text="Hola, "/>
@@ -84,7 +76,7 @@
                         </Label>
 
                         <Label Text="Aquí tienes un resumen claro de tu actividad y tus métricas clave del mes."
-                               TextColor="{StaticResource DashboardMuted}"
+                               TextColor="{StaticResource TextMuted}"
                                FontSize="14"
                                LineBreakMode="WordWrap"/>
                     </VerticalStackLayout>
@@ -100,8 +92,8 @@
                 <BindableLayout.ItemTemplate>
                     <DataTemplate x:DataType="models:StatCard">
                         <Border StrokeShape="RoundRectangle 14"
-                                BackgroundColor="White"
-                                Stroke="{StaticResource DashboardBorder}"
+                                BackgroundColor="{StaticResource White}"
+                                Stroke="{StaticResource BorderColor}"
                                 Padding="12,10"
                                 Margin="4"
                                 HeightRequest="126"
@@ -132,7 +124,7 @@
                                     FontAttributes="Bold"
                                     HorizontalTextAlignment="Center"
                                     HorizontalOptions="Fill"
-                                    TextColor="{StaticResource DashboardText}"/>
+                                    TextColor="{StaticResource TextPrimary}"/>
 
                                 <Label Grid.Row="2"
                                     Text="{Binding Label}"
@@ -140,7 +132,7 @@
                                     HorizontalTextAlignment="Center"
                                     HorizontalOptions="Fill"
                                     LineBreakMode="WordWrap"
-                                    TextColor="{StaticResource DashboardMuted}"/>
+                                    TextColor="{StaticResource TextMuted}"/>
                             </Grid>
                         </Border>
                     </DataTemplate>
@@ -149,7 +141,7 @@
 
             <!-- ===================== Horas reportadas por proyecto (con selector de rango) ===================== -->
                 <Border StrokeShape="RoundRectangle 16"
-                        BackgroundColor="White"
+                        BackgroundColor="{StaticResource White}"
                         Stroke="Transparent"
                         Padding="16">
                     <VerticalStackLayout Spacing="14">
@@ -158,12 +150,12 @@
                                 Text="Horas reportadas por proyecto"
                                 FontSize="16"
                                 FontAttributes="Bold"
-                                TextColor="#101828"/>
+                                TextColor="{StaticResource TextPrimary}"/>
 
                             <Border Grid.Column="1"
                                     StrokeShape="RoundRectangle 20"
-                                    Stroke="#E4E7EC"
-                                    BackgroundColor="#F9FAFB"
+                                    Stroke="{StaticResource BorderColor}"
+                                    BackgroundColor="{StaticResource BackgroundLight}"
                                     Padding="12,6">
                                 <Border.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding ToggleSelectorRangoCommand}"/>
@@ -172,10 +164,10 @@
                                     <Label Text="{Binding RangoLabel}"
                                         FontSize="12"
                                         FontAttributes="Bold"
-                                        TextColor="#101828"
+                                        TextColor="{StaticResource TextPrimary}"
                                         VerticalOptions="Center"/>
                                     <Path Data="M2,4 L7,9 L12,4"
-                                        Stroke="#667085"
+                                        Stroke="{StaticResource TextMuted}"
                                         StrokeThickness="1.5"
                                         StrokeLineCap="Round"
                                         StrokeLineJoin="Round"
@@ -197,23 +189,23 @@
                                             <Label Grid.Column="0"
                                                    Text="{Binding Categoria}"
                                                    FontSize="12"
-                                                   TextColor="#667085"
+                                                   TextColor="{StaticResource TextMuted}"
                                                    LineBreakMode="TailTruncation"/>
                                             <Label Grid.Column="1"
                                                    Text="{Binding Horas, StringFormat='{0:0} h'}"
                                                    FontSize="13"
                                                    FontAttributes="Bold"
-                                                   TextColor="#101828"/>
+                                                   TextColor="{StaticResource TextPrimary}"/>
                                         </Grid>
 
-                                        <Border BackgroundColor="#E4ECFF"
+                                        <Border BackgroundColor="{StaticResource PrimaryLight}"
                                                 Stroke="Transparent"
                                                 StrokeShape="RoundRectangle 6"
                                                 HeightRequest="12">
                                             <Grid ColumnDefinitions="{Binding Porcentaje, Converter={StaticResource PercentToColumns}}"
                                                   HeightRequest="12">
                                                 <Border Grid.Column="0"
-                                                        BackgroundColor="#2E5BFF"
+                                                        BackgroundColor="{StaticResource Primary}"
                                                         Stroke="Transparent"
                                                         StrokeShape="RoundRectangle 6"/>
                                             </Grid>
@@ -233,11 +225,11 @@
                                                          Spacing="4">
                                         <Label Text="{Binding Titulo}"
                                                FontSize="10"
-                                               TextColor="#98A2B3"/>
+                                               TextColor="{StaticResource TextLight}"/>
                                         <Label Text="{Binding Valor}"
                                                FontSize="18"
                                                FontAttributes="Bold"
-                                               TextColor="#101828"/>
+                                               TextColor="{StaticResource TextPrimary}"/>
                                     </VerticalStackLayout>
                                 </DataTemplate>
                             </BindableLayout.ItemTemplate>
@@ -249,14 +241,14 @@
 
             <!-- ===================== Proyectos por cliente ===================== -->
             <Border StrokeShape="RoundRectangle 16"
-                    BackgroundColor="White"
+                    BackgroundColor="{StaticResource White}"
                     Stroke="Transparent"
                     Padding="16">
                 <VerticalStackLayout Spacing="14">
                     <Label Text="Proyectos por cliente"
                            FontSize="16"
                            FontAttributes="Bold"
-                           TextColor="#101828"/>
+                           TextColor="{StaticResource TextPrimary}"/>
 
                     <CollectionView ItemsSource="{Binding ProyectosPorClienteVisibles}"
                                     SelectionMode="None">
@@ -268,12 +260,12 @@
                                         <Label Grid.Column="0"
                                                Text="{Binding Cliente}"
                                                FontSize="12"
-                                               TextColor="#667085"
+                                               TextColor="{StaticResource TextMuted}"
                                                LineBreakMode="TailTruncation"/>
                                         <Label Grid.Column="1"
                                                FontSize="13"
                                                FontAttributes="Bold"
-                                               TextColor="#101828">
+                                               TextColor="{StaticResource TextPrimary}">
                                             <Label.FormattedText>
                                                 <FormattedString>
                                                     <Span Text="{Binding Proyectos}"/>
@@ -285,14 +277,14 @@
                                         </Label>
                                     </Grid>
 
-                                    <Border BackgroundColor="#E4ECFF"
+                                    <Border BackgroundColor="{StaticResource PrimaryLight}"
                                             Stroke="Transparent"
                                             StrokeShape="RoundRectangle 6"
                                             HeightRequest="12">
                                         <Grid ColumnDefinitions="{Binding Porcentaje, Converter={StaticResource PercentToColumns}}"
                                               HeightRequest="12">
                                             <Border Grid.Column="0"
-                                                    BackgroundColor="#7A58D1"
+                                                    BackgroundColor="{StaticResource Primary}"
                                                     Stroke="Transparent"
                                                     StrokeShape="RoundRectangle 6"/>
                                         </Grid>
@@ -305,7 +297,7 @@
                     <Button Text="{Binding TextoVerMasClientes}"
                             Command="{Binding ToggleVerMasClientesCommand}"
                             BackgroundColor="Transparent"
-                            TextColor="#7A58D1"
+                            TextColor="{StaticResource Primary}"
                             FontAttributes="Bold"
                             FontSize="13"
                             HorizontalOptions="Center"
@@ -321,7 +313,7 @@
                        Text="Próximos a cerrar"
                        FontSize="17"
                        FontAttributes="Bold"
-                       TextColor="#101828"/>
+                       TextColor="{StaticResource TextPrimary}"/>
             </Grid>
 
                 <CollectionView ItemsSource="{Binding ProximosACerrar}">
@@ -332,7 +324,7 @@
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="models:ClosingProject">
                             <Border StrokeShape="RoundRectangle 16"
-                                    BackgroundColor="White"
+                                    BackgroundColor="{StaticResource White}"
                                     Stroke="Transparent"
                                     Padding="16">
                                 <Grid ColumnDefinitions="*,Auto"
@@ -340,13 +332,13 @@
                                       RowSpacing="4">
                                     <Border Grid.Row="0"
                                             Grid.Column="0"
-                                            BackgroundColor="#EEF1F6"
+                                            BackgroundColor="{StaticResource Secondary}"
                                             StrokeShape="RoundRectangle 6"
                                             Padding="8,3"
                                             HorizontalOptions="Start">
                                         <Label Text="{Binding Codigo}"
                                                FontSize="11"
-                                               TextColor="#667085"/>
+                                               TextColor="{StaticResource TextMuted}"/>
                                     </Border>
 
                                     <Border Grid.Row="0"
@@ -365,24 +357,24 @@
                                            Text="{Binding Titulo}"
                                            FontSize="15"
                                            FontAttributes="Bold"
-                                           TextColor="#101828"/>
+                                           TextColor="{StaticResource TextPrimary}"/>
 
                                     <Label Grid.Row="2"
                                            Grid.Column="0"
                                            Text="{Binding Cliente}"
                                            FontSize="13"
-                                           TextColor="#667085"/>
+                                           TextColor="{StaticResource TextMuted}"/>
 
                                     <Label Grid.Row="3"
                                            Grid.Column="0"
                                            Text="{Binding FechaCierre, StringFormat='{0:dd/MM/yyyy}'}"
                                            FontSize="13"
-                                           TextColor="#667085"/>
+                                           TextColor="{StaticResource TextMuted}"/>
                                     <Label Grid.Row="3"
                                            Grid.Column="1"
                                            Text="{Binding HorasRestantes, StringFormat='{0} h restantes'}"
                                            FontSize="12"
-                                           TextColor="#667085"
+                                           TextColor="{StaticResource TextMuted}"
                                            HorizontalOptions="End"/>
                                 </Grid>
                             </Border>
@@ -393,7 +385,6 @@
         </VerticalStackLayout>
     </ScrollView>
 
-        <shared:TopNavBar VerticalOptions="Start" />
         <shared:BottomNavBar VerticalOptions="End" />
     </Grid>
 </ContentPage>

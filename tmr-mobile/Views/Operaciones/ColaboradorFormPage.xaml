@@ -6,7 +6,7 @@
     x:Class="tmr_mobile.Views.Operaciones.ColaboradorFormPage"
     x:DataType="vm:ColaboradorFormViewModel"
     Title="{Binding TituloPagina}"
-    BackgroundColor="#F4F6FA">
+    BackgroundColor="{StaticResource BackgroundLight}">
 
     <Grid>
         <ScrollView>
@@ -19,7 +19,7 @@
                         Text="‹"
                         Command="{Binding RegresarCommand}"
                         BackgroundColor="Transparent"
-                        TextColor="#173A54"
+                        TextColor="{StaticResource Primary}"
                         FontSize="24"
                         FontAttributes="Bold"
                         Padding="0"
@@ -32,103 +32,103 @@
                         Text="{Binding TituloPagina}"
                         FontSize="20"
                         FontAttributes="Bold"
-                        TextColor="#173A54"
+                        TextColor="{StaticResource Primary}"
                         VerticalOptions="Center" />
                 </Grid>
 
                 <!-- BLOQUE 1: CONTRATO -->
-                <Border BackgroundColor="White" Stroke="#E2E8F0" StrokeThickness="1" Padding="16">
+                <Border BackgroundColor="{StaticResource White}" Stroke="{StaticResource BorderColor}" StrokeThickness="1" Padding="16">
                     <Border.StrokeShape><RoundRectangle CornerRadius="12" /></Border.StrokeShape>
                     <VerticalStackLayout Spacing="14">
-                        <Label Text="▼ Contrato" FontSize="15" FontAttributes="Bold" TextColor="#173A54" />
+                        <Label Text="▼ Contrato" FontSize="15" FontAttributes="Bold" TextColor="{StaticResource Primary}" />
 
                         <!-- Empresa -->
                         <VerticalStackLayout Spacing="4">
-                            <Label Text="Empresa *" FontSize="12" TextColor="#64748B" />
-                            <Border Stroke="#DCE3EC" StrokeThickness="1" BackgroundColor="Transparent" Padding="8,0" HeightRequest="44">
+                            <Label Text="Empresa *" FontSize="12" TextColor="{StaticResource TextMuted}" />
+                            <Border Stroke="{StaticResource BorderColor}" StrokeThickness="1" BackgroundColor="Transparent" Padding="8,0" HeightRequest="44">
                                 <Border.StrokeShape><RoundRectangle CornerRadius="8" /></Border.StrokeShape>
-                                <Picker ItemsSource="{Binding Empresas}" ItemDisplayBinding="{Binding Valor}" SelectedItem="{Binding EmpresaSeleccionada}" Title="Seleccione empresa" TextColor="#334155" TitleColor="#9CA3AF" VerticalOptions="Center" />
+                                <Picker ItemsSource="{Binding Empresas}" ItemDisplayBinding="{Binding Valor}" SelectedItem="{Binding EmpresaSeleccionada}" Title="Seleccione empresa" TextColor="{StaticResource TextMain}" TitleColor="{StaticResource TextLight}" VerticalOptions="Center" />
                             </Border>
                         </VerticalStackLayout>
 
                         <!-- Tipo de Contrato -->
                         <VerticalStackLayout Spacing="4">
-                            <Label Text="Tipo de contrato *" FontSize="12" TextColor="#64748B" />
-                            <Border Stroke="#DCE3EC" StrokeThickness="1" BackgroundColor="Transparent" Padding="8,0" HeightRequest="44">
+                            <Label Text="Tipo de contrato *" FontSize="12" TextColor="{StaticResource TextMuted}" />
+                            <Border Stroke="{StaticResource BorderColor}" StrokeThickness="1" BackgroundColor="Transparent" Padding="8,0" HeightRequest="44">
                                 <Border.StrokeShape><RoundRectangle CornerRadius="8" /></Border.StrokeShape>
-                                <Picker ItemsSource="{Binding TiposContrato}" ItemDisplayBinding="{Binding Valor}" SelectedItem="{Binding TipoContratoSeleccionado}" Title="Seleccione tipo de contrato" TextColor="#334155" TitleColor="#9CA3AF" VerticalOptions="Center" />
+                                <Picker ItemsSource="{Binding TiposContrato}" ItemDisplayBinding="{Binding Valor}" SelectedItem="{Binding TipoContratoSeleccionado}" Title="Seleccione tipo de contrato" TextColor="{StaticResource TextMain}" TitleColor="{StaticResource TextLight}" VerticalOptions="Center" />
                             </Border>
                         </VerticalStackLayout>
                     </VerticalStackLayout>
                 </Border>
 
                 <!-- BLOQUE 2: DATOS PERSONALES -->
-                <Border BackgroundColor="White" Stroke="#E2E8F0" StrokeThickness="1" Padding="16">
+                <Border BackgroundColor="{StaticResource White}" Stroke="{StaticResource BorderColor}" StrokeThickness="1" Padding="16">
                     <Border.StrokeShape><RoundRectangle CornerRadius="12" /></Border.StrokeShape>
                     <VerticalStackLayout Spacing="14">
-                        <Label Text="▼ Datos personales" FontSize="15" FontAttributes="Bold" TextColor="#173A54" />
+                        <Label Text="▼ Datos personales" FontSize="15" FontAttributes="Bold" TextColor="{StaticResource Primary}" />
 
                         <!-- Tipo de Identificación -->
                         <VerticalStackLayout Spacing="4">
-                            <Label Text="Tipo de identificación *" FontSize="12" TextColor="#64748B" />
-                            <Border Stroke="#DCE3EC" StrokeThickness="1" BackgroundColor="Transparent" Padding="8,0" HeightRequest="44">
+                            <Label Text="Tipo de identificación *" FontSize="12" TextColor="{StaticResource TextMuted}" />
+                            <Border Stroke="{StaticResource BorderColor}" StrokeThickness="1" BackgroundColor="Transparent" Padding="8,0" HeightRequest="44">
                                 <Border.StrokeShape><RoundRectangle CornerRadius="8" /></Border.StrokeShape>
-                                <Picker ItemsSource="{Binding TiposIdentificacion}" ItemDisplayBinding="{Binding Valor}" SelectedItem="{Binding TipoIdentificacionSeleccionado}" Title="Seleccione tipo" TextColor="#334155" TitleColor="#9CA3AF" VerticalOptions="Center" />
+                                <Picker ItemsSource="{Binding TiposIdentificacion}" ItemDisplayBinding="{Binding Valor}" SelectedItem="{Binding TipoIdentificacionSeleccionado}" Title="Seleccione tipo" TextColor="{StaticResource TextMain}" TitleColor="{StaticResource TextLight}" VerticalOptions="Center" />
                             </Border>
                         </VerticalStackLayout>
 
                         <!-- Identificación -->
                         <VerticalStackLayout Spacing="4">
-                            <Label Text="Identificación *" FontSize="12" TextColor="#64748B" />
-                            <Border Stroke="#DCE3EC" StrokeThickness="1" BackgroundColor="Transparent" Padding="12,0" HeightRequest="44">
+                            <Label Text="Identificación *" FontSize="12" TextColor="{StaticResource TextMuted}" />
+                            <Border Stroke="{StaticResource BorderColor}" StrokeThickness="1" BackgroundColor="Transparent" Padding="12,0" HeightRequest="44">
                                 <Border.StrokeShape><RoundRectangle CornerRadius="8" /></Border.StrokeShape>
-                                <Entry Text="{Binding NumeroIdentificacion}" Placeholder="Ej: 0931961908" TextColor="#334155" PlaceholderColor="#9CA3AF" />
+                                <Entry Text="{Binding NumeroIdentificacion}" Placeholder="Ej: 0931961908" TextColor="{StaticResource TextMain}" PlaceholderColor="{StaticResource TextLight}" />
                             </Border>
                         </VerticalStackLayout>
 
                         <!-- Nombres y Apellidos -->
                         <Grid ColumnDefinitions="*,*" RowDefinitions="Auto" ColumnSpacing="12">
                             <VerticalStackLayout Grid.Column="0" Spacing="4">
-                                <Label Text="Nombres *" FontSize="12" TextColor="#64748B" />
-                                <Border Stroke="#DCE3EC" StrokeThickness="1" BackgroundColor="Transparent" Padding="12,0" HeightRequest="44">
+                                <Label Text="Nombres *" FontSize="12" TextColor="{StaticResource TextMuted}" />
+                                <Border Stroke="{StaticResource BorderColor}" StrokeThickness="1" BackgroundColor="Transparent" Padding="12,0" HeightRequest="44">
                                     <Border.StrokeShape><RoundRectangle CornerRadius="8" /></Border.StrokeShape>
-                                    <Entry Text="{Binding Nombres}" TextColor="#334155" />
+                                    <Entry Text="{Binding Nombres}" TextColor="{StaticResource TextMain}" />
                                 </Border>
                             </VerticalStackLayout>
 
                             <VerticalStackLayout Grid.Column="1" Spacing="4">
-                                <Label Text="Apellidos *" FontSize="12" TextColor="#64748B" />
-                                <Border Stroke="#DCE3EC" StrokeThickness="1" BackgroundColor="Transparent" Padding="12,0" HeightRequest="44">
+                                <Label Text="Apellidos *" FontSize="12" TextColor="{StaticResource TextMuted}" />
+                                <Border Stroke="{StaticResource BorderColor}" StrokeThickness="1" BackgroundColor="Transparent" Padding="12,0" HeightRequest="44">
                                     <Border.StrokeShape><RoundRectangle CornerRadius="8" /></Border.StrokeShape>
-                                    <Entry Text="{Binding Apellidos}" TextColor="#334155" />
+                                    <Entry Text="{Binding Apellidos}" TextColor="{StaticResource TextMain}" />
                                 </Border>
                             </VerticalStackLayout>
                         </Grid>
 
                         <!-- Fecha de Nacimiento -->
                         <VerticalStackLayout Spacing="4">
-                            <Label Text="Fecha de nacimiento" FontSize="12" TextColor="#64748B" />
-                            <Border Stroke="#DCE3EC" StrokeThickness="1" BackgroundColor="Transparent" Padding="12,0" HeightRequest="44">
+                            <Label Text="Fecha de nacimiento" FontSize="12" TextColor="{StaticResource TextMuted}" />
+                            <Border Stroke="{StaticResource BorderColor}" StrokeThickness="1" BackgroundColor="Transparent" Padding="12,0" HeightRequest="44">
                                 <Border.StrokeShape><RoundRectangle CornerRadius="8" /></Border.StrokeShape>
-                                <DatePicker Date="{Binding FechaNacimiento}" Format="dd/MM/yyyy" TextColor="#334155" VerticalOptions="Center" />
+                                <DatePicker Date="{Binding FechaNacimiento}" Format="dd/MM/yyyy" TextColor="{StaticResource TextMain}" VerticalOptions="Center" />
                             </Border>
                         </VerticalStackLayout>
 
                         <!-- Género y Nacionalidad -->
                         <Grid ColumnDefinitions="*,*" RowDefinitions="Auto" ColumnSpacing="12">
                             <VerticalStackLayout Grid.Column="0" Spacing="4">
-                                <Label Text="Género" FontSize="12" TextColor="#64748B" />
-                                <Border Stroke="#DCE3EC" StrokeThickness="1" BackgroundColor="Transparent" Padding="8,0" HeightRequest="44">
+                                <Label Text="Género" FontSize="12" TextColor="{StaticResource TextMuted}" />
+                                <Border Stroke="{StaticResource BorderColor}" StrokeThickness="1" BackgroundColor="Transparent" Padding="8,0" HeightRequest="44">
                                     <Border.StrokeShape><RoundRectangle CornerRadius="8" /></Border.StrokeShape>
-                                    <Picker ItemsSource="{Binding Generos}" ItemDisplayBinding="{Binding Valor}" SelectedItem="{Binding GeneroSeleccionado}" Title="Género" TextColor="#334155" TitleColor="#9CA3AF" VerticalOptions="Center" />
+                                    <Picker ItemsSource="{Binding Generos}" ItemDisplayBinding="{Binding Valor}" SelectedItem="{Binding GeneroSeleccionado}" Title="Género" TextColor="{StaticResource TextMain}" TitleColor="{StaticResource TextLight}" VerticalOptions="Center" />
                                 </Border>
                             </VerticalStackLayout>
 
                             <VerticalStackLayout Grid.Column="1" Spacing="4">
-                                <Label Text="Nacionalidad" FontSize="12" TextColor="#64748B" />
-                                <Border Stroke="#DCE3EC" StrokeThickness="1" BackgroundColor="Transparent" Padding="8,0" HeightRequest="44">
+                                <Label Text="Nacionalidad" FontSize="12" TextColor="{StaticResource TextMuted}" />
+                                <Border Stroke="{StaticResource BorderColor}" StrokeThickness="1" BackgroundColor="Transparent" Padding="8,0" HeightRequest="44">
                                     <Border.StrokeShape><RoundRectangle CornerRadius="8" /></Border.StrokeShape>
-                                    <Picker ItemsSource="{Binding Nacionalidades}" ItemDisplayBinding="{Binding Valor}" SelectedItem="{Binding NacionalidadSeleccionada}" Title="Nacionalidad" TextColor="#334155" TitleColor="#9CA3AF" VerticalOptions="Center" />
+                                    <Picker ItemsSource="{Binding Nacionalidades}" ItemDisplayBinding="{Binding Valor}" SelectedItem="{Binding NacionalidadSeleccionada}" Title="Nacionalidad" TextColor="{StaticResource TextMain}" TitleColor="{StaticResource TextLight}" VerticalOptions="Center" />
                                 </Border>
                             </VerticalStackLayout>
                         </Grid>
@@ -136,35 +136,35 @@
                 </Border>
 
                 <!-- BLOQUE 3: DATOS DE CONTACTO -->
-                <Border BackgroundColor="White" Stroke="#E2E8F0" StrokeThickness="1" Padding="16">
+                <Border BackgroundColor="{StaticResource White}" Stroke="{StaticResource BorderColor}" StrokeThickness="1" Padding="16">
                     <Border.StrokeShape><RoundRectangle CornerRadius="12" /></Border.StrokeShape>
                     <VerticalStackLayout Spacing="14">
-                        <Label Text="▼ Datos de contacto" FontSize="15" FontAttributes="Bold" TextColor="#173A54" />
+                        <Label Text="▼ Datos de contacto" FontSize="15" FontAttributes="Bold" TextColor="{StaticResource Primary}" />
 
                         <!-- Correo Electrónico -->
                         <VerticalStackLayout Spacing="4">
-                            <Label Text="Correo electrónico" FontSize="12" TextColor="#64748B" />
-                            <Border Stroke="#DCE3EC" StrokeThickness="1" BackgroundColor="Transparent" Padding="12,0" HeightRequest="44">
+                            <Label Text="Correo electrónico" FontSize="12" TextColor="{StaticResource TextMuted}" />
+                            <Border Stroke="{StaticResource BorderColor}" StrokeThickness="1" BackgroundColor="Transparent" Padding="12,0" HeightRequest="44">
                                 <Border.StrokeShape><RoundRectangle CornerRadius="8" /></Border.StrokeShape>
-                                <Entry Text="{Binding Email}" Keyboard="Email" TextColor="#334155" />
+                                <Entry Text="{Binding Email}" Keyboard="Email" TextColor="{StaticResource TextMain}" />
                             </Border>
                         </VerticalStackLayout>
 
                         <!-- Teléfono y Dirección -->
                         <Grid ColumnDefinitions="*,*" RowDefinitions="Auto" ColumnSpacing="12">
                             <VerticalStackLayout Grid.Column="0" Spacing="4">
-                                <Label Text="Teléfono" FontSize="12" TextColor="#64748B" />
-                                <Border Stroke="#DCE3EC" StrokeThickness="1" BackgroundColor="Transparent" Padding="12,0" HeightRequest="44">
+                                <Label Text="Teléfono" FontSize="12" TextColor="{StaticResource TextMuted}" />
+                                <Border Stroke="{StaticResource BorderColor}" StrokeThickness="1" BackgroundColor="Transparent" Padding="12,0" HeightRequest="44">
                                     <Border.StrokeShape><RoundRectangle CornerRadius="8" /></Border.StrokeShape>
-                                    <Entry Text="{Binding Telefono}" Keyboard="Telephone" TextColor="#334155" />
+                                    <Entry Text="{Binding Telefono}" Keyboard="Telephone" TextColor="{StaticResource TextMain}" />
                                 </Border>
                             </VerticalStackLayout>
 
                             <VerticalStackLayout Grid.Column="1" Spacing="4">
-                                <Label Text="Dirección" FontSize="12" TextColor="#64748B" />
-                                <Border Stroke="#DCE3EC" StrokeThickness="1" BackgroundColor="Transparent" Padding="12,0" HeightRequest="44">
+                                <Label Text="Dirección" FontSize="12" TextColor="{StaticResource TextMuted}" />
+                                <Border Stroke="{StaticResource BorderColor}" StrokeThickness="1" BackgroundColor="Transparent" Padding="12,0" HeightRequest="44">
                                     <Border.StrokeShape><RoundRectangle CornerRadius="8" /></Border.StrokeShape>
-                                    <Entry Text="{Binding Direccion}" TextColor="#334155" />
+                                    <Entry Text="{Binding Direccion}" TextColor="{StaticResource TextMain}" />
                                 </Border>
                             </VerticalStackLayout>
                         </Grid>
@@ -172,26 +172,26 @@
                 </Border>
 
                 <!-- BLOQUE 4: DATOS LABORALES -->
-                <Border BackgroundColor="White" Stroke="#E2E8F0" StrokeThickness="1" Padding="16">
+                <Border BackgroundColor="{StaticResource White}" Stroke="{StaticResource BorderColor}" StrokeThickness="1" Padding="16">
                     <Border.StrokeShape><RoundRectangle CornerRadius="12" /></Border.StrokeShape>
                     <VerticalStackLayout Spacing="14">
-                        <Label Text="▼ Datos laborales" FontSize="15" FontAttributes="Bold" TextColor="#173A54" />
+                        <Label Text="▼ Datos laborales" FontSize="15" FontAttributes="Bold" TextColor="{StaticResource Primary}" />
 
                         <!-- Departamento y Fecha Contratación -->
                         <Grid ColumnDefinitions="*,*" RowDefinitions="Auto" ColumnSpacing="12">
                             <VerticalStackLayout Grid.Column="0" Spacing="4">
-                                <Label Text="Departamento *" FontSize="12" TextColor="#64748B" />
-                                <Border Stroke="#DCE3EC" StrokeThickness="1" BackgroundColor="Transparent" Padding="8,0" HeightRequest="44">
+                                <Label Text="Departamento *" FontSize="12" TextColor="{StaticResource TextMuted}" />
+                                <Border Stroke="{StaticResource BorderColor}" StrokeThickness="1" BackgroundColor="Transparent" Padding="8,0" HeightRequest="44">
                                     <Border.StrokeShape><RoundRectangle CornerRadius="8" /></Border.StrokeShape>
-                                    <Picker ItemsSource="{Binding Departamentos}" ItemDisplayBinding="{Binding Valor}" SelectedItem="{Binding DepartamentoSeleccionado}" Title="Departamento" TextColor="#334155" TitleColor="#9CA3AF" VerticalOptions="Center" />
+                                    <Picker ItemsSource="{Binding Departamentos}" ItemDisplayBinding="{Binding Valor}" SelectedItem="{Binding DepartamentoSeleccionado}" Title="Departamento" TextColor="{StaticResource TextMain}" TitleColor="{StaticResource TextLight}" VerticalOptions="Center" />
                                 </Border>
                             </VerticalStackLayout>
 
                             <VerticalStackLayout Grid.Column="1" Spacing="4">
-                                <Label Text="Fecha de contratación *" FontSize="12" TextColor="#64748B" />
-                                <Border Stroke="#DCE3EC" StrokeThickness="1" BackgroundColor="Transparent" Padding="12,0" HeightRequest="44">
+                                <Label Text="Fecha de contratación *" FontSize="12" TextColor="{StaticResource TextMuted}" />
+                                <Border Stroke="{StaticResource BorderColor}" StrokeThickness="1" BackgroundColor="Transparent" Padding="12,0" HeightRequest="44">
                                     <Border.StrokeShape><RoundRectangle CornerRadius="8" /></Border.StrokeShape>
-                                    <DatePicker Date="{Binding FechaContratacion}" Format="dd/MM/yyyy" TextColor="#334155" VerticalOptions="Center" />
+                                    <DatePicker Date="{Binding FechaContratacion}" Format="dd/MM/yyyy" TextColor="{StaticResource TextMain}" VerticalOptions="Center" />
                                 </Border>
                             </VerticalStackLayout>
                         </Grid>
@@ -199,18 +199,18 @@
                         <!-- Cargo y Años de Experiencia -->
                         <Grid ColumnDefinitions="*,*" RowDefinitions="Auto" ColumnSpacing="12">
                             <VerticalStackLayout Grid.Column="0" Spacing="4">
-                                <Label Text="Cargo *" FontSize="12" TextColor="#64748B" />
-                                <Border Stroke="#DCE3EC" StrokeThickness="1" BackgroundColor="Transparent" Padding="8,0" HeightRequest="44">
+                                <Label Text="Cargo *" FontSize="12" TextColor="{StaticResource TextMuted}" />
+                                <Border Stroke="{StaticResource BorderColor}" StrokeThickness="1" BackgroundColor="Transparent" Padding="8,0" HeightRequest="44">
                                     <Border.StrokeShape><RoundRectangle CornerRadius="8" /></Border.StrokeShape>
-                                    <Picker ItemsSource="{Binding Cargos}" ItemDisplayBinding="{Binding NombreCargo}" SelectedItem="{Binding CargoSeleccionado}" Title="Seleccione cargo" TextColor="#334155" TitleColor="#9CA3AF" VerticalOptions="Center" />
+                                    <Picker ItemsSource="{Binding Cargos}" ItemDisplayBinding="{Binding NombreCargo}" SelectedItem="{Binding CargoSeleccionado}" Title="Seleccione cargo" TextColor="{StaticResource TextMain}" TitleColor="{StaticResource TextLight}" VerticalOptions="Center" />
                                 </Border>
                             </VerticalStackLayout>
 
                             <VerticalStackLayout Grid.Column="1" Spacing="4">
-                                <Label Text="Años de experiencia" FontSize="12" TextColor="#64748B" />
-                                <Border Stroke="#DCE3EC" StrokeThickness="1" BackgroundColor="Transparent" Padding="12,0" HeightRequest="44">
+                                <Label Text="Años de experiencia" FontSize="12" TextColor="{StaticResource TextMuted}" />
+                                <Border Stroke="{StaticResource BorderColor}" StrokeThickness="1" BackgroundColor="Transparent" Padding="12,0" HeightRequest="44">
                                     <Border.StrokeShape><RoundRectangle CornerRadius="8" /></Border.StrokeShape>
-                                    <Entry Text="{Binding AniosExperiencia}" Keyboard="Numeric" Placeholder="0" TextColor="#334155" />
+                                    <Entry Text="{Binding AniosExperiencia}" Keyboard="Numeric" Placeholder="0" TextColor="{StaticResource TextMain}" />
                                 </Border>
                             </VerticalStackLayout>
                         </Grid>
@@ -218,28 +218,28 @@
                         <!-- Modalidad y Categoría -->
                         <Grid ColumnDefinitions="*,*" RowDefinitions="Auto" ColumnSpacing="12">
                             <VerticalStackLayout Grid.Column="0" Spacing="4">
-                                <Label Text="Modalidad" FontSize="12" TextColor="#64748B" />
-                                <Border Stroke="#DCE3EC" StrokeThickness="1" BackgroundColor="Transparent" Padding="8,0" HeightRequest="44">
+                                <Label Text="Modalidad" FontSize="12" TextColor="{StaticResource TextMuted}" />
+                                <Border Stroke="{StaticResource BorderColor}" StrokeThickness="1" BackgroundColor="Transparent" Padding="8,0" HeightRequest="44">
                                     <Border.StrokeShape><RoundRectangle CornerRadius="8" /></Border.StrokeShape>
-                                    <Picker ItemsSource="{Binding Modalidades}" ItemDisplayBinding="{Binding Valor}" SelectedItem="{Binding ModalidadSeleccionada}" Title="Modalidad" TextColor="#334155" TitleColor="#9CA3AF" VerticalOptions="Center" />
+                                    <Picker ItemsSource="{Binding Modalidades}" ItemDisplayBinding="{Binding Valor}" SelectedItem="{Binding ModalidadSeleccionada}" Title="Modalidad" TextColor="{StaticResource TextMain}" TitleColor="{StaticResource TextLight}" VerticalOptions="Center" />
                                 </Border>
                             </VerticalStackLayout>
 
                             <VerticalStackLayout Grid.Column="1" Spacing="4">
-                                <Label Text="Categoría" FontSize="12" TextColor="#64748B" />
-                                <Border Stroke="#DCE3EC" StrokeThickness="1" BackgroundColor="Transparent" Padding="8,0" HeightRequest="44">
+                                <Label Text="Categoría" FontSize="12" TextColor="{StaticResource TextMuted}" />
+                                <Border Stroke="{StaticResource BorderColor}" StrokeThickness="1" BackgroundColor="Transparent" Padding="8,0" HeightRequest="44">
                                     <Border.StrokeShape><RoundRectangle CornerRadius="8" /></Border.StrokeShape>
-                                    <Picker ItemsSource="{Binding Categorias}" ItemDisplayBinding="{Binding Valor}" SelectedItem="{Binding CategoriaSeleccionada}" Title="Categoría" TextColor="#334155" TitleColor="#9CA3AF" VerticalOptions="Center" />
+                                    <Picker ItemsSource="{Binding Categorias}" ItemDisplayBinding="{Binding Valor}" SelectedItem="{Binding CategoriaSeleccionada}" Title="Categoría" TextColor="{StaticResource TextMain}" TitleColor="{StaticResource TextLight}" VerticalOptions="Center" />
                                 </Border>
                             </VerticalStackLayout>
                         </Grid>
 
                         <!-- Reemplaza a -->
                         <VerticalStackLayout Spacing="4">
-                            <Label Text="Reemplaza a (opcional)" FontSize="12" TextColor="#64748B" />
-                            <Border Stroke="#DCE3EC" StrokeThickness="1" BackgroundColor="Transparent" Padding="8,0" HeightRequest="44">
+                            <Label Text="Reemplaza a (opcional)" FontSize="12" TextColor="{StaticResource TextMuted}" />
+                            <Border Stroke="{StaticResource BorderColor}" StrokeThickness="1" BackgroundColor="Transparent" Padding="8,0" HeightRequest="44">
                                 <Border.StrokeShape><RoundRectangle CornerRadius="8" /></Border.StrokeShape>
-                                <Picker ItemsSource="{Binding ColaboradoresReemplazo}" ItemDisplayBinding="{Binding NombreCompleto}" SelectedItem="{Binding ReemplazoSeleccionado}" Title="Seleccionar colaborador" TextColor="#334155" TitleColor="#9CA3AF" VerticalOptions="Center" />
+                                <Picker ItemsSource="{Binding ColaboradoresReemplazo}" ItemDisplayBinding="{Binding NombreCompleto}" SelectedItem="{Binding ReemplazoSeleccionado}" Title="Seleccionar colaborador" TextColor="{StaticResource TextMain}" TitleColor="{StaticResource TextLight}" VerticalOptions="Center" />
                             </Border>
                         </VerticalStackLayout>
                     </VerticalStackLayout>
@@ -249,8 +249,8 @@
                 <Button
                     Text="Guardar"
                     Command="{Binding GuardarCommand}"
-                    BackgroundColor="#173A54"
-                    TextColor="White"
+                    BackgroundColor="{StaticResource Primary}"
+                    TextColor="{StaticResource White}"
                     CornerRadius="8"
                     HeightRequest="50"
                     FontSize="16"
@@ -264,21 +264,21 @@
         <ActivityIndicator
             IsVisible="{Binding IsBusy}"
             IsRunning="{Binding IsBusy}"
-            Color="#173A54"
+            Color="{StaticResource Primary}"
             HorizontalOptions="Center"
             VerticalOptions="Center" />
 
         <!-- ERROR DE VALIDACIÓN -->
         <ContentView
             IsVisible="{Binding ErrorMessage, Converter={StaticResource IsStringNotNullOrEmptyConverter}}"
-            BackgroundColor="#CC000000"
+            BackgroundColor="{StaticResource Overlay}"
             InputTransparent="False">
-            <Border BackgroundColor="White" Padding="24" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="300">
+            <Border BackgroundColor="{StaticResource White}" Padding="24" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="300">
                 <Border.StrokeShape><RoundRectangle CornerRadius="12" /></Border.StrokeShape>
                 <VerticalStackLayout Spacing="16">
-                    <Label Text="Error" FontSize="18" FontAttributes="Bold" TextColor="#E53935" HorizontalTextAlignment="Center" />
-                    <Label Text="{Binding ErrorMessage}" TextColor="#334155" HorizontalTextAlignment="Center" />
-                    <Button Text="Cerrar" Command="{Binding LimpiarErrorCommand}" BackgroundColor="#173A54" TextColor="White" CornerRadius="8" />
+                    <Label Text="Error" FontSize="18" FontAttributes="Bold" TextColor="{StaticResource Error}" HorizontalTextAlignment="Center" />
+                    <Label Text="{Binding ErrorMessage}" TextColor="{StaticResource TextMain}" HorizontalTextAlignment="Center" />
+                    <Button Text="Cerrar" Command="{Binding LimpiarErrorCommand}" BackgroundColor="{StaticResource Primary}" TextColor="{StaticResource White}" CornerRadius="8" />
                 </VerticalStackLayout>
             </Border>
         </ContentView>
