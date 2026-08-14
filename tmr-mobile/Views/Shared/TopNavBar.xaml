@@ -101,7 +101,6 @@
             <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" Spacing="2">
                 <Image Source="logo_empresa.png" HeightRequest="60" HorizontalOptions="Center" />
             </VerticalStackLayout>
-            <Label Grid.Column="1" Text="12:03" FontSize="12" TextColor="#667085" HorizontalOptions="End" VerticalOptions="Center" Margin="0,0,10,0"/>
 
             <!-- Columna 2: Boton menu -->
             <ImageButton Grid.Column="2" Source="icon_menu.png" WidthRequest="24" HeightRequest="24" HorizontalOptions="Center" VerticalOptions="Center" Clicked="OnMenuClicked"/>
