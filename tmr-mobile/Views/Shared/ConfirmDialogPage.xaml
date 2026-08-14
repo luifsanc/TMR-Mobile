@@ -4,20 +4,20 @@
              x:Class="tmr_mobile.Views.Shared.ConfirmDialogPage"
              Shell.NavBarIsVisible="False"
              Shell.TabBarIsVisible="False"
-             BackgroundColor="#990F172A">
+             BackgroundColor="{StaticResource OverlaySoft}">
 
     <Grid Padding="20,32">
         <Border x:Name="DialogCard"
                 MaximumWidthRequest="420"
                 HorizontalOptions="Fill"
                 VerticalOptions="Center"
-                BackgroundColor="White"
-                Stroke="#E8EDF5"
+                BackgroundColor="{StaticResource White}"
+                Stroke="{StaticResource PrimaryLight}"
                 StrokeThickness="1"
                 StrokeShape="RoundRectangle 22"
                 Padding="24,26,24,22">
             <Border.Shadow>
-                <Shadow Brush="#0F172A"
+                <Shadow Brush="{StaticResource TextPrimary}"
                         Opacity="0.24"
                         Radius="28"
                         Offset="0,12" />
@@ -27,14 +27,14 @@
                 <Border WidthRequest="52"
                         HeightRequest="52"
                         HorizontalOptions="Start"
-                        BackgroundColor="#FEF2F2"
-                        Stroke="#FECACA"
+                        BackgroundColor="{StaticResource ErrorSurface}"
+                        Stroke="{StaticResource ErrorSurface}"
                         StrokeThickness="1"
                         StrokeShape="RoundRectangle 16">
                     <Label x:Name="IconLabel"
                            FontFamily="InterSemiBold"
                            FontSize="23"
-                           TextColor="#B42318"
+                           TextColor="{StaticResource ErrorText}"
                            HorizontalTextAlignment="Center"
                            VerticalTextAlignment="Center" />
                 </Border>
@@ -43,19 +43,19 @@
                        Margin="0,18,0,0"
                        FontFamily="InterSemiBold"
                        FontSize="21"
-                       TextColor="#163572"
+                       TextColor="{StaticResource Primary}"
                        LineHeight="1.15" />
 
                 <Label x:Name="MessageLabel"
                        Margin="0,9,0,0"
                        FontFamily="InterRegular"
                        FontSize="14"
-                       TextColor="#5F6B7A"
+                       TextColor="{StaticResource TextMuted}"
                        LineHeight="1.35" />
 
                 <BoxView Margin="0,24,0,20"
                          HeightRequest="1"
-                         Color="#E8EDF5" />
+                         Color="{StaticResource PrimaryLight}" />
 
                 <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
                     <Button x:Name="CancelButton"
@@ -66,10 +66,10 @@
                             Padding="12,0"
                             FontFamily="InterSemiBold"
                             FontSize="14"
-                            BackgroundColor="#FFFFFF"
-                            BorderColor="#D1D5DB"
+                            BackgroundColor="{StaticResource White}"
+                            BorderColor="{StaticResource BorderColor}"
                             BorderWidth="1"
-                            TextColor="#374151" />
+                            TextColor="{StaticResource TextMain}" />
 
                     <Button x:Name="ConfirmButton"
                             Grid.Column="1"
@@ -79,8 +79,8 @@
                             Padding="12,0"
                             FontFamily="InterSemiBold"
                             FontSize="14"
-                            BackgroundColor="#163572"
-                            TextColor="White" />
+                            BackgroundColor="{StaticResource Primary}"
+                            TextColor="{StaticResource White}" />
                 </Grid>
             </VerticalStackLayout>
         </Border>

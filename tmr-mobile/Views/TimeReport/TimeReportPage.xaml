@@ -9,61 +9,61 @@
              x:DataType="vm:TimeReportViewModel"
              Title="{Binding Title}">
 
-    <Grid BackgroundColor="#F8FAFC">
-        <ScrollView Margin="0,60,0,80">
+    <Grid BackgroundColor="{StaticResource BackgroundLight}">
+        <ScrollView Margin="0,0,0,80">
             <VerticalStackLayout Padding="20,10,20,32" Spacing="20">
 
                 <!-- Título -->
-                <Label Text="Actividades" FontAttributes="Bold" FontSize="34" TextColor="#0F172A" Margin="0,0,0,0" />
+                <Label Text="Actividades" FontAttributes="Bold" FontSize="34" TextColor="{StaticResource TextPrimary}" Margin="0,0,0,0" />
 
                 <!-- Tarjeta Resumen de Horas (2x2 Grid) -->
-                <Border StrokeShape="RoundRectangle 20" Stroke="#E2E8F0" StrokeThickness="1" BackgroundColor="White" Padding="0">
+                <Border StrokeShape="RoundRectangle 20" Stroke="{StaticResource BorderColor}" StrokeThickness="1" BackgroundColor="{StaticResource White}" Padding="0">
                     <Border.Shadow>
-                        <Shadow Brush="#0F172A" Offset="0,2" Radius="8" Opacity="0.05" />
+                        <Shadow Brush="{StaticResource TextPrimary}" Offset="0,2" Radius="8" Opacity="0.05" />
                     </Border.Shadow>
                     
                     <Grid RowDefinitions="Auto,1,Auto" ColumnDefinitions="*,1,*">
                         
                         <!-- Top Left: Horas por registrar -->
                         <Grid Grid.Row="0" Grid.Column="0" ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto" ColumnSpacing="10" Padding="16">
-                            <Border Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" StrokeShape="RoundRectangle 12" BackgroundColor="#E0E7FF" WidthRequest="36" HeightRequest="36" Stroke="Transparent" VerticalOptions="Center">
+                            <Border Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" StrokeShape="RoundRectangle 12" BackgroundColor="{StaticResource PrimaryLight}" WidthRequest="36" HeightRequest="36" Stroke="Transparent" VerticalOptions="Center">
                                 <Label Text="🕘" FontSize="16" VerticalOptions="Center" HorizontalOptions="Center" />
                             </Border>
-                            <Label Grid.Row="0" Grid.Column="1" Text="{Binding Resumen.HorasPorRegistrar, StringFormat='{0:F2} h'}" FontAttributes="Bold" FontSize="16" TextColor="#0F172A" VerticalOptions="End" Margin="0,0,0,-2" />
-                            <Label Grid.Row="1" Grid.Column="1" Text="Horas por&#10;registrar" FontSize="11" TextColor="#64748B" VerticalOptions="Start" LineHeight="1.1" />
+                            <Label Grid.Row="0" Grid.Column="1" Text="{Binding Resumen.HorasPorRegistrar, StringFormat='{0:F2} h'}" FontAttributes="Bold" FontSize="16" TextColor="{StaticResource TextPrimary}" VerticalOptions="End" Margin="0,0,0,-2" />
+                            <Label Grid.Row="1" Grid.Column="1" Text="Horas por&#10;registrar" FontSize="11" TextColor="{StaticResource TextMuted}" VerticalOptions="Start" LineHeight="1.1" />
                         </Grid>
                         
                         <!-- Vertical Divider -->
-                        <BoxView Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" WidthRequest="1" Color="#F1F5F9" VerticalOptions="Fill" Margin="0,12" />
+                        <BoxView Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" WidthRequest="1" Color="{StaticResource Secondary}" VerticalOptions="Fill" Margin="0,12" />
                         
                         <!-- Top Right: Horas registradas -->
                         <Grid Grid.Row="0" Grid.Column="2" ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto" ColumnSpacing="10" Padding="16">
-                            <Border Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" StrokeShape="RoundRectangle 12" BackgroundColor="#DCFCE7" WidthRequest="36" HeightRequest="36" Stroke="Transparent" VerticalOptions="Center">
+                            <Border Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" StrokeShape="RoundRectangle 12" BackgroundColor="{StaticResource SuccessSurface}" WidthRequest="36" HeightRequest="36" Stroke="Transparent" VerticalOptions="Center">
                                 <Label Text="🟢" FontSize="16" VerticalOptions="Center" HorizontalOptions="Center" />
                             </Border>
-                            <Label Grid.Row="0" Grid.Column="1" Text="{Binding Resumen.HorasRegistradas, StringFormat='{0:F2} h'}" FontAttributes="Bold" FontSize="16" TextColor="#0F172A" VerticalOptions="End" Margin="0,0,0,-2" />
-                            <Label Grid.Row="1" Grid.Column="1" Text="Horas&#10;registradas" FontSize="11" TextColor="#64748B" VerticalOptions="Start" LineHeight="1.1" />
+                            <Label Grid.Row="0" Grid.Column="1" Text="{Binding Resumen.HorasRegistradas, StringFormat='{0:F2} h'}" FontAttributes="Bold" FontSize="16" TextColor="{StaticResource TextPrimary}" VerticalOptions="End" Margin="0,0,0,-2" />
+                            <Label Grid.Row="1" Grid.Column="1" Text="Horas&#10;registradas" FontSize="11" TextColor="{StaticResource TextMuted}" VerticalOptions="Start" LineHeight="1.1" />
                         </Grid>
 
                         <!-- Horizontal Divider -->
-                        <BoxView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" HeightRequest="1" Color="#F1F5F9" HorizontalOptions="Fill" Margin="16,0" />
+                        <BoxView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" HeightRequest="1" Color="{StaticResource Secondary}" HorizontalOptions="Fill" Margin="16,0" />
 
                         <!-- Bottom Left: Horas de la semana -->
                         <Grid Grid.Row="2" Grid.Column="0" ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto" ColumnSpacing="10" Padding="16">
-                            <Border Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" StrokeShape="RoundRectangle 12" BackgroundColor="#F3E8FF" WidthRequest="36" HeightRequest="36" Stroke="Transparent" VerticalOptions="Center">
+                            <Border Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" StrokeShape="RoundRectangle 12" BackgroundColor="{StaticResource PrimaryLight}" WidthRequest="36" HeightRequest="36" Stroke="Transparent" VerticalOptions="Center">
                                 <Label Text="🗓" FontSize="16" VerticalOptions="Center" HorizontalOptions="Center" />
                             </Border>
-                            <Label Grid.Row="0" Grid.Column="1" Text="{Binding Resumen.HorasSemana, StringFormat='{0:F2} h'}" FontAttributes="Bold" FontSize="16" TextColor="#0F172A" VerticalOptions="End" Margin="0,0,0,-2" />
-                            <Label Grid.Row="1" Grid.Column="1" Text="Horas de la&#10;semana" FontSize="11" TextColor="#64748B" VerticalOptions="Start" LineHeight="1.1" />
+                            <Label Grid.Row="0" Grid.Column="1" Text="{Binding Resumen.HorasSemana, StringFormat='{0:F2} h'}" FontAttributes="Bold" FontSize="16" TextColor="{StaticResource TextPrimary}" VerticalOptions="End" Margin="0,0,0,-2" />
+                            <Label Grid.Row="1" Grid.Column="1" Text="Horas de la&#10;semana" FontSize="11" TextColor="{StaticResource TextMuted}" VerticalOptions="Start" LineHeight="1.1" />
                         </Grid>
 
                         <!-- Bottom Right: Horas del mes -->
                         <Grid Grid.Row="2" Grid.Column="2" ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto" ColumnSpacing="10" Padding="16">
-                            <Border Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" StrokeShape="RoundRectangle 12" BackgroundColor="#FEF3C7" WidthRequest="36" HeightRequest="36" Stroke="Transparent" VerticalOptions="Center">
+                            <Border Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" StrokeShape="RoundRectangle 12" BackgroundColor="{StaticResource WarningSurface}" WidthRequest="36" HeightRequest="36" Stroke="Transparent" VerticalOptions="Center">
                                 <Label Text="🟡" FontSize="16" VerticalOptions="Center" HorizontalOptions="Center" />
                             </Border>
-                            <Label Grid.Row="0" Grid.Column="1" Text="{Binding Resumen.HorasMes, StringFormat='{0:F2} h'}" FontAttributes="Bold" FontSize="16" TextColor="#0F172A" VerticalOptions="End" Margin="0,0,0,-2" />
-                            <Label Grid.Row="1" Grid.Column="1" Text="Horas del&#10;mes" FontSize="11" TextColor="#64748B" VerticalOptions="Start" LineHeight="1.1" />
+                            <Label Grid.Row="0" Grid.Column="1" Text="{Binding Resumen.HorasMes, StringFormat='{0:F2} h'}" FontAttributes="Bold" FontSize="16" TextColor="{StaticResource TextPrimary}" VerticalOptions="End" Margin="0,0,0,-2" />
+                            <Label Grid.Row="1" Grid.Column="1" Text="Horas del&#10;mes" FontSize="11" TextColor="{StaticResource TextMuted}" VerticalOptions="Start" LineHeight="1.1" />
                         </Grid>
                     </Grid>
                 </Border>
@@ -71,31 +71,31 @@
                 <!-- Botón Agregar Actividad -->
                 <Button Text="＋  Agregar Actividad"
                         Command="{Binding NuevaActividadCommand}"
-                        BackgroundColor="#4A658A"
-                        TextColor="White"
+                        BackgroundColor="{StaticResource TextMuted}"
+                        TextColor="{StaticResource White}"
                         FontAttributes="Bold"
                         FontSize="16"
                         CornerRadius="14"
                         HeightRequest="52" />
 
                 <!-- Tarjeta del Calendario -->
-                <Border StrokeShape="RoundRectangle 24" Stroke="#E2E8F0" StrokeThickness="1" BackgroundColor="White" Padding="16,20,16,20">
+                <Border StrokeShape="RoundRectangle 24" Stroke="{StaticResource BorderColor}" StrokeThickness="1" BackgroundColor="{StaticResource White}" Padding="16,20,16,20">
                     <Border.Shadow>
-                        <Shadow Brush="#0F172A" Offset="0,4" Radius="12" Opacity="0.03" />
+                        <Shadow Brush="{StaticResource TextPrimary}" Offset="0,4" Radius="12" Opacity="0.03" />
                     </Border.Shadow>
                     
                     <VerticalStackLayout Spacing="16">
                         
                         <!-- Resumen Semanal -->
-                        <Border StrokeShape="RoundRectangle 12" Stroke="Transparent" BackgroundColor="#F1F5F9" Padding="12,10" Margin="0,0,0,4">
+                        <Border StrokeShape="RoundRectangle 12" Stroke="Transparent" BackgroundColor="{StaticResource Secondary}" Padding="12,10" Margin="0,0,0,4">
                             <Grid ColumnDefinitions="Auto,*,Auto">
-                                <Label Grid.Column="0" Text="‹" FontSize="20" FontAttributes="Bold" TextColor="#0F172A" VerticalOptions="Center" Margin="8,0,0,0">
+                                <Label Grid.Column="0" Text="‹" FontSize="20" FontAttributes="Bold" TextColor="{StaticResource TextPrimary}" VerticalOptions="Center" Margin="8,0,0,0">
                                     <Label.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding MesAnteriorCommand}"/>
                                     </Label.GestureRecognizers>
                                 </Label>
-                                <Label Grid.Column="1" Text="Resumen Semanal" FontSize="15" FontAttributes="Bold" TextColor="#0F172A" HorizontalOptions="Center" VerticalOptions="Center" />
-                                <Label Grid.Column="2" Text="›" FontSize="20" FontAttributes="Bold" TextColor="#0F172A" VerticalOptions="Center" Margin="0,0,8,0">
+                                <Label Grid.Column="1" Text="Resumen Semanal" FontSize="15" FontAttributes="Bold" TextColor="{StaticResource TextPrimary}" HorizontalOptions="Center" VerticalOptions="Center" />
+                                <Label Grid.Column="2" Text="›" FontSize="20" FontAttributes="Bold" TextColor="{StaticResource TextPrimary}" VerticalOptions="Center" Margin="0,0,8,0">
                                     <Label.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding MesSiguienteCommand}"/>
                                     </Label.GestureRecognizers>
@@ -105,19 +105,19 @@
                         
                         <!-- Subcabecera Agosto de 2026 v -->
                         <HorizontalStackLayout HorizontalOptions="Center" Spacing="6">
-                            <Label Text="{Binding FechaSeleccionada, StringFormat='{0:MMMM} de {0:yyyy}'}" FontSize="16" FontAttributes="Bold" TextColor="#0F172A" VerticalOptions="Center" TextTransform="None" />
-                            <Label Text="˅" FontSize="12" FontAttributes="Bold" TextColor="#64748B" VerticalOptions="Center" />
+                            <Label Text="{Binding FechaSeleccionada, StringFormat='{0:MMMM} de {0:yyyy}'}" FontSize="16" FontAttributes="Bold" TextColor="{StaticResource TextPrimary}" VerticalOptions="Center" TextTransform="None" />
+                            <Label Text="˅" FontSize="12" FontAttributes="Bold" TextColor="{StaticResource TextMuted}" VerticalOptions="Center" />
                         </HorizontalStackLayout>
                         
                         <!-- Encabezados de Días -->
                         <Grid ColumnDefinitions="*,*,*,*,*,*,*" Margin="0,8,0,4">
-                            <Label Grid.Column="0" Text="dom" FontSize="13" TextColor="#64748B" HorizontalTextAlignment="Center" />
-                            <Label Grid.Column="1" Text="lun" FontSize="13" TextColor="#64748B" HorizontalTextAlignment="Center" />
-                            <Label Grid.Column="2" Text="mar" FontSize="13" TextColor="#64748B" HorizontalTextAlignment="Center" />
-                            <Label Grid.Column="3" Text="mié" FontSize="13" TextColor="#64748B" HorizontalTextAlignment="Center" />
-                            <Label Grid.Column="4" Text="jue" FontSize="13" TextColor="#64748B" HorizontalTextAlignment="Center" />
-                            <Label Grid.Column="5" Text="vie" FontSize="13" TextColor="#64748B" HorizontalTextAlignment="Center" />
-                            <Label Grid.Column="6" Text="sáb" FontSize="13" TextColor="#64748B" HorizontalTextAlignment="Center" />
+                            <Label Grid.Column="0" Text="dom" FontSize="13" TextColor="{StaticResource TextMuted}" HorizontalTextAlignment="Center" />
+                            <Label Grid.Column="1" Text="lun" FontSize="13" TextColor="{StaticResource TextMuted}" HorizontalTextAlignment="Center" />
+                            <Label Grid.Column="2" Text="mar" FontSize="13" TextColor="{StaticResource TextMuted}" HorizontalTextAlignment="Center" />
+                            <Label Grid.Column="3" Text="mié" FontSize="13" TextColor="{StaticResource TextMuted}" HorizontalTextAlignment="Center" />
+                            <Label Grid.Column="4" Text="jue" FontSize="13" TextColor="{StaticResource TextMuted}" HorizontalTextAlignment="Center" />
+                            <Label Grid.Column="5" Text="vie" FontSize="13" TextColor="{StaticResource TextMuted}" HorizontalTextAlignment="Center" />
+                            <Label Grid.Column="6" Text="sáb" FontSize="13" TextColor="{StaticResource TextMuted}" HorizontalTextAlignment="Center" />
                         </Grid>
 
                         <!-- Grid de Días -->
@@ -132,7 +132,7 @@
                                             HeightRequest="42" Padding="0" BackgroundColor="Transparent">
                                         <Border.Triggers>
                                             <DataTrigger TargetType="Border" Binding="{Binding IsSelected}" Value="True">
-                                                <Setter Property="BackgroundColor" Value="#E2E8F0" />
+                                                <Setter Property="BackgroundColor" Value="{StaticResource BorderColor}" />
                                             </DataTrigger>
                                         </Border.Triggers>
                                         <Border.GestureRecognizers>
@@ -142,29 +142,29 @@
                                             <Label Grid.Row="0" Text="{Binding DayNumber}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="15">
                                                 <Label.Triggers>
                                                     <DataTrigger TargetType="Label" Binding="{Binding IsCurrentMonth}" Value="False">
-                                                        <Setter Property="TextColor" Value="#CBD5E1" />
+                                                        <Setter Property="TextColor" Value="{StaticResource BorderColor}" />
                                                     </DataTrigger>
                                                     <DataTrigger TargetType="Label" Binding="{Binding IsCurrentMonth}" Value="True">
-                                                        <Setter Property="TextColor" Value="#0F172A" />
+                                                        <Setter Property="TextColor" Value="{StaticResource TextPrimary}" />
                                                     </DataTrigger>
                                                     <MultiTrigger TargetType="Label">
                                                         <MultiTrigger.Conditions>
                                                             <BindingCondition Binding="{Binding IsCurrentMonth}" Value="True" />
                                                             <BindingCondition Binding="{Binding Date.DayOfWeek}" Value="Saturday" />
                                                         </MultiTrigger.Conditions>
-                                                        <Setter Property="TextColor" Value="#EF4444" />
+                                                        <Setter Property="TextColor" Value="{StaticResource Error}" />
                                                     </MultiTrigger>
                                                     <MultiTrigger TargetType="Label">
                                                         <MultiTrigger.Conditions>
                                                             <BindingCondition Binding="{Binding IsCurrentMonth}" Value="True" />
                                                             <BindingCondition Binding="{Binding Date.DayOfWeek}" Value="Sunday" />
                                                         </MultiTrigger.Conditions>
-                                                        <Setter Property="TextColor" Value="#EF4444" />
+                                                        <Setter Property="TextColor" Value="{StaticResource Error}" />
                                                     </MultiTrigger>
                                                 </Label.Triggers>
                                             </Label>
                                             <!-- Indicador de actividad -->
-                                            <Ellipse Grid.Row="1" WidthRequest="4" HeightRequest="4" Fill="#3B82F6" HorizontalOptions="Center" Margin="0,2,0,0" IsVisible="{Binding HasActivities}" />
+                                            <Ellipse Grid.Row="1" WidthRequest="4" HeightRequest="4" Fill="{StaticResource Primary}" HorizontalOptions="Center" Margin="0,2,0,0" IsVisible="{Binding HasActivities}" />
                                         </Grid>
                                     </Border>
                                 </DataTemplate>
@@ -182,14 +182,15 @@
 
                     </VerticalStackLayout>
                 </Border>
-<<<<<<< Updated upstream
-
                 <!-- Lista de Actividades del día -->
-                <Label Text="{Binding FechaSeleccionada, StringFormat='Actividades del {0:dd/MM/yyyy}'}" FontAttributes="Bold" FontSize="16" TextColor="#0F172A" Margin="0,8,0,0" IsVisible="False" />
-=======
->>>>>>> Stashed changes
+                <Label Text="{Binding FechaSeleccionada, StringFormat='Actividades del {0:dd/MM/yyyy}'}"
+                       FontAttributes="Bold"
+                       FontSize="16"
+                       TextColor="{StaticResource TextPrimary}"
+                       Margin="0,8,0,0"
+                       IsVisible="False" />
                 
-                <Label Text="No hay actividades para este día." TextColor="#64748B" HorizontalTextAlignment="Center" Margin="0,16" IsVisible="False">
+                <Label Text="No hay actividades para este día." TextColor="{StaticResource TextMuted}" HorizontalTextAlignment="Center" Margin="0,16" IsVisible="False">
                     <Label.Triggers>
                         <DataTrigger TargetType="Label" Binding="{Binding ActividadesDelDia.Count}" Value="0">
                             <Setter Property="IsVisible" Value="True" />
@@ -203,11 +204,11 @@
                     </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="dto:CalendarioActividadDto">
-                            <Border Padding="12" StrokeShape="RoundRectangle 12" Stroke="#E2E8F0" BackgroundColor="#FFF8E7" HeightRequest="90">
+                            <Border Padding="12" StrokeShape="RoundRectangle 12" Stroke="{StaticResource BorderColor}" BackgroundColor="{StaticResource WarningSurface}" HeightRequest="90">
                                 <VerticalStackLayout Spacing="2">
-                                    <Label Text="{Binding ProyectoNombre}" FontAttributes="Bold" FontSize="13" TextColor="#0F172A" LineBreakMode="TailTruncation" />
-                                    <Label Text="{Binding DescripcionActividad}" TextColor="#64748B" FontSize="12" LineBreakMode="TailTruncation" />
-                                    <Label Text="{Binding CantidadHoras, StringFormat='{0} h'}" FontAttributes="Bold" TextColor="#0F172A" FontSize="12" Margin="0,4,0,0" />
+                                    <Label Text="{Binding ProyectoNombre}" FontAttributes="Bold" FontSize="13" TextColor="{StaticResource TextPrimary}" LineBreakMode="TailTruncation" />
+                                    <Label Text="{Binding DescripcionActividad}" TextColor="{StaticResource TextMuted}" FontSize="12" LineBreakMode="TailTruncation" />
+                                    <Label Text="{Binding CantidadHoras, StringFormat='{0} h'}" FontAttributes="Bold" TextColor="{StaticResource TextPrimary}" FontSize="12" Margin="0,4,0,0" />
                                 </VerticalStackLayout>
                             </Border>
                         </DataTemplate>
@@ -217,7 +218,6 @@
             </VerticalStackLayout>
         </ScrollView>
         
-        <shared:TopNavBar VerticalOptions="Start" />
         <shared:BottomNavBar VerticalOptions="End" />
     </Grid>
 </ContentPage>

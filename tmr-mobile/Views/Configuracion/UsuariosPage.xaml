@@ -8,7 +8,7 @@
         <ContentView Grid.Row="0">
 <VerticalStackLayout Spacing="16" Padding="20">
         <Label Text="Administración de Usuarios" FontAttributes="Bold" FontSize="18" />
-        <Label Text="Gestión de accesos y perfiles del sistema." TextColor="#64748B" FontSize="14" />
+        <Label Text="Gestión de accesos y perfiles del sistema." TextColor="{StaticResource TextMuted}" FontSize="14" />
     </VerticalStackLayout>
 
 

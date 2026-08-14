@@ -8,7 +8,7 @@
         <ContentView Grid.Row="0">
 <VerticalStackLayout Spacing="16" Padding="20">
         <Label Text="Gestión de Días Feriados" FontAttributes="Bold" FontSize="18" />
-        <Label Text="Calendario de días no laborables registrados." TextColor="#64748B" FontSize="14" />
+        <Label Text="Calendario de días no laborables registrados." TextColor="{StaticResource TextMuted}" FontSize="14" />
     </VerticalStackLayout>
 
 

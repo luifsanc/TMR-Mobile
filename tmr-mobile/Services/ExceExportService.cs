@@ -1,15 +1,15 @@
-// Colores tomados exactamente del archivo Angular (reporte-excel.utils.ts)
+// Colores del sistema de diseño TMR.
 using ClosedXML.Excel;
 using ClosedXML.Excel.Drawings;
 
 public static class ReporteEstilos
 {
     public static readonly XLColor Cabecera = XLColor.FromArgb(0x16, 0x35, 0x72); // COLOR_CABECERA
-    public static readonly XLColor Texto    = XLColor.FromArgb(0x33, 0x41, 0x55); // COLOR_TEXTO
-    public static readonly XLColor Borde    = XLColor.FromArgb(0xE2, 0xE8, 0xF0); // COLOR_BORDE
+    public static readonly XLColor Texto    = XLColor.FromArgb(0x1E, 0x29, 0x3B); // TEXT_MAIN
+    public static readonly XLColor Borde    = XLColor.FromArgb(0xE5, 0xE7, 0xEB); // BORDER_COLOR
     public static readonly XLColor Alterno  = XLColor.FromArgb(0xF8, 0xFA, 0xFC); // COLOR_ALTERNO
     public static readonly XLColor Blanco   = XLColor.White;
-    public static readonly XLColor Verde    = XLColor.FromArgb(0x16, 0xA3, 0x4A); // activo/cargado
+    public static readonly XLColor Verde    = XLColor.FromArgb(0x4C, 0xAF, 0x50); // ACCENT
     public static readonly XLColor Gris     = XLColor.FromArgb(0x6B, 0x72, 0x80); // inactivo
 }
 

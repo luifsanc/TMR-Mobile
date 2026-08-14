@@ -1,4 +1,5 @@
 using System.Globalization;
+using tmr_mobile.Resources.Styles;
 
 namespace tmr_mobile.Views.TimeReport.Converters
 {
@@ -9,10 +10,10 @@ namespace tmr_mobile.Views.TimeReport.Converters
             var estado = value as string ?? string.Empty;
             return estado switch
             {
-                "Cargado" => Color.FromArgb("#2563EB"), // azul, como en el mockup
-                "Pendiente" => Color.FromArgb("#D97706"), // ámbar
-                "Error" => Color.FromArgb("#DC2626"), // rojo
-                _ => Color.FromArgb("#667085")  // gris neutro
+                "Cargado" => Color.FromArgb(DesignColors.Primary),
+                "Pendiente" => Color.FromArgb(DesignColors.Warning),
+                "Error" => Color.FromArgb(DesignColors.Error),
+                _ => Color.FromArgb(DesignColors.TextSecondary)
             };
         }
 

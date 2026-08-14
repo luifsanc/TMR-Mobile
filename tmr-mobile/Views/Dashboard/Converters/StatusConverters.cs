@@ -1,4 +1,5 @@
 using System.Globalization;
+using tmr_mobile.Resources.Styles;
 
 namespace tmr_mobile.Views.Dashboard.Converters;
 
@@ -12,12 +13,12 @@ public class StatusToBackgroundColorConverter : IValueConverter
         var estado = value as string ?? string.Empty;
         return estado switch
         {
-            "Completado" => Color.FromArgb("#DFF6E4"),
-            "En progreso" => Color.FromArgb("#E4ECFF"),
-            "En riesgo" => Color.FromArgb("#FDECEC"),
-            "Pendiente" => Color.FromArgb("#FFF0DE"),
-            "Activo" => Color.FromArgb("#E7F7ED"),
-            _ => Color.FromArgb("#F1F1F5")
+            "Completado" => Color.FromArgb(DesignColors.SuccessSurface),
+            "En progreso" => Color.FromArgb(DesignColors.PrimaryLight),
+            "En riesgo" => Color.FromArgb(DesignColors.ErrorSurface),
+            "Pendiente" => Color.FromArgb(DesignColors.WarningSurface),
+            "Activo" => Color.FromArgb(DesignColors.SuccessSurface),
+            _ => Color.FromArgb(DesignColors.Secondary)
         };
     }
 
@@ -35,12 +36,12 @@ public class StatusToTextColorConverter : IValueConverter
         var estado = value as string ?? string.Empty;
         return estado switch
         {
-            "Completado" => Color.FromArgb("#1F9254"),
-            "En progreso" => Color.FromArgb("#2E5BFF"),
-            "En riesgo" => Color.FromArgb("#D92D20"),
-            "Pendiente" => Color.FromArgb("#F58220"),
-            "Activo" => Color.FromArgb("#0E9F6E"),
-            _ => Color.FromArgb("#667085")
+            "Completado" => Color.FromArgb(DesignColors.SuccessText),
+            "En progreso" => Color.FromArgb(DesignColors.Primary),
+            "En riesgo" => Color.FromArgb(DesignColors.ErrorText),
+            "Pendiente" => Color.FromArgb(DesignColors.WarningText),
+            "Activo" => Color.FromArgb(DesignColors.SuccessText),
+            _ => Color.FromArgb(DesignColors.TextSecondary)
         };
     }
 

@@ -9,7 +9,7 @@
     x:DataType="vm:ReporteHorasViewModel"
     Title="Reporte por Horas"
     Shell.NavBarIsVisible="False"
-    BackgroundColor="#F8FAFC">
+    BackgroundColor="{StaticResource BackgroundLight}">
 
     <Grid RowDefinitions="*,80">
         <Grid Grid.Row="0">
@@ -22,7 +22,7 @@
                         Text="‹"
                         Command="{Binding RegresarCommand}"
                         BackgroundColor="Transparent"
-                        TextColor="#163572"
+                        TextColor="{StaticResource Primary}"
                         FontSize="28"
                         FontFamily="InterSemiBold"
                         FontAttributes="Bold"
@@ -37,7 +37,7 @@
                         FontSize="24"
                         FontAttributes="Bold"
                         FontFamily="InterSemiBold"
-                        TextColor="#163572"
+                        TextColor="{StaticResource Primary}"
                         VerticalOptions="Center" />
                 </Grid>
 
@@ -58,8 +58,8 @@
                                     <Border
                                         Grid.Column="0"
                                         HeightRequest="44"
-                                        BackgroundColor="White"
-                                        Stroke="#D1D5DB"
+                                        BackgroundColor="{StaticResource White}"
+                                        Stroke="{StaticResource BorderColor}"
                                         StrokeThickness="1"
                                         Padding="12,0">
                                         <Border.StrokeShape>
@@ -76,8 +76,8 @@
                                                 Grid.Column="1"
                                                 Text="{Binding TextoCliente}"
                                                 Placeholder="Buscar por cliente..."
-                                                PlaceholderColor="#9CA3AF"
-                                                TextColor="#111827"
+                                                PlaceholderColor="{StaticResource TextLight}"
+                                                TextColor="{StaticResource TextPrimary}"
                                                 FontSize="13"
                                                 FontFamily="InterRegular"
                                                 BackgroundColor="Transparent"
@@ -90,7 +90,7 @@
                                     <Border
                                         Grid.Column="1"
                                         HeightRequest="44"
-                                        BackgroundColor="#2563EB"
+                                        BackgroundColor="{StaticResource Primary}"
                                         Stroke="Transparent"
                                         Padding="14,0">
                                         <Border.StrokeShape>
@@ -101,7 +101,7 @@
                                         </Border.GestureRecognizers>
                                         <HorizontalStackLayout Spacing="6" HorizontalOptions="Center" VerticalOptions="Center">
                                             <Path Data="M12,4 L12,14 M7,9 L12,14 L17,9 M5,19 L19,19"
-                                                  Stroke="White"
+                                                  Stroke="{StaticResource White}"
                                                   StrokeThickness="2"
                                                   StrokeLineCap="Round"
                                                   StrokeLineJoin="Round"
@@ -110,7 +110,7 @@
                                                   VerticalOptions="Center"
                                                   Aspect="Uniform" />
                                             <Label Text="Descargar"
-                                                   TextColor="White"
+                                                   TextColor="{StaticResource White}"
                                                    FontSize="13"
                                                    FontAttributes="Bold"
                                                    VerticalOptions="Center" />
@@ -124,21 +124,21 @@
                                     <Border
                                         Grid.Column="0"
                                         HeightRequest="44"
-                                        BackgroundColor="White"
-                                        Stroke="#DCE3EC"
+                                        BackgroundColor="{StaticResource White}"
+                                        Stroke="{StaticResource BorderColor}"
                                         StrokeThickness="1"
                                         Padding="10,0">
                                         <Border.StrokeShape>
                                             <RoundRectangle CornerRadius="8" />
                                         </Border.StrokeShape>
                                         <Grid ColumnDefinitions="Auto,*" ColumnSpacing="6" VerticalOptions="Center">
-                                            <Label Text="Año:" FontSize="12" FontAttributes="Bold" TextColor="#64748B" VerticalOptions="Center" />
+                                            <Label Text="Año:" FontSize="12" FontAttributes="Bold" TextColor="{StaticResource TextMuted}" VerticalOptions="Center" />
                                             <Picker
                                                 Grid.Column="1"
                                                 ItemsSource="{Binding AniosDisponibles}"
                                                 SelectedItem="{Binding AnioSeleccionadoTexto}"
                                                 FontSize="12"
-                                                TextColor="#1E293B"
+                                                TextColor="{StaticResource TextMain}"
                                                 VerticalTextAlignment="Center"
                                                 HorizontalOptions="Fill"
                                                 VerticalOptions="Center" />
@@ -149,21 +149,21 @@
                                     <Border
                                         Grid.Column="1"
                                         HeightRequest="44"
-                                        BackgroundColor="White"
-                                        Stroke="#DCE3EC"
+                                        BackgroundColor="{StaticResource White}"
+                                        Stroke="{StaticResource BorderColor}"
                                         StrokeThickness="1"
                                         Padding="10,0">
                                         <Border.StrokeShape>
                                             <RoundRectangle CornerRadius="8" />
                                         </Border.StrokeShape>
                                         <Grid ColumnDefinitions="Auto,*" ColumnSpacing="6" VerticalOptions="Center">
-                                            <Label Text="Mes:" FontSize="12" FontAttributes="Bold" TextColor="#64748B" VerticalOptions="Center" />
+                                            <Label Text="Mes:" FontSize="12" FontAttributes="Bold" TextColor="{StaticResource TextMuted}" VerticalOptions="Center" />
                                             <Picker
                                                 Grid.Column="1"
                                                 ItemsSource="{Binding MesesDisponibles}"
                                                 SelectedItem="{Binding MesSeleccionadoTexto}"
                                                 FontSize="12"
-                                                TextColor="#1E293B"
+                                                TextColor="{StaticResource TextMain}"
                                                 VerticalTextAlignment="Center"
                                                 HorizontalOptions="Fill"
                                                 VerticalOptions="Center" />
@@ -177,48 +177,48 @@
                                 <!-- Card 1: Clientes Consultados -->
                                 <Border
                                     Grid.Column="0"
-                                    BackgroundColor="#F3E8FF"
-                                    Stroke="#E9D5FF"
+                                    BackgroundColor="{StaticResource PrimaryLight}"
+                                    Stroke="{StaticResource BorderColor}"
                                     StrokeThickness="1"
                                     Padding="8,8">
                                     <Border.StrokeShape>
                                         <RoundRectangle CornerRadius="10" />
                                     </Border.StrokeShape>
                                     <VerticalStackLayout Spacing="2">
-                                        <Label Text="Clientes" FontSize="10" TextColor="#6B21A8" HorizontalTextAlignment="Center" />
-                                        <Label Text="{Binding TotalClientesConsultados}" FontSize="16" FontAttributes="Bold" TextColor="#581C87" HorizontalTextAlignment="Center" />
+                                        <Label Text="Clientes" FontSize="10" TextColor="{StaticResource Primary}" HorizontalTextAlignment="Center" />
+                                        <Label Text="{Binding TotalClientesConsultados}" FontSize="16" FontAttributes="Bold" TextColor="{StaticResource PrimaryDark}" HorizontalTextAlignment="Center" />
                                     </VerticalStackLayout>
                                 </Border>
 
                                 <!-- Card 2: Recursos Asignados -->
                                 <Border
                                     Grid.Column="1"
-                                    BackgroundColor="#F0FDF4"
-                                    Stroke="#DCFCE7"
+                                    BackgroundColor="{StaticResource SuccessSurface}"
+                                    Stroke="{StaticResource SuccessSurface}"
                                     StrokeThickness="1"
                                     Padding="8,8">
                                     <Border.StrokeShape>
                                         <RoundRectangle CornerRadius="10" />
                                     </Border.StrokeShape>
                                     <VerticalStackLayout Spacing="2">
-                                        <Label Text="Recursos" FontSize="10" TextColor="#166534" HorizontalTextAlignment="Center" />
-                                        <Label Text="{Binding TotalRecursosInvolucrados}" FontSize="16" FontAttributes="Bold" TextColor="#14532D" HorizontalTextAlignment="Center" />
+                                        <Label Text="Recursos" FontSize="10" TextColor="{StaticResource SuccessText}" HorizontalTextAlignment="Center" />
+                                        <Label Text="{Binding TotalRecursosInvolucrados}" FontSize="16" FontAttributes="Bold" TextColor="{StaticResource SuccessText}" HorizontalTextAlignment="Center" />
                                     </VerticalStackLayout>
                                 </Border>
 
                                 <!-- Card 3: Total Horas -->
                                 <Border
                                     Grid.Column="2"
-                                    BackgroundColor="#EBF3FA"
-                                    Stroke="#D0E3F5"
+                                    BackgroundColor="{StaticResource PrimaryLight}"
+                                    Stroke="{StaticResource PrimaryLight}"
                                     StrokeThickness="1"
                                     Padding="8,8">
                                     <Border.StrokeShape>
                                         <RoundRectangle CornerRadius="10" />
                                     </Border.StrokeShape>
                                     <VerticalStackLayout Spacing="2">
-                                        <Label Text="Total Horas" FontSize="10" TextColor="#1E40AF" HorizontalTextAlignment="Center" />
-                                        <Label Text="{Binding TotalHorasRegistradas, StringFormat='{0:N1}h'}" FontSize="16" FontAttributes="Bold" TextColor="#1E3A8A" HorizontalTextAlignment="Center" />
+                                        <Label Text="Total Horas" FontSize="10" TextColor="{StaticResource Primary}" HorizontalTextAlignment="Center" />
+                                        <Label Text="{Binding TotalHorasRegistradas, StringFormat='{0:N1}h'}" FontSize="16" FontAttributes="Bold" TextColor="{StaticResource Primary}" HorizontalTextAlignment="Center" />
                                     </VerticalStackLayout>
                                 </Border>
                             </Grid>
@@ -229,7 +229,7 @@
                         <VerticalStackLayout Padding="40" HorizontalOptions="Center" VerticalOptions="Center">
                             <Label
                                 Text="No se encontraron registros de horas."
-                                TextColor="#64748B"
+                                TextColor="{StaticResource TextMuted}"
                                 FontSize="14"
                                 HorizontalTextAlignment="Center" />
                         </VerticalStackLayout>
@@ -240,8 +240,8 @@
                             <Border
                                 Margin="0,0,0,10"
                                 Padding="14"
-                                BackgroundColor="White"
-                                Stroke="#E2E8F0"
+                                BackgroundColor="{StaticResource White}"
+                                Stroke="{StaticResource BorderColor}"
                                 StrokeThickness="1">
                                 <Border.StrokeShape>
                                     <RoundRectangle CornerRadius="12" />
@@ -253,7 +253,7 @@
                                         Grid.Column="0"
                                         WidthRequest="42"
                                         HeightRequest="42"
-                                        BackgroundColor="#EBF3FA"
+                                        BackgroundColor="{StaticResource PrimaryLight}"
                                         StrokeThickness="0"
                                         VerticalOptions="Center">
                                         <Border.StrokeShape>
@@ -263,7 +263,7 @@
                                             Text="{Binding Inicial}"
                                             FontSize="15"
                                             FontAttributes="Bold"
-                                            TextColor="#173A54"
+                                            TextColor="{StaticResource Primary}"
                                             HorizontalTextAlignment="Center"
                                             VerticalTextAlignment="Center" />
                                     </Border>
@@ -274,22 +274,22 @@
                                             Text="{Binding Cliente}"
                                             FontSize="14"
                                             FontAttributes="Bold"
-                                            TextColor="#173A54"
+                                            TextColor="{StaticResource Primary}"
                                             MaxLines="1"
                                             LineBreakMode="TailTruncation" />
                                         <HorizontalStackLayout Spacing="6">
                                             <Label
                                                 Text="{Binding Recursos, StringFormat='👥 {0} recursos'}"
                                                 FontSize="12"
-                                                TextColor="#64748B" />
+                                                TextColor="{StaticResource TextMuted}" />
                                             <Label
                                                 Text="•"
                                                 FontSize="12"
-                                                TextColor="#CBD5E1" />
+                                                TextColor="{StaticResource BorderColor}" />
                                             <Label
                                                 Text="{Binding Mes, StringFormat='📅 {0}'}"
                                                 FontSize="12"
-                                                TextColor="#64748B" />
+                                                TextColor="{StaticResource TextMuted}" />
                                         </HorizontalStackLayout>
                                     </VerticalStackLayout>
 
@@ -299,7 +299,7 @@
                                             Text="{Binding Horas, StringFormat='{0:N1} hrs'}"
                                             FontSize="15"
                                             FontAttributes="Bold"
-                                            TextColor="#173A54"
+                                            TextColor="{StaticResource Primary}"
                                             HorizontalTextAlignment="End" />
 
                                         <Border
@@ -334,7 +334,7 @@
             Grid.RowSpan="2"
             IsVisible="{Binding IsBusy}"
             IsRunning="{Binding IsBusy}"
-            Color="#173A54"
+            Color="{StaticResource Primary}"
             HorizontalOptions="Center"
             VerticalOptions="Center" />
     </Grid>

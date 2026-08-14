@@ -1,5 +1,6 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using tmr_mobile.Resources.Styles;
 using tmr_mobile.Services;
 using tmr_mobile.Views.Dashboard.Models;
 using tmr_shared.DTOs.Dashboard;
@@ -13,7 +14,14 @@ public partial class DashboardViewModel : BaseViewModel
     // Paleta usada para "Detalle de horas" (derivado de HorasPorProyecto,
     // ya que el endpoint no trae un color por proyecto).
     private static readonly string[] DetallePalette =
-        { "#2E5BFF", "#1F9254", "#F58220", "#7C4DFF", "#E4374B", "#0BA5EC" };
+    {
+        DesignColors.Primary,
+        DesignColors.Accent,
+        DesignColors.Warning,
+        DesignColors.PrimaryDark,
+        DesignColors.Danger,
+        DesignColors.TextMuted
+    };
 
     [ObservableProperty]
     public partial int TotalProyectos { get; set; }
@@ -142,10 +150,10 @@ public partial class DashboardViewModel : BaseViewModel
         // emoji directo, siguiendo la misma convención que ya usan otras
         // pantallas de la app (emojis en vez de fuentes de íconos).
         StatCards.Clear();
-        StatCards.Add(new StatCard { Icon = "📁", IconColor = "#3559D6", Value = metricas.TotalProyectos.ToString(), Label = "Proyectos\nen total", IconBackground = "#E7EEFF" });
-        StatCards.Add(new StatCard { Icon = "⏱", IconColor = "#168A52", Value = $"{metricas.HorasReportadas:0} h", Label = "Horas\nreportadas", IconBackground = "#E1F8E9" });
-        StatCards.Add(new StatCard { Icon = "👥", IconColor = "#C9781A", Value = metricas.ColaboradoresActivos.ToString(), Label = "Colaboradores\nactivos", IconBackground = "#FFF0DE" });
-        StatCards.Add(new StatCard { Icon = "🏢", IconColor = "#7A58D1", Value = metricas.ClientesActivos.ToString(), Label = "Clientes\nactivos", IconBackground = "#F1E9FF" });
+        StatCards.Add(new StatCard { Icon = "📁", IconColor = DesignColors.Primary, Value = metricas.TotalProyectos.ToString(), Label = "Proyectos\nen total", IconBackground = DesignColors.PrimaryLight });
+        StatCards.Add(new StatCard { Icon = "⏱", IconColor = DesignColors.Accent, Value = $"{metricas.HorasReportadas:0} h", Label = "Horas\nreportadas", IconBackground = DesignColors.SuccessSurface });
+        StatCards.Add(new StatCard { Icon = "👥", IconColor = DesignColors.Warning, Value = metricas.ColaboradoresActivos.ToString(), Label = "Colaboradores\nactivos", IconBackground = DesignColors.WarningSurface });
+        StatCards.Add(new StatCard { Icon = "🏢", IconColor = DesignColors.PrimaryDark, Value = metricas.ClientesActivos.ToString(), Label = "Clientes\nactivos", IconBackground = DesignColors.PrimaryLight });
 
         var promedio = metricas.TotalProyectos > 0
             ? metricas.HorasReportadas / metricas.TotalProyectos
