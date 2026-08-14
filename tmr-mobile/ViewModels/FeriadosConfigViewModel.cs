@@ -160,7 +160,7 @@ public partial class FeriadosConfigViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    private async Task AgregarAsync()
+    private async Task NuevoFeriadoAsync()
     {
         await Shell.Current.GoToAsync(nameof(FeriadoFormPage));
     }

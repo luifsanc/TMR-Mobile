@@ -198,6 +198,15 @@ public class ApiService
         return await HandleResponseAsync<TResponse>(response, endpoint, "PUT", data, ct);
     }
 
+    public async Task<TResponse?> PatchAsync<TRequest, TResponse>(string endpoint, TRequest data,
+        CancellationToken ct = default)
+    {
+        await AddAuthHeaderAsync();
+        endpoint = NormalizeEndpoint(endpoint);
+        var response = await _httpClient.PatchAsJsonAsync(endpoint, data, JsonOptions, ct);
+        return await HandleResponseAsync<TResponse>(response, endpoint, "PATCH", data, ct);
+    }
+
     public async Task<bool> PutAsync<TRequest>(string endpoint, TRequest data,
         CancellationToken ct = default)
     {

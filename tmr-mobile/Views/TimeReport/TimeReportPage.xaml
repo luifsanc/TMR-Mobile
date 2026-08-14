@@ -182,13 +182,10 @@
 
                     </VerticalStackLayout>
                 </Border>
-<<<<<<< Updated upstream
-
+                
                 <!-- Lista de Actividades del día -->
                 <Label Text="{Binding FechaSeleccionada, StringFormat='Actividades del {0:dd/MM/yyyy}'}" FontAttributes="Bold" FontSize="16" TextColor="#0F172A" Margin="0,8,0,0" IsVisible="False" />
-=======
->>>>>>> Stashed changes
-                
+            
                 <Label Text="No hay actividades para este día." TextColor="#64748B" HorizontalTextAlignment="Center" Margin="0,16" IsVisible="False">
                     <Label.Triggers>
                         <DataTrigger TargetType="Label" Binding="{Binding ActividadesDelDia.Count}" Value="0">
