@@ -60,6 +60,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<IClientesService, ClientesService>();
         builder.Services.AddSingleton<IColaboradoresService, ColaboradoresService>();
         builder.Services.AddSingleton<ICargaActividadesService, CargaActividadesService>();
+        builder.Services.AddSingleton<ExcelExportService>();
 
 
         // ─────────────────────────────────────────────────────────────
@@ -192,6 +193,18 @@ public static class MauiProgram
                         Microsoft.UI.Colors.Transparent
                     );
 
+#endif
+            });
+
+        DatePickerHandler.Mapper.AppendToMapping(
+            "CapitalizedPlaceholderDatePicker",
+            (handler, view) =>
+            {
+#if WINDOWS
+                if (handler.PlatformView is Microsoft.UI.Xaml.Controls.CalendarDatePicker datePicker)
+                {
+                    datePicker.PlaceholderText = "Seleccionar una fecha";
+                }
 #endif
             });
 
