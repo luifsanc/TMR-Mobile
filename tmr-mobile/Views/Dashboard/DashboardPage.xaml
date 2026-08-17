@@ -22,16 +22,18 @@
         <!-- Fixed header -->
         <Grid Grid.Row="0"
               Padding="16,12,16,8"
-              ColumnDefinitions="Auto,*,Auto"
+              ColumnDefinitions="26,*,26"
               ColumnSpacing="12"
               VerticalOptions="Center">
 
-            <Label Grid.Column="1"
-                   Text="TMR-Mobile"
-                   FontSize="22"
-                   FontAttributes="Bold"
+            <Image Grid.Column="1"
+                   Source="letras1.png"
+                   WidthRequest="124"
+                   HeightRequest="40"
+                   Aspect="AspectFit"
                    HorizontalOptions="Center"
-                   TextColor="{StaticResource TextPrimary}"/>
+                   VerticalOptions="Center"
+                   SemanticProperties.Description="Integrity Solutions" />
 
             <Grid Grid.Column="2"
                   WidthRequest="26"

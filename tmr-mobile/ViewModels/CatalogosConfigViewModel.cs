@@ -57,6 +57,13 @@ public partial class CatalogosConfigViewModel : BaseViewModel
         set;
     } = "Todos";
 
+    [ObservableProperty]
+    public partial bool MostrarFiltros
+    {
+        get;
+        set;
+    }
+
 
     // ─────────────────────────────────────────────
     // PAGINACIÓN
@@ -394,6 +401,12 @@ public partial class CatalogosConfigViewModel : BaseViewModel
     // ─────────────────────────────────────────────
     // FILTROS
     // ─────────────────────────────────────────────
+
+    [RelayCommand]
+    private void AlternarFiltros()
+    {
+        MostrarFiltros = !MostrarFiltros;
+    }
 
     [RelayCommand]
     private void MostrarTodos()

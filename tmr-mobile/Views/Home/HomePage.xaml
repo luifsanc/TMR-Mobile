@@ -45,13 +45,23 @@
         </Border>
 
         <!-- Modules Grid -->
-        <CollectionView Grid.Row="1" ItemsSource="{Binding Modulos}" Margin="20,8,20,24" HorizontalOptions="Center">
+        <CollectionView Grid.Row="1"
+                        ItemsSource="{Binding Modulos}"
+                        Margin="20,8,20,24"
+                        HorizontalOptions="Fill"
+                        SelectionMode="None"
+                        VerticalScrollBarVisibility="Never">
             <CollectionView.ItemsLayout>
                 <GridItemsLayout Orientation="Vertical" Span="2" VerticalItemSpacing="15" HorizontalItemSpacing="15" />
             </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="vm:ModuloItem">
-                    <Border StrokeShape="RoundRectangle 16" Stroke="{StaticResource BorderColor}" BackgroundColor="{StaticResource PrimaryLight}" HeightRequest="110" Padding="10">
+                    <Border StrokeShape="RoundRectangle 16"
+                            Stroke="{StaticResource BorderColor}"
+                            BackgroundColor="{StaticResource PrimaryLight}"
+                            HeightRequest="110"
+                            Padding="10"
+                            HorizontalOptions="Fill">
                         <Border.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HomeViewModel}}, Path=NavigateCommand}" CommandParameter="{Binding Ruta}" />
                         </Border.GestureRecognizers>

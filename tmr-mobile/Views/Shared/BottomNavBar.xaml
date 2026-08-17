@@ -25,7 +25,13 @@
               </Grid.GestureRecognizers>
               <Border StrokeShape="RoundRectangle 27" BackgroundColor="{StaticResource White}" Stroke="{StaticResource PrimaryLight}" StrokeThickness="3" WidthRequest="54" HeightRequest="54" HorizontalOptions="Center" VerticalOptions="Center">
                    <Border StrokeShape="RoundRectangle 21" BackgroundColor="Transparent" WidthRequest="42" HeightRequest="42" HorizontalOptions="Center" VerticalOptions="Center" Stroke="Transparent">
-                        <Image Source="logo_isc.png" WidthRequest="32" HeightRequest="32" HorizontalOptions="Center" VerticalOptions="Center" />
+                        <Image Source="isotipo1.png"
+                               WidthRequest="34"
+                               HeightRequest="34"
+                               Aspect="AspectFit"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"
+                               SemanticProperties.Description="Integrity Solutions" />
                    </Border>
               </Border>
          </Grid>
