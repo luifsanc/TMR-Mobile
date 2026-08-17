@@ -29,6 +29,10 @@ public class ColaboradorModel
     public string EstadoTexto => Activo ? "ACTIVO" : "INACTIVO";
     public string ColorEstado => Activo ? "#43A047" : "#E53935";
     public string ColorFondoEstado => Activo ? "#E8F5E9" : "#FFEBEE";
+
+    public string IdentificacionTexto => !string.IsNullOrWhiteSpace(NumeroIdentificacion) ? NumeroIdentificacion : "Sin identificación";
+    public string EmailTexto => !string.IsNullOrWhiteSpace(Email) ? Email : "Sin correo";
+    public string CargoTexto => !string.IsNullOrWhiteSpace(Cargo) ? Cargo : "Sin cargo";
 }
 
 public class ColaboradorDetalleModel : ColaboradorModel
@@ -43,6 +47,7 @@ public class ColaboradorDetalleModel : ColaboradorModel
     public int? IdCategoriaEmpleado { get; set; }
     public int? IdDepartamento { get; set; }
     public int? IdCargo { get; set; }
+    public int? IdEmpleadoReemplazo { get; set; }
 
     public string TipoContrato { get; set; } = string.Empty;
     public string Departamento { get; set; } = string.Empty;
@@ -71,6 +76,52 @@ public class ColaboradorDetalleModel : ColaboradorModel
     public string? ComentarioSalida { get; set; }
     public string? ReemplazoNombre { get; set; }
     public string? ReemplazaANombre { get; set; }
+
+    // Helpers de formateo para vista de detalles
+    public string EmpresaTexto => !string.IsNullOrWhiteSpace(Asociacion) ? Asociacion : "—";
+    public string TipoContratoTexto => !string.IsNullOrWhiteSpace(TipoContrato) ? TipoContrato : "—";
+    public string DepartamentoTexto => !string.IsNullOrWhiteSpace(Departamento) ? Departamento : "—";
+    public string CargoDetalleTexto => !string.IsNullOrWhiteSpace(Cargo) ? Cargo : "—";
+    public string ModalidadTexto => !string.IsNullOrWhiteSpace(Modalidad) ? Modalidad : "—";
+    public string CategoriaTexto => !string.IsNullOrWhiteSpace(Categoria) ? Categoria : "—";
+    public string AniosExperienciaTexto => AniosExperiencia.HasValue ? $"{AniosExperiencia.Value} años" : "—";
+
+    public string TipoPersonaTexto => !string.IsNullOrWhiteSpace(TipoPersona) ? TipoPersona : "NATURAL";
+    public string GeneroTexto => !string.IsNullOrWhiteSpace(Genero) ? Genero : "—";
+    public string NacionalidadTexto => !string.IsNullOrWhiteSpace(Nacionalidad) ? Nacionalidad : "—";
+    public string TelefonoTexto => !string.IsNullOrWhiteSpace(Telefono) ? Telefono : "—";
+    public string DireccionTexto => !string.IsNullOrWhiteSpace(Direccion) ? Direccion : "—";
+
+    public string FechaContratacionFormateada
+    {
+        get
+        {
+            var fechaStr = FechaContratacion ?? FechaIngreso;
+            if (DateTime.TryParse(fechaStr, out var d)) return d.ToString("dd/MM/yyyy");
+            return !string.IsNullOrWhiteSpace(fechaStr) ? fechaStr : "—";
+        }
+    }
+
+    public string FechaNacimientoFormateada
+    {
+        get
+        {
+            if (DateTime.TryParse(FechaNacimiento, out var d)) return d.ToString("dd/MM/yyyy");
+            return !string.IsNullOrWhiteSpace(FechaNacimiento) ? FechaNacimiento : "—";
+        }
+    }
+
+    public string FechaSalidaFormateada
+    {
+        get
+        {
+            if (DateTime.TryParse(FechaSalida, out var d)) return d.ToString("dd/MM/yyyy");
+            return !string.IsNullOrWhiteSpace(FechaSalida) ? FechaSalida : "—";
+        }
+    }
+
+    public bool TieneReemplazoInfo => !string.IsNullOrWhiteSpace(ReemplazoNombre) || !string.IsNullOrWhiteSpace(ReemplazaANombre);
+    public bool TieneSalidaInfo => !string.IsNullOrWhiteSpace(FechaSalida) || !string.IsNullOrWhiteSpace(TipoSalida) || !string.IsNullOrWhiteSpace(CausaSalida);
 }
 
 public class ProyectoColaboradorModel
