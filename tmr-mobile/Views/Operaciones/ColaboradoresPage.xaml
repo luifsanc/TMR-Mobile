@@ -193,8 +193,8 @@
                                             VerticalTextAlignment="Center" />
                                     </Border>
 
-                                    <!-- Información -->
-                                    <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                    <!-- Información del Colaborador -->
+                                    <VerticalStackLayout Grid.Column="1" Spacing="3" VerticalOptions="Center">
                                         <Label
                                             Text="{Binding NombreCompleto}"
                                             FontSize="14"
@@ -202,16 +202,40 @@
                                             TextColor="{StaticResource Primary}"
                                             MaxLines="1"
                                             LineBreakMode="TailTruncation" />
-                                        <Label
-                                            Text="{Binding IdentificacionFormateada}"
-                                            FontSize="12"
-                                            TextColor="{StaticResource TextMuted}" />
-                                        <Label
-                                            Text="{Binding CargoRolFormateado}"
-                                            FontSize="11"
-                                            TextColor="{StaticResource TextLight}"
-                                            MaxLines="1"
-                                            LineBreakMode="TailTruncation" />
+
+                                        <!-- Cédula -->
+                                        <HorizontalStackLayout Spacing="4" VerticalOptions="Center">
+                                            <Label Text="🆔" FontSize="11" VerticalOptions="Center" />
+                                            <Label
+                                                Text="{Binding IdentificacionTexto, StringFormat='C.I.: {0}'}"
+                                                FontSize="12"
+                                                TextColor="{StaticResource TextMain}"
+                                                MaxLines="1"
+                                                LineBreakMode="TailTruncation" />
+                                        </HorizontalStackLayout>
+
+                                        <!-- Correo -->
+                                        <HorizontalStackLayout Spacing="4" VerticalOptions="Center">
+                                            <Label Text="✉" FontSize="11" TextColor="{StaticResource TextMuted}" VerticalOptions="Center" />
+                                            <Label
+                                                Text="{Binding EmailTexto}"
+                                                FontSize="11"
+                                                TextColor="{StaticResource TextMuted}"
+                                                MaxLines="1"
+                                                LineBreakMode="TailTruncation" />
+                                        </HorizontalStackLayout>
+
+                                        <!-- Cargo -->
+                                        <HorizontalStackLayout Spacing="4" VerticalOptions="Center">
+                                            <Label Text="💼" FontSize="11" VerticalOptions="Center" />
+                                            <Label
+                                                Text="{Binding CargoTexto}"
+                                                FontSize="11"
+                                                FontAttributes="Bold"
+                                                TextColor="{StaticResource Primary}"
+                                                MaxLines="1"
+                                                LineBreakMode="TailTruncation" />
+                                        </HorizontalStackLayout>
                                     </VerticalStackLayout>
 
                                     <!-- Estado Badge -->

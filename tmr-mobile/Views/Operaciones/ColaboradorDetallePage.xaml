@@ -30,10 +30,18 @@
                         VerticalOptions="Center" />
 
                     <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="1">
-                        <Label
-                            Text="{Binding Colaborador.CodigoEmpleado}"
-                            FontSize="12"
-                            TextColor="{StaticResource TextMuted}" />
+                        <HorizontalStackLayout Spacing="6">
+                            <Label
+                                Text="{Binding Colaborador.CodigoEmpleado}"
+                                FontSize="12"
+                                FontAttributes="Bold"
+                                TextColor="{StaticResource TextMuted}" />
+                            <Label Text="·" FontSize="12" TextColor="{StaticResource TextMuted}" />
+                            <Label
+                                Text="{Binding Colaborador.TipoContratoTexto}"
+                                FontSize="12"
+                                TextColor="{StaticResource TextMuted}" />
+                        </HorizontalStackLayout>
                         <Label
                             Text="{Binding Colaborador.NombreCompleto}"
                             FontSize="18"
@@ -60,47 +68,59 @@
                     </Border>
                 </Grid>
 
-                <!-- CARD: DATOS LABORALES -->
+                <!-- CARD: DATOS LABORALES Y CONTRATO -->
                 <Border BackgroundColor="{StaticResource White}" Stroke="{StaticResource BorderColor}" StrokeThickness="1" Padding="16">
                     <Border.StrokeShape><RoundRectangle CornerRadius="12" /></Border.StrokeShape>
                     <VerticalStackLayout Spacing="12">
                         <Label Text="▼ Datos laborales" FontSize="15" FontAttributes="Bold" TextColor="{StaticResource Primary}" />
 
-                        <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto" RowSpacing="10" ColumnSpacing="12">
-                            <!-- Departamento -->
+                        <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto,Auto" RowSpacing="10" ColumnSpacing="12">
+                            <!-- Empresa / Asociación -->
                             <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="2">
+                                <Label Text="Empresa" FontSize="11" TextColor="{StaticResource TextLight}" />
+                                <Label Text="{Binding Colaborador.EmpresaTexto}" FontSize="13" TextColor="{StaticResource TextMain}" />
+                            </VerticalStackLayout>
+
+                            <!-- Tipo de contrato -->
+                            <VerticalStackLayout Grid.Row="0" Grid.Column="1" Spacing="2">
+                                <Label Text="Tipo de contrato" FontSize="11" TextColor="{StaticResource TextLight}" />
+                                <Label Text="{Binding Colaborador.TipoContratoTexto}" FontSize="13" TextColor="{StaticResource TextMain}" />
+                            </VerticalStackLayout>
+
+                            <!-- Departamento -->
+                            <VerticalStackLayout Grid.Row="1" Grid.Column="0" Spacing="2">
                                 <Label Text="Departamento" FontSize="11" TextColor="{StaticResource TextLight}" />
-                                <Label Text="{Binding Colaborador.Departamento}" FontSize="13" TextColor="{StaticResource TextMain}" />
+                                <Label Text="{Binding Colaborador.DepartamentoTexto}" FontSize="13" TextColor="{StaticResource TextMain}" />
                             </VerticalStackLayout>
 
                             <!-- Fecha de contratación -->
-                            <VerticalStackLayout Grid.Row="0" Grid.Column="1" Spacing="2">
+                            <VerticalStackLayout Grid.Row="1" Grid.Column="1" Spacing="2">
                                 <Label Text="Fecha de contratación" FontSize="11" TextColor="{StaticResource TextLight}" />
-                                <Label Text="{Binding Colaborador.FechaContratacion}" FontSize="13" TextColor="{StaticResource TextMain}" />
+                                <Label Text="{Binding Colaborador.FechaContratacionFormateada}" FontSize="13" TextColor="{StaticResource TextMain}" />
                             </VerticalStackLayout>
 
                             <!-- Cargo -->
-                            <VerticalStackLayout Grid.Row="1" Grid.Column="0" Spacing="2">
+                            <VerticalStackLayout Grid.Row="2" Grid.Column="0" Spacing="2">
                                 <Label Text="Cargo" FontSize="11" TextColor="{StaticResource TextLight}" />
-                                <Label Text="{Binding Colaborador.Cargo}" FontSize="13" TextColor="{StaticResource TextMain}" />
+                                <Label Text="{Binding Colaborador.CargoDetalleTexto}" FontSize="13" TextColor="{StaticResource TextMain}" />
                             </VerticalStackLayout>
 
                             <!-- Años de experiencia -->
-                            <VerticalStackLayout Grid.Row="1" Grid.Column="1" Spacing="2">
+                            <VerticalStackLayout Grid.Row="2" Grid.Column="1" Spacing="2">
                                 <Label Text="Años de experiencia" FontSize="11" TextColor="{StaticResource TextLight}" />
-                                <Label Text="{Binding Colaborador.AniosExperiencia}" FontSize="13" TextColor="{StaticResource TextMain}" />
+                                <Label Text="{Binding Colaborador.AniosExperienciaTexto}" FontSize="13" TextColor="{StaticResource TextMain}" />
                             </VerticalStackLayout>
 
                             <!-- Modalidad -->
-                            <VerticalStackLayout Grid.Row="2" Grid.Column="0" Spacing="2">
+                            <VerticalStackLayout Grid.Row="3" Grid.Column="0" Spacing="2">
                                 <Label Text="Modalidad" FontSize="11" TextColor="{StaticResource TextLight}" />
-                                <Label Text="{Binding Colaborador.Modalidad}" FontSize="13" TextColor="{StaticResource TextMain}" />
+                                <Label Text="{Binding Colaborador.ModalidadTexto}" FontSize="13" TextColor="{StaticResource TextMain}" />
                             </VerticalStackLayout>
 
                             <!-- Categoría -->
-                            <VerticalStackLayout Grid.Row="2" Grid.Column="1" Spacing="2">
+                            <VerticalStackLayout Grid.Row="3" Grid.Column="1" Spacing="2">
                                 <Label Text="Categoría" FontSize="11" TextColor="{StaticResource TextLight}" />
-                                <Label Text="{Binding Colaborador.Categoria}" FontSize="13" TextColor="{StaticResource TextMain}" />
+                                <Label Text="{Binding Colaborador.CategoriaTexto}" FontSize="13" TextColor="{StaticResource TextMain}" />
                             </VerticalStackLayout>
                         </Grid>
                     </VerticalStackLayout>
@@ -112,29 +132,35 @@
                     <VerticalStackLayout Spacing="12">
                         <Label Text="▼ Datos personales" FontSize="15" FontAttributes="Bold" TextColor="{StaticResource Primary}" />
 
-                        <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" RowSpacing="10" ColumnSpacing="12">
-                            <!-- Identificación -->
+                        <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto" RowSpacing="10" ColumnSpacing="12">
+                            <!-- Tipo Persona -->
                             <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="2">
+                                <Label Text="Tipo de Persona" FontSize="11" TextColor="{StaticResource TextLight}" />
+                                <Label Text="{Binding Colaborador.TipoPersonaTexto}" FontSize="13" TextColor="{StaticResource TextMain}" />
+                            </VerticalStackLayout>
+
+                            <!-- Identificación -->
+                            <VerticalStackLayout Grid.Row="0" Grid.Column="1" Spacing="2">
                                 <Label Text="Identificación" FontSize="11" TextColor="{StaticResource TextLight}" />
-                                <Label Text="{Binding Colaborador.NumeroIdentificacion}" FontSize="13" TextColor="{StaticResource TextMain}" />
+                                <Label Text="{Binding Colaborador.IdentificacionTexto}" FontSize="13" TextColor="{StaticResource TextMain}" />
                             </VerticalStackLayout>
 
                             <!-- Fecha de nacimiento -->
-                            <VerticalStackLayout Grid.Row="0" Grid.Column="1" Spacing="2">
+                            <VerticalStackLayout Grid.Row="1" Grid.Column="0" Spacing="2">
                                 <Label Text="Fecha de nacimiento" FontSize="11" TextColor="{StaticResource TextLight}" />
-                                <Label Text="{Binding Colaborador.FechaNacimiento}" FontSize="13" TextColor="{StaticResource TextMain}" />
+                                <Label Text="{Binding Colaborador.FechaNacimientoFormateada}" FontSize="13" TextColor="{StaticResource TextMain}" />
                             </VerticalStackLayout>
 
                             <!-- Género -->
-                            <VerticalStackLayout Grid.Row="1" Grid.Column="0" Spacing="2">
+                            <VerticalStackLayout Grid.Row="1" Grid.Column="1" Spacing="2">
                                 <Label Text="Género" FontSize="11" TextColor="{StaticResource TextLight}" />
-                                <Label Text="{Binding Colaborador.Genero}" FontSize="13" TextColor="{StaticResource TextMain}" />
+                                <Label Text="{Binding Colaborador.GeneroTexto}" FontSize="13" TextColor="{StaticResource TextMain}" />
                             </VerticalStackLayout>
 
                             <!-- Nacionalidad -->
-                            <VerticalStackLayout Grid.Row="1" Grid.Column="1" Spacing="2">
+                            <VerticalStackLayout Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Spacing="2">
                                 <Label Text="Nacionalidad" FontSize="11" TextColor="{StaticResource TextLight}" />
-                                <Label Text="{Binding Colaborador.Nacionalidad}" FontSize="13" TextColor="{StaticResource TextMain}" />
+                                <Label Text="{Binding Colaborador.NacionalidadTexto}" FontSize="13" TextColor="{StaticResource TextMain}" />
                             </VerticalStackLayout>
                         </Grid>
                     </VerticalStackLayout>
@@ -150,19 +176,73 @@
                             <!-- Correo electrónico -->
                             <VerticalStackLayout Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Spacing="2">
                                 <Label Text="Correo electrónico" FontSize="11" TextColor="{StaticResource TextLight}" />
-                                <Label Text="{Binding Colaborador.Email}" FontSize="13" TextColor="{StaticResource TextMain}" />
+                                <Label Text="{Binding Colaborador.EmailTexto}" FontSize="13" TextColor="{StaticResource TextMain}" />
                             </VerticalStackLayout>
 
                             <!-- Teléfono -->
                             <VerticalStackLayout Grid.Row="1" Grid.Column="0" Spacing="2">
                                 <Label Text="Teléfono" FontSize="11" TextColor="{StaticResource TextLight}" />
-                                <Label Text="{Binding Colaborador.Telefono}" FontSize="13" TextColor="{StaticResource TextMain}" />
+                                <Label Text="{Binding Colaborador.TelefonoTexto}" FontSize="13" TextColor="{StaticResource TextMain}" />
                             </VerticalStackLayout>
 
                             <!-- Dirección -->
                             <VerticalStackLayout Grid.Row="1" Grid.Column="1" Spacing="2">
                                 <Label Text="Dirección" FontSize="11" TextColor="{StaticResource TextLight}" />
-                                <Label Text="{Binding Colaborador.Direccion}" FontSize="13" TextColor="{StaticResource TextMain}" />
+                                <Label Text="{Binding Colaborador.DireccionTexto}" FontSize="13" TextColor="{StaticResource TextMain}" />
+                            </VerticalStackLayout>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- CARD: INFORMACIÓN DE REEMPLAZO (Si aplica) -->
+                <Border BackgroundColor="{StaticResource White}" Stroke="{StaticResource BorderColor}" StrokeThickness="1" Padding="16" IsVisible="{Binding Colaborador.TieneReemplazoInfo}">
+                    <Border.StrokeShape><RoundRectangle CornerRadius="12" /></Border.StrokeShape>
+                    <VerticalStackLayout Spacing="12">
+                        <Label Text="▼ Reemplazo" FontSize="15" FontAttributes="Bold" TextColor="{StaticResource Primary}" />
+
+                        <!-- Reemplaza a -->
+                        <VerticalStackLayout Spacing="2" IsVisible="{Binding Colaborador.ReemplazaANombre, Converter={StaticResource IsStringNotNullOrEmptyConverter}}">
+                            <Label Text="Reemplaza a" FontSize="11" TextColor="{StaticResource TextLight}" />
+                            <Label Text="{Binding Colaborador.ReemplazaANombre}" FontSize="13" TextColor="{StaticResource TextMain}" FontAttributes="Bold" />
+                        </VerticalStackLayout>
+
+                        <!-- Reemplazado por -->
+                        <VerticalStackLayout Spacing="2" IsVisible="{Binding Colaborador.ReemplazoNombre, Converter={StaticResource IsStringNotNullOrEmptyConverter}}">
+                            <Label Text="Reemplazado por" FontSize="11" TextColor="{StaticResource TextLight}" />
+                            <Label Text="{Binding Colaborador.ReemplazoNombre}" FontSize="13" TextColor="{StaticResource TextMain}" FontAttributes="Bold" />
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- CARD: DATOS DE SALIDA (Si aplica) -->
+                <Border BackgroundColor="{StaticResource White}" Stroke="{StaticResource BorderColor}" StrokeThickness="1" Padding="16" IsVisible="{Binding Colaborador.TieneSalidaInfo}">
+                    <Border.StrokeShape><RoundRectangle CornerRadius="12" /></Border.StrokeShape>
+                    <VerticalStackLayout Spacing="12">
+                        <Label Text="▼ Datos de salida" FontSize="15" FontAttributes="Bold" TextColor="{StaticResource Error}" />
+
+                        <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto" RowSpacing="10" ColumnSpacing="12">
+                            <!-- Fecha de Salida -->
+                            <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="2">
+                                <Label Text="Fecha de salida" FontSize="11" TextColor="{StaticResource TextLight}" />
+                                <Label Text="{Binding Colaborador.FechaSalidaFormateada}" FontSize="13" TextColor="{StaticResource TextMain}" />
+                            </VerticalStackLayout>
+
+                            <!-- Tipo de Salida -->
+                            <VerticalStackLayout Grid.Row="0" Grid.Column="1" Spacing="2">
+                                <Label Text="Tipo de salida" FontSize="11" TextColor="{StaticResource TextLight}" />
+                                <Label Text="{Binding Colaborador.TipoSalida}" FontSize="13" TextColor="{StaticResource TextMain}" />
+                            </VerticalStackLayout>
+
+                            <!-- Causa de Salida -->
+                            <VerticalStackLayout Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Spacing="2">
+                                <Label Text="Causa de salida" FontSize="11" TextColor="{StaticResource TextLight}" />
+                                <Label Text="{Binding Colaborador.CausaSalida}" FontSize="13" TextColor="{StaticResource TextMain}" />
+                            </VerticalStackLayout>
+
+                            <!-- Comentario -->
+                            <VerticalStackLayout Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Spacing="2" IsVisible="{Binding Colaborador.ComentarioSalida, Converter={StaticResource IsStringNotNullOrEmptyConverter}}">
+                                <Label Text="Comentario" FontSize="11" TextColor="{StaticResource TextLight}" />
+                                <Label Text="{Binding Colaborador.ComentarioSalida}" FontSize="13" TextColor="{StaticResource TextMuted}" />
                             </VerticalStackLayout>
                         </Grid>
                     </VerticalStackLayout>
