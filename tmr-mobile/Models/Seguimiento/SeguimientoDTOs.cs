@@ -23,6 +23,7 @@ public class SeguimientoColaboradorDto
     public string Estado { get; set; } = string.Empty;
     public int DiasConReporte { get; set; }
     public int DiasACompletar { get; set; }
+    public bool IsSelected { get; set; }
 
     // Helpers for UI
     public string Iniciales
@@ -54,4 +55,23 @@ public class SeguimientoColaboradorDto
         "Pendiente" => "#FFEBEE",
         _ => "#F1F5F9"
     };
+}
+
+public class ActividadDetalleDto
+{
+    public string ClienteProyecto { get; set; } = string.Empty;
+    public string TipoActividad { get; set; } = string.Empty;
+    public string LiderProyecto { get; set; } = string.Empty;
+    public string CodigoRequerimiento { get; set; } = string.Empty;
+    public string Descripcion { get; set; } = string.Empty;
+    public string Fecha { get; set; } = string.Empty;
+    public decimal Horas { get; set; }
+    public bool EsRecurrente { get; set; }
+    public bool Recurrente { get; set; }
+}
+
+public class DetalleActividadesResponse
+{
+    public List<ActividadDetalleDto> Actividades { get; set; } = new();
+    public List<string> Feriados { get; set; } = new();
 }
