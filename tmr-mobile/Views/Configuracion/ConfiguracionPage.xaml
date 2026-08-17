@@ -6,7 +6,7 @@
              x:Class="tmr_mobile.Views.Configuracion.ConfiguracionPage"
              Title="Configuración"
              Shell.NavBarIsVisible="False"
-             BackgroundColor="{StaticResource White}"
+             BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkBackgroundLight}}"
              x:DataType="vm:ConfiguracionViewModel">
 
     <!-- Principal Grid: Scrollable Content + Fixed Bottom Nav -->
@@ -19,13 +19,18 @@
             </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="vm:ConfiguracionModuloItem">
-                    <Border StrokeShape="RoundRectangle 16" Stroke="{StaticResource BorderColor}" BackgroundColor="{StaticResource PrimaryLight}" HeightRequest="110" Padding="10">
+                    <Border StrokeShape="RoundRectangle 16" Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryLight}, Dark={StaticResource DarkSurfaceElevated}}" HeightRequest="110" Padding="10">
                         <Border.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ConfiguracionViewModel}}, Path=NavigateCommand}" CommandParameter="{Binding Ruta}" />
                         </Border.GestureRecognizers>
                         <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="12">
-                             <Image Source="{Binding Icono}" WidthRequest="32" HeightRequest="32" HorizontalOptions="Center" />
-                             <Label Text="{Binding Nombre}" FontSize="14" FontAttributes="Bold" TextColor="{StaticResource TextMain}" HorizontalOptions="Center" HorizontalTextAlignment="Center" LineBreakMode="WordWrap" />
+                             <Grid WidthRequest="32" HeightRequest="32" HorizontalOptions="Center">
+                                 <Image Source="{Binding Icono}" WidthRequest="32" HeightRequest="32"
+                                        IsVisible="{AppThemeBinding Light=True, Dark=False}" />
+                                 <Image Source="{Binding IconoOscuro}" WidthRequest="32" HeightRequest="32"
+                                        IsVisible="{AppThemeBinding Light=False, Dark=True}" />
+                             </Grid>
+                             <Label Text="{Binding Nombre}" FontSize="14" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource TextMain}, Dark={StaticResource DarkTextMain}}" HorizontalOptions="Center" HorizontalTextAlignment="Center" LineBreakMode="WordWrap" />
                         </VerticalStackLayout>
                     </Border>
                 </DataTemplate>

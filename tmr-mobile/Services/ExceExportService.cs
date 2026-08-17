@@ -5,12 +5,12 @@ using ClosedXML.Excel.Drawings;
 public static class ReporteEstilos
 {
     public static readonly XLColor Cabecera = XLColor.FromArgb(0x16, 0x35, 0x72); // COLOR_CABECERA
-    public static readonly XLColor Texto    = XLColor.FromArgb(0x33, 0x41, 0x55); // COLOR_TEXTO
-    public static readonly XLColor Borde    = XLColor.FromArgb(0xE2, 0xE8, 0xF0); // COLOR_BORDE
-    public static readonly XLColor Alterno  = XLColor.FromArgb(0xF8, 0xFA, 0xFC); // COLOR_ALTERNO
-    public static readonly XLColor Blanco   = XLColor.White;
-    public static readonly XLColor Verde    = XLColor.FromArgb(0x16, 0xA3, 0x4A); // activo/cargado
-    public static readonly XLColor Gris     = XLColor.FromArgb(0x6B, 0x72, 0x80); // inactivo
+    public static readonly XLColor Texto = XLColor.FromArgb(0x33, 0x41, 0x55); // COLOR_TEXTO
+    public static readonly XLColor Borde = XLColor.FromArgb(0xE2, 0xE8, 0xF0); // COLOR_BORDE
+    public static readonly XLColor Alterno = XLColor.FromArgb(0xF8, 0xFA, 0xFC); // COLOR_ALTERNO
+    public static readonly XLColor Blanco = XLColor.White;
+    public static readonly XLColor Verde = XLColor.FromArgb(0x16, 0xA3, 0x4A); // activo/cargado
+    public static readonly XLColor Gris = XLColor.FromArgb(0x6B, 0x72, 0x80); // inactivo
 }
 
 public class ReporteColumna
@@ -110,9 +110,9 @@ public class ExcelExportService
                 if (columnaEstado.HasValue && c == columnaEstado.Value)
                 {
                     string valorEstado = (datos[c]?.ToString() ?? "").ToLower();
-                    
+
                     cell.Style.Font.Bold = true;
-                    
+
                     if (valorEstado == "completo")
                         cell.Style.Font.FontColor = XLColor.FromArgb(0x43, 0xA0, 0x47); // Verde
                     else if (valorEstado == "en progreso")
@@ -124,7 +124,7 @@ public class ExcelExportService
                         bool activo = valorEstado == "cargado" || valorEstado == "activo";
                         cell.Style.Font.FontColor = activo ? ReporteEstilos.Verde : ReporteEstilos.Gris;
                     }
-                    
+
                     cell.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Left;
                 }
             }
@@ -220,7 +220,7 @@ public class ExcelExportService
 
             // Ajustar logo según referencia (aprox 172x55, pero en MAUI puede necesitar multiplicador de escala)
             // Utilizando un tamaño mayor para asegurar visibilidad en la cabecera alta.
-            picture.Width = 300; 
+            picture.Width = 300;
             picture.Height = 85;
 
             picture.MoveTo(ws.Cell(1, 1), 10, 10);
@@ -239,7 +239,7 @@ public class ExcelExportService
         List<string> feriados)
     {
         using var workbook = new XLWorkbook();
-        
+
         var groupsByClient = actividades
             .GroupBy(a => string.IsNullOrWhiteSpace(a.ClienteProyecto) ? "Sin Cliente" : a.ClienteProyecto)
             .ToList();
@@ -257,7 +257,7 @@ public class ExcelExportService
             var sheetName = $"Reporte_{clientName}".Replace("*", "").Replace("?", "").Replace(":", "").Replace("\\", "").Replace("/", "").Replace("[", "").Replace("]", "");
             if (sheetName.Length > 31) sheetName = sheetName.Substring(0, 31);
             if (string.IsNullOrWhiteSpace(sheetName)) sheetName = "Reporte";
-            
+
             var ws = workbook.Worksheets.Add(sheetName);
 
             ws.Column(1).Width = 5;
@@ -292,7 +292,7 @@ public class ExcelExportService
             titleCell.Style.Font.FontColor = XLColor.White;
             titleCell.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
             titleCell.Style.Alignment.Vertical = XLAlignmentVerticalValues.Bottom;
-            
+
             var subtitleCell = ws.Cell(2, 3);
             subtitleCell.Value = $"{mesAnio} | Generado: {DateTime.Now.ToString("dd/MM/yyyy")}";
             subtitleCell.Style.Font.FontName = "Calibri";
@@ -301,7 +301,7 @@ public class ExcelExportService
             subtitleCell.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Right;
             subtitleCell.Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
             // ------------------------------------------------------------
-            
+
             ws.Cell(4, 1).Value = "Cliente:";
             ws.Cell(4, 1).Style.Font.Bold = true; ws.Cell(4, 1).Style.Font.FontColor = ReporteEstilos.Cabecera;
             ws.Cell(4, 3).Value = clientName;
@@ -345,7 +345,7 @@ public class ExcelExportService
             rngHeader.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
             rngHeader.Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
             rngHeader.Style.Alignment.WrapText = true;
-            AplicarBorde(ws.Cell(6,1), ReporteEstilos.Blanco); // Just to not duplicate range styling logic manually for now. We will loop.
+            AplicarBorde(ws.Cell(6, 1), ReporteEstilos.Blanco); // Just to not duplicate range styling logic manually for now. We will loop.
 
             foreach (var cell in rngHeader.Cells())
             {
@@ -384,7 +384,7 @@ public class ExcelExportService
                 rowRange.Style.Fill.BackgroundColor = XLColor.White;
                 rowRange.Style.Font.FontSize = 10;
                 rowRange.Style.Font.FontColor = ReporteEstilos.Texto;
-                
+
                 foreach (var cell in rowRange.Cells())
                 {
                     cell.Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
@@ -394,12 +394,12 @@ public class ExcelExportService
                 ws.Cell(currentRow, 1).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
                 ws.Cell(currentRow, 6).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
                 ws.Cell(currentRow, totalCols).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
-                
+
                 for (int c = 7; c <= 6 + totalDays; c++)
                 {
                     var cell = ws.Cell(currentRow, c);
                     cell.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
-                    
+
                     var dateIdx = c - 7;
                     var date = listDates[dateIdx];
                     var dateStr = date.ToString("yyyy-MM-dd");
@@ -447,7 +447,7 @@ public class ExcelExportService
                 var dateStr = date.ToString("yyyy-MM-dd");
                 var isWeekend = date.DayOfWeek == DayOfWeek.Sunday || date.DayOfWeek == DayOfWeek.Saturday;
                 var isFeriado = feriados.Contains(dateStr);
-                
+
                 if (isFeriado)
                     ws.Cell(totalRow, 7 + i).Style.Fill.BackgroundColor = XLColor.FromArgb(0xFF, 0xFF, 0xFF, 0x00);
                 else if (isWeekend)
@@ -489,7 +489,7 @@ public class ExcelExportService
                 c.Style.Font.FontSize = 9;
                 AplicarBorde(c, ReporteEstilos.Borde);
             }
-            
+
             ws.SheetView.FreezeRows(8);
         }
 

@@ -6,7 +6,7 @@
     x:Class="tmr_mobile.Views.Operaciones.ColaboradorSalidaPage"
     x:DataType="vm:ColaboradorSalidaViewModel"
     Title="Registrar Salida"
-    BackgroundColor="{StaticResource BackgroundLight}">
+    BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource DarkBackgroundLight}}">
 
     <Grid>
         <ScrollView>
@@ -19,7 +19,7 @@
                         Text="‹"
                         Command="{Binding RegresarCommand}"
                         BackgroundColor="Transparent"
-                        TextColor="{StaticResource Primary}"
+                        TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}"
                         FontSize="24"
                         FontAttributes="Bold"
                         Padding="0"
@@ -32,67 +32,67 @@
                             Text="Registrar Salida"
                             FontSize="20"
                             FontAttributes="Bold"
-                            TextColor="{StaticResource Primary}" />
+                            TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />
                         <HorizontalStackLayout Spacing="6">
                             <Label
                                 Text="{Binding Colaborador.NombreCompleto}"
                                 FontSize="12"
-                                TextColor="{StaticResource TextMuted}" />
+                                TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}" />
                             <Label
                                 Text="•"
                                 FontSize="12"
-                                TextColor="{StaticResource TextMuted}" />
+                                TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}" />
                             <Label
                                 Text="{Binding Colaborador.NumeroIdentificacion}"
                                 FontSize="12"
-                                TextColor="{StaticResource TextMuted}" />
+                                TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}" />
                         </HorizontalStackLayout>
                     </VerticalStackLayout>
                 </Grid>
 
                 <!-- CARD FORMULARIO DE SALIDA -->
-                <Border BackgroundColor="{StaticResource White}" Stroke="{StaticResource BorderColor}" StrokeThickness="1" Padding="16">
+                <Border BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}" Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" StrokeThickness="1" Padding="16">
                     <Border.StrokeShape><RoundRectangle CornerRadius="12" /></Border.StrokeShape>
                     <VerticalStackLayout Spacing="16">
-                        <Label Text="▼ Datos de salida" FontSize="15" FontAttributes="Bold" TextColor="{StaticResource Primary}" />
+                        <Label Text="▼ Datos de salida" FontSize="15" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />
 
                         <!-- Fecha de salida -->
                         <VerticalStackLayout Spacing="4">
-                            <Label Text="Fecha de salida *" FontSize="12" TextColor="{StaticResource TextMuted}" />
-                            <Border Stroke="{StaticResource BorderColor}" StrokeThickness="1" BackgroundColor="Transparent" Padding="12,0" HeightRequest="44">
+                            <Label Text="Fecha de salida *" FontSize="12" TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}" />
+                            <Border Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" StrokeThickness="1" BackgroundColor="Transparent" Padding="12,0" HeightRequest="44">
                                 <Border.StrokeShape><RoundRectangle CornerRadius="8" /></Border.StrokeShape>
-                                <DatePicker Date="{Binding FechaSalida}" Format="dd/MM/yyyy" TextColor="{StaticResource TextMain}" VerticalOptions="Center" />
+                                <DatePicker Date="{Binding FechaSalida}" Format="dd/MM/yyyy" TextColor="{AppThemeBinding Light={StaticResource TextMain}, Dark={StaticResource DarkTextMain}}" VerticalOptions="Center" />
                             </Border>
                         </VerticalStackLayout>
 
                         <!-- Tipo de salida -->
                         <VerticalStackLayout Spacing="4">
-                            <Label Text="Tipo de salida *" FontSize="12" TextColor="{StaticResource TextMuted}" />
-                            <Border Stroke="{StaticResource BorderColor}" StrokeThickness="1" BackgroundColor="Transparent" Padding="8,0" HeightRequest="44">
+                            <Label Text="Tipo de salida *" FontSize="12" TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}" />
+                            <Border Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" StrokeThickness="1" BackgroundColor="Transparent" Padding="8,0" HeightRequest="44">
                                 <Border.StrokeShape><RoundRectangle CornerRadius="8" /></Border.StrokeShape>
                                 <Picker
                                     ItemsSource="{Binding TiposSalida}"
                                     ItemDisplayBinding="{Binding Valor}"
                                     SelectedItem="{Binding TipoSalidaSeleccionado}"
                                     Title="Seleccione un tipo de salida"
-                                    TextColor="{StaticResource TextMain}"
-                                    TitleColor="{StaticResource TextLight}"
+                                    TextColor="{AppThemeBinding Light={StaticResource TextMain}, Dark={StaticResource DarkTextMain}}"
+                                    TitleColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}"
                                     VerticalOptions="Center" />
                             </Border>
                         </VerticalStackLayout>
 
                         <!-- Causa de salida -->
                         <VerticalStackLayout Spacing="4">
-                            <Label Text="Causa de salida *" FontSize="12" TextColor="{StaticResource TextMuted}" />
-                            <Border Stroke="{StaticResource BorderColor}" StrokeThickness="1" BackgroundColor="Transparent" Padding="8,0" HeightRequest="44">
+                            <Label Text="Causa de salida *" FontSize="12" TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}" />
+                            <Border Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" StrokeThickness="1" BackgroundColor="Transparent" Padding="8,0" HeightRequest="44">
                                 <Border.StrokeShape><RoundRectangle CornerRadius="8" /></Border.StrokeShape>
                                 <Picker
                                     ItemsSource="{Binding CausasSalida}"
                                     ItemDisplayBinding="{Binding Valor}"
                                     SelectedItem="{Binding CausaSalidaSeleccionada}"
                                     Title="Seleccione una causa de salida"
-                                    TextColor="{StaticResource TextMain}"
-                                    TitleColor="{StaticResource TextLight}"
+                                    TextColor="{AppThemeBinding Light={StaticResource TextMain}, Dark={StaticResource DarkTextMain}}"
+                                    TitleColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}"
                                     VerticalOptions="Center" />
                             </Border>
                         </VerticalStackLayout>
@@ -100,16 +100,16 @@
                         <!-- Comentario (Opcional) -->
                         <VerticalStackLayout Spacing="4">
                             <Grid ColumnDefinitions="*,Auto">
-                                <Label Grid.Column="0" Text="Comentario (opcional)" FontSize="12" TextColor="{StaticResource TextMuted}" />
-                                <Label Grid.Column="1" Text="Máximo 500 caracteres" FontSize="11" TextColor="{StaticResource TextLight}" />
+                                <Label Grid.Column="0" Text="Comentario (opcional)" FontSize="12" TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}" />
+                                <Label Grid.Column="1" Text="Máximo 500 caracteres" FontSize="11" TextColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}" />
                             </Grid>
-                            <Border Stroke="{StaticResource BorderColor}" StrokeThickness="1" BackgroundColor="Transparent" Padding="12,8" HeightRequest="100">
+                            <Border Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" StrokeThickness="1" BackgroundColor="Transparent" Padding="12,8" HeightRequest="100">
                                 <Border.StrokeShape><RoundRectangle CornerRadius="8" /></Border.StrokeShape>
                                 <Editor
                                     Text="{Binding Comentario}"
                                     Placeholder="Ingrese un comentario detallado sobre la salida..."
-                                    PlaceholderColor="{StaticResource TextLight}"
-                                    TextColor="{StaticResource TextMain}"
+                                    PlaceholderColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}"
+                                    TextColor="{AppThemeBinding Light={StaticResource TextMain}, Dark={StaticResource DarkTextMain}}"
                                     MaxLength="500"
                                     AutoSize="Disabled" />
                             </Border>
@@ -121,7 +121,7 @@
                 <Button
                     Text="Guardar"
                     Command="{Binding GuardarSalidaCommand}"
-                    BackgroundColor="{StaticResource Primary}"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}"
                     TextColor="{StaticResource White}"
                     CornerRadius="8"
                     HeightRequest="50"
@@ -136,21 +136,21 @@
         <ActivityIndicator
             IsVisible="{Binding IsBusy}"
             IsRunning="{Binding IsBusy}"
-            Color="{StaticResource Primary}"
+            Color="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}"
             HorizontalOptions="Center"
             VerticalOptions="Center" />
 
         <!-- ERROR -->
         <ContentView
             IsVisible="{Binding ErrorMessage, Converter={StaticResource IsStringNotNullOrEmptyConverter}}"
-            BackgroundColor="{StaticResource Overlay}"
+            BackgroundColor="{AppThemeBinding Light={StaticResource Overlay}, Dark={StaticResource DarkOverlay}}"
             InputTransparent="False">
-            <Border BackgroundColor="{StaticResource White}" Padding="24" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="300">
+            <Border BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}" Padding="24" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="300">
                 <Border.StrokeShape><RoundRectangle CornerRadius="12" /></Border.StrokeShape>
                 <VerticalStackLayout Spacing="16">
                     <Label Text="Error" FontSize="18" FontAttributes="Bold" TextColor="{StaticResource Error}" HorizontalTextAlignment="Center" />
-                    <Label Text="{Binding ErrorMessage}" TextColor="{StaticResource TextMain}" HorizontalTextAlignment="Center" />
-                    <Button Text="Cerrar" Command="{Binding LimpiarErrorCommand}" BackgroundColor="{StaticResource Primary}" TextColor="{StaticResource White}" CornerRadius="8" />
+                    <Label Text="{Binding ErrorMessage}" TextColor="{AppThemeBinding Light={StaticResource TextMain}, Dark={StaticResource DarkTextMain}}" HorizontalTextAlignment="Center" />
+                    <Button Text="Cerrar" Command="{Binding LimpiarErrorCommand}" BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" TextColor="{StaticResource White}" CornerRadius="8" />
                 </VerticalStackLayout>
             </Border>
         </ContentView>

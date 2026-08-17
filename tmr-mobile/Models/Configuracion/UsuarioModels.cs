@@ -1,4 +1,5 @@
 using CommunityToolkit.Mvvm.ComponentModel;
+using tmr_mobile.Resources.Styles;
 
 namespace tmr_mobile.Models.Configuracion;
 
@@ -45,9 +46,9 @@ public class UsuarioListaItem
         string.IsNullOrWhiteSpace(Email) ? "usuario" : Email.Split('@')[0];
 
     public string EstadoTexto => Activo ? "Activo" : "Inactivo";
-    public string EstadoColor => Activo ? "#16A34A" : "#6B7280";
-    public string ColorFondoEstado => Activo ? "#E6FDEE" : "#F3F4F6";
-    public string ColorTextoEstado => Activo ? "#16A34A" : "#6B7280";
+    public string EstadoColor => Activo ? DesignColors.SuccessText : DesignColors.TextMuted;
+    public string ColorFondoEstado => Activo ? DesignColors.SuccessSurface : DesignColors.Secondary;
+    public string ColorTextoEstado => Activo ? DesignColors.SuccessText : DesignColors.TextMuted;
 
     public string Iniciales
     {

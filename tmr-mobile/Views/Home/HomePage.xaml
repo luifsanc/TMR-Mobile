@@ -5,7 +5,7 @@
              x:Class="tmr_mobile.Views.Home.HomePage"
              Title="Módulos"
              Shell.NavBarIsVisible="False"
-             BackgroundColor="{StaticResource White}"
+             BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkBackgroundLight}}"
              x:DataType="vm:HomeViewModel">
 
     <Grid RowDefinitions="Auto,*">
@@ -13,22 +13,22 @@
         <Border Grid.Row="0"
                 Margin="20,16,20,8"
                 Padding="14,9,8,9"
-                BackgroundColor="{StaticResource White}"
-                Stroke="{StaticResource BorderColor}"
+                BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}"
+                Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}"
                 StrokeThickness="1"
                 StrokeShape="RoundRectangle 14">
             <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
                 <Label Text="¿Qué quieres hacer hoy?"
                        FontSize="16"
                        FontAttributes="Bold"
-                       TextColor="{StaticResource TextMain}"
+                       TextColor="{AppThemeBinding Light={StaticResource TextMain}, Dark={StaticResource DarkTextMain}}"
                        VerticalOptions="Center" />
 
                 <Border Grid.Column="1"
                         WidthRequest="28"
                         HeightRequest="28"
                         Padding="0"
-                        BackgroundColor="{StaticResource BackgroundLight}"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource DarkBackgroundLight}}"
                         Stroke="Transparent"
                         StrokeShape="RoundRectangle 14"
                         SemanticProperties.Description="Cerrar menú">
@@ -37,7 +37,7 @@
                     </Border.GestureRecognizers>
                     <Label Text="×"
                            FontSize="20"
-                           TextColor="{StaticResource TextMuted}"
+                           TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}"
                            HorizontalOptions="Center"
                            VerticalOptions="Center" />
                 </Border>
@@ -57,8 +57,8 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="vm:ModuloItem">
                     <Border StrokeShape="RoundRectangle 16"
-                            Stroke="{StaticResource BorderColor}"
-                            BackgroundColor="{StaticResource PrimaryLight}"
+                            Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryLight}, Dark={StaticResource DarkSurfaceElevated}}"
                             HeightRequest="110"
                             Padding="10"
                             HorizontalOptions="Fill">
@@ -66,8 +66,13 @@
                             <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HomeViewModel}}, Path=NavigateCommand}" CommandParameter="{Binding Ruta}" />
                         </Border.GestureRecognizers>
                         <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="12">
-                             <Image Source="{Binding Icono}" WidthRequest="32" HeightRequest="32" HorizontalOptions="Center" />
-                             <Label Text="{Binding Nombre}" FontSize="14" FontAttributes="Bold" TextColor="{StaticResource TextMain}" HorizontalOptions="Center" HorizontalTextAlignment="Center" LineBreakMode="WordWrap" />
+                             <Grid WidthRequest="32" HeightRequest="32" HorizontalOptions="Center">
+                                 <Image Source="{Binding Icono}" WidthRequest="32" HeightRequest="32"
+                                        IsVisible="{AppThemeBinding Light=True, Dark=False}" />
+                                 <Image Source="{Binding IconoOscuro}" WidthRequest="32" HeightRequest="32"
+                                        IsVisible="{AppThemeBinding Light=False, Dark=True}" />
+                             </Grid>
+                             <Label Text="{Binding Nombre}" FontSize="14" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource TextMain}, Dark={StaticResource DarkTextMain}}" HorizontalOptions="Center" HorizontalTextAlignment="Center" LineBreakMode="WordWrap" />
                         </VerticalStackLayout>
                     </Border>
                 </DataTemplate>

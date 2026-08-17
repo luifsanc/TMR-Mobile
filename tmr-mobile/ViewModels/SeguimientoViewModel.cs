@@ -27,9 +27,9 @@ public class SeguimientoViewModel : BaseViewModel
     public string Busqueda
     {
         get => _busqueda;
-        set 
-        { 
-            _busqueda = value; 
+        set
+        {
+            _busqueda = value;
             OnPropertyChanged();
             FiltrarColaboradores();
         }
@@ -38,11 +38,11 @@ public class SeguimientoViewModel : BaseViewModel
     public DateTime FechaDesde
     {
         get => _fechaDesde;
-        set 
-        { 
+        set
+        {
             if (_fechaDesde != value)
             {
-                _fechaDesde = value; 
+                _fechaDesde = value;
                 OnPropertyChanged();
                 _ = CargarDatosAsync();
             }
@@ -52,11 +52,11 @@ public class SeguimientoViewModel : BaseViewModel
     public DateTime FechaHasta
     {
         get => _fechaHasta;
-        set 
-        { 
+        set
+        {
             if (_fechaHasta != value)
             {
-                _fechaHasta = value; 
+                _fechaHasta = value;
                 OnPropertyChanged();
                 _ = CargarDatosAsync();
             }
@@ -110,7 +110,7 @@ public class SeguimientoViewModel : BaseViewModel
         try
         {
             IsBusy = true;
-            
+
             var filtro = new FiltroSeguimientoDto
             {
                 Busqueda = string.IsNullOrWhiteSpace(Busqueda) ? null : Busqueda,
@@ -120,7 +120,7 @@ public class SeguimientoViewModel : BaseViewModel
 
             var data = await _seguimientoService.ObtenerSeguimientoAsync(filtro);
             _colaboradores = new ObservableCollection<SeguimientoColaboradorDto>(data);
-            
+
             CalcularIndicadores();
             FiltrarColaboradores();
         }
@@ -151,10 +151,10 @@ public class SeguimientoViewModel : BaseViewModel
         HorasPorRegistrar = _colaboradores.Sum(c => c.DiasACompletar * 8); // Estimación de 8 horas por día
         ColaboradoresActivos = _colaboradores.Count;
         ColaboradoresConReporte = _colaboradores.Count(c => c.DiasConReporte > 0);
-        
+
         var totalDiasConReporte = _colaboradores.Sum(c => c.DiasConReporte);
         PromedioPorDia = totalDiasConReporte > 0 ? Math.Round(HorasRegistradas / totalDiasConReporte, 2) : 0;
-        
+
         ProyectosConActividades = _colaboradores
             .SelectMany(c => c.Proyecto.Split(new[] { ", " }, StringSplitOptions.RemoveEmptyEntries))
             .Where(p => p != "Sin Proyecto")
@@ -171,8 +171,8 @@ public class SeguimientoViewModel : BaseViewModel
         else
         {
             var term = Busqueda.ToLower();
-            var filtered = _colaboradores.Where(c => 
-                c.Nombre.ToLower().Contains(term) || 
+            var filtered = _colaboradores.Where(c =>
+                c.Nombre.ToLower().Contains(term) ||
                 c.Proyecto.ToLower().Contains(term) ||
                 c.Cliente.ToLower().Contains(term)
             );
@@ -218,8 +218,8 @@ public class SeguimientoViewModel : BaseViewModel
             try
             {
                 var response = await _seguimientoService.ObtenerActividadesColaboradorAsync(
-                    col.Id, 
-                    FechaDesde.ToString("yyyy-MM-dd"), 
+                    col.Id,
+                    FechaDesde.ToString("yyyy-MM-dd"),
                     FechaHasta.ToString("yyyy-MM-dd"));
 
                 if (response == null || !response.Actividades.Any())
@@ -242,7 +242,7 @@ public class SeguimientoViewModel : BaseViewModel
                     nombreArchivo,
                     tmr_mobile.Services.DescargaArchivoHelper.MimeTypeXlsx,
                     $"Compartir Reporte de {col.Nombre}");
-                    
+
                 generados++;
             }
             catch (Exception ex)
@@ -279,9 +279,9 @@ public class SeguimientoViewModel : BaseViewModel
         }).ToList();
 
         await ReportService.SeleccionarYExportarAsync(
-            $"Periodo: {FechaDesde:dd/MM/yyyy} al {FechaHasta:dd/MM/yyyy}", 
-            encabezados, 
-            filas, 
+            $"Periodo: {FechaDesde:dd/MM/yyyy} al {FechaHasta:dd/MM/yyyy}",
+            encabezados,
+            filas,
             nombreArchivo);
     }
 }

@@ -60,7 +60,7 @@
                             Date="{Binding FechaDesde}" 
                             Format="dd/MM/yyyy"
                             FontSize="13" 
-                            TextColor="#334155" 
+                            TextColor="#334155"
                             BackgroundColor="Transparent" />
                     </Border>
                     <Border
@@ -73,11 +73,11 @@
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="10" />
                         </Border.StrokeShape>
-                        <DatePicker 
-                            Date="{Binding FechaHasta}" 
+                        <DatePicker
+                            Date="{Binding FechaHasta}"
                             Format="dd/MM/yyyy"
-                            FontSize="13" 
-                            TextColor="#334155" 
+                            FontSize="13"
+                            TextColor="#334155"
                             BackgroundColor="Transparent" />
                     </Border>
                 </Grid>
@@ -184,7 +184,7 @@
                                     <Grid ColumnDefinitions="Auto,*, Auto" RowDefinitions="Auto,Auto" ColumnSpacing="10">
                                         <!-- CheckBox para selección -->
                                         <CheckBox Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" IsChecked="{Binding IsSelected}" VerticalOptions="Center" Color="#163572" />
-                                        
+
                                         <Label Grid.Row="0" Grid.Column="1" Text="{Binding Nombre}" FontSize="15" FontAttributes="Bold" TextColor="#1E293B" LineBreakMode="TailTruncation" />
                                         <Label Grid.Row="0" Grid.Column="2" Text="&gt;" FontSize="18" TextColor="#94A3B8" VerticalOptions="Center" />
                                         

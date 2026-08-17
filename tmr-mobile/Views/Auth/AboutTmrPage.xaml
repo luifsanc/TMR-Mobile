@@ -2,34 +2,34 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:tmr_mobile.ViewModels" x:Class="tmr_mobile.Views.Auth.AboutTmrPage"
              x:DataType="vm:AboutTmrViewModel" Shell.NavBarIsVisible="False" Shell.TabBarIsVisible="False"
-             BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark=#101827}" Title="Acerca de TMR">
+             BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource DarkBackgroundLight}}" Title="Acerca de TMR">
     <Grid RowDefinitions="Auto,*">
-        <Grid Padding="16,18,24,14" ColumnDefinitions="48,*" BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark=#1E293B}">
-            <Button Text="‹" Command="{Binding GoBackCommand}" FontFamily="InterRegular" FontSize="32" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark=#F8FAFC}" BackgroundColor="Transparent" Padding="0" WidthRequest="44" HeightRequest="44" />
-            <Label Grid.Column="1" Text="Acerca de TMR" FontFamily="InterSemiBold" FontSize="19" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark=#F8FAFC}" VerticalOptions="Center" />
+        <Grid Padding="16,18,24,14" ColumnDefinitions="48,*" BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource DarkSurfaceColor}}">
+            <Button Text="‹" Command="{Binding GoBackCommand}" FontFamily="InterRegular" FontSize="32" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkTextPrimary}}" BackgroundColor="Transparent" Padding="0" WidthRequest="44" HeightRequest="44" />
+            <Label Grid.Column="1" Text="Acerca de TMR" FontFamily="InterSemiBold" FontSize="19" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkTextPrimary}}" VerticalOptions="Center" />
         </Grid>
         <ScrollView Grid.Row="1" VerticalScrollBarVisibility="Never">
             <VerticalStackLayout Padding="24,34,24,40" Spacing="22" HorizontalOptions="Fill">
                 <VerticalStackLayout HorizontalOptions="Center" Spacing="12">
-                    <Border WidthRequest="106" HeightRequest="106" BackgroundColor="{StaticResource White}" Stroke="{AppThemeBinding Light={StaticResource PrimaryLight}, Dark=#334155}" StrokeThickness="1" StrokeShape="RoundRectangle 28" Padding="16">
-                        <Image Source="isotipo1.png" Aspect="AspectFit" />
+                    <Border WidthRequest="106" HeightRequest="106" BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}" Stroke="{AppThemeBinding Light={StaticResource PrimaryLight}, Dark={StaticResource DarkBorderColor}}" StrokeThickness="1" StrokeShape="RoundRectangle 28" Padding="16">
+                        <Image Source="{AppThemeBinding Light=isotipo1.png, Dark=isotipo2.png}" Aspect="AspectFit" />
                     </Border>
-                    <Label Text="TMR Móvil" FontFamily="InterSemiBold" FontSize="26" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark=#F8FAFC}" />
-                    <Label Text="{Binding Version}" FontFamily="InterRegular" FontSize="13" TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark=#94A3B8}" />
+                    <Label Text="TMR Móvil" FontFamily="InterSemiBold" FontSize="26" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkTextPrimary}}" />
+                    <Label Text="{Binding Version}" FontFamily="InterRegular" FontSize="13" TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextLight}}" />
                 </VerticalStackLayout>
-                <Border BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark=#1E293B}" Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark=#334155}" StrokeThickness="1" StrokeShape="RoundRectangle 20" Padding="22">
+                <Border BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource DarkSurfaceColor}}" Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" StrokeThickness="1" StrokeShape="RoundRectangle 20" Padding="22">
                     <VerticalStackLayout Spacing="13">
-                        <Label Text="Gestión del tiempo, más simple" FontFamily="InterSemiBold" FontSize="18" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark=#F8FAFC}" />
+                        <Label Text="Gestión del tiempo, más simple" FontFamily="InterSemiBold" FontSize="18" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkTextPrimary}}" />
                         <Label Text="TMR centraliza el registro y seguimiento de actividades, horas y proyectos para que los equipos mantengan su trabajo organizado y visible."
-                               FontFamily="InterRegular" FontSize="14" LineHeight="1.4" TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark=#CBD5E1}" />
+                               FontFamily="InterRegular" FontSize="14" LineHeight="1.4" TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextSecondary}}" />
                     </VerticalStackLayout>
                 </Border>
                 <VerticalStackLayout HorizontalOptions="Center" Spacing="9">
-                    <Label Text="Desarrollado por" FontFamily="InterRegular" FontSize="12" TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark=#94A3B8}" HorizontalTextAlignment="Center" />
+                    <Label Text="Desarrollado por" FontFamily="InterRegular" FontSize="12" TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextLight}}" HorizontalTextAlignment="Center" />
                     <Image Source="logo_isc.png" WidthRequest="190" HeightRequest="58" Aspect="AspectFit" />
-                    <Label Text="Integrity Solutions" FontFamily="InterSemiBold" FontSize="13" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark=#F8FAFC}" HorizontalTextAlignment="Center" />
+                    <Label Text="Integrity Solutions" FontFamily="InterSemiBold" FontSize="13" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkTextPrimary}}" HorizontalTextAlignment="Center" />
                 </VerticalStackLayout>
-                <Label Text="© 2026 Integrity Solutions. Todos los derechos reservados." FontFamily="InterRegular" FontSize="11" TextColor="{AppThemeBinding Light={StaticResource TextLight}, Dark=#64748B}" HorizontalTextAlignment="Center" />
+                <Label Text="© 2026 Integrity Solutions. Todos los derechos reservados." FontFamily="InterRegular" FontSize="11" TextColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextMuted}}" HorizontalTextAlignment="Center" />
             </VerticalStackLayout>
         </ScrollView>
     </Grid>

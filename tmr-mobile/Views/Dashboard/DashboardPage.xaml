@@ -8,7 +8,7 @@
              x:Class="tmr_mobile.Views.Dashboard.DashboardPage"
              x:DataType="vm:DashboardViewModel"
              Title="Dashboard"
-             BackgroundColor="{StaticResource BackgroundLight}">
+             BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource DarkBackgroundLight}}">
 
     <ContentPage.Resources>
         <conv:StatusToBackgroundColorConverter x:Key="StatusBg"/>
@@ -27,7 +27,7 @@
               VerticalOptions="Center">
 
             <Image Grid.Column="1"
-                   Source="letras1.png"
+                   Source="{AppThemeBinding Light=letras1.png, Dark=letras2.png}"
                    WidthRequest="124"
                    HeightRequest="40"
                    Aspect="AspectFit"
@@ -44,7 +44,7 @@
                     <TapGestureRecognizer Tapped="OnNotificationsTapped" />
                 </Grid.GestureRecognizers>
 
-                <Image Source="notification_bell_alarm.png"
+                <Image Source="{AppThemeBinding Light=notification_bell_alarm.png, Dark=notification_bell_alarm_dark.png}"
                        WidthRequest="16"
                        HeightRequest="16"
                        HorizontalOptions="Center"
@@ -56,8 +56,8 @@
                         Margin="0,1,1,0"
                         HorizontalOptions="End"
                         VerticalOptions="Start"
-                        BackgroundColor="#EF4444"
-                        Stroke="White"
+                        BackgroundColor="{StaticResource Error}"
+                        Stroke="{StaticResource OnPrimary}"
                         StrokeThickness="1"
                         StrokeShape="RoundRectangle 3.5"
                         IsVisible="{Binding TieneNotificaciones}" />
@@ -74,9 +74,9 @@
                     Padding="18,18,18,16">
                 <Border.Background>
                     <LinearGradientBrush EndPoint="1,1">
-                        <GradientStop Color="{StaticResource BackgroundLight}"
+                        <GradientStop Color="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource DarkBackgroundLight}}"
                                       Offset="0.0"/>
-                        <GradientStop Color="{StaticResource PrimaryLight}"
+                        <GradientStop Color="{AppThemeBinding Light={StaticResource PrimaryLight}, Dark={StaticResource DarkPrimaryLight}}"
                                       Offset="1.0"/>
                     </LinearGradientBrush>
                 </Border.Background>
@@ -84,7 +84,7 @@
                       ColumnSpacing="14">
                     <VerticalStackLayout Grid.Column="0"
                                          Spacing="6">
-                        <Border BackgroundColor="{StaticResource WhiteTranslucent}"
+                        <Border BackgroundColor="{AppThemeBinding Light={StaticResource WhiteTranslucent}, Dark={StaticResource DarkWhiteTranslucent}}"
                                 Stroke="Transparent"
                                 StrokeShape="RoundRectangle 14"
                                 Padding="10,5"
@@ -92,12 +92,12 @@
                             <Label Text="Resumen general"
                                    FontSize="11"
                                    FontAttributes="Bold"
-                                   TextColor="{StaticResource Primary}"/>
+                                   TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}"/>
                         </Border>
 
                         <Label FontSize="24"
                                FontAttributes="Bold"
-                               TextColor="{StaticResource TextPrimary}">
+                               TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}">
                             <Label.FormattedText>
                                 <FormattedString>
                                     <Span Text="Hola, "/>
@@ -108,7 +108,7 @@
                         </Label>
 
                         <Label Text="Aquí tienes un resumen claro de tu actividad y tus métricas clave del mes."
-                               TextColor="{StaticResource TextMuted}"
+                               TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}"
                                FontSize="14"
                                LineBreakMode="WordWrap"/>
                     </VerticalStackLayout>
@@ -124,8 +124,8 @@
                 <BindableLayout.ItemTemplate>
                     <DataTemplate x:DataType="models:StatCard">
                         <Border StrokeShape="RoundRectangle 14"
-                                BackgroundColor="{StaticResource White}"
-                                Stroke="{StaticResource BorderColor}"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}"
+                                Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}"
                                 Padding="12,10"
                                 Margin="4"
                                 HeightRequest="126"
@@ -156,7 +156,7 @@
                                     FontAttributes="Bold"
                                     HorizontalTextAlignment="Center"
                                     HorizontalOptions="Fill"
-                                    TextColor="{StaticResource TextPrimary}"/>
+                                    TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}"/>
 
                                 <Label Grid.Row="2"
                                     Text="{Binding Label}"
@@ -164,7 +164,7 @@
                                     HorizontalTextAlignment="Center"
                                     HorizontalOptions="Fill"
                                     LineBreakMode="WordWrap"
-                                    TextColor="{StaticResource TextMuted}"/>
+                                    TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}"/>
                             </Grid>
                         </Border>
                     </DataTemplate>
@@ -173,7 +173,7 @@
 
             <!-- ===================== Horas reportadas por proyecto (con selector de rango) ===================== -->
                 <Border StrokeShape="RoundRectangle 16"
-                        BackgroundColor="{StaticResource White}"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}"
                         Stroke="Transparent"
                         Padding="16">
                     <VerticalStackLayout Spacing="14">
@@ -182,12 +182,12 @@
                                 Text="Horas reportadas por proyecto"
                                 FontSize="16"
                                 FontAttributes="Bold"
-                                TextColor="{StaticResource TextPrimary}"/>
+                                TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}"/>
 
                             <Border Grid.Column="1"
                                     StrokeShape="RoundRectangle 20"
-                                    Stroke="{StaticResource BorderColor}"
-                                    BackgroundColor="{StaticResource BackgroundLight}"
+                                    Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}"
+                                    BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource DarkBackgroundLight}}"
                                     Padding="12,6">
                                 <Border.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding ToggleSelectorRangoCommand}"/>
@@ -196,10 +196,10 @@
                                     <Label Text="{Binding RangoLabel}"
                                         FontSize="12"
                                         FontAttributes="Bold"
-                                        TextColor="{StaticResource TextPrimary}"
+                                        TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}"
                                         VerticalOptions="Center"/>
                                     <Path Data="M2,4 L7,9 L12,4"
-                                        Stroke="{StaticResource TextMuted}"
+                                        Stroke="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}"
                                         StrokeThickness="1.5"
                                         StrokeLineCap="Round"
                                         StrokeLineJoin="Round"
@@ -221,23 +221,23 @@
                                             <Label Grid.Column="0"
                                                    Text="{Binding Categoria}"
                                                    FontSize="12"
-                                                   TextColor="{StaticResource TextMuted}"
+                                                   TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}"
                                                    LineBreakMode="TailTruncation"/>
                                             <Label Grid.Column="1"
                                                    Text="{Binding Horas, StringFormat='{0:0} h'}"
                                                    FontSize="13"
                                                    FontAttributes="Bold"
-                                                   TextColor="{StaticResource TextPrimary}"/>
+                                                   TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}"/>
                                         </Grid>
 
-                                        <Border BackgroundColor="{StaticResource PrimaryLight}"
+                                        <Border BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryLight}, Dark={StaticResource DarkPrimaryLight}}"
                                                 Stroke="Transparent"
                                                 StrokeShape="RoundRectangle 6"
                                                 HeightRequest="12">
                                             <Grid ColumnDefinitions="{Binding Porcentaje, Converter={StaticResource PercentToColumns}}"
                                                   HeightRequest="12">
                                                 <Border Grid.Column="0"
-                                                        BackgroundColor="{StaticResource Primary}"
+                                                        BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}"
                                                         Stroke="Transparent"
                                                         StrokeShape="RoundRectangle 6"/>
                                             </Grid>
@@ -257,11 +257,11 @@
                                                          Spacing="4">
                                         <Label Text="{Binding Titulo}"
                                                FontSize="10"
-                                               TextColor="{StaticResource TextLight}"/>
+                                               TextColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}"/>
                                         <Label Text="{Binding Valor}"
                                                FontSize="18"
                                                FontAttributes="Bold"
-                                               TextColor="{StaticResource TextPrimary}"/>
+                                               TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}"/>
                                     </VerticalStackLayout>
                                 </DataTemplate>
                             </BindableLayout.ItemTemplate>
@@ -273,14 +273,14 @@
 
             <!-- ===================== Proyectos por cliente ===================== -->
             <Border StrokeShape="RoundRectangle 16"
-                    BackgroundColor="{StaticResource White}"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}"
                     Stroke="Transparent"
                     Padding="16">
                 <VerticalStackLayout Spacing="14">
                     <Label Text="Proyectos por cliente"
                            FontSize="16"
                            FontAttributes="Bold"
-                           TextColor="{StaticResource TextPrimary}"/>
+                           TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}"/>
 
                     <CollectionView ItemsSource="{Binding ProyectosPorClienteVisibles}"
                                     SelectionMode="None">
@@ -292,12 +292,12 @@
                                         <Label Grid.Column="0"
                                                Text="{Binding Cliente}"
                                                FontSize="12"
-                                               TextColor="{StaticResource TextMuted}"
+                                               TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}"
                                                LineBreakMode="TailTruncation"/>
                                         <Label Grid.Column="1"
                                                FontSize="13"
                                                FontAttributes="Bold"
-                                               TextColor="{StaticResource TextPrimary}">
+                                               TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}">
                                             <Label.FormattedText>
                                                 <FormattedString>
                                                     <Span Text="{Binding Proyectos}"/>
@@ -309,14 +309,14 @@
                                         </Label>
                                     </Grid>
 
-                                    <Border BackgroundColor="{StaticResource PrimaryLight}"
+                                    <Border BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryLight}, Dark={StaticResource DarkPrimaryLight}}"
                                             Stroke="Transparent"
                                             StrokeShape="RoundRectangle 6"
                                             HeightRequest="12">
                                         <Grid ColumnDefinitions="{Binding Porcentaje, Converter={StaticResource PercentToColumns}}"
                                               HeightRequest="12">
                                             <Border Grid.Column="0"
-                                                    BackgroundColor="{StaticResource Primary}"
+                                                    BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}"
                                                     Stroke="Transparent"
                                                     StrokeShape="RoundRectangle 6"/>
                                         </Grid>
@@ -329,7 +329,7 @@
                     <Button Text="{Binding TextoVerMasClientes}"
                             Command="{Binding ToggleVerMasClientesCommand}"
                             BackgroundColor="Transparent"
-                            TextColor="{StaticResource Primary}"
+                            TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}"
                             FontAttributes="Bold"
                             FontSize="13"
                             HorizontalOptions="Center"
@@ -345,7 +345,7 @@
                        Text="Próximos a cerrar"
                        FontSize="17"
                        FontAttributes="Bold"
-                       TextColor="{StaticResource TextPrimary}"/>
+                       TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}"/>
             </Grid>
 
                 <CollectionView ItemsSource="{Binding ProximosACerrar}">
@@ -356,7 +356,7 @@
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="models:ClosingProject">
                             <Border StrokeShape="RoundRectangle 16"
-                                    BackgroundColor="{StaticResource White}"
+                                    BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}"
                                     Stroke="Transparent"
                                     Padding="16">
                                 <Grid ColumnDefinitions="*,Auto"
@@ -364,13 +364,13 @@
                                       RowSpacing="4">
                                     <Border Grid.Row="0"
                                             Grid.Column="0"
-                                            BackgroundColor="{StaticResource Secondary}"
+                                            BackgroundColor="{AppThemeBinding Light={StaticResource Secondary}, Dark={StaticResource DarkSecondary}}"
                                             StrokeShape="RoundRectangle 6"
                                             Padding="8,3"
                                             HorizontalOptions="Start">
                                         <Label Text="{Binding Codigo}"
                                                FontSize="11"
-                                               TextColor="{StaticResource TextMuted}"/>
+                                               TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}"/>
                                     </Border>
 
                                     <Border Grid.Row="0"
@@ -389,24 +389,24 @@
                                            Text="{Binding Titulo}"
                                            FontSize="15"
                                            FontAttributes="Bold"
-                                           TextColor="{StaticResource TextPrimary}"/>
+                                           TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}"/>
 
                                     <Label Grid.Row="2"
                                            Grid.Column="0"
                                            Text="{Binding Cliente}"
                                            FontSize="13"
-                                           TextColor="{StaticResource TextMuted}"/>
+                                           TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}"/>
 
                                     <Label Grid.Row="3"
                                            Grid.Column="0"
                                            Text="{Binding FechaCierre, StringFormat='{0:dd/MM/yyyy}'}"
                                            FontSize="13"
-                                           TextColor="{StaticResource TextMuted}"/>
+                                           TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}"/>
                                     <Label Grid.Row="3"
                                            Grid.Column="1"
                                            Text="{Binding HorasRestantes, StringFormat='{0} h restantes'}"
                                            FontSize="12"
-                                           TextColor="{StaticResource TextMuted}"
+                                           TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}"
                                            HorizontalOptions="End"/>
                                 </Grid>
                             </Border>

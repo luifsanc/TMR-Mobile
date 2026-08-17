@@ -8,26 +8,26 @@
              NavigationPage.HasNavigationBar="False"
              Shell.NavBarIsVisible="False"
              Shell.PresentationMode="ModalAnimated"
-             BackgroundColor="{StaticResource OverlaySoft}">
+             BackgroundColor="{AppThemeBinding Light={StaticResource OverlaySoft}, Dark={StaticResource DarkOverlaySoft}}">
 
     <!-- Se simula el Modal / Bottom Sheet cubriendo toda la pantalla pero con estilo limpio -->
     <Grid>
         
-        <Border StrokeShape="RoundRectangle 24,24,0,0" Stroke="Transparent" BackgroundColor="{StaticResource White}" Padding="0" VerticalOptions="End" MaximumHeightRequest="750">
+        <Border StrokeShape="RoundRectangle 24,24,0,0" Stroke="Transparent" BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}" Padding="0" VerticalOptions="End" MaximumHeightRequest="750">
             
             <Grid RowDefinitions="Auto,*,Auto" Padding="20">
                 
                 <!-- Encabezado -->
                 <Grid Grid.Row="0" ColumnDefinitions="*,Auto" Margin="0,0,0,24">
                     <VerticalStackLayout Grid.Column="0" Spacing="4">
-                        <Label Text="Agregar actividad" FontAttributes="Bold" FontSize="26" TextColor="{StaticResource TextPrimary}" />
-                        <Label Text="Registra el tiempo y detalles de ..." FontSize="14" TextColor="{StaticResource TextMuted}" />
+                        <Label Text="Agregar actividad" FontAttributes="Bold" FontSize="26" TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
+                        <Label Text="Registra el tiempo y detalles de ..." FontSize="14" TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}" />
                     </VerticalStackLayout>
-                    <Border Grid.Column="1" Stroke="{StaticResource BorderColor}" StrokeShape="RoundRectangle 12" BackgroundColor="{StaticResource White}" WidthRequest="44" HeightRequest="44" VerticalOptions="Start" Padding="0">
+                    <Border Grid.Column="1" Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" StrokeShape="RoundRectangle 12" BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}" WidthRequest="44" HeightRequest="44" VerticalOptions="Start" Padding="0">
                         <Border.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding CancelarCommand}" />
                         </Border.GestureRecognizers>
-                        <Label Text="X" FontSize="18" FontAttributes="Bold" TextColor="{StaticResource TextPrimary}" HorizontalOptions="Center" VerticalOptions="Center" />
+                        <Label Text="X" FontSize="18" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" HorizontalOptions="Center" VerticalOptions="Center" />
                     </Border>
                 </Grid>
 
@@ -38,46 +38,46 @@
                         <!-- Tipo de Actividad -->
                         <VerticalStackLayout Spacing="8">
                             <HorizontalStackLayout Spacing="4">
-                                <Label Text="Tipo de Actividad" FontAttributes="Bold" FontSize="14" TextColor="{StaticResource TextPrimary}" />
+                                <Label Text="Tipo de Actividad" FontAttributes="Bold" FontSize="14" TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
                                 <Label Text="*" FontAttributes="Bold" FontSize="14" TextColor="{StaticResource Error}" />
-                                <Label Text="ⓘ" FontSize="14" TextColor="{StaticResource BorderColor}" Margin="4,0,0,0" />
+                                <Label Text="ⓘ" FontSize="14" TextColor="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" Margin="4,0,0,0" />
                             </HorizontalStackLayout>
-                            <Border Stroke="{StaticResource BorderColor}" StrokeShape="RoundRectangle 12" BackgroundColor="{StaticResource BackgroundLight}" Padding="12,4">
+                            <Border Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" StrokeShape="RoundRectangle 12" BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource DarkBackgroundLight}}" Padding="12,4">
                                 <Picker ItemsSource="{Binding TiposActividad}" 
                                         ItemDisplayBinding="{Binding Nombre}" 
                                         SelectedItem="{Binding TipoActividadSeleccionada}" 
                                         Title="👤  Busque y seleccione un tipo"
-                                        TextColor="{StaticResource TextPrimary}" TitleColor="{StaticResource TextMuted}" BackgroundColor="Transparent" />
+                                        TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" TitleColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}" BackgroundColor="Transparent" />
                             </Border>
                         </VerticalStackLayout>
 
                         <!-- Proyecto -->
                         <VerticalStackLayout Spacing="8">
                             <HorizontalStackLayout Spacing="4">
-                                <Label Text="Proyecto" FontAttributes="Bold" FontSize="14" TextColor="{StaticResource TextPrimary}" />
+                                <Label Text="Proyecto" FontAttributes="Bold" FontSize="14" TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
                                 <Label Text="*" FontAttributes="Bold" FontSize="14" TextColor="{StaticResource Error}" />
-                                <Label Text="ⓘ" FontSize="14" TextColor="{StaticResource BorderColor}" Margin="4,0,0,0" />
+                                <Label Text="ⓘ" FontSize="14" TextColor="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" Margin="4,0,0,0" />
                             </HorizontalStackLayout>
-                            <Border Stroke="{StaticResource BorderColor}" StrokeShape="RoundRectangle 12" BackgroundColor="{StaticResource BackgroundLight}" Padding="12,4">
+                            <Border Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" StrokeShape="RoundRectangle 12" BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource DarkBackgroundLight}}" Padding="12,4">
                                 <Picker ItemsSource="{Binding Proyectos}" 
                                         ItemDisplayBinding="{Binding Nombre}" 
                                         SelectedItem="{Binding ProyectoSeleccionado}" 
                                         Title="▣  Busque y seleccione un proyecto"
-                                        TextColor="{StaticResource TextPrimary}" TitleColor="{StaticResource TextMuted}" BackgroundColor="Transparent" />
+                                        TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" TitleColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}" BackgroundColor="Transparent" />
                             </Border>
                         </VerticalStackLayout>
 
                         <!-- Código Requerimiento -->
                         <VerticalStackLayout Spacing="8">
                             <HorizontalStackLayout Spacing="4">
-                                <Label Text="Código de Requerimiento" FontAttributes="Bold" FontSize="14" TextColor="{StaticResource TextPrimary}" />
+                                <Label Text="Código de Requerimiento" FontAttributes="Bold" FontSize="14" TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
                                 <Label Text="*" FontAttributes="Bold" FontSize="14" TextColor="{StaticResource Error}" />
-                                <Label Text="ⓘ" FontSize="14" TextColor="{StaticResource BorderColor}" Margin="4,0,0,0" />
+                                <Label Text="ⓘ" FontSize="14" TextColor="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" Margin="4,0,0,0" />
                             </HorizontalStackLayout>
-                            <Border Stroke="{StaticResource BorderColor}" StrokeShape="RoundRectangle 12" BackgroundColor="{StaticResource BackgroundLight}" Padding="12,0" HeightRequest="52">
+                            <Border Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" StrokeShape="RoundRectangle 12" BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource DarkBackgroundLight}}" Padding="12,0" HeightRequest="52">
                                 <Grid ColumnDefinitions="*,Auto" VerticalOptions="Center">
-                                    <Entry Grid.Column="0" Text="{Binding CodigoRequerimiento}" MaxLength="50" Placeholder="Ej. REQ-101" BackgroundColor="Transparent" TextColor="{StaticResource TextPrimary}" />
-                                    <Label Grid.Column="1" Text="0/50" FontSize="12" TextColor="{StaticResource TextLight}" VerticalOptions="Center" />
+                                    <Entry Grid.Column="0" Text="{Binding CodigoRequerimiento}" MaxLength="50" Placeholder="Ej. REQ-101" BackgroundColor="Transparent" TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
+                                    <Label Grid.Column="1" Text="0/50" FontSize="12" TextColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}" VerticalOptions="Center" />
                                 </Grid>
                             </Border>
                         </VerticalStackLayout>
@@ -85,13 +85,13 @@
                         <!-- Descripción -->
                         <VerticalStackLayout Spacing="8">
                             <HorizontalStackLayout Spacing="4">
-                                <Label Text="Descripción" FontAttributes="Bold" FontSize="14" TextColor="{StaticResource TextPrimary}" />
-                                <Label Text="ⓘ" FontSize="14" TextColor="{StaticResource BorderColor}" Margin="4,0,0,0" />
+                                <Label Text="Descripción" FontAttributes="Bold" FontSize="14" TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
+                                <Label Text="ⓘ" FontSize="14" TextColor="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" Margin="4,0,0,0" />
                             </HorizontalStackLayout>
-                            <Border Stroke="{StaticResource BorderColor}" StrokeShape="RoundRectangle 12" BackgroundColor="{StaticResource BackgroundLight}" Padding="12,12" HeightRequest="100">
+                            <Border Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" StrokeShape="RoundRectangle 12" BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource DarkBackgroundLight}}" Padding="12,12" HeightRequest="100">
                                 <Grid RowDefinitions="*,Auto">
-                                    <Editor Grid.Row="0" Text="{Binding DescripcionActividad}" MaxLength="255" Placeholder="Descripción de la actividad" BackgroundColor="Transparent" TextColor="{StaticResource TextPrimary}" />
-                                    <Label Grid.Row="1" Text="0/255" FontSize="12" TextColor="{StaticResource TextLight}" HorizontalOptions="End" />
+                                    <Editor Grid.Row="0" Text="{Binding DescripcionActividad}" MaxLength="255" Placeholder="Descripción de la actividad" BackgroundColor="Transparent" TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
+                                    <Label Grid.Row="1" Text="0/255" FontSize="12" TextColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}" HorizontalOptions="End" />
                                 </Grid>
                             </Border>
                         </VerticalStackLayout>
@@ -100,23 +100,23 @@
                         <Grid ColumnDefinitions="*,*" ColumnSpacing="16" IsVisible="{Binding IsRecurrente, Converter={x:StaticResource InvertedBoolConverter}}">
                             <VerticalStackLayout Grid.Column="0" Spacing="8">
                                 <HorizontalStackLayout Spacing="4">
-                                    <Label Text="Fecha Actividad" FontAttributes="Bold" FontSize="14" TextColor="{StaticResource TextPrimary}" />
+                                    <Label Text="Fecha Actividad" FontAttributes="Bold" FontSize="14" TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
                                     <Label Text="*" FontAttributes="Bold" FontSize="14" TextColor="{StaticResource Error}" />
                                 </HorizontalStackLayout>
-                                <Border Stroke="{StaticResource BorderColor}" StrokeShape="RoundRectangle 12" BackgroundColor="{StaticResource BackgroundLight}" Padding="12,4" HeightRequest="52">
-                                    <DatePicker Date="{Binding FechaActividad}" BackgroundColor="Transparent" TextColor="{StaticResource TextPrimary}" Format="dd/MM/yyyy" />
+                                <Border Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" StrokeShape="RoundRectangle 12" BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource DarkBackgroundLight}}" Padding="12,4" HeightRequest="52">
+                                    <DatePicker Date="{Binding FechaActividad}" BackgroundColor="Transparent" TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" Format="dd/MM/yyyy" />
                                 </Border>
                             </VerticalStackLayout>
                             <VerticalStackLayout Grid.Column="1" Spacing="8">
                                 <HorizontalStackLayout Spacing="4">
-                                    <Label Text="Número de Horas" FontAttributes="Bold" FontSize="14" TextColor="{StaticResource TextPrimary}" />
+                                    <Label Text="Número de Horas" FontAttributes="Bold" FontSize="14" TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
                                     <Label Text="*" FontAttributes="Bold" FontSize="14" TextColor="{StaticResource Error}" />
-                                    <Label Text="ⓘ" FontSize="14" TextColor="{StaticResource BorderColor}" Margin="4,0,0,0" />
+                                    <Label Text="ⓘ" FontSize="14" TextColor="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" Margin="4,0,0,0" />
                                 </HorizontalStackLayout>
-                                <Border Stroke="{StaticResource BorderColor}" StrokeShape="RoundRectangle 12" BackgroundColor="{StaticResource BackgroundLight}" Padding="12,0" HeightRequest="52">
+                                <Border Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" StrokeShape="RoundRectangle 12" BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource DarkBackgroundLight}}" Padding="12,0" HeightRequest="52">
                                     <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
                                         <Label Text="🕘" FontSize="16" VerticalOptions="Center" />
-                                        <Entry Text="{Binding CantidadHoras}" Keyboard="Numeric" BackgroundColor="Transparent" TextColor="{StaticResource TextPrimary}" />
+                                        <Entry Text="{Binding CantidadHoras}" Keyboard="Numeric" BackgroundColor="Transparent" TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
                                     </HorizontalStackLayout>
                                 </Border>
                             </VerticalStackLayout>
@@ -124,9 +124,9 @@
 
                         <!-- Checkbox Actividad Recurrente -->
                         <HorizontalStackLayout Spacing="12" Margin="0,8,0,0">
-                            <CheckBox IsChecked="{Binding IsRecurrente}" Color="{StaticResource Primary}" />
-                            <Label Text="Actividad Recurrente" FontAttributes="Bold" FontSize="15" TextColor="{StaticResource TextPrimary}" VerticalOptions="Center" />
-                            <Label Text="ⓘ" FontSize="15" TextColor="{StaticResource BorderColor}" VerticalOptions="Center" />
+                            <CheckBox IsChecked="{Binding IsRecurrente}" Color="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />
+                            <Label Text="Actividad Recurrente" FontAttributes="Bold" FontSize="15" TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" VerticalOptions="Center" />
+                            <Label Text="ⓘ" FontSize="15" TextColor="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" VerticalOptions="Center" />
                         </HorizontalStackLayout>
 
                         <!-- Campos Recurrentes -->
@@ -135,12 +135,12 @@
                             <!-- Fecha Inicio -->
                             <VerticalStackLayout Spacing="8">
                                 <HorizontalStackLayout Spacing="4">
-                                    <Label Text="Fecha Inicio" FontAttributes="Bold" FontSize="14" TextColor="{StaticResource TextPrimary}" />
+                                    <Label Text="Fecha Inicio" FontAttributes="Bold" FontSize="14" TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
                                     <Label Text="*" FontAttributes="Bold" FontSize="14" TextColor="{StaticResource Error}" />
                                 </HorizontalStackLayout>
-                                <Border Stroke="{StaticResource BorderColor}" StrokeShape="RoundRectangle 12" BackgroundColor="{StaticResource BackgroundLight}" Padding="12,4" HeightRequest="52">
+                                <Border Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" StrokeShape="RoundRectangle 12" BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource DarkBackgroundLight}}" Padding="12,4" HeightRequest="52">
                                     <Grid ColumnDefinitions="*,Auto" VerticalOptions="Center">
-                                        <DatePicker Grid.Column="0" Date="{Binding FechaInicio}" BackgroundColor="Transparent" TextColor="{StaticResource TextPrimary}" Format="dd/MM/yyyy" />
+                                        <DatePicker Grid.Column="0" Date="{Binding FechaInicio}" BackgroundColor="Transparent" TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" Format="dd/MM/yyyy" />
                                         <Label Grid.Column="1" Text="📅" FontSize="16" VerticalOptions="Center" />
                                     </Grid>
                                 </Border>
@@ -149,13 +149,13 @@
                             <!-- Fecha Fin -->
                             <VerticalStackLayout Spacing="8">
                                 <HorizontalStackLayout Spacing="4">
-                                    <Label Text="Fecha Fin" FontAttributes="Bold" FontSize="14" TextColor="{StaticResource TextPrimary}" />
+                                    <Label Text="Fecha Fin" FontAttributes="Bold" FontSize="14" TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
                                     <Label Text="*" FontAttributes="Bold" FontSize="14" TextColor="{StaticResource Error}" />
-                                    <Label Text="ⓘ" FontSize="14" TextColor="{StaticResource BorderColor}" Margin="4,0,0,0" />
+                                    <Label Text="ⓘ" FontSize="14" TextColor="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" Margin="4,0,0,0" />
                                 </HorizontalStackLayout>
-                                <Border Stroke="{StaticResource BorderColor}" StrokeShape="RoundRectangle 12" BackgroundColor="{StaticResource BackgroundLight}" Padding="12,4" HeightRequest="52">
+                                <Border Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" StrokeShape="RoundRectangle 12" BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource DarkBackgroundLight}}" Padding="12,4" HeightRequest="52">
                                     <Grid ColumnDefinitions="*,Auto" VerticalOptions="Center">
-                                        <DatePicker Grid.Column="0" Date="{Binding FechaFin}" BackgroundColor="Transparent" TextColor="{StaticResource TextPrimary}" Format="dd/MM/yyyy" />
+                                        <DatePicker Grid.Column="0" Date="{Binding FechaFin}" BackgroundColor="Transparent" TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" Format="dd/MM/yyyy" />
                                         <Label Grid.Column="1" Text="📅" FontSize="16" VerticalOptions="Center" />
                                     </Grid>
                                 </Border>
@@ -164,34 +164,34 @@
                             <!-- Horas por día -->
                             <VerticalStackLayout Spacing="8">
                                 <HorizontalStackLayout Spacing="4">
-                                    <Label Text="Horas por día" FontAttributes="Bold" FontSize="14" TextColor="{StaticResource TextPrimary}" />
+                                    <Label Text="Horas por día" FontAttributes="Bold" FontSize="14" TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
                                     <Label Text="*" FontAttributes="Bold" FontSize="14" TextColor="{StaticResource Error}" />
-                                    <Label Text="ⓘ" FontSize="14" TextColor="{StaticResource BorderColor}" Margin="4,0,0,0" />
+                                    <Label Text="ⓘ" FontSize="14" TextColor="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" Margin="4,0,0,0" />
                                 </HorizontalStackLayout>
-                                <Border Stroke="{StaticResource BorderColor}" StrokeShape="RoundRectangle 12" BackgroundColor="{StaticResource BackgroundLight}" Padding="12,0" HeightRequest="52">
+                                <Border Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" StrokeShape="RoundRectangle 12" BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource DarkBackgroundLight}}" Padding="12,0" HeightRequest="52">
                                     <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
                                         <Label Text="🕘" FontSize="16" VerticalOptions="Center" />
-                                        <Entry Text="{Binding HorasPorDia}" Keyboard="Numeric" BackgroundColor="Transparent" TextColor="{StaticResource TextPrimary}" />
+                                        <Entry Text="{Binding HorasPorDia}" Keyboard="Numeric" BackgroundColor="Transparent" TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
                                     </HorizontalStackLayout>
                                 </Border>
                             </VerticalStackLayout>
 
                             <!-- Checkbox Fines de Semana -->
                             <HorizontalStackLayout Spacing="12">
-                                <CheckBox IsChecked="{Binding IncluirFinesSemana}" Color="{StaticResource Primary}" />
-                                <Label Text="Incluir fines de semana" FontSize="15" TextColor="{StaticResource TextMuted}" VerticalOptions="Center" />
-                                <Label Text="ⓘ" FontSize="15" TextColor="{StaticResource BorderColor}" VerticalOptions="Center" />
+                                <CheckBox IsChecked="{Binding IncluirFinesSemana}" Color="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />
+                                <Label Text="Incluir fines de semana" FontSize="15" TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}" VerticalOptions="Center" />
+                                <Label Text="ⓘ" FontSize="15" TextColor="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" VerticalOptions="Center" />
                             </HorizontalStackLayout>
 
                             <!-- Checkbox Feriados -->
                             <HorizontalStackLayout Spacing="12">
-                                <CheckBox IsChecked="{Binding IncluirFeriados}" Color="{StaticResource Primary}" />
-                                <Label Text="Incluir días feriados" FontSize="15" TextColor="{StaticResource TextMuted}" VerticalOptions="Center" />
-                                <Label Text="ⓘ" FontSize="15" TextColor="{StaticResource BorderColor}" VerticalOptions="Center" />
+                                <CheckBox IsChecked="{Binding IncluirFeriados}" Color="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />
+                                <Label Text="Incluir días feriados" FontSize="15" TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}" VerticalOptions="Center" />
+                                <Label Text="ⓘ" FontSize="15" TextColor="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" VerticalOptions="Center" />
                             </HorizontalStackLayout>
 
                             <!-- Mensaje Recurrente -->
-                            <Border StrokeShape="RoundRectangle 12" Stroke="Transparent" BackgroundColor="{StaticResource SuccessSurface}" Padding="16" Margin="0,12,0,0">
+                            <Border StrokeShape="RoundRectangle 12" Stroke="Transparent" BackgroundColor="{AppThemeBinding Light={StaticResource SuccessSurface}, Dark={StaticResource DarkSuccessSurface}}" Padding="16" Margin="0,12,0,0">
                                 <HorizontalStackLayout Spacing="12">
                                     <Label Text="ℹ️" FontSize="20" VerticalOptions="Center" />
                                     <Label Text="{Binding MensajeRecurrente}" FontSize="14" TextColor="{StaticResource SuccessText}" FontAttributes="Bold" VerticalOptions="Center" LineBreakMode="WordWrap" />
@@ -204,7 +204,7 @@
                 </ScrollView>
 
                 <!-- Botón Guardar -->
-                <Button Grid.Row="2" Text="Guardar" Command="{Binding GuardarActividadCommand}" BackgroundColor="{StaticResource TextMuted}" TextColor="{StaticResource White}" FontAttributes="Bold" FontSize="16" CornerRadius="16" HeightRequest="56" />
+                <Button Grid.Row="2" Text="Guardar" Command="{Binding GuardarActividadCommand}" BackgroundColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}" TextColor="{StaticResource White}" FontAttributes="Bold" FontSize="16" CornerRadius="16" HeightRequest="56" />
 
             </Grid>
         </Border>

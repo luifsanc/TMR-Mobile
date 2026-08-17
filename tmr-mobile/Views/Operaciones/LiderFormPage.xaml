@@ -5,7 +5,7 @@
     x:Class="tmr_mobile.Views.Operaciones.LiderFormPage"
     Title="Formulario de Líder"
     Shell.NavBarIsVisible="False"
-    BackgroundColor="{StaticResource BackgroundLight}">
+    BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource DarkBackgroundLight}}">
 
     <Grid>
         <ScrollView VerticalScrollBarVisibility="Never">
@@ -18,7 +18,7 @@
                         Text="‹"
                         Clicked="OnCancelarClicked"
                         BackgroundColor="Transparent"
-                        TextColor="{StaticResource Primary}"
+                        TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}"
                         FontSize="28"
                         FontAttributes="Bold"
                         Padding="0"
@@ -32,54 +32,54 @@
                         Text="Agregar Nuevo Líder"
                         FontSize="22"
                         FontAttributes="Bold"
-                        TextColor="{StaticResource Primary}"
+                        TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}"
                         VerticalOptions="Center" />
                 </Grid>
 
                 <!-- CARD DE FORMULARIO -->
                 <Border
-                    BackgroundColor="{StaticResource White}"
-                    Stroke="{StaticResource BorderColor}"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}"
+                    Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}"
                     StrokeThickness="1"
                     Padding="18">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="14" />
                     </Border.StrokeShape>
                     <Border.Shadow>
-                        <Shadow Brush="{StaticResource TextPrimary}" Offset="0,2" Radius="6" Opacity="0.04" />
+                        <Shadow Brush="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" Offset="0,2" Radius="6" Opacity="0.04" />
                     </Border.Shadow>
 
                     <VerticalStackLayout Spacing="16">
                         <!-- Indicador de Sección -->
                         <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
-                            <BoxView WidthRequest="3" HeightRequest="14" Color="{StaticResource Primary}" CornerRadius="1.5" VerticalOptions="Center" />
-                            <Label Text="Información del Líder" FontSize="14" FontAttributes="Bold" TextColor="{StaticResource Primary}" VerticalOptions="Center" />
+                            <BoxView WidthRequest="3" HeightRequest="14" Color="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" CornerRadius="1.5" VerticalOptions="Center" />
+                            <Label Text="Información del Líder" FontSize="14" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" VerticalOptions="Center" />
                         </HorizontalStackLayout>
 
                         <!-- Nombres -->
                         <VerticalStackLayout Spacing="6">
-                            <Label Text="Nombres *" FontSize="12" TextColor="{StaticResource TextMuted}" />
-                            <Border Stroke="{StaticResource BorderColor}" StrokeThickness="1" BackgroundColor="Transparent" Padding="12,0" HeightRequest="44">
+                            <Label Text="Nombres *" FontSize="12" TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}" />
+                            <Border Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" StrokeThickness="1" BackgroundColor="Transparent" Padding="12,0" HeightRequest="44">
                                 <Border.StrokeShape><RoundRectangle CornerRadius="8" /></Border.StrokeShape>
-                                <Entry x:Name="NombresEntry" Placeholder="Ej. Roberto" TextColor="{StaticResource TextMain}" PlaceholderColor="{StaticResource TextLight}" FontSize="13" BackgroundColor="Transparent" VerticalOptions="Center" />
+                                <Entry x:Name="NombresEntry" Placeholder="Ej. Roberto" TextColor="{AppThemeBinding Light={StaticResource TextMain}, Dark={StaticResource DarkTextMain}}" PlaceholderColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}" FontSize="13" BackgroundColor="Transparent" VerticalOptions="Center" />
                             </Border>
                         </VerticalStackLayout>
 
                         <!-- Apellidos -->
                         <VerticalStackLayout Spacing="6">
-                            <Label Text="Apellidos *" FontSize="12" TextColor="{StaticResource TextMuted}" />
-                            <Border Stroke="{StaticResource BorderColor}" StrokeThickness="1" BackgroundColor="Transparent" Padding="12,0" HeightRequest="44">
+                            <Label Text="Apellidos *" FontSize="12" TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}" />
+                            <Border Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" StrokeThickness="1" BackgroundColor="Transparent" Padding="12,0" HeightRequest="44">
                                 <Border.StrokeShape><RoundRectangle CornerRadius="8" /></Border.StrokeShape>
-                                <Entry x:Name="ApellidosEntry" Placeholder="Ej. Gómez" TextColor="{StaticResource TextMain}" PlaceholderColor="{StaticResource TextLight}" FontSize="13" BackgroundColor="Transparent" VerticalOptions="Center" />
+                                <Entry x:Name="ApellidosEntry" Placeholder="Ej. Gómez" TextColor="{AppThemeBinding Light={StaticResource TextMain}, Dark={StaticResource DarkTextMain}}" PlaceholderColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}" FontSize="13" BackgroundColor="Transparent" VerticalOptions="Center" />
                             </Border>
                         </VerticalStackLayout>
 
                         <!-- Tipo de Líder -->
                         <VerticalStackLayout Spacing="6">
-                            <Label Text="Tipo de Líder" FontSize="12" TextColor="{StaticResource TextMuted}" />
-                            <Border Stroke="{StaticResource BorderColor}" StrokeThickness="1" BackgroundColor="Transparent" Padding="8,0" HeightRequest="44">
+                            <Label Text="Tipo de Líder" FontSize="12" TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}" />
+                            <Border Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" StrokeThickness="1" BackgroundColor="Transparent" Padding="8,0" HeightRequest="44">
                                 <Border.StrokeShape><RoundRectangle CornerRadius="8" /></Border.StrokeShape>
-                                <Picker x:Name="TipoPicker" Title="Seleccione tipo" TextColor="{StaticResource TextMain}" TitleColor="{StaticResource TextLight}" FontSize="13" VerticalOptions="Center">
+                                <Picker x:Name="TipoPicker" Title="Seleccione tipo" TextColor="{AppThemeBinding Light={StaticResource TextMain}, Dark={StaticResource DarkTextMain}}" TitleColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}" FontSize="13" VerticalOptions="Center">
                                     <Picker.ItemsSource>
                                         <x:Array Type="{x:Type x:String}">
                                             <x:String>Interno</x:String>
@@ -92,28 +92,28 @@
 
                         <!-- Correo Electrónico -->
                         <VerticalStackLayout Spacing="6">
-                            <Label Text="Correo Electrónico" FontSize="12" TextColor="{StaticResource TextMuted}" />
-                            <Border Stroke="{StaticResource BorderColor}" StrokeThickness="1" BackgroundColor="Transparent" Padding="12,0" HeightRequest="44">
+                            <Label Text="Correo Electrónico" FontSize="12" TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}" />
+                            <Border Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" StrokeThickness="1" BackgroundColor="Transparent" Padding="12,0" HeightRequest="44">
                                 <Border.StrokeShape><RoundRectangle CornerRadius="8" /></Border.StrokeShape>
-                                <Entry x:Name="EmailEntry" Placeholder="ejemplo@tmr.com" Keyboard="Email" TextColor="{StaticResource TextMain}" PlaceholderColor="{StaticResource TextLight}" FontSize="13" BackgroundColor="Transparent" VerticalOptions="Center" />
+                                <Entry x:Name="EmailEntry" Placeholder="ejemplo@tmr.com" Keyboard="Email" TextColor="{AppThemeBinding Light={StaticResource TextMain}, Dark={StaticResource DarkTextMain}}" PlaceholderColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}" FontSize="13" BackgroundColor="Transparent" VerticalOptions="Center" />
                             </Border>
                         </VerticalStackLayout>
 
                         <!-- Teléfono -->
                         <VerticalStackLayout Spacing="6">
-                            <Label Text="Teléfono" FontSize="12" TextColor="{StaticResource TextMuted}" />
-                            <Border Stroke="{StaticResource BorderColor}" StrokeThickness="1" BackgroundColor="Transparent" Padding="12,0" HeightRequest="44">
+                            <Label Text="Teléfono" FontSize="12" TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}" />
+                            <Border Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" StrokeThickness="1" BackgroundColor="Transparent" Padding="12,0" HeightRequest="44">
                                 <Border.StrokeShape><RoundRectangle CornerRadius="8" /></Border.StrokeShape>
-                                <Entry x:Name="TelefonoEntry" Placeholder="Ej. 0991234567" Keyboard="Telephone" TextColor="{StaticResource TextMain}" PlaceholderColor="{StaticResource TextLight}" FontSize="13" BackgroundColor="Transparent" VerticalOptions="Center" />
+                                <Entry x:Name="TelefonoEntry" Placeholder="Ej. 0991234567" Keyboard="Telephone" TextColor="{AppThemeBinding Light={StaticResource TextMain}, Dark={StaticResource DarkTextMain}}" PlaceholderColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}" FontSize="13" BackgroundColor="Transparent" VerticalOptions="Center" />
                             </Border>
                         </VerticalStackLayout>
 
                         <!-- Documento de Identificación -->
                         <VerticalStackLayout Spacing="6">
-                            <Label Text="Número de Identificación / Cédula" FontSize="12" TextColor="{StaticResource TextMuted}" />
-                            <Border Stroke="{StaticResource BorderColor}" StrokeThickness="1" BackgroundColor="Transparent" Padding="12,0" HeightRequest="44">
+                            <Label Text="Número de Identificación / Cédula" FontSize="12" TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}" />
+                            <Border Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" StrokeThickness="1" BackgroundColor="Transparent" Padding="12,0" HeightRequest="44">
                                 <Border.StrokeShape><RoundRectangle CornerRadius="8" /></Border.StrokeShape>
-                                <Entry x:Name="IdentificacionEntry" Placeholder="Ej. 0912345678" TextColor="{StaticResource TextMain}" PlaceholderColor="{StaticResource TextLight}" FontSize="13" BackgroundColor="Transparent" VerticalOptions="Center" />
+                                <Entry x:Name="IdentificacionEntry" Placeholder="Ej. 0912345678" TextColor="{AppThemeBinding Light={StaticResource TextMain}, Dark={StaticResource DarkTextMain}}" PlaceholderColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}" FontSize="13" BackgroundColor="Transparent" VerticalOptions="Center" />
                             </Border>
                         </VerticalStackLayout>
 
@@ -126,8 +126,8 @@
                                 Grid.Column="0"
                                 Text="Cancelar"
                                 Clicked="OnCancelarClicked"
-                                BackgroundColor="{StaticResource Secondary}"
-                                TextColor="{StaticResource TextMuted}"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource Secondary}, Dark={StaticResource DarkSecondary}}"
+                                TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}"
                                 FontSize="14"
                                 FontAttributes="Bold"
                                 HeightRequest="46"
@@ -138,7 +138,7 @@
                                 x:Name="GuardarBtn"
                                 Text="Guardar Líder"
                                 Clicked="OnGuardarClicked"
-                                BackgroundColor="{StaticResource Primary}"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}"
                                 TextColor="{StaticResource White}"
                                 FontSize="14"
                                 FontAttributes="Bold"

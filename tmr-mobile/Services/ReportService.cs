@@ -69,7 +69,7 @@ public static class ReportService
 
         var columnaEstado = Array.FindLastIndex(
             encabezados,
-            e => e.Contains("Estado", StringComparison.OrdinalIgnoreCase) || 
+            e => e.Contains("Estado", StringComparison.OrdinalIgnoreCase) ||
                  e.Contains("Seguimiento", StringComparison.OrdinalIgnoreCase));
 
         var bytes = servicioExcel.GenerarReporteExcel(

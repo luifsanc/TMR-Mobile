@@ -8,7 +8,7 @@
     x:DataType="vm:RolDetalleViewModel"
     Title="Detalle de Rol"
     Shell.NavBarIsVisible="False"
-    BackgroundColor="#F8FAFC">
+    BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource DarkBackgroundLight}}">
 
     <Grid>
         <!-- CONTENIDO SCROLLABLE -->
@@ -22,7 +22,7 @@
                         Text="‹"
                         Command="{Binding RegresarCommand}"
                         BackgroundColor="Transparent"
-                        TextColor="#163572"
+                        TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}"
                         FontSize="28"
                         FontAttributes="Bold"
                         FontFamily="InterSemiBold"
@@ -37,7 +37,7 @@
                         FontSize="22"
                         FontAttributes="Bold"
                         FontFamily="InterSemiBold"
-                        TextColor="#163572"
+                        TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}"
                         VerticalOptions="Center"
                         LineBreakMode="TailTruncation"
                         MaxLines="1" />
@@ -72,8 +72,8 @@
 
                 <!-- CARD 1: INFORMACIÓN DEL ROL -->
                 <Border
-                    BackgroundColor="White"
-                    Stroke="#E5E7EB"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}"
+                    Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}"
                     StrokeThickness="1"
                     Padding="18">
                     <Border.StrokeShape>
@@ -85,20 +85,20 @@
 
                     <VerticalStackLayout Spacing="16">
                         <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
-                            <BoxView WidthRequest="3" HeightRequest="14" Color="#163572" CornerRadius="1.5" VerticalOptions="Center" />
-                            <Label Text="Información del rol" FontSize="14" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#163572" VerticalOptions="Center" />
+                            <BoxView WidthRequest="3" HeightRequest="14" Color="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" CornerRadius="1.5" VerticalOptions="Center" />
+                            <Label Text="Información del rol" FontSize="14" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" VerticalOptions="Center" />
                         </HorizontalStackLayout>
                         
                         <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" RowSpacing="12" ColumnSpacing="12">
                             <!-- Nombre del rol -->
                             <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="2">
-                                <Label Text="Nombre del rol" FontSize="12" FontFamily="InterRegular" TextColor="#6B7280" />
-                                <Label Text="{Binding Rol.Nombre}" FontSize="14" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#163572" />
+                                <Label Text="Nombre del rol" FontSize="12" FontFamily="InterRegular" TextColor="{AppThemeBinding Light={StaticResource TextSecondary}, Dark={StaticResource DarkTextSecondary}}" />
+                                <Label Text="{Binding Rol.Nombre}" FontSize="14" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />
                             </VerticalStackLayout>
 
                             <!-- Estado -->
                             <VerticalStackLayout Grid.Row="0" Grid.Column="1" Spacing="2">
-                                <Label Text="Estado" FontSize="12" FontFamily="InterRegular" TextColor="#6B7280" />
+                                <Label Text="Estado" FontSize="12" FontFamily="InterRegular" TextColor="{AppThemeBinding Light={StaticResource TextSecondary}, Dark={StaticResource DarkTextSecondary}}" />
                                 <Border BackgroundColor="{Binding Rol.ColorFondoEstado}" StrokeThickness="0" Padding="8,3" HorizontalOptions="Start">
                                     <Border.StrokeShape><RoundRectangle CornerRadius="8" /></Border.StrokeShape>
                                     <Label Text="{Binding Rol.EstadoTexto}" FontSize="12" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="{Binding Rol.ColorTextoEstado}" />
@@ -107,8 +107,8 @@
 
                             <!-- Descripción -->
                             <VerticalStackLayout Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Spacing="2">
-                                <Label Text="Descripción" FontSize="12" FontFamily="InterRegular" TextColor="#6B7280" />
-                                <Label Text="{Binding Rol.Descripcion}" FontSize="13" FontFamily="InterRegular" TextColor="#1A1A2E" LineBreakMode="WordWrap" />
+                                <Label Text="Descripción" FontSize="12" FontFamily="InterRegular" TextColor="{AppThemeBinding Light={StaticResource TextSecondary}, Dark={StaticResource DarkTextSecondary}}" />
+                                <Label Text="{Binding Rol.Descripcion}" FontSize="13" FontFamily="InterRegular" TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" LineBreakMode="WordWrap" />
                             </VerticalStackLayout>
                         </Grid>
                     </VerticalStackLayout>
@@ -116,8 +116,8 @@
 
                 <!-- CARD 2: MÓDULOS HABILITADOS -->
                 <Border
-                    BackgroundColor="White"
-                    Stroke="#E5E7EB"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}"
+                    Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}"
                     StrokeThickness="1"
                     Padding="18">
                     <Border.StrokeShape>
@@ -129,12 +129,12 @@
 
                     <VerticalStackLayout Spacing="16">
                         <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
-                            <BoxView WidthRequest="3" HeightRequest="14" Color="#163572" CornerRadius="1.5" VerticalOptions="Center" />
-                            <Label Text="Módulos habilitados" FontSize="14" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#163572" VerticalOptions="Center" />
+                            <BoxView WidthRequest="3" HeightRequest="14" Color="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" CornerRadius="1.5" VerticalOptions="Center" />
+                            <Label Text="Módulos habilitados" FontSize="14" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" VerticalOptions="Center" />
                             
-                            <Border BackgroundColor="#EEF4FF" StrokeThickness="0" Padding="8,2" VerticalOptions="Center">
+                            <Border BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryLight}, Dark={StaticResource DarkPrimaryLight}}" StrokeThickness="0" Padding="8,2" VerticalOptions="Center">
                                 <Border.StrokeShape><RoundRectangle CornerRadius="6" /></Border.StrokeShape>
-                                <Label Text="{Binding ModulosHabilitados.Count}" FontSize="11" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#163572" />
+                                <Label Text="{Binding ModulosHabilitados.Count}" FontSize="11" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />
                             </Border>
                         </HorizontalStackLayout>
                         
@@ -144,17 +144,17 @@
                                 <GridItemsLayout Orientation="Vertical" Span="2" HorizontalItemSpacing="8" VerticalItemSpacing="8" />
                             </CollectionView.ItemsLayout>
                             <CollectionView.EmptyView>
-                                <Label Text="Sin módulos habilitados" FontSize="12" FontFamily="InterRegular" TextColor="#9CA3AF" />
+                                <Label Text="Sin módulos habilitados" FontSize="12" FontFamily="InterRegular" TextColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}" />
                             </CollectionView.EmptyView>
                             <CollectionView.ItemTemplate>
                                 <DataTemplate x:DataType="model:RolModuloItem">
-                                    <Border BackgroundColor="#EEF4FF" Stroke="#D1D5DB" StrokeThickness="1" Padding="10,8">
+                                    <Border BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryLight}, Dark={StaticResource DarkPrimaryLight}}" Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" StrokeThickness="1" Padding="10,8">
                                         <Border.StrokeShape>
                                             <RoundRectangle CornerRadius="8" />
                                         </Border.StrokeShape>
                                         <HorizontalStackLayout Spacing="6" VerticalOptions="Center">
-                                            <Label Text="✔" FontSize="12" TextColor="#163572" VerticalOptions="Center" />
-                                            <Label Text="{Binding Nombre}" FontSize="12" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#163572" VerticalOptions="Center" MaxLines="1" LineBreakMode="TailTruncation" />
+                                            <Label Text="✔" FontSize="12" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" VerticalOptions="Center" />
+                                            <Label Text="{Binding Nombre}" FontSize="12" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" VerticalOptions="Center" MaxLines="1" LineBreakMode="TailTruncation" />
                                         </HorizontalStackLayout>
                                     </Border>
                                 </DataTemplate>
@@ -170,8 +170,8 @@
                         Grid.Column="0"
                         Text="Editar"
                         Command="{Binding EditarCommand}"
-                        BackgroundColor="#163572"
-                        TextColor="White"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}"
+                        TextColor="{StaticResource OnPrimary}"
                         CornerRadius="8"
                         HeightRequest="48"
                         FontSize="14"
@@ -183,8 +183,8 @@
                         Grid.Column="1"
                         Text="{Binding TextoBotonEstado}"
                         Command="{Binding CambiarEstadoCommand}"
-                        BackgroundColor="#DC2626"
-                        TextColor="White"
+                        BackgroundColor="{StaticResource Error}"
+                        TextColor="{StaticResource OnPrimary}"
                         CornerRadius="8"
                         HeightRequest="48"
                         FontSize="14"
@@ -192,7 +192,7 @@
                         FontFamily="InterSemiBold">
                         <Button.Triggers>
                             <DataTrigger TargetType="Button" Binding="{Binding EsInactivo}" Value="True">
-                                <Setter Property="BackgroundColor" Value="#16A34A" />
+                                <Setter Property="BackgroundColor" Value="{StaticResource Accent}" />
                             </DataTrigger>
                         </Button.Triggers>
                     </Button>
@@ -204,7 +204,7 @@
         <ActivityIndicator
             IsVisible="{Binding IsBusy}"
             IsRunning="{Binding IsBusy}"
-            Color="#163572"
+            Color="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}"
             HorizontalOptions="Center"
             VerticalOptions="Center" />
             
@@ -217,15 +217,15 @@
             Padding="32">
             <Label
                 Text="{Binding ErrorMessage}"
-                TextColor="#DC2626"
+                TextColor="{StaticResource Error}"
                 FontSize="14"
                 FontFamily="InterRegular"
                 HorizontalTextAlignment="Center" />
             <Button
                 Text="Regresar"
                 Command="{Binding RegresarCommand}"
-                BackgroundColor="#163572"
-                TextColor="White"
+                BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}"
+                TextColor="{StaticResource OnPrimary}"
                 CornerRadius="8"
                 FontFamily="InterSemiBold" />
         </VerticalStackLayout>

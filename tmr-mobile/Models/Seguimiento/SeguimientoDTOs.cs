@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using tmr_mobile.Resources.Styles;
 
 namespace tmr_mobile.Models.Seguimiento;
 
@@ -42,18 +43,18 @@ public class SeguimientoColaboradorDto
 
     public string ColorEstado => Estado switch
     {
-        "Completo" => "#43A047",
-        "En progreso" => "#F59E0B",
-        "Pendiente" => "#E53935",
-        _ => "#64748B"
+        "Completo" => DesignColors.SuccessText,
+        "En progreso" => DesignColors.WarningText,
+        "Pendiente" => DesignColors.ErrorText,
+        _ => DesignColors.TextMuted
     };
 
     public string ColorFondoEstado => Estado switch
     {
-        "Completo" => "#E8F5E9",
-        "En progreso" => "#FEF3C7",
-        "Pendiente" => "#FFEBEE",
-        _ => "#F1F5F9"
+        "Completo" => DesignColors.SuccessSurface,
+        "En progreso" => DesignColors.WarningSurface,
+        "Pendiente" => DesignColors.ErrorSurface,
+        _ => DesignColors.Secondary
     };
 }
 
