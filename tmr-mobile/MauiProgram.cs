@@ -100,6 +100,9 @@ public static class MauiProgram
         builder.Services.AddTransient<ReportesViewModel>();
         builder.Services.AddTransient<ProfileViewModel>();
         builder.Services.AddTransient<ChangePasswordViewModel>();
+        builder.Services.AddTransient<PersonalDataViewModel>();
+        builder.Services.AddTransient<AppPreferencesViewModel>();
+        builder.Services.AddTransient<AboutTmrViewModel>();
         builder.Services.AddTransient<SeguimientoViewModel>();
         builder.Services.AddTransient<SeguimientoDetalleViewModel>();
 
@@ -146,6 +149,9 @@ public static class MauiProgram
         builder.Services.AddTransient<ReportesPage>();
         builder.Services.AddTransient<ProfilePage>();
         builder.Services.AddTransient<ChangePasswordPage>();
+        builder.Services.AddTransient<PersonalDataPage>();
+        builder.Services.AddTransient<AppPreferencesPage>();
+        builder.Services.AddTransient<AboutTmrPage>();
         builder.Services.AddTransient<SeguimientoPage>();
         builder.Services.AddTransient<SeguimientoDetallePage>();
 

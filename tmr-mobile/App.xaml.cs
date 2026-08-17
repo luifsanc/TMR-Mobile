@@ -16,6 +16,7 @@ public partial class App : Application
 				System.Diagnostics.Debug.WriteLine($"[UNOBSERVED TASK] {e.Exception}");
 			};
 		InitializeComponent();
+		UserAppTheme = ViewModels.AppPreferencesViewModel.GetSavedTheme();
 
 	}
 
