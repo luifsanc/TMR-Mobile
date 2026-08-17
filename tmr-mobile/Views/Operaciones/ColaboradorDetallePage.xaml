@@ -7,7 +7,7 @@
     x:Class="tmr_mobile.Views.Operaciones.ColaboradorDetallePage"
     x:DataType="vm:ColaboradorDetalleViewModel"
     Title="Detalle del Colaborador"
-    BackgroundColor="{StaticResource BackgroundLight}">
+    BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource DarkBackgroundLight}}">
 
     <Grid>
         <!-- SCROLL PRINCIPAL -->
@@ -21,7 +21,7 @@
                         Text="‹"
                         Command="{Binding RegresarCommand}"
                         BackgroundColor="Transparent"
-                        TextColor="{StaticResource Primary}"
+                        TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}"
                         FontSize="24"
                         FontAttributes="Bold"
                         Padding="0"
@@ -35,18 +35,18 @@
                                 Text="{Binding Colaborador.CodigoEmpleado}"
                                 FontSize="12"
                                 FontAttributes="Bold"
-                                TextColor="{StaticResource TextMuted}" />
-                            <Label Text="·" FontSize="12" TextColor="{StaticResource TextMuted}" />
+                                TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}" />
+                            <Label Text="·" FontSize="12" TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}" />
                             <Label
                                 Text="{Binding Colaborador.TipoContratoTexto}"
                                 FontSize="12"
-                                TextColor="{StaticResource TextMuted}" />
+                                TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}" />
                         </HorizontalStackLayout>
                         <Label
                             Text="{Binding Colaborador.NombreCompleto}"
                             FontSize="18"
                             FontAttributes="Bold"
-                            TextColor="{StaticResource Primary}"
+                            TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}"
                             MaxLines="1"
                             LineBreakMode="TailTruncation" />
                     </VerticalStackLayout>
@@ -69,153 +69,153 @@
                 </Grid>
 
                 <!-- CARD: DATOS LABORALES Y CONTRATO -->
-                <Border BackgroundColor="{StaticResource White}" Stroke="{StaticResource BorderColor}" StrokeThickness="1" Padding="16">
+                <Border BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}" Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" StrokeThickness="1" Padding="16">
                     <Border.StrokeShape><RoundRectangle CornerRadius="12" /></Border.StrokeShape>
                     <VerticalStackLayout Spacing="12">
-                        <Label Text="▼ Datos laborales" FontSize="15" FontAttributes="Bold" TextColor="{StaticResource Primary}" />
+                        <Label Text="▼ Datos laborales" FontSize="15" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />
 
                         <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto,Auto" RowSpacing="10" ColumnSpacing="12">
                             <!-- Empresa / Asociación -->
                             <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="2">
-                                <Label Text="Empresa" FontSize="11" TextColor="{StaticResource TextLight}" />
-                                <Label Text="{Binding Colaborador.EmpresaTexto}" FontSize="13" TextColor="{StaticResource TextMain}" />
+                                <Label Text="Empresa" FontSize="11" TextColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}" />
+                                <Label Text="{Binding Colaborador.EmpresaTexto}" FontSize="13" TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
                             </VerticalStackLayout>
 
                             <!-- Tipo de contrato -->
                             <VerticalStackLayout Grid.Row="0" Grid.Column="1" Spacing="2">
-                                <Label Text="Tipo de contrato" FontSize="11" TextColor="{StaticResource TextLight}" />
-                                <Label Text="{Binding Colaborador.TipoContratoTexto}" FontSize="13" TextColor="{StaticResource TextMain}" />
+                                <Label Text="Tipo de contrato" FontSize="11" TextColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}" />
+                                <Label Text="{Binding Colaborador.TipoContratoTexto}" FontSize="13" TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
                             </VerticalStackLayout>
 
                             <!-- Departamento -->
                             <VerticalStackLayout Grid.Row="1" Grid.Column="0" Spacing="2">
-                                <Label Text="Departamento" FontSize="11" TextColor="{StaticResource TextLight}" />
-                                <Label Text="{Binding Colaborador.DepartamentoTexto}" FontSize="13" TextColor="{StaticResource TextMain}" />
+                                <Label Text="Departamento" FontSize="11" TextColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}" />
+                                <Label Text="{Binding Colaborador.DepartamentoTexto}" FontSize="13" TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
                             </VerticalStackLayout>
 
                             <!-- Fecha de contratación -->
                             <VerticalStackLayout Grid.Row="1" Grid.Column="1" Spacing="2">
-                                <Label Text="Fecha de contratación" FontSize="11" TextColor="{StaticResource TextLight}" />
-                                <Label Text="{Binding Colaborador.FechaContratacionFormateada}" FontSize="13" TextColor="{StaticResource TextMain}" />
+                                <Label Text="Fecha de contratación" FontSize="11" TextColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}" />
+                                <Label Text="{Binding Colaborador.FechaContratacionFormateada}" FontSize="13" TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
                             </VerticalStackLayout>
 
                             <!-- Cargo -->
                             <VerticalStackLayout Grid.Row="2" Grid.Column="0" Spacing="2">
-                                <Label Text="Cargo" FontSize="11" TextColor="{StaticResource TextLight}" />
-                                <Label Text="{Binding Colaborador.CargoDetalleTexto}" FontSize="13" TextColor="{StaticResource TextMain}" />
+                                <Label Text="Cargo" FontSize="11" TextColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}" />
+                                <Label Text="{Binding Colaborador.CargoDetalleTexto}" FontSize="13" TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
                             </VerticalStackLayout>
 
                             <!-- Años de experiencia -->
                             <VerticalStackLayout Grid.Row="2" Grid.Column="1" Spacing="2">
-                                <Label Text="Años de experiencia" FontSize="11" TextColor="{StaticResource TextLight}" />
-                                <Label Text="{Binding Colaborador.AniosExperienciaTexto}" FontSize="13" TextColor="{StaticResource TextMain}" />
+                                <Label Text="Años de experiencia" FontSize="11" TextColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}" />
+                                <Label Text="{Binding Colaborador.AniosExperienciaTexto}" FontSize="13" TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
                             </VerticalStackLayout>
 
                             <!-- Modalidad -->
                             <VerticalStackLayout Grid.Row="3" Grid.Column="0" Spacing="2">
-                                <Label Text="Modalidad" FontSize="11" TextColor="{StaticResource TextLight}" />
-                                <Label Text="{Binding Colaborador.ModalidadTexto}" FontSize="13" TextColor="{StaticResource TextMain}" />
+                                <Label Text="Modalidad" FontSize="11" TextColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}" />
+                                <Label Text="{Binding Colaborador.ModalidadTexto}" FontSize="13" TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
                             </VerticalStackLayout>
 
                             <!-- Categoría -->
                             <VerticalStackLayout Grid.Row="3" Grid.Column="1" Spacing="2">
-                                <Label Text="Categoría" FontSize="11" TextColor="{StaticResource TextLight}" />
-                                <Label Text="{Binding Colaborador.CategoriaTexto}" FontSize="13" TextColor="{StaticResource TextMain}" />
+                                <Label Text="Categoría" FontSize="11" TextColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}" />
+                                <Label Text="{Binding Colaborador.CategoriaTexto}" FontSize="13" TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
                             </VerticalStackLayout>
                         </Grid>
                     </VerticalStackLayout>
                 </Border>
 
                 <!-- CARD: DATOS PERSONALES -->
-                <Border BackgroundColor="{StaticResource White}" Stroke="{StaticResource BorderColor}" StrokeThickness="1" Padding="16">
+                <Border BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}" Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" StrokeThickness="1" Padding="16">
                     <Border.StrokeShape><RoundRectangle CornerRadius="12" /></Border.StrokeShape>
                     <VerticalStackLayout Spacing="12">
-                        <Label Text="▼ Datos personales" FontSize="15" FontAttributes="Bold" TextColor="{StaticResource Primary}" />
+                        <Label Text="▼ Datos personales" FontSize="15" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />
 
                         <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto" RowSpacing="10" ColumnSpacing="12">
                             <!-- Tipo Persona -->
                             <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="2">
-                                <Label Text="Tipo de Persona" FontSize="11" TextColor="{StaticResource TextLight}" />
-                                <Label Text="{Binding Colaborador.TipoPersonaTexto}" FontSize="13" TextColor="{StaticResource TextMain}" />
+                                <Label Text="Tipo de Persona" FontSize="11" TextColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}" />
+                                <Label Text="{Binding Colaborador.TipoPersonaTexto}" FontSize="13" TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
                             </VerticalStackLayout>
 
                             <!-- Identificación -->
                             <VerticalStackLayout Grid.Row="0" Grid.Column="1" Spacing="2">
-                                <Label Text="Identificación" FontSize="11" TextColor="{StaticResource TextLight}" />
-                                <Label Text="{Binding Colaborador.IdentificacionTexto}" FontSize="13" TextColor="{StaticResource TextMain}" />
+                                <Label Text="Identificación" FontSize="11" TextColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}" />
+                                <Label Text="{Binding Colaborador.IdentificacionTexto}" FontSize="13" TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
                             </VerticalStackLayout>
 
                             <!-- Fecha de nacimiento -->
                             <VerticalStackLayout Grid.Row="1" Grid.Column="0" Spacing="2">
-                                <Label Text="Fecha de nacimiento" FontSize="11" TextColor="{StaticResource TextLight}" />
-                                <Label Text="{Binding Colaborador.FechaNacimientoFormateada}" FontSize="13" TextColor="{StaticResource TextMain}" />
+                                <Label Text="Fecha de nacimiento" FontSize="11" TextColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}" />
+                                <Label Text="{Binding Colaborador.FechaNacimientoFormateada}" FontSize="13" TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
                             </VerticalStackLayout>
 
                             <!-- Género -->
                             <VerticalStackLayout Grid.Row="1" Grid.Column="1" Spacing="2">
-                                <Label Text="Género" FontSize="11" TextColor="{StaticResource TextLight}" />
-                                <Label Text="{Binding Colaborador.GeneroTexto}" FontSize="13" TextColor="{StaticResource TextMain}" />
+                                <Label Text="Género" FontSize="11" TextColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}" />
+                                <Label Text="{Binding Colaborador.GeneroTexto}" FontSize="13" TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
                             </VerticalStackLayout>
 
                             <!-- Nacionalidad -->
                             <VerticalStackLayout Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Spacing="2">
-                                <Label Text="Nacionalidad" FontSize="11" TextColor="{StaticResource TextLight}" />
-                                <Label Text="{Binding Colaborador.NacionalidadTexto}" FontSize="13" TextColor="{StaticResource TextMain}" />
+                                <Label Text="Nacionalidad" FontSize="11" TextColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}" />
+                                <Label Text="{Binding Colaborador.NacionalidadTexto}" FontSize="13" TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
                             </VerticalStackLayout>
                         </Grid>
                     </VerticalStackLayout>
                 </Border>
 
                 <!-- CARD: DATOS DE CONTACTO -->
-                <Border BackgroundColor="{StaticResource White}" Stroke="{StaticResource BorderColor}" StrokeThickness="1" Padding="16">
+                <Border BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}" Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" StrokeThickness="1" Padding="16">
                     <Border.StrokeShape><RoundRectangle CornerRadius="12" /></Border.StrokeShape>
                     <VerticalStackLayout Spacing="12">
-                        <Label Text="▼ Datos de contacto" FontSize="15" FontAttributes="Bold" TextColor="{StaticResource Primary}" />
+                        <Label Text="▼ Datos de contacto" FontSize="15" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />
 
                         <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" RowSpacing="10" ColumnSpacing="12">
                             <!-- Correo electrónico -->
                             <VerticalStackLayout Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Spacing="2">
-                                <Label Text="Correo electrónico" FontSize="11" TextColor="{StaticResource TextLight}" />
-                                <Label Text="{Binding Colaborador.EmailTexto}" FontSize="13" TextColor="{StaticResource TextMain}" />
+                                <Label Text="Correo electrónico" FontSize="11" TextColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}" />
+                                <Label Text="{Binding Colaborador.EmailTexto}" FontSize="13" TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
                             </VerticalStackLayout>
 
                             <!-- Teléfono -->
                             <VerticalStackLayout Grid.Row="1" Grid.Column="0" Spacing="2">
-                                <Label Text="Teléfono" FontSize="11" TextColor="{StaticResource TextLight}" />
-                                <Label Text="{Binding Colaborador.TelefonoTexto}" FontSize="13" TextColor="{StaticResource TextMain}" />
+                                <Label Text="Teléfono" FontSize="11" TextColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}" />
+                                <Label Text="{Binding Colaborador.TelefonoTexto}" FontSize="13" TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
                             </VerticalStackLayout>
 
                             <!-- Dirección -->
                             <VerticalStackLayout Grid.Row="1" Grid.Column="1" Spacing="2">
-                                <Label Text="Dirección" FontSize="11" TextColor="{StaticResource TextLight}" />
-                                <Label Text="{Binding Colaborador.DireccionTexto}" FontSize="13" TextColor="{StaticResource TextMain}" />
+                                <Label Text="Dirección" FontSize="11" TextColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}" />
+                                <Label Text="{Binding Colaborador.DireccionTexto}" FontSize="13" TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
                             </VerticalStackLayout>
                         </Grid>
                     </VerticalStackLayout>
                 </Border>
 
                 <!-- CARD: INFORMACIÓN DE REEMPLAZO (Si aplica) -->
-                <Border BackgroundColor="{StaticResource White}" Stroke="{StaticResource BorderColor}" StrokeThickness="1" Padding="16" IsVisible="{Binding Colaborador.TieneReemplazoInfo}">
+                <Border BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}" Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" StrokeThickness="1" Padding="16" IsVisible="{Binding Colaborador.TieneReemplazoInfo}">
                     <Border.StrokeShape><RoundRectangle CornerRadius="12" /></Border.StrokeShape>
                     <VerticalStackLayout Spacing="12">
-                        <Label Text="▼ Reemplazo" FontSize="15" FontAttributes="Bold" TextColor="{StaticResource Primary}" />
+                        <Label Text="▼ Reemplazo" FontSize="15" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />
 
                         <!-- Reemplaza a -->
                         <VerticalStackLayout Spacing="2" IsVisible="{Binding Colaborador.ReemplazaANombre, Converter={StaticResource IsStringNotNullOrEmptyConverter}}">
-                            <Label Text="Reemplaza a" FontSize="11" TextColor="{StaticResource TextLight}" />
-                            <Label Text="{Binding Colaborador.ReemplazaANombre}" FontSize="13" TextColor="{StaticResource TextMain}" FontAttributes="Bold" />
+                            <Label Text="Reemplaza a" FontSize="11" TextColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}" />
+                            <Label Text="{Binding Colaborador.ReemplazaANombre}" FontSize="13" TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" FontAttributes="Bold" />
                         </VerticalStackLayout>
 
                         <!-- Reemplazado por -->
                         <VerticalStackLayout Spacing="2" IsVisible="{Binding Colaborador.ReemplazoNombre, Converter={StaticResource IsStringNotNullOrEmptyConverter}}">
-                            <Label Text="Reemplazado por" FontSize="11" TextColor="{StaticResource TextLight}" />
-                            <Label Text="{Binding Colaborador.ReemplazoNombre}" FontSize="13" TextColor="{StaticResource TextMain}" FontAttributes="Bold" />
+                            <Label Text="Reemplazado por" FontSize="11" TextColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}" />
+                            <Label Text="{Binding Colaborador.ReemplazoNombre}" FontSize="13" TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" FontAttributes="Bold" />
                         </VerticalStackLayout>
                     </VerticalStackLayout>
                 </Border>
 
                 <!-- CARD: DATOS DE SALIDA (Si aplica) -->
-                <Border BackgroundColor="{StaticResource White}" Stroke="{StaticResource BorderColor}" StrokeThickness="1" Padding="16" IsVisible="{Binding Colaborador.TieneSalidaInfo}">
+                <Border BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}" Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" StrokeThickness="1" Padding="16" IsVisible="{Binding Colaborador.TieneSalidaInfo}">
                     <Border.StrokeShape><RoundRectangle CornerRadius="12" /></Border.StrokeShape>
                     <VerticalStackLayout Spacing="12">
                         <Label Text="▼ Datos de salida" FontSize="15" FontAttributes="Bold" TextColor="{StaticResource Error}" />
@@ -223,40 +223,40 @@
                         <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto" RowSpacing="10" ColumnSpacing="12">
                             <!-- Fecha de Salida -->
                             <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="2">
-                                <Label Text="Fecha de salida" FontSize="11" TextColor="{StaticResource TextLight}" />
-                                <Label Text="{Binding Colaborador.FechaSalidaFormateada}" FontSize="13" TextColor="{StaticResource TextMain}" />
+                                <Label Text="Fecha de salida" FontSize="11" TextColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}" />
+                                <Label Text="{Binding Colaborador.FechaSalidaFormateada}" FontSize="13" TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
                             </VerticalStackLayout>
 
                             <!-- Tipo de Salida -->
                             <VerticalStackLayout Grid.Row="0" Grid.Column="1" Spacing="2">
-                                <Label Text="Tipo de salida" FontSize="11" TextColor="{StaticResource TextLight}" />
-                                <Label Text="{Binding Colaborador.TipoSalida}" FontSize="13" TextColor="{StaticResource TextMain}" />
+                                <Label Text="Tipo de salida" FontSize="11" TextColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}" />
+                                <Label Text="{Binding Colaborador.TipoSalida}" FontSize="13" TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
                             </VerticalStackLayout>
 
                             <!-- Causa de Salida -->
                             <VerticalStackLayout Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Spacing="2">
-                                <Label Text="Causa de salida" FontSize="11" TextColor="{StaticResource TextLight}" />
-                                <Label Text="{Binding Colaborador.CausaSalida}" FontSize="13" TextColor="{StaticResource TextMain}" />
+                                <Label Text="Causa de salida" FontSize="11" TextColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}" />
+                                <Label Text="{Binding Colaborador.CausaSalida}" FontSize="13" TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
                             </VerticalStackLayout>
 
                             <!-- Comentario -->
                             <VerticalStackLayout Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Spacing="2" IsVisible="{Binding Colaborador.ComentarioSalida, Converter={StaticResource IsStringNotNullOrEmptyConverter}}">
-                                <Label Text="Comentario" FontSize="11" TextColor="{StaticResource TextLight}" />
-                                <Label Text="{Binding Colaborador.ComentarioSalida}" FontSize="13" TextColor="{StaticResource TextMuted}" />
+                                <Label Text="Comentario" FontSize="11" TextColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}" />
+                                <Label Text="{Binding Colaborador.ComentarioSalida}" FontSize="13" TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}" />
                             </VerticalStackLayout>
                         </Grid>
                     </VerticalStackLayout>
                 </Border>
 
                 <!-- CARD: PROYECTOS ASIGNADOS -->
-                <Border BackgroundColor="{StaticResource White}" Stroke="{StaticResource BorderColor}" StrokeThickness="1" Padding="16">
+                <Border BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}" Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" StrokeThickness="1" Padding="16">
                     <Border.StrokeShape><RoundRectangle CornerRadius="12" /></Border.StrokeShape>
                     <VerticalStackLayout Spacing="12">
                         <HorizontalStackLayout Spacing="8">
-                            <Label Text="▼ Proyectos asignados" FontSize="15" FontAttributes="Bold" TextColor="{StaticResource Primary}" />
-                            <Border BackgroundColor="{StaticResource Secondary}" Stroke="Transparent" Padding="8,2">
+                            <Label Text="▼ Proyectos asignados" FontSize="15" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />
+                            <Border BackgroundColor="{AppThemeBinding Light={StaticResource Secondary}, Dark={StaticResource DarkSecondary}}" Stroke="Transparent" Padding="8,2">
                                 <Border.StrokeShape><RoundRectangle CornerRadius="6" /></Border.StrokeShape>
-                                <Label Text="{Binding Colaborador.Proyectos.Count}" FontSize="11" FontAttributes="Bold" TextColor="{StaticResource Primary}" />
+                                <Label Text="{Binding Colaborador.Proyectos.Count}" FontSize="11" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />
                             </Border>
                         </HorizontalStackLayout>
 
@@ -264,16 +264,16 @@
                         <VerticalStackLayout BindableLayout.ItemsSource="{Binding Colaborador.Proyectos}" Spacing="8">
                             <BindableLayout.EmptyViewTemplate>
                                 <DataTemplate>
-                                    <Label Text="No tiene proyectos asignados actualmente." FontSize="12" TextColor="{StaticResource TextLight}" Margin="0,4" />
+                                    <Label Text="No tiene proyectos asignados actualmente." FontSize="12" TextColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}" Margin="0,4" />
                                 </DataTemplate>
                             </BindableLayout.EmptyViewTemplate>
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate x:DataType="model:ProyectoColaboradorModel">
-                                    <Border BackgroundColor="{StaticResource BackgroundLight}" Stroke="{StaticResource BorderColor}" StrokeThickness="1" Padding="12">
+                                    <Border BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource DarkBackgroundLight}}" Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" StrokeThickness="1" Padding="12">
                                         <Border.StrokeShape><RoundRectangle CornerRadius="8" /></Border.StrokeShape>
                                         <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" RowSpacing="2">
-                                            <Label Grid.Row="0" Grid.Column="0" Text="{Binding Nombre}" FontSize="13" FontAttributes="Bold" TextColor="{StaticResource Primary}" />
-                                            <Label Grid.Row="1" Grid.Column="0" Text="{Binding Cliente}" FontSize="11" TextColor="{StaticResource TextMuted}" />
+                                            <Label Grid.Row="0" Grid.Column="0" Text="{Binding Nombre}" FontSize="13" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />
+                                            <Label Grid.Row="1" Grid.Column="0" Text="{Binding Cliente}" FontSize="11" TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}" />
                                             <Border Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" BackgroundColor="{Binding ColorFondoEstado}" Stroke="Transparent" Padding="6,2" VerticalOptions="Center">
                                                 <Border.StrokeShape><RoundRectangle CornerRadius="6" /></Border.StrokeShape>
                                                 <Label Text="{Binding Estado}" FontSize="10" FontAttributes="Bold" TextColor="{Binding ColorEstado}" />
@@ -293,7 +293,7 @@
                         Grid.Column="0"
                         Text="Editar"
                         Command="{Binding EditarCommand}"
-                        BackgroundColor="{StaticResource TextLight}"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}"
                         TextColor="{StaticResource White}"
                         CornerRadius="8"
                         HeightRequest="48"
@@ -334,7 +334,7 @@
         <ActivityIndicator
             IsVisible="{Binding IsBusy}"
             IsRunning="{Binding IsBusy}"
-            Color="{StaticResource Primary}"
+            Color="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}"
             HorizontalOptions="Center"
             VerticalOptions="Center" />
 
@@ -346,7 +346,7 @@
             Spacing="16"
             Padding="32">
             <Label Text="{Binding ErrorMessage}" TextColor="{StaticResource Error}" FontSize="14" HorizontalTextAlignment="Center" />
-            <Button Text="Regresar" Command="{Binding RegresarCommand}" BackgroundColor="{StaticResource Primary}" TextColor="{StaticResource White}" CornerRadius="8" />
+            <Button Text="Regresar" Command="{Binding RegresarCommand}" BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" TextColor="{StaticResource White}" CornerRadius="8" />
         </VerticalStackLayout>
     </Grid>
 
