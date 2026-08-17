@@ -92,17 +92,30 @@ public class ApiService
         CancellationToken ct = default)
     {
         await AddAuthHeaderAsync();
+        endpoint = NormalizeEndpoint(endpoint);
+
+        var hasAuthHeader = !string.IsNullOrWhiteSpace(_httpClient.DefaultRequestHeaders.Authorization?.ToString());
+        if (!hasAuthHeader && !endpoint.StartsWith("auth/", StringComparison.OrdinalIgnoreCase))
+        {
+            var message = "No hay sesión activa. Inicia sesión nuevamente.";
+            Log($"[ApiService] Bloqueado GET {endpoint}: {message}");
+            throw new InvalidOperationException(message);
+        }
+
         try
         {
-            endpoint = NormalizeEndpoint(endpoint);
             var response = await _httpClient.GetAsync(endpoint, ct);
             Log($"[ApiService] GET {endpoint} -> {(int)response.StatusCode} {response.ReasonPhrase}");
             return await HandleResponseAsync<TResponse>(response, endpoint, "GET", null, ct);
         }
+        catch (InvalidOperationException)
+        {
+            throw;
+        }
         catch (Exception ex)
         {
             Log($"[ApiService] Exception en GET {endpoint}: {ex.Message}");
-            return default;
+            throw new InvalidOperationException("No se pudo cargar la información del servidor. Inténtalo nuevamente.", ex);
         }
     }
 

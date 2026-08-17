@@ -15,9 +15,13 @@ public record ProyectoResponse
     public int? IdTipoProyecto { get; init; }
     public string Tipo { get; init; } = string.Empty;
     public string? Observacion { get; init; }
+    [System.Text.Json.Serialization.JsonConverter(typeof(DdMmYyyyDateOnlyConverter))]
     public DateOnly? FechaInicioReal { get; init; }
+    [System.Text.Json.Serialization.JsonConverter(typeof(DdMmYyyyDateOnlyConverter))]
     public DateOnly? FechaFinReal { get; init; }
+    [System.Text.Json.Serialization.JsonConverter(typeof(DdMmYyyyDateOnlyConverter))]
     public DateOnly? FechaInicioEspera { get; init; }
+    [System.Text.Json.Serialization.JsonConverter(typeof(DdMmYyyyDateOnlyConverter))]
     public DateOnly? FechaFinEspera { get; init; }
     public int? IdLider { get; init; }
     public string Lider { get; init; } = string.Empty;
@@ -26,7 +30,9 @@ public record ProyectoResponse
     public decimal? HorasLider { get; init; }
     public int IdEstadoProyecto { get; init; }
     public string Estado { get; init; } = string.Empty;
+    [System.Text.Json.Serialization.JsonConverter(typeof(DdMmYyyyDateOnlyConverter))]
     public DateOnly? FechaInicio { get; init; }
+    [System.Text.Json.Serialization.JsonConverter(typeof(DdMmYyyyDateOnlyConverter))]
     public DateOnly? FechaFin { get; init; }
     public decimal? Presupuesto { get; init; }
     public decimal? Horas { get; init; }
@@ -56,7 +62,9 @@ public record ProyectoRecursoResponse
     public string Tipo { get; init; } = string.Empty;
     public string Nombre { get; init; } = string.Empty;
     public string Rol { get; init; } = string.Empty;
+    [System.Text.Json.Serialization.JsonConverter(typeof(DdMmYyyyDateOnlyConverter))]
     public DateOnly? Entrada { get; init; }
+    [System.Text.Json.Serialization.JsonConverter(typeof(DdMmYyyyDateOnlyConverter))]
     public DateOnly? Salida { get; init; }
     public decimal? CostoHora { get; init; }
     public decimal? Horas { get; init; }
