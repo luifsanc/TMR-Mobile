@@ -7,7 +7,7 @@
     x:DataType="vm:UsuarioDetalleViewModel"
     Title="Detalle de Usuario"
     Shell.NavBarIsVisible="False"
-    BackgroundColor="#F8FAFC">
+    BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource DarkBackgroundLight}}">
 
     <Grid>
         <!-- CONTENIDO SCROLLABLE -->
@@ -21,7 +21,7 @@
                         Text="‹"
                         Command="{Binding RegresarCommand}"
                         BackgroundColor="Transparent"
-                        TextColor="#163572"
+                        TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}"
                         FontSize="28"
                         FontAttributes="Bold"
                         FontFamily="InterSemiBold"
@@ -36,7 +36,7 @@
                         FontSize="20"
                         FontAttributes="Bold"
                         FontFamily="InterSemiBold"
-                        TextColor="#163572"
+                        TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}"
                         VerticalOptions="Center"
                         LineBreakMode="TailTruncation"
                         MaxLines="2" />
@@ -71,8 +71,8 @@
 
                 <!-- CARD 1: VÍNCULO DE PERSONA -->
                 <Border
-                    BackgroundColor="White"
-                    Stroke="#E5E7EB"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}"
+                    Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}"
                     StrokeThickness="1"
                     Padding="18">
                     <Border.StrokeShape>
@@ -84,27 +84,27 @@
 
                     <VerticalStackLayout Spacing="16">
                         <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
-                            <BoxView WidthRequest="3" HeightRequest="14" Color="#163572" CornerRadius="1.5" VerticalOptions="Center" />
-                            <Label Text="Vínculo de persona" FontSize="14" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#163572" VerticalOptions="Center" />
+                            <BoxView WidthRequest="3" HeightRequest="14" Color="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" CornerRadius="1.5" VerticalOptions="Center" />
+                            <Label Text="Vínculo de persona" FontSize="14" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" VerticalOptions="Center" />
                         </HorizontalStackLayout>
                         
                         <Grid ColumnDefinitions="*,*" RowDefinitions="Auto" RowSpacing="12" ColumnSpacing="12">
                             <!-- Usuario -->
                             <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="4">
                                 <HorizontalStackLayout Spacing="6">
-                                    <Label Text="👤" FontSize="12" TextColor="#9CA3AF" VerticalOptions="Center" />
-                                    <Label Text="Usuario" FontSize="12" FontFamily="InterRegular" TextColor="#9CA3AF" VerticalOptions="Center" />
+                                    <Label Text="👤" FontSize="12" TextColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}" VerticalOptions="Center" />
+                                    <Label Text="Usuario" FontSize="12" FontFamily="InterRegular" TextColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}" VerticalOptions="Center" />
                                 </HorizontalStackLayout>
-                                <Label Text="{Binding Usuario.NombreUsuario}" FontSize="14" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#163572" />
+                                <Label Text="{Binding Usuario.NombreUsuario}" FontSize="14" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />
                             </VerticalStackLayout>
 
                             <!-- Tipo de usuario -->
                             <VerticalStackLayout Grid.Row="0" Grid.Column="1" Spacing="4">
                                 <HorizontalStackLayout Spacing="6">
-                                    <Label Text="🪪" FontSize="12" TextColor="#9CA3AF" VerticalOptions="Center" />
-                                    <Label Text="Tipo de usuario" FontSize="12" FontFamily="InterRegular" TextColor="#9CA3AF" VerticalOptions="Center" />
+                                    <Label Text="🪪" FontSize="12" TextColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}" VerticalOptions="Center" />
+                                    <Label Text="Tipo de usuario" FontSize="12" FontFamily="InterRegular" TextColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}" VerticalOptions="Center" />
                                 </HorizontalStackLayout>
-                                <Label Text="{Binding Usuario.TipoUsuarioTexto}" FontSize="14" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#163572" />
+                                <Label Text="{Binding Usuario.TipoUsuarioTexto}" FontSize="14" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />
                             </VerticalStackLayout>
                         </Grid>
                     </VerticalStackLayout>
@@ -112,8 +112,8 @@
 
                 <!-- CARD 2: CONTACTO & ROLES -->
                 <Border
-                    BackgroundColor="White"
-                    Stroke="#E5E7EB"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}"
+                    Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}"
                     StrokeThickness="1"
                     Padding="18">
                     <Border.StrokeShape>
@@ -125,27 +125,27 @@
 
                     <VerticalStackLayout Spacing="16">
                         <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
-                            <BoxView WidthRequest="3" HeightRequest="14" Color="#163572" CornerRadius="1.5" VerticalOptions="Center" />
-                            <Label Text="Contacto &amp; Roles" FontSize="14" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#163572" VerticalOptions="Center" />
+                            <BoxView WidthRequest="3" HeightRequest="14" Color="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" CornerRadius="1.5" VerticalOptions="Center" />
+                            <Label Text="Contacto &amp; Roles" FontSize="14" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" VerticalOptions="Center" />
                         </HorizontalStackLayout>
                         
                         <Grid ColumnDefinitions="*,*" RowDefinitions="Auto" RowSpacing="12" ColumnSpacing="12">
                             <!-- Correo -->
                             <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="4">
                                 <HorizontalStackLayout Spacing="6">
-                                    <Label Text="✉" FontSize="12" TextColor="#9CA3AF" VerticalOptions="Center" />
-                                    <Label Text="Correo" FontSize="12" FontFamily="InterRegular" TextColor="#9CA3AF" VerticalOptions="Center" />
+                                    <Label Text="✉" FontSize="12" TextColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}" VerticalOptions="Center" />
+                                    <Label Text="Correo" FontSize="12" FontFamily="InterRegular" TextColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}" VerticalOptions="Center" />
                                 </HorizontalStackLayout>
-                                <Label Text="{Binding Usuario.Email}" FontSize="13" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#163572" LineBreakMode="TailTruncation" MaxLines="2" />
+                                <Label Text="{Binding Usuario.Email}" FontSize="13" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" LineBreakMode="TailTruncation" MaxLines="2" />
                             </VerticalStackLayout>
 
                             <!-- Roles -->
                             <VerticalStackLayout Grid.Row="0" Grid.Column="1" Spacing="4">
                                 <HorizontalStackLayout Spacing="6">
-                                    <Label Text="🛡" FontSize="12" TextColor="#9CA3AF" VerticalOptions="Center" />
-                                    <Label Text="Roles" FontSize="12" FontFamily="InterRegular" TextColor="#9CA3AF" VerticalOptions="Center" />
+                                    <Label Text="🛡" FontSize="12" TextColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}" VerticalOptions="Center" />
+                                    <Label Text="Roles" FontSize="12" FontFamily="InterRegular" TextColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}" VerticalOptions="Center" />
                                 </HorizontalStackLayout>
-                                <Label Text="{Binding RolesTexto}" FontSize="13" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#163572" LineBreakMode="TailTruncation" MaxLines="2" />
+                                <Label Text="{Binding RolesTexto}" FontSize="13" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" LineBreakMode="TailTruncation" MaxLines="2" />
                             </VerticalStackLayout>
                         </Grid>
                     </VerticalStackLayout>
@@ -158,8 +158,8 @@
                         Grid.Column="0"
                         Text="Editar"
                         Command="{Binding EditarCommand}"
-                        BackgroundColor="#163572"
-                        TextColor="White"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}"
+                        TextColor="{StaticResource OnPrimary}"
                         CornerRadius="8"
                         HeightRequest="48"
                         FontSize="14"
@@ -171,8 +171,8 @@
                         Grid.Column="1"
                         Text="{Binding TextoBotonEstado}"
                         Command="{Binding CambiarEstadoCommand}"
-                        BackgroundColor="#DC2626"
-                        TextColor="White"
+                        BackgroundColor="{StaticResource Error}"
+                        TextColor="{StaticResource OnPrimary}"
                         CornerRadius="8"
                         HeightRequest="48"
                         FontSize="14"
@@ -180,7 +180,7 @@
                         FontFamily="InterSemiBold">
                         <Button.Triggers>
                             <DataTrigger TargetType="Button" Binding="{Binding EsInactivo}" Value="True">
-                                <Setter Property="BackgroundColor" Value="#16A34A" />
+                                <Setter Property="BackgroundColor" Value="{StaticResource Accent}" />
                             </DataTrigger>
                         </Button.Triggers>
                     </Button>
@@ -192,7 +192,7 @@
         <ActivityIndicator
             IsVisible="{Binding IsBusy}"
             IsRunning="{Binding IsBusy}"
-            Color="#163572"
+            Color="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}"
             HorizontalOptions="Center"
             VerticalOptions="Center" />
             
@@ -205,15 +205,15 @@
             Padding="32">
             <Label
                 Text="{Binding ErrorMessage}"
-                TextColor="#DC2626"
+                TextColor="{StaticResource Error}"
                 FontSize="14"
                 FontFamily="InterRegular"
                 HorizontalTextAlignment="Center" />
             <Button
                 Text="Regresar"
                 Command="{Binding RegresarCommand}"
-                BackgroundColor="#163572"
-                TextColor="White"
+                BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}"
+                TextColor="{StaticResource OnPrimary}"
                 CornerRadius="8"
                 FontFamily="InterSemiBold" />
         </VerticalStackLayout>

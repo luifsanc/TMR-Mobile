@@ -7,8 +7,8 @@
         <!-- Dropdown Menu Overlay -->
         <Border x:Name="DropdownMenu" 
                 IsVisible="False" 
-                BackgroundColor="White" 
-                Stroke="#E4E7EC"
+                BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}"
+                Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}"
                 StrokeThickness="1"
                 StrokeShape="RoundRectangle 8"
                 Padding="0"
@@ -24,50 +24,50 @@
                     <Grid.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnNavigate" CommandParameter="ProyectosPage" />
                     </Grid.GestureRecognizers>
-                    <Image Grid.Column="0" Source="icon_proyectos.png" WidthRequest="24" HeightRequest="24" />
-                    <Label Grid.Column="1" Text="Proyectos" VerticalOptions="Center" TextColor="#101828" />
+                    <Image Grid.Column="0" Source="{AppThemeBinding Light=icon_proyectos.png, Dark=icon_proyectos_dark.png}" WidthRequest="24" HeightRequest="24" />
+                    <Label Grid.Column="1" Text="Proyectos" VerticalOptions="Center" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />
                 </Grid>
-                <BoxView HeightRequest="1" Color="#F5F6FA" />
+                <BoxView HeightRequest="1" Color="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" />
                 
                 <!-- Time Report -->
                 <Grid Padding="15" ColumnDefinitions="40,*" BackgroundColor="Transparent">
                     <Grid.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnNavigate" CommandParameter="TimeReportPage" />
                     </Grid.GestureRecognizers>
-                    <Image Grid.Column="0" Source="icon_timereport.png" WidthRequest="24" HeightRequest="24" />
-                    <Label Grid.Column="1" Text="Time Report" VerticalOptions="Center" TextColor="#101828" />
+                    <Image Grid.Column="0" Source="{AppThemeBinding Light=icon_timereport.png, Dark=icon_timereport_dark.png}" WidthRequest="24" HeightRequest="24" />
+                    <Label Grid.Column="1" Text="Time Report" VerticalOptions="Center" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />
                 </Grid>
-                <BoxView HeightRequest="1" Color="#F5F6FA" />
+                <BoxView HeightRequest="1" Color="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" />
 
                 <!-- Carga Actividades -->
                 <Grid Padding="15" ColumnDefinitions="40,*" BackgroundColor="Transparent">
                     <Grid.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnNavigate" CommandParameter="CargaActividadesPage" />
                     </Grid.GestureRecognizers>
-                    <Image Grid.Column="0" Source="icon_carga.png" WidthRequest="24" HeightRequest="24" />
-                    <Label Grid.Column="1" Text="Carga Actividades" VerticalOptions="Center" TextColor="#101828" />
+                    <Image Grid.Column="0" Source="{AppThemeBinding Light=icon_carga.png, Dark=icon_carga_dark.png}" WidthRequest="24" HeightRequest="24" />
+                    <Label Grid.Column="1" Text="Carga Actividades" VerticalOptions="Center" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />
                 </Grid>
-                <BoxView HeightRequest="1" Color="#F5F6FA" />
+                <BoxView HeightRequest="1" Color="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" />
 
                 <!-- Reportes -->
                 <Grid Padding="15" ColumnDefinitions="40,*" BackgroundColor="Transparent">
                     <Grid.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnNavigate" CommandParameter="ReportesPage" />
                     </Grid.GestureRecognizers>
-                    <Image Grid.Column="0" Source="icon_reportes.png" WidthRequest="24" HeightRequest="24" />
-                    <Label Grid.Column="1" Text="Reportes" VerticalOptions="Center" TextColor="#101828" />
+                    <Image Grid.Column="0" Source="{AppThemeBinding Light=icon_reportes.png, Dark=icon_reportes_dark.png}" WidthRequest="24" HeightRequest="24" />
+                    <Label Grid.Column="1" Text="Reportes" VerticalOptions="Center" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />
                 </Grid>
-                <BoxView HeightRequest="1" Color="#F5F6FA" />
+                <BoxView HeightRequest="1" Color="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" />
 
                 <!-- Líderes -->
                 <Grid Padding="15" ColumnDefinitions="40,*" BackgroundColor="Transparent">
                     <Grid.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnNavigate" CommandParameter="LideresPage" />
                     </Grid.GestureRecognizers>
-                    <Image Grid.Column="0" Source="icon_lideres.png" WidthRequest="24" HeightRequest="24" />
-                    <Label Grid.Column="1" Text="Líderes" VerticalOptions="Center" TextColor="#101828" />
+                    <Image Grid.Column="0" Source="{AppThemeBinding Light=icon_lideres.png, Dark=icon_lideres_dark.png}" WidthRequest="24" HeightRequest="24" />
+                    <Label Grid.Column="1" Text="Líderes" VerticalOptions="Center" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />
                 </Grid>
-                <BoxView HeightRequest="1" Color="#F5F6FA" />
+                <BoxView HeightRequest="1" Color="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" />
 
                 <!-- Colaboradores -->
                 <Grid Padding="15" ColumnDefinitions="40,*" BackgroundColor="Transparent">
@@ -75,34 +75,34 @@
                         <TapGestureRecognizer Tapped="OnNavigate" CommandParameter="ColaboradoresPage" />
                     </Grid.GestureRecognizers>
                     <Image Grid.Column="0" Source="icon_colaboradores.png" WidthRequest="24" HeightRequest="24" />
-                    <Label Grid.Column="1" Text="Colaboradores" VerticalOptions="Center" TextColor="#101828" />
+                    <Label Grid.Column="1" Text="Colaboradores" VerticalOptions="Center" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />
                 </Grid>
-                <BoxView HeightRequest="1" Color="#F5F6FA" />
+                <BoxView HeightRequest="1" Color="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" />
 
                 <!-- Clientes -->
                 <Grid Padding="15" ColumnDefinitions="40,*" BackgroundColor="Transparent">
                     <Grid.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnNavigate" CommandParameter="ClientesPage" />
                     </Grid.GestureRecognizers>
-                    <Image Grid.Column="0" Source="icon_clientes.png" WidthRequest="24" HeightRequest="24" />
-                    <Label Grid.Column="1" Text="Clientes" VerticalOptions="Center" TextColor="#101828" />
+                    <Image Grid.Column="0" Source="{AppThemeBinding Light=icon_clientes.png, Dark=icon_clientes_dark.png}" WidthRequest="24" HeightRequest="24" />
+                    <Label Grid.Column="1" Text="Clientes" VerticalOptions="Center" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />
                 </Grid>
-                <BoxView HeightRequest="1" Color="#F5F6FA" />
+                <BoxView HeightRequest="1" Color="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" />
                 
                 <!-- Seguimiento -->
                 <Grid Padding="15" ColumnDefinitions="40,*" BackgroundColor="Transparent">
                     <Grid.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnNavigate" CommandParameter="SeguimientoPage" />
                     </Grid.GestureRecognizers>
-                    <Image Grid.Column="0" Source="icon_seguimiento.png" WidthRequest="24" HeightRequest="24" />
-                    <Label Grid.Column="1" Text="Seguimiento" VerticalOptions="Center" TextColor="#101828" />
+                    <Image Grid.Column="0" Source="{AppThemeBinding Light=icon_seguimiento.png, Dark=icon_seguimiento_dark.png}" WidthRequest="24" HeightRequest="24" />
+                    <Label Grid.Column="1" Text="Seguimiento" VerticalOptions="Center" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />
                 </Grid>
             </VerticalStackLayout>
 
         </Border>
 
         <!-- Main Top Bar -->
-        <Grid BackgroundColor="White" 
+        <Grid BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}"
               HeightRequest="60" 
               VerticalOptions="Start"
               ColumnDefinitions="60,*,60"
@@ -114,7 +114,7 @@
             </VerticalStackLayout>
 
             <!-- Columna 2: Boton menu -->
-            <ImageButton Grid.Column="2" Source="icon_menu.png" WidthRequest="24" HeightRequest="24" HorizontalOptions="Center" VerticalOptions="Center" Clicked="OnMenuClicked"/>
+            <ImageButton Grid.Column="2" Source="{AppThemeBinding Light=icon_menu.png, Dark=icon_menu_dark.png}" WidthRequest="24" HeightRequest="24" HorizontalOptions="Center" VerticalOptions="Center" Clicked="OnMenuClicked"/>
         </Grid>
     </Grid>
 </ContentView>

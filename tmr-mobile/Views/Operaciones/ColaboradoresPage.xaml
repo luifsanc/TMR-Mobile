@@ -8,7 +8,7 @@
     x:Class="tmr_mobile.Views.Operaciones.ColaboradoresPage"
     x:DataType="vm:ColaboradoresViewModel"
     Title="Colaboradores"
-    BackgroundColor="{StaticResource BackgroundLight}">
+    BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource DarkBackgroundLight}}">
 
     <Grid RowDefinitions="*,36">
         <!-- Contenido principal y Botón Flotante -->
@@ -21,7 +21,7 @@
                     Text="Colaboradores"
                     FontSize="24"
                     FontAttributes="Bold"
-                    TextColor="{StaticResource Primary}" />
+                    TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />
 
                 <!-- BUSCADOR CON BOTONES DE FILTRO Y DESCARGA -->
                 <Grid Grid.Row="1" ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
@@ -29,8 +29,8 @@
                     <Border
                         Grid.Column="0"
                         HeightRequest="46"
-                        BackgroundColor="{StaticResource White}"
-                        Stroke="{StaticResource BorderColor}"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}"
+                        Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}"
                         StrokeThickness="1"
                         Padding="12,0">
                         <Border.StrokeShape>
@@ -39,8 +39,8 @@
                         <Entry
                             Text="{Binding Busqueda}"
                             Placeholder="Buscar por nombre o identificación"
-                            PlaceholderColor="{StaticResource TextLight}"
-                            TextColor="{StaticResource TextMain}"
+                            PlaceholderColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}"
+                            TextColor="{AppThemeBinding Light={StaticResource TextMain}, Dark={StaticResource DarkTextMain}}"
                             FontSize="13"
                             BackgroundColor="Transparent"
                             VerticalOptions="Center" />
@@ -51,8 +51,8 @@
                         Grid.Column="1"
                         WidthRequest="46"
                         HeightRequest="46"
-                        BackgroundColor="{StaticResource White}"
-                        Stroke="{StaticResource BorderColor}"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}"
+                        Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}"
                         StrokeThickness="1">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="10" />
@@ -61,7 +61,7 @@
                             Text="⚙"
                             Command="{Binding CambiarFiltroEstadoCommand}"
                             BackgroundColor="Transparent"
-                            TextColor="{StaticResource TextMuted}"
+                            TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}"
                             FontSize="18"
                             Padding="0"
                             ToolTipProperties.Text="{Binding FiltroEstadoTexto}" />
@@ -72,8 +72,8 @@
                         Grid.Column="2"
                         WidthRequest="46"
                         HeightRequest="46"
-                        BackgroundColor="{StaticResource White}"
-                        Stroke="{StaticResource BorderColor}"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}"
+                        Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}"
                         StrokeThickness="1">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="10" />
@@ -82,7 +82,7 @@
                             Text="⤓"
                             Command="{Binding DescargarCommand}"
                             BackgroundColor="Transparent"
-                            TextColor="{StaticResource TextMuted}"
+                            TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}"
                             FontSize="18"
                             Padding="0" />
                     </Border>
@@ -93,24 +93,24 @@
                     <!-- Total -->
                     <Border
                         Grid.Column="0"
-                        BackgroundColor="{StaticResource White}"
-                        Stroke="{StaticResource BorderColor}"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}"
+                        Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}"
                         StrokeThickness="1"
                         Padding="10">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="10" />
                         </Border.StrokeShape>
                         <VerticalStackLayout Spacing="2">
-                            <Label Text="Total" FontSize="11" TextColor="{StaticResource TextMuted}" HorizontalTextAlignment="Center" />
-                            <Label Text="{Binding TotalColaboradores}" FontSize="18" FontAttributes="Bold" TextColor="{StaticResource Primary}" HorizontalTextAlignment="Center" />
+                            <Label Text="Total" FontSize="11" TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}" HorizontalTextAlignment="Center" />
+                            <Label Text="{Binding TotalColaboradores}" FontSize="18" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" HorizontalTextAlignment="Center" />
                         </VerticalStackLayout>
                     </Border>
 
                     <!-- Activos -->
                     <Border
                         Grid.Column="1"
-                        BackgroundColor="{StaticResource SuccessSurface}"
-                        Stroke="{StaticResource SuccessSurface}"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource SuccessSurface}, Dark={StaticResource DarkSuccessSurface}}"
+                        Stroke="{AppThemeBinding Light={StaticResource SuccessSurface}, Dark={StaticResource DarkSuccessSurface}}"
                         StrokeThickness="1"
                         Padding="10">
                         <Border.StrokeShape>
@@ -125,8 +125,8 @@
                     <!-- Inactivos -->
                     <Border
                         Grid.Column="2"
-                        BackgroundColor="{StaticResource ErrorSurface}"
-                        Stroke="{StaticResource ErrorSurface}"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource ErrorSurface}, Dark={StaticResource DarkErrorSurface}}"
+                        Stroke="{AppThemeBinding Light={StaticResource ErrorSurface}, Dark={StaticResource DarkErrorSurface}}"
                         StrokeThickness="1"
                         Padding="10">
                         <Border.StrokeShape>
@@ -149,7 +149,7 @@
                         <VerticalStackLayout Padding="40" HorizontalOptions="Center" VerticalOptions="Center">
                             <Label
                                 Text="No se encontraron colaboradores."
-                                TextColor="{StaticResource TextMuted}"
+                                TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}"
                                 FontSize="14"
                                 HorizontalTextAlignment="Center" />
                         </VerticalStackLayout>
@@ -160,8 +160,8 @@
                             <Border
                                 Margin="0,0,0,10"
                                 Padding="14"
-                                BackgroundColor="{StaticResource White}"
-                                Stroke="{StaticResource BorderColor}"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}"
+                                Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}"
                                 StrokeThickness="1">
                                 <Border.StrokeShape>
                                     <RoundRectangle CornerRadius="12" />
@@ -178,7 +178,7 @@
                                         Grid.Column="0"
                                         WidthRequest="42"
                                         HeightRequest="42"
-                                        BackgroundColor="{StaticResource PrimaryLight}"
+                                        BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryLight}, Dark={StaticResource DarkPrimaryLight}}"
                                         StrokeThickness="0"
                                         VerticalOptions="Center">
                                         <Border.StrokeShape>
@@ -188,7 +188,7 @@
                                             Text="{Binding Iniciales}"
                                             FontSize="14"
                                             FontAttributes="Bold"
-                                            TextColor="{StaticResource Primary}"
+                                            TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}"
                                             HorizontalTextAlignment="Center"
                                             VerticalTextAlignment="Center" />
                                     </Border>
@@ -199,17 +199,17 @@
                                             Text="{Binding NombreCompleto}"
                                             FontSize="14"
                                             FontAttributes="Bold"
-                                            TextColor="{StaticResource Primary}"
+                                            TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}"
                                             MaxLines="1"
                                             LineBreakMode="TailTruncation" />
                                         <Label
                                             Text="{Binding IdentificacionFormateada}"
                                             FontSize="12"
-                                            TextColor="{StaticResource TextMuted}" />
+                                            TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}" />
                                         <Label
                                             Text="{Binding CargoRolFormateado}"
                                             FontSize="11"
-                                            TextColor="{StaticResource TextLight}"
+                                            TextColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}"
                                             MaxLines="1"
                                             LineBreakMode="TailTruncation" />
                                     </VerticalStackLayout>
@@ -245,7 +245,7 @@
                 WidthRequest="56"
                 HeightRequest="56"
                 CornerRadius="28"
-                BackgroundColor="{StaticResource Primary}"
+                BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}"
                 TextColor="{StaticResource White}"
                 FontSize="24"
                 FontAttributes="Bold"
@@ -254,7 +254,7 @@
                 Margin="20"
                 Padding="0">
                 <Button.Shadow>
-                    <Shadow Brush="{StaticResource TextPrimary}" Offset="0,4" Radius="6" Opacity="0.2" />
+                    <Shadow Brush="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" Offset="0,4" Radius="6" Opacity="0.2" />
                 </Button.Shadow>
             </Button>
         </Grid>
@@ -267,7 +267,7 @@
             Grid.RowSpan="2"
             IsVisible="{Binding IsBusy}"
             IsRunning="{Binding IsBusy}"
-            Color="{StaticResource Primary}"
+            Color="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}"
             HorizontalOptions="Center"
             VerticalOptions="Center" />
     </Grid>

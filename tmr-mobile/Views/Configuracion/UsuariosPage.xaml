@@ -9,7 +9,7 @@
     x:DataType="vm:UsuariosConfigViewModel"
     Title="Usuarios"
     Shell.NavBarIsVisible="False"
-    BackgroundColor="#F8FAFC">
+    BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource DarkBackgroundLight}}">
 
     <Grid RowDefinitions="*,36">
         <!-- Contenido principal y FAB en la fila superior -->
@@ -23,7 +23,7 @@
                     FontSize="28"
                     FontAttributes="Bold"
                     FontFamily="InterSemiBold"
-                    TextColor="#163572"
+                    TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}"
                     Margin="0,4,0,4" />
 
                 <!-- BARRA DE BÚSQUEDA Y BOTONES DE FILTRO Y DESCARGA -->
@@ -32,8 +32,8 @@
                     <Border
                         Grid.Column="0"
                         HeightRequest="44"
-                        BackgroundColor="White"
-                        Stroke="#D1D5DB"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}"
+                        Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}"
                         StrokeThickness="1"
                         Padding="12,0">
                         <Border.StrokeShape>
@@ -42,7 +42,7 @@
                         <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8" VerticalOptions="Center">
                             <Image
                                 Grid.Column="0"
-                                Source="buscar_icon.png"
+                                Source="{AppThemeBinding Light=buscar_icon.png, Dark=buscar_icon_dark.png}"
                                 WidthRequest="18"
                                 HeightRequest="18"
                                 VerticalOptions="Center" />
@@ -50,8 +50,8 @@
                                 Grid.Column="1"
                                 Text="{Binding Busqueda}"
                                 Placeholder="Buscar por usuario, nombre, correo..."
-                                PlaceholderColor="#9CA3AF"
-                                TextColor="#111827"
+                                PlaceholderColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}"
+                                TextColor="{AppThemeBinding Light={StaticResource TextMain}, Dark={StaticResource DarkTextMain}}"
                                 FontSize="13"
                                 FontFamily="InterRegular"
                                 BackgroundColor="Transparent"
@@ -64,14 +64,14 @@
                         Grid.Column="1"
                         WidthRequest="44"
                         HeightRequest="44"
-                        BackgroundColor="White"
-                        Stroke="#D1D5DB"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}"
+                        Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}"
                         StrokeThickness="1">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="10" />
                         </Border.StrokeShape>
                         <ImageButton
-                            Source="filtro_icon.png"
+                            Source="{AppThemeBinding Light=filtro_icon.png, Dark=filtro_icon_dark.png}"
                             Command="{Binding CambiarFiltroEstadoCommand}"
                             Padding="11"
                             BackgroundColor="Transparent"
@@ -83,14 +83,14 @@
                         Grid.Column="2"
                         WidthRequest="44"
                         HeightRequest="44"
-                        BackgroundColor="White"
-                        Stroke="#D1D5DB"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}"
+                        Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}"
                         StrokeThickness="1">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="10" />
                         </Border.StrokeShape>
                         <ImageButton
-                            Source="descargar_icon.png"
+                            Source="{AppThemeBinding Light=descargar_icon.png, Dark=descargar_icon_dark.png}"
                             Padding="11"
                             BackgroundColor="Transparent" />
                     </Border>
@@ -101,8 +101,8 @@
                     <!-- Total Usuarios -->
                     <Border
                         Grid.Column="0"
-                        BackgroundColor="White"
-                        Stroke="#E5E7EB"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}"
+                        Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}"
                         StrokeThickness="1"
                         Padding="10,12">
                         <Border.StrokeShape>
@@ -115,7 +115,7 @@
                             <Border
                                 WidthRequest="34"
                                 HeightRequest="34"
-                                BackgroundColor="#F6EEFE"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource PurpleSurface}, Dark={StaticResource DarkPurpleSurface}}"
                                 StrokeThickness="0"
                                 VerticalOptions="Center">
                                 <Border.StrokeShape>
@@ -134,12 +134,12 @@
                                     FontSize="20"
                                     FontAttributes="Bold"
                                     FontFamily="InterSemiBold"
-                                    TextColor="#163572" />
+                                    TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />
                                 <Label
                                     Text="Total"
                                     FontSize="10"
                                     FontFamily="InterRegular"
-                                    TextColor="#6B7280" />
+                                    TextColor="{AppThemeBinding Light={StaticResource TextSecondary}, Dark={StaticResource DarkTextSecondary}}" />
                             </VerticalStackLayout>
                         </HorizontalStackLayout>
                     </Border>
@@ -147,8 +147,8 @@
                     <!-- Activos -->
                     <Border
                         Grid.Column="1"
-                        BackgroundColor="White"
-                        Stroke="#E5E7EB"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}"
+                        Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}"
                         StrokeThickness="1"
                         Padding="10,12">
                         <Border.StrokeShape>
@@ -161,7 +161,7 @@
                             <Border
                                 WidthRequest="34"
                                 HeightRequest="34"
-                                BackgroundColor="#E6FDEE"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource SuccessSurface}, Dark={StaticResource DarkSuccessSurface}}"
                                 StrokeThickness="0"
                                 VerticalOptions="Center">
                                 <Border.StrokeShape>
@@ -180,12 +180,12 @@
                                     FontSize="20"
                                     FontAttributes="Bold"
                                     FontFamily="InterSemiBold"
-                                    TextColor="#163572" />
+                                    TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />
                                 <Label
                                     Text="Activos"
                                     FontSize="10"
                                     FontFamily="InterRegular"
-                                    TextColor="#6B7280" />
+                                    TextColor="{AppThemeBinding Light={StaticResource TextSecondary}, Dark={StaticResource DarkTextSecondary}}" />
                             </VerticalStackLayout>
                         </HorizontalStackLayout>
                     </Border>
@@ -193,8 +193,8 @@
                     <!-- Inactivos -->
                     <Border
                         Grid.Column="2"
-                        BackgroundColor="White"
-                        Stroke="#E5E7EB"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}"
+                        Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}"
                         StrokeThickness="1"
                         Padding="10,12">
                         <Border.StrokeShape>
@@ -207,7 +207,7 @@
                             <Border
                                 WidthRequest="34"
                                 HeightRequest="34"
-                                BackgroundColor="#F3F4F6"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource Secondary}, Dark={StaticResource DarkSecondary}}"
                                 StrokeThickness="0"
                                 VerticalOptions="Center">
                                 <Border.StrokeShape>
@@ -226,12 +226,12 @@
                                     FontSize="20"
                                     FontAttributes="Bold"
                                     FontFamily="InterSemiBold"
-                                    TextColor="#163572" />
+                                    TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />
                                 <Label
                                     Text="Inactivos"
                                     FontSize="10"
                                     FontFamily="InterRegular"
-                                    TextColor="#6B7280" />
+                                    TextColor="{AppThemeBinding Light={StaticResource TextSecondary}, Dark={StaticResource DarkTextSecondary}}" />
                             </VerticalStackLayout>
                         </HorizontalStackLayout>
                     </Border>
@@ -248,7 +248,7 @@
                         <VerticalStackLayout Padding="40" HorizontalOptions="Center" VerticalOptions="Center">
                             <Label
                                 Text="No se encontraron usuarios."
-                                TextColor="#6B7280"
+                                TextColor="{AppThemeBinding Light={StaticResource TextSecondary}, Dark={StaticResource DarkTextSecondary}}"
                                 FontSize="14"
                                 FontFamily="InterRegular"
                                 HorizontalTextAlignment="Center" />
@@ -260,8 +260,8 @@
                             <Border
                                 Margin="0,0,0,12"
                                 Padding="14,14"
-                                BackgroundColor="White"
-                                Stroke="#E5E7EB"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}"
+                                Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}"
                                 StrokeThickness="1">
                                 <Border.StrokeShape>
                                     <RoundRectangle CornerRadius="14" />
@@ -281,7 +281,7 @@
                                         Grid.Column="0"
                                         WidthRequest="44"
                                         HeightRequest="44"
-                                        BackgroundColor="#F0F4FF"
+                                        BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryLight}, Dark={StaticResource DarkPrimaryLight}}"
                                         StrokeThickness="0"
                                         VerticalOptions="Center">
                                         <Border.StrokeShape>
@@ -292,7 +292,7 @@
                                             FontSize="14"
                                             FontAttributes="Bold"
                                             FontFamily="InterSemiBold"
-                                            TextColor="#163572"
+                                            TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}"
                                             HorizontalTextAlignment="Center"
                                             VerticalTextAlignment="Center" />
                                     </Border>
@@ -304,19 +304,19 @@
                                             FontSize="14"
                                             FontAttributes="Bold"
                                             FontFamily="InterSemiBold"
-                                            TextColor="#163572"
+                                            TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}"
                                             MaxLines="1"
                                             LineBreakMode="TailTruncation" />
                                         <Label
                                             Text="{Binding Email}"
                                             FontSize="12"
                                             FontFamily="InterRegular"
-                                            TextColor="#6B7280"
+                                            TextColor="{AppThemeBinding Light={StaticResource TextSecondary}, Dark={StaticResource DarkTextSecondary}}"
                                             MaxLines="1"
                                             LineBreakMode="TailTruncation" />
                                         <HorizontalStackLayout Spacing="6" Margin="0,2,0,0">
                                             <Border
-                                                BackgroundColor="#EEF4FF"
+                                                BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryLight}, Dark={StaticResource DarkPrimaryLight}}"
                                                 StrokeThickness="0"
                                                 Padding="8,2">
                                                 <Border.StrokeShape>
@@ -327,7 +327,7 @@
                                                     FontSize="10"
                                                     FontAttributes="Bold"
                                                     FontFamily="InterSemiBold"
-                                                    TextColor="#163572" />
+                                                    TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />
                                             </Border>
                                         </HorizontalStackLayout>
                                     </VerticalStackLayout>
@@ -374,8 +374,8 @@
                 WidthRequest="52"
                 HeightRequest="52"
                 CornerRadius="26"
-                BackgroundColor="#163572"
-                TextColor="White"
+                BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}"
+                TextColor="{StaticResource OnPrimary}"
                 FontSize="24"
                 FontAttributes="Bold"
                 FontFamily="InterSemiBold"
@@ -392,7 +392,7 @@
             <ActivityIndicator
                 IsVisible="{Binding IsBusy}"
                 IsRunning="{Binding IsBusy}"
-                Color="#163572"
+                Color="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}"
                 HorizontalOptions="Center"
                 VerticalOptions="Center" />
         </Grid>
