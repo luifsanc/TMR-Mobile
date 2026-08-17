@@ -158,6 +158,7 @@ public partial class TimeReportViewModel : BaseViewModel
         {
             MesActual--;
         }
+        FechaSeleccionada = new DateTime(AnioActual, MesActual, 1);
         await CargarActividadesAsync();
     }
 
@@ -173,6 +174,7 @@ public partial class TimeReportViewModel : BaseViewModel
         {
             MesActual++;
         }
+        FechaSeleccionada = new DateTime(AnioActual, MesActual, 1);
         await CargarActividadesAsync();
     }
 

@@ -38,13 +38,29 @@ public class SeguimientoViewModel : BaseViewModel
     public DateTime FechaDesde
     {
         get => _fechaDesde;
-        set { _fechaDesde = value; OnPropertyChanged(); }
+        set 
+        { 
+            if (_fechaDesde != value)
+            {
+                _fechaDesde = value; 
+                OnPropertyChanged();
+                _ = CargarDatosAsync();
+            }
+        }
     }
 
     public DateTime FechaHasta
     {
         get => _fechaHasta;
-        set { _fechaHasta = value; OnPropertyChanged(); }
+        set 
+        { 
+            if (_fechaHasta != value)
+            {
+                _fechaHasta = value; 
+                OnPropertyChanged();
+                _ = CargarDatosAsync();
+            }
+        }
     }
 
     // Indicadores
@@ -69,6 +85,8 @@ public class SeguimientoViewModel : BaseViewModel
     public ICommand BuscarCommand { get; }
     public ICommand AplicarFiltrosCommand { get; }
     public ICommand ItemTappedCommand { get; }
+    public ICommand ExportarTodosCommand { get; }
+    public ICommand DescargarSeleccionadosCommand { get; }
 
     public SeguimientoViewModel(ISeguimientoService seguimientoService)
     {
@@ -79,6 +97,8 @@ public class SeguimientoViewModel : BaseViewModel
         BuscarCommand = new Command(async () => await CargarDatosAsync());
         AplicarFiltrosCommand = new Command(async () => await CargarDatosAsync());
         ItemTappedCommand = new Command<SeguimientoColaboradorDto>(async (item) => await OnItemTapped(item));
+        ExportarTodosCommand = new Command(async () => await ExportarTodosAsync());
+        DescargarSeleccionadosCommand = new Command(async () => await DescargarSeleccionadosAsync());
 
         _ = CargarDatosAsync();
     }
@@ -168,5 +188,100 @@ public class SeguimientoViewModel : BaseViewModel
             { "Colaborador", item }
         };
         await Shell.Current.GoToAsync(nameof(tmr_mobile.Views.Seguimiento.SeguimientoDetallePage), true, navigationParameter);
+    }
+
+    private async Task ExportarTodosAsync()
+    {
+        if (ColaboradoresFiltrados == null || !ColaboradoresFiltrados.Any())
+        {
+            await Application.Current.MainPage.DisplayAlert("Exportar", "No hay datos para exportar.", "OK");
+            return;
+        }
+        await ExportarAExcelAsync(ColaboradoresFiltrados, "Consolidado_Seguimiento");
+    }
+
+    private async Task DescargarSeleccionadosAsync()
+    {
+        var seleccionados = ColaboradoresFiltrados?.Where(c => c.IsSelected).ToList();
+        if (seleccionados == null || !seleccionados.Any())
+        {
+            await Application.Current.MainPage.DisplayAlert("Descargar", "Debe seleccionar al menos un colaborador.", "OK");
+            return;
+        }
+
+        bool errores = false;
+        int generados = 0;
+        var svc = new ExcelExportService();
+
+        foreach (var col in seleccionados)
+        {
+            try
+            {
+                var response = await _seguimientoService.ObtenerActividadesColaboradorAsync(
+                    col.Id, 
+                    FechaDesde.ToString("yyyy-MM-dd"), 
+                    FechaHasta.ToString("yyyy-MM-dd"));
+
+                if (response == null || !response.Actividades.Any())
+                {
+                    await Application.Current.MainPage.DisplayAlert("Aviso", $"No se encontraron actividades detalladas para {col.Nombre}.", "OK");
+                    continue;
+                }
+
+                var bytes = svc.GenerarReporteDetalleColaborador(
+                    col.Nombre,
+                    FechaDesde,
+                    FechaHasta,
+                    response.Actividades,
+                    response.Feriados ?? new List<string>()
+                );
+
+                var nombreArchivo = $"Reporte_{col.Nombre.Replace(" ", "_")}.xlsx";
+                await tmr_mobile.Services.DescargaArchivoHelper.GuardarYCompartirAsync(
+                    bytes,
+                    nombreArchivo,
+                    tmr_mobile.Services.DescargaArchivoHelper.MimeTypeXlsx,
+                    $"Compartir Reporte de {col.Nombre}");
+                    
+                generados++;
+            }
+            catch (Exception ex)
+            {
+                errores = true;
+                System.Diagnostics.Debug.WriteLine($"Error al descargar reporte para {col.Nombre}: {ex}");
+                await Application.Current.MainPage.DisplayAlert("Error", $"Ocurrió un error con {col.Nombre}: {ex.Message}", "OK");
+            }
+        }
+
+        if (errores)
+        {
+            await Application.Current.MainPage.DisplayAlert("Aviso", "Ocurrieron problemas al generar uno o más reportes.", "OK");
+        }
+        else if (generados > 0)
+        {
+            await Application.Current.MainPage.DisplayAlert("Éxito", $"Se generaron {generados} reporte(s) correctamente.", "OK");
+        }
+    }
+
+    private async Task ExportarAExcelAsync(IEnumerable<SeguimientoColaboradorDto> datos, string nombreArchivo)
+    {
+        var encabezados = new[] { "Colaborador", "Proyecto", "Cliente", "Líder Técnico", "Horas Registradas", "Seguimiento", "Días con Reporte", "Días a Completar" };
+        var filas = datos.Select(c => new[]
+        {
+            c.Nombre ?? "-",
+            c.Proyecto ?? "-",
+            c.Cliente ?? "-",
+            c.LiderTecnico ?? "-",
+            c.NroHoras.ToString(),
+            c.Estado ?? "-",
+            c.DiasConReporte.ToString(),
+            c.DiasACompletar.ToString()
+        }).ToList();
+
+        await ReportService.SeleccionarYExportarAsync(
+            $"Periodo: {FechaDesde:dd/MM/yyyy} al {FechaHasta:dd/MM/yyyy}", 
+            encabezados, 
+            filas, 
+            nombreArchivo);
     }
 }

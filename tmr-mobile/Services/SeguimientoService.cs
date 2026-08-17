@@ -45,4 +45,11 @@ public class SeguimientoService : ISeguimientoService
         var response = await _apiService.GetAsync<List<SeguimientoColaboradorDto>>(url);
         return response ?? new List<SeguimientoColaboradorDto>();
     }
+
+    public async Task<DetalleActividadesResponse> ObtenerActividadesColaboradorAsync(int idColaborador, string fechaDesde, string fechaHasta)
+    {
+        var url = $"time-report/seguimiento/colaborador/{idColaborador}/actividades?fechaDesde={fechaDesde}&fechaHasta={fechaHasta}";
+        var response = await _apiService.GetAsync<DetalleActividadesResponse>(url);
+        return response ?? new DetalleActividadesResponse();
+    }
 }
