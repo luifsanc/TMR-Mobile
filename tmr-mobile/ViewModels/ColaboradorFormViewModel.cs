@@ -83,8 +83,8 @@ public partial class ColaboradorFormViewModel : BaseViewModel, IQueryAttributabl
             IsBusy = true;
             ErrorMessage = string.Empty;
 
-            // Cargar catálogos en paralelo o secuencia
-            var empresas = await _colaboradoresService.ObtenerCatalogoAsync("CAT");
+            // Cargar catálogos
+            var empresas = await _colaboradoresService.ObtenerCatalogoAsync("EMP");
             Empresas.Clear();
             foreach (var item in empresas) Empresas.Add(item);
 
@@ -104,19 +104,20 @@ public partial class ColaboradorFormViewModel : BaseViewModel, IQueryAttributabl
             Modalidades.Clear();
             foreach (var item in mdts) Modalidades.Add(item);
 
-            var emps = await _colaboradoresService.ObtenerCatalogoAsync("EMP");
+            var cats = await _colaboradoresService.ObtenerCatalogoAsync("CAT");
             Categorias.Clear();
-            foreach (var item in emps) Categorias.Add(item);
+            foreach (var item in cats) Categorias.Add(item);
 
             var gens = await _colaboradoresService.ObtenerCatalogoAsync("GEN");
             Generos.Clear();
             foreach (var item in gens) Generos.Add(item);
 
-            var mdns = await _colaboradoresService.ObtenerCatalogoAsync("MDN");
+            var nacs = await _colaboradoresService.ObtenerCatalogoAsync("NAC");
             Nacionalidades.Clear();
-            foreach (var item in mdns) Nacionalidades.Add(item);
+            foreach (var item in nacs) Nacionalidades.Add(item);
 
-            var listaReemplazo = await _colaboradoresService.ObtenerColaboradoresAsync(activo: true);
+            // SECCIÓN REEMPLAZO: Cargar SOLO colaboradores inactivos
+            var listaReemplazo = await _colaboradoresService.ObtenerColaboradoresAsync(activo: false);
             ColaboradoresReemplazo.Clear();
             foreach (var item in listaReemplazo) ColaboradoresReemplazo.Add(item);
 
@@ -126,10 +127,29 @@ public partial class ColaboradorFormViewModel : BaseViewModel, IQueryAttributabl
                 var c = await _colaboradoresService.ObtenerColaboradorAsync(IdColaborador.Value);
                 if (c != null)
                 {
-                    TipoPersona = c.TipoPersona ?? "NATURAL";
+                    TipoPersona = string.IsNullOrWhiteSpace(c.TipoPersona) ? "NATURAL" : c.TipoPersona;
                     NumeroIdentificacion = c.NumeroIdentificacion;
-                    Nombres = c.Nombres;
-                    Apellidos = c.Apellidos;
+
+                    if (!string.IsNullOrWhiteSpace(c.Nombres))
+                    {
+                        Nombres = c.Nombres;
+                        Apellidos = c.Apellidos;
+                    }
+                    else if (!string.IsNullOrWhiteSpace(c.NombreCompleto))
+                    {
+                        var partes = c.NombreCompleto.Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+                        if (partes.Length >= 2)
+                        {
+                            Nombres = partes[0];
+                            Apellidos = string.Join(" ", partes.Skip(1));
+                        }
+                        else
+                        {
+                            Nombres = c.NombreCompleto;
+                            Apellidos = string.Empty;
+                        }
+                    }
+
                     Email = c.Email;
                     Telefono = c.Telefono;
                     Direccion = c.Direccion;
@@ -138,19 +158,43 @@ public partial class ColaboradorFormViewModel : BaseViewModel, IQueryAttributabl
                     if (DateTime.TryParse(c.FechaNacimiento, out var fn)) FechaNacimiento = fn;
                     if (DateTime.TryParse(c.FechaContratacion ?? c.FechaIngreso, out var fc)) FechaContratacion = fc;
 
-                    EmpresaSeleccionada = Empresas.FirstOrDefault(x => x.Id == c.IdEmpresaCatalogo);
-                    TipoContratoSeleccionado = TiposContrato.FirstOrDefault(x => x.Id == c.IdTipoContrato);
-                    TipoIdentificacionSeleccionado = TiposIdentificacion.FirstOrDefault(x => x.Id == c.IdTipoIdentificacion);
-                    GeneroSeleccionado = Generos.FirstOrDefault(x => x.Id == c.IdGenero);
-                    NacionalidadSeleccionada = Nacionalidades.FirstOrDefault(x => x.Id == c.IdNacionalidad);
-                    ModalidadSeleccionada = Modalidades.FirstOrDefault(x => x.Id == c.IdModoTrabajo);
-                    CategoriaSeleccionada = Categorias.FirstOrDefault(x => x.Id == c.IdCategoriaEmpleado);
+                    EmpresaSeleccionada = Empresas.FirstOrDefault(x => x.Id == c.IdEmpresaCatalogo)
+                        ?? Empresas.FirstOrDefault(x => string.Equals(x.Valor, c.Asociacion, StringComparison.OrdinalIgnoreCase));
 
-                    DepartamentoSeleccionado = Departamentos.FirstOrDefault(x => x.Id == c.IdDepartamento);
+                    TipoContratoSeleccionado = TiposContrato.FirstOrDefault(x => x.Id == c.IdTipoContrato)
+                        ?? TiposContrato.FirstOrDefault(x => string.Equals(x.Valor, c.TipoContrato, StringComparison.OrdinalIgnoreCase));
+
+                    TipoIdentificacionSeleccionado = TiposIdentificacion.FirstOrDefault(x => x.Id == c.IdTipoIdentificacion);
+
+                    GeneroSeleccionado = Generos.FirstOrDefault(x => x.Id == c.IdGenero)
+                        ?? Generos.FirstOrDefault(x => string.Equals(x.Valor, c.Genero, StringComparison.OrdinalIgnoreCase));
+
+                    NacionalidadSeleccionada = Nacionalidades.FirstOrDefault(x => x.Id == c.IdNacionalidad)
+                        ?? Nacionalidades.FirstOrDefault(x => string.Equals(x.Valor, c.Nacionalidad, StringComparison.OrdinalIgnoreCase));
+
+                    ModalidadSeleccionada = Modalidades.FirstOrDefault(x => x.Id == c.IdModoTrabajo)
+                        ?? Modalidades.FirstOrDefault(x => string.Equals(x.Valor, c.Modalidad, StringComparison.OrdinalIgnoreCase));
+
+                    CategoriaSeleccionada = Categorias.FirstOrDefault(x => x.Id == c.IdCategoriaEmpleado)
+                        ?? Categorias.FirstOrDefault(x => string.Equals(x.Valor, c.Categoria, StringComparison.OrdinalIgnoreCase));
+
+                    DepartamentoSeleccionado = Departamentos.FirstOrDefault(x => x.Id == c.IdDepartamento)
+                        ?? Departamentos.FirstOrDefault(x => string.Equals(x.Valor, c.Departamento, StringComparison.OrdinalIgnoreCase));
+
                     if (DepartamentoSeleccionado != null)
                     {
                         await CargarCargosPorDepartamentoAsync(DepartamentoSeleccionado.Id);
-                        CargoSeleccionado = Cargos.FirstOrDefault(x => x.Id == c.IdCargo);
+                        CargoSeleccionado = Cargos.FirstOrDefault(x => x.Id == c.IdCargo)
+                            ?? Cargos.FirstOrDefault(x => string.Equals(x.NombreCargo, c.Cargo, StringComparison.OrdinalIgnoreCase));
+                    }
+
+                    if (c.IdEmpleadoReemplazo.HasValue)
+                    {
+                        ReemplazoSeleccionado = ColaboradoresReemplazo.FirstOrDefault(x => x.Id == c.IdEmpleadoReemplazo.Value);
+                    }
+                    else if (!string.IsNullOrWhiteSpace(c.ReemplazaANombre))
+                    {
+                        ReemplazoSeleccionado = ColaboradoresReemplazo.FirstOrDefault(x => string.Equals(x.NombreCompleto, c.ReemplazaANombre, StringComparison.OrdinalIgnoreCase));
                     }
                 }
             }
