@@ -20,6 +20,9 @@ public partial class CatalogosPage : ContentPage
     {
         base.OnAppearing();
 
+        if (tmr_mobile.Views.Shared.OverlayNavigationState.ConsumePreservation(this))
+            return;
+
         await _viewModel.InicializarAsync();
     }
 }

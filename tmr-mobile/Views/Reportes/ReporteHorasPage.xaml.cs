@@ -15,6 +15,9 @@ public partial class ReporteHorasPage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
+        if (tmr_mobile.Views.Shared.OverlayNavigationState.ConsumePreservation(this))
+            return;
+
         await _viewModel.CargarReporteCommand.ExecuteAsync(null);
     }
 }

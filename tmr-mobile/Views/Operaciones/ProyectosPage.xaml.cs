@@ -17,6 +17,9 @@ public partial class ProyectosPage : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
+        if (tmr_mobile.Views.Shared.OverlayNavigationState.ConsumePreservation(this))
+            return;
+
         if (BindingContext is ProyectosViewModel vm)
         {
             vm.CargarProyectosCommand.Execute(null);

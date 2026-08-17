@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:shared="clr-namespace:tmr_mobile.Views.Shared"
              xmlns:vm="clr-namespace:tmr_mobile.ViewModels"
              x:Class="tmr_mobile.Views.Home.HomePage"
              Title="Módulos"
@@ -9,17 +8,60 @@
              BackgroundColor="{StaticResource White}"
              x:DataType="vm:HomeViewModel">
 
-    <!-- Principal Grid: Scrollable Content + Fixed Bottom Nav -->
-    <Grid RowDefinitions="*,80">
-        
+    <Grid RowDefinitions="Auto,*">
+        <!-- Modal menu header -->
+        <Border Grid.Row="0"
+                Margin="20,16,20,8"
+                Padding="14,9,8,9"
+                BackgroundColor="{StaticResource White}"
+                Stroke="{StaticResource BorderColor}"
+                StrokeThickness="1"
+                StrokeShape="RoundRectangle 14">
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                <Label Text="¿Qué quieres hacer hoy?"
+                       FontSize="16"
+                       FontAttributes="Bold"
+                       TextColor="{StaticResource TextMain}"
+                       VerticalOptions="Center" />
+
+                <Border Grid.Column="1"
+                        WidthRequest="28"
+                        HeightRequest="28"
+                        Padding="0"
+                        BackgroundColor="{StaticResource BackgroundLight}"
+                        Stroke="Transparent"
+                        StrokeShape="RoundRectangle 14"
+                        SemanticProperties.Description="Cerrar menú">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnCloseTapped" />
+                    </Border.GestureRecognizers>
+                    <Label Text="×"
+                           FontSize="20"
+                           TextColor="{StaticResource TextMuted}"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center" />
+                </Border>
+            </Grid>
+        </Border>
+
         <!-- Modules Grid -->
-        <CollectionView Grid.Row="0" ItemsSource="{Binding Modulos}" Margin="20,20,20,30" HorizontalOptions="Center">
+        <CollectionView Grid.Row="1"
+                        ItemsSource="{Binding Modulos}"
+                        Margin="20,8,20,24"
+                        HorizontalOptions="Fill"
+                        SelectionMode="None"
+                        VerticalScrollBarVisibility="Never">
             <CollectionView.ItemsLayout>
                 <GridItemsLayout Orientation="Vertical" Span="2" VerticalItemSpacing="15" HorizontalItemSpacing="15" />
             </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="vm:ModuloItem">
-                    <Border StrokeShape="RoundRectangle 16" Stroke="{StaticResource BorderColor}" BackgroundColor="{StaticResource PrimaryLight}" HeightRequest="110" Padding="10">
+                    <Border StrokeShape="RoundRectangle 16"
+                            Stroke="{StaticResource BorderColor}"
+                            BackgroundColor="{StaticResource PrimaryLight}"
+                            HeightRequest="110"
+                            Padding="10"
+                            HorizontalOptions="Fill">
                         <Border.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HomeViewModel}}, Path=NavigateCommand}" CommandParameter="{Binding Ruta}" />
                         </Border.GestureRecognizers>
@@ -31,8 +73,5 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-
-        <!-- Custom Bottom Nav Bar with FAB -->
-        <shared:BottomNavBar Grid.Row="1" />
     </Grid>
 </ContentPage>

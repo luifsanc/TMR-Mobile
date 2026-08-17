@@ -18,23 +18,55 @@
         <conv:SelectedTextColorConverter x:Key="SelectedText"/>
     </ContentPage.Resources>
 
-    <Grid>
-        <!-- ===================== TODO EN UN SOLO SCROLL ===================== -->
-        <ScrollView Margin="0,0,0,80">
-            <VerticalStackLayout Spacing="14"
-                                 Padding="16,12,16,32">
+    <Grid RowDefinitions="Auto,*">
+        <!-- Fixed header -->
+        <Grid Grid.Row="0"
+              Padding="16,12,16,8"
+              ColumnDefinitions="26,*,26"
+              ColumnSpacing="12"
+              VerticalOptions="Center">
 
-            <Grid ColumnDefinitions="Auto,*,Auto"
-                  ColumnSpacing="12"
-                  VerticalOptions="Center">
+            <Image Grid.Column="1"
+                   Source="letras1.png"
+                   WidthRequest="124"
+                   HeightRequest="40"
+                   Aspect="AspectFit"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   SemanticProperties.Description="Integrity Solutions" />
 
-                <Label Grid.Column="1"
-                       Text="TMR-Mobile"
-                       FontSize="22"
-                       FontAttributes="Bold"
+            <Grid Grid.Column="2"
+                  WidthRequest="26"
+                  HeightRequest="26"
+                  HorizontalOptions="End"
+                  SemanticProperties.Description="Notificaciones">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnNotificationsTapped" />
+                </Grid.GestureRecognizers>
+
+                <Image Source="notification_bell_alarm.png"
+                       WidthRequest="16"
+                       HeightRequest="16"
                        HorizontalOptions="Center"
-                       TextColor="{StaticResource TextPrimary}"/>
-            </Grid> 
+                       VerticalOptions="Center" />
+
+                <Border WidthRequest="7"
+                        HeightRequest="7"
+                        Padding="0"
+                        Margin="0,1,1,0"
+                        HorizontalOptions="End"
+                        VerticalOptions="Start"
+                        BackgroundColor="#EF4444"
+                        Stroke="White"
+                        StrokeThickness="1"
+                        StrokeShape="RoundRectangle 3.5"
+                        IsVisible="{Binding TieneNotificaciones}" />
+            </Grid>
+        </Grid>
+
+        <ScrollView Grid.Row="1" Margin="0,0,0,36">
+            <VerticalStackLayout Spacing="14"
+                                 Padding="16,4,16,32">
 
             <!-- ===================== cuadro donde saluda la usuario ===================== -->
             <Border StrokeShape="RoundRectangle 26"
@@ -385,6 +417,6 @@
         </VerticalStackLayout>
     </ScrollView>
 
-        <shared:BottomNavBar VerticalOptions="End" />
+        <shared:BottomNavBar Grid.Row="1" VerticalOptions="End" />
     </Grid>
 </ContentPage>

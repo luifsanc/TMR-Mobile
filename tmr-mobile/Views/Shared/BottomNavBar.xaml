@@ -3,52 +3,45 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="tmr_mobile.Views.Shared.BottomNavBar">
 
-    <Grid BackgroundColor="{StaticResource White}" ColumnDefinitions="*,*,*,*,*" HeightRequest="80" VerticalOptions="End">
+    <Grid BackgroundColor="{StaticResource White}"
+          ColumnDefinitions="*,46,60,46,*"
+          HeightRequest="36"
+          VerticalOptions="End">
          <!-- Top shadow / border -->
          <BoxView HeightRequest="1" Color="{StaticResource BorderColor}" VerticalOptions="Start" Grid.ColumnSpan="5" />
          
          <!-- Home -->
-         <VerticalStackLayout Grid.Column="0" VerticalOptions="Center" HorizontalOptions="Center" Spacing="2">
+         <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Center" Spacing="2">
              <VerticalStackLayout.GestureRecognizers>
                  <TapGestureRecognizer Tapped="OnNavigate" CommandParameter="DashboardPage" />
              </VerticalStackLayout.GestureRecognizers>
-             <Image Source="homes.png" WidthRequest="24" HeightRequest="24" HorizontalOptions="Center" />
-         </VerticalStackLayout>
-         
-         <!-- Profile -->
-         <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Center" Spacing="2">
-             <VerticalStackLayout.GestureRecognizers>
-                 <TapGestureRecognizer Tapped="OnNavigate" CommandParameter="ProfilePage" />
-             </VerticalStackLayout.GestureRecognizers>
-             <Image Source="user_profile.png" WidthRequest="24" HeightRequest="24" HorizontalOptions="Center" />
+             <Image Source="homes.png" WidthRequest="16" HeightRequest="16" HorizontalOptions="Center" />
          </VerticalStackLayout>
          
          <!-- Center FAB -->
-         <Grid Grid.Column="2" WidthRequest="70" HeightRequest="70" VerticalOptions="End" Margin="0,0,0,20">
+         <Grid Grid.Column="2" WidthRequest="54" HeightRequest="54" VerticalOptions="End" Margin="0,0,0,7">
               <Grid.GestureRecognizers>
                   <TapGestureRecognizer Tapped="OnNavigate" CommandParameter="HomePage" />
               </Grid.GestureRecognizers>
-              <Border StrokeShape="RoundRectangle 35" BackgroundColor="{StaticResource White}" Stroke="{StaticResource PrimaryLight}" StrokeThickness="4" WidthRequest="70" HeightRequest="70" HorizontalOptions="Center" VerticalOptions="Center">
-                   <Border StrokeShape="RoundRectangle 26" BackgroundColor="Transparent" WidthRequest="52" HeightRequest="52" HorizontalOptions="Center" VerticalOptions="Center" Stroke="Transparent">
-                        <Image Source="logo_isc.png" WidthRequest="40" HeightRequest="40" HorizontalOptions="Center" VerticalOptions="Center" />
+              <Border StrokeShape="RoundRectangle 27" BackgroundColor="{StaticResource White}" Stroke="{StaticResource PrimaryLight}" StrokeThickness="3" WidthRequest="54" HeightRequest="54" HorizontalOptions="Center" VerticalOptions="Center">
+                   <Border StrokeShape="RoundRectangle 21" BackgroundColor="Transparent" WidthRequest="42" HeightRequest="42" HorizontalOptions="Center" VerticalOptions="Center" Stroke="Transparent">
+                        <Image Source="isotipo1.png"
+                               WidthRequest="34"
+                               HeightRequest="34"
+                               Aspect="AspectFit"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"
+                               SemanticProperties.Description="Integrity Solutions" />
                    </Border>
               </Border>
          </Grid>
 
-         <!-- Notifications -->
+         <!-- Profile -->
          <VerticalStackLayout Grid.Column="3" VerticalOptions="Center" HorizontalOptions="Center" Spacing="2">
              <VerticalStackLayout.GestureRecognizers>
-                 <TapGestureRecognizer Tapped="OnNavigate" CommandParameter="NotificacionesPage" />
+                 <TapGestureRecognizer Tapped="OnNavigate" CommandParameter="ProfilePage" />
              </VerticalStackLayout.GestureRecognizers>
-             <Image Source="notification_bell_alarm.png" WidthRequest="24" HeightRequest="24" HorizontalOptions="Center" />
-         </VerticalStackLayout>
-         
-         <!-- Settings -->
-         <VerticalStackLayout Grid.Column="4" VerticalOptions="Center" HorizontalOptions="Center" Spacing="2">
-             <VerticalStackLayout.GestureRecognizers>
-                 <TapGestureRecognizer Tapped="OnNavigate" CommandParameter="ConfiguracionPage" />
-             </VerticalStackLayout.GestureRecognizers>
-             <Image Source="configura.png" WidthRequest="24" HeightRequest="24" HorizontalOptions="Center" />
+             <Image Source="user_profile.png" WidthRequest="16" HeightRequest="16" HorizontalOptions="Center" />
          </VerticalStackLayout>
     </Grid>
 </ContentView>
