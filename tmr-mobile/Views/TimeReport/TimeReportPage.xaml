@@ -10,7 +10,7 @@
              Title="{Binding Title}">
 
     <Grid BackgroundColor="{StaticResource BackgroundLight}">
-        <ScrollView Margin="0,0,0,80">
+        <ScrollView Margin="0,0,0,36">
             <VerticalStackLayout Padding="20,10,20,32" Spacing="20">
 
                 <!-- Título -->

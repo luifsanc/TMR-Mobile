@@ -17,6 +17,9 @@ public partial class UsuariosPage : ContentPage
     {
         base.OnAppearing();
 
+        if (tmr_mobile.Views.Shared.OverlayNavigationState.ConsumePreservation(this))
+            return;
+
         System.Diagnostics.Debug.WriteLine("[USUARIOS] Inicio página");
         await _viewModel.InicializarAsync();
     }

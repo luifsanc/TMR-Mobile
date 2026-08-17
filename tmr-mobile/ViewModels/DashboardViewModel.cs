@@ -108,6 +108,7 @@ public partial class DashboardViewModel : BaseViewModel
             ActualizarMetricasMini();
             MapDetalleHoras(response.HorasPorProyecto);
             MapProyectosPorCliente(response.ProyectosPorCliente);
+            await CargarEstadoNotificacionesAsync();
         }
         catch (Exception ex)
         {
@@ -116,6 +117,20 @@ public partial class DashboardViewModel : BaseViewModel
         finally
         {
             IsBusy = false;
+        }
+    }
+
+    private async Task CargarEstadoNotificacionesAsync()
+    {
+        try
+        {
+            var response = await _apiService.GetAsync<HorasIncompletasResponse>(
+                "dashboard/mis-horas-incompletas?rango=mes");
+            TieneNotificaciones = response?.TieneFaltantes == true;
+        }
+        catch
+        {
+            TieneNotificaciones = false;
         }
     }
 

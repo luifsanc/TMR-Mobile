@@ -18,7 +18,7 @@
 
     <Grid RowDefinitions="*,Auto">
         <ScrollView Grid.Row="0"
-            Margin="0,0,0,80">
+            Margin="0,0,0,36">
         <VerticalStackLayout Padding="16,12,16,32" Spacing="20">
 
         <!-- ===================== Card de horas por registrar + carga de archivo ===================== -->

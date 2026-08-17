@@ -13,9 +13,6 @@ public partial class CatalogosConfigViewModel : BaseViewModel
 
     private readonly List<CatalogoDetalle> _todosDetalles = new();
 
-    private const int PageSize = 5;
-
-
     // ─────────────────────────────────────────────
     // COLECCIONES
     // ─────────────────────────────────────────────
@@ -29,12 +26,6 @@ public partial class CatalogosConfigViewModel : BaseViewModel
     {
         get;
     } = new();
-
-    public ObservableCollection<int> PaginasVisibles
-    {
-        get;
-    } = new();
-
 
     // ─────────────────────────────────────────────
     // CATÁLOGO SELECCIONADO
@@ -71,28 +62,6 @@ public partial class CatalogosConfigViewModel : BaseViewModel
     // PAGINACIÓN
     // ─────────────────────────────────────────────
 
-    [ObservableProperty]
-    public partial int PaginaActual
-    {
-        get;
-        set;
-    } = 1;
-
-    [ObservableProperty]
-    public partial int TotalPaginas
-    {
-        get;
-        set;
-    } = 1;
-
-    [ObservableProperty]
-    public partial int TotalRegistros
-    {
-        get;
-        set;
-    }
-
-
     // ─────────────────────────────────────────────
     // RESUMEN
     // ─────────────────────────────────────────────
@@ -113,13 +82,6 @@ public partial class CatalogosConfigViewModel : BaseViewModel
 
     public int TotalItems =>
         _todosDetalles.Count;
-
-    public bool PuedeAnterior =>
-        PaginaActual > 1;
-
-    public bool PuedeSiguiente =>
-        PaginaActual < TotalPaginas;
-
 
     // ─────────────────────────────────────────────
     // CONSTRUCTOR
@@ -228,9 +190,6 @@ public partial class CatalogosConfigViewModel : BaseViewModel
         FiltroEstado =
             "Todos";
 
-        PaginaActual =
-            1;
-
         await CargarDetallesAsync(
             catalogo.Id
         );
@@ -310,16 +269,12 @@ public partial class CatalogosConfigViewModel : BaseViewModel
     partial void OnBusquedaChanged(
         string value)
     {
-        PaginaActual = 1;
-
         AplicarFiltros();
     }
 
     partial void OnFiltroEstadoChanged(
         string value)
     {
-        PaginaActual = 1;
-
         AplicarFiltros();
     }
 
@@ -420,101 +375,21 @@ public partial class CatalogosConfigViewModel : BaseViewModel
         // PAGINACIÓN
         // ─────────────────────────────────────────
 
-        TotalRegistros =
-            lista.Count;
-
-        TotalPaginas =
-            Math.Max(
-                1,
-                (int)Math.Ceiling(
-                    TotalRegistros /
-                    (double)PageSize
-                )
-            );
-
-        if (
-            PaginaActual > TotalPaginas)
-        {
-            PaginaActual =
-                TotalPaginas;
-        }
-
-
-        var pagina =
-            lista
-                .Skip(
-                    (PaginaActual - 1)
-                    * PageSize
-                )
-                .Take(PageSize)
-                .ToList();
-
-
         Detalles.Clear();
 
         foreach (
-            var detalle in pagina)
+            var detalle in lista)
         {
             Detalles.Add(
                 detalle
             );
         }
-
-
-        ActualizarPaginas();
-
-
-        OnPropertyChanged(
-            nameof(PuedeAnterior)
-        );
-
-        OnPropertyChanged(
-            nameof(PuedeSiguiente)
-        );
     }
 
 
     // ─────────────────────────────────────────────
     // NÚMEROS DE PÁGINA
     // ─────────────────────────────────────────────
-
-    private void ActualizarPaginas()
-    {
-        PaginasVisibles.Clear();
-
-        var inicio =
-            Math.Max(
-                1,
-                PaginaActual - 2
-            );
-
-        var fin =
-            Math.Min(
-                TotalPaginas,
-                inicio + 4
-            );
-
-        if (
-            fin - inicio < 4)
-        {
-            inicio =
-                Math.Max(
-                    1,
-                    fin - 4
-                );
-        }
-
-        for (
-            var pagina = inicio;
-            pagina <= fin;
-            pagina++)
-        {
-            PaginasVisibles.Add(
-                pagina
-            );
-        }
-    }
-
 
     // ─────────────────────────────────────────────
     // FILTROS
@@ -545,49 +420,6 @@ public partial class CatalogosConfigViewModel : BaseViewModel
     // ─────────────────────────────────────────────
     // PAGINACIÓN
     // ─────────────────────────────────────────────
-
-    [RelayCommand]
-    private void PaginaAnterior()
-    {
-        if (PaginaActual <= 1)
-            return;
-
-        PaginaActual--;
-
-        AplicarFiltros();
-    }
-
-    [RelayCommand]
-    private void PaginaSiguiente()
-    {
-        if (
-            PaginaActual >= TotalPaginas)
-        {
-            return;
-        }
-
-        PaginaActual++;
-
-        AplicarFiltros();
-    }
-
-    [RelayCommand]
-    private void IrPagina(
-        int pagina)
-    {
-        if (
-            pagina < 1 ||
-            pagina > TotalPaginas)
-        {
-            return;
-        }
-
-        PaginaActual =
-            pagina;
-
-        AplicarFiltros();
-    }
-
 
     // ─────────────────────────────────────────────
     // ABRIR DETALLE

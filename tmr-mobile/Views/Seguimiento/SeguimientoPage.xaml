@@ -10,7 +10,7 @@
     Title="Seguimiento de Colaboradores"
     BackgroundColor="#F4F6FA">
 
-    <Grid RowDefinitions="*,80">
+    <Grid RowDefinitions="*,36">
         <!-- Contenido principal -->
         <Grid Grid.Row="0">
             <Grid RowDefinitions="Auto,Auto,*" Padding="16" RowSpacing="14">

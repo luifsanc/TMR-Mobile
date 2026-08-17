@@ -13,6 +13,9 @@ public partial class TimeReportPage : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
+        if (tmr_mobile.Views.Shared.OverlayNavigationState.ConsumePreservation(this))
+            return;
+
         if (BindingContext is TimeReportViewModel vm)
         {
             vm.CargarActividadesCommand.Execute(null);

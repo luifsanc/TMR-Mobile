@@ -18,7 +18,6 @@ public partial class NotificacionesViewModel : BaseViewModel
     {
         _apiService = apiService;
         Title = "Notificaciones";
-        _ = CargarNotificacionesAsync();
     }
 
     [RelayCommand]

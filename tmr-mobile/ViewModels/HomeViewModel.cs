@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.Maui.Controls;
 using tmr_mobile.Services;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace tmr_mobile.ViewModels;
 
@@ -18,6 +19,15 @@ public class ModuloItem
 public partial class HomeViewModel : ObservableObject
 {
     private readonly ApiService _apiService;
+
+    private static readonly ModuloItem[] ModulosLocales =
+    [
+        new() { Nombre = "Seguimiento", Icono = "icon_seguimiento.png", Ruta = "SeguimientoPage" },
+        new() { Nombre = "Usuarios", Icono = "user_profile.png", Ruta = "UsuariosPage" },
+        new() { Nombre = "Roles", Icono = "rol.png", Ruta = "RolesPage" },
+        new() { Nombre = "Feriados", Icono = "feriado.png", Ruta = "FeriadosPage" },
+        new() { Nombre = "Catálogos", Icono = "catalogo.png", Ruta = "CatalogosPage" }
+    ];
 
     public ObservableCollection<ModuloItem> Modulos { get; } = new();
 
@@ -36,10 +46,8 @@ public partial class HomeViewModel : ObservableObject
             {
                 Modulos.Clear();
                 foreach (var item in response) Modulos.Add(item);
-                
-                // Agregar localmente para pruebas hasta que se despliegue en el backend
-                Modulos.Add(new ModuloItem { Nombre = "Seguimiento", Icono = "icon_seguimiento.png", Ruta = "SeguimientoPage" });
-                
+
+                AgregarModulosLocalesFaltantes();
                 return;
             }
         }
@@ -54,7 +62,20 @@ public partial class HomeViewModel : ObservableObject
         Modulos.Add(new ModuloItem { Nombre = "Líderes", Icono = "icon_lideres.png", Ruta = "LideresPage" });
         Modulos.Add(new ModuloItem { Nombre = "Colaboradores", Icono = "icon_colaboradores.png", Ruta = "ColaboradoresPage" });
         Modulos.Add(new ModuloItem { Nombre = "Clientes", Icono = "icon_clientes.png", Ruta = "ClientesPage" });
-        Modulos.Add(new ModuloItem { Nombre = "Seguimiento", Icono = "icon_seguimiento.png", Ruta = "SeguimientoPage" });
+        AgregarModulosLocalesFaltantes();
+    }
+
+    private void AgregarModulosLocalesFaltantes()
+    {
+        foreach (var modulo in ModulosLocales)
+        {
+            if (Modulos.Any(item => string.Equals(item.Ruta, modulo.Ruta, StringComparison.OrdinalIgnoreCase)))
+            {
+                continue;
+            }
+
+            Modulos.Add(modulo);
+        }
     }
 
     [RelayCommand]
@@ -63,6 +84,11 @@ public partial class HomeViewModel : ObservableObject
         if (!string.IsNullOrEmpty(route))
         {
             // Todos los módulos principales ahora son ShellItems raíz
+            while (Shell.Current.Navigation.ModalStack.Count > 0)
+            {
+                await Shell.Current.Navigation.PopModalAsync(false);
+            }
+
             await Shell.Current.GoToAsync($"//{route}");
         }
     }

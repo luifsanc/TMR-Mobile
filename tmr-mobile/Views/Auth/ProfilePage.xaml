@@ -9,19 +9,51 @@
              BackgroundColor="{StaticResource BackgroundLight}"
              Title="Perfil">
 
-    <Grid RowDefinitions="*,80">
-        <ScrollView Grid.Row="0" VerticalScrollBarVisibility="Never">
-            <VerticalStackLayout Padding="24,32,24,32" Spacing="24">
-                <VerticalStackLayout Spacing="6">
-                    <Label Text="Mi perfil"
-                           FontFamily="InterSemiBold"
-                           FontSize="28"
-                           TextColor="{StaticResource Primary}" />
-                    <Label Text="Administra la seguridad de tu cuenta"
-                           FontFamily="InterRegular"
-                           FontSize="14"
-                           TextColor="{StaticResource TextMuted}" />
-                </VerticalStackLayout>
+    <Grid RowDefinitions="Auto,*,36">
+        <!-- Fixed header -->
+        <Grid Grid.Row="0" Padding="24,16,24,8" ColumnDefinitions="*,Auto" ColumnSpacing="12">
+            <VerticalStackLayout Spacing="6">
+                <Label Text="Mi perfil"
+                       FontFamily="InterSemiBold"
+                       FontSize="28"
+                       TextColor="{StaticResource Primary}" />
+                <Label Text="Administra la seguridad de tu cuenta"
+                       FontFamily="InterRegular"
+                       FontSize="14"
+                       TextColor="{StaticResource TextMuted}" />
+            </VerticalStackLayout>
+
+            <Grid Grid.Column="1"
+                  WidthRequest="26"
+                  HeightRequest="26"
+                  Margin="0,3,0,0"
+                  HorizontalOptions="End"
+                  VerticalOptions="Start"
+                  SemanticProperties.Description="Notificaciones">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnNotificationsTapped" />
+                </Grid.GestureRecognizers>
+                <Image Source="notification_bell_alarm.png"
+                       WidthRequest="16"
+                       HeightRequest="16"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center" />
+                <Border WidthRequest="7"
+                        HeightRequest="7"
+                        Padding="0"
+                        Margin="0,1,1,0"
+                        HorizontalOptions="End"
+                        VerticalOptions="Start"
+                        BackgroundColor="#EF4444"
+                        Stroke="White"
+                        StrokeThickness="1"
+                        StrokeShape="RoundRectangle 3.5"
+                        IsVisible="{Binding TieneNotificaciones}" />
+            </Grid>
+        </Grid>
+
+        <ScrollView Grid.Row="1" VerticalScrollBarVisibility="Never">
+            <VerticalStackLayout Padding="24,12,24,32" Spacing="24">
 
                 <Border BackgroundColor="{StaticResource White}"
                         Stroke="{StaticResource PrimaryLight}"
@@ -150,6 +182,6 @@
             </VerticalStackLayout>
         </ScrollView>
 
-        <shared:BottomNavBar Grid.Row="1" />
+        <shared:BottomNavBar Grid.Row="2" />
     </Grid>
 </ContentPage>

@@ -8,78 +8,29 @@
     x:DataType="vm:CatalogosConfigViewModel"
     Title="Catálogos"
     BackgroundColor="{StaticResource BackgroundLight}">
-    <ContentPage.Resources>
-        <Style x:Key="CatalogCompactPaginationButton"
-               TargetType="Button"
-               BasedOn="{StaticResource CatalogPaginationButton}">
-            <Setter Property="WidthRequest" Value="26" />
-            <Setter Property="HeightRequest" Value="26" />
-            <Setter Property="MinimumWidthRequest" Value="26" />
-            <Setter Property="MinimumHeightRequest" Value="26" />
-            <Setter Property="CornerRadius" Value="13" />
-            <Setter Property="FontSize" Value="9" />
-        </Style>
-    </ContentPage.Resources>
-    <Grid RowDefinitions="*,80">
+    <Grid RowDefinitions="*,36">
         <ContentView Grid.Row="0">
             <Grid
                 RowDefinitions="Auto,Auto,Auto,Auto,*"
-                Padding="16"
-                RowSpacing="10">
+                Padding="12"
+                RowSpacing="6">
 
-                <Grid Grid.Row="0"
-                      ColumnDefinitions="*,Auto"
-                      ColumnSpacing="8"
-                      VerticalOptions="Center">
-                    <Label Grid.Column="0"
-                           Text="Catálogos"
+                <Grid Grid.Row="0" VerticalOptions="Center">
+                    <Label Text="Catálogos"
                            VerticalOptions="Center"
-                           Style="{StaticResource CatalogPageTitle}" />
-
-                    <Grid Grid.Column="1"
-                          HeightRequest="26"
-                          ColumnDefinitions="Auto,Auto,Auto"
-                          ColumnSpacing="6"
-                          VerticalOptions="Center">
-                        <Button Grid.Column="0"
-                                Text="‹"
-                                Command="{Binding PaginaAnteriorCommand}"
-                                IsEnabled="{Binding PuedeAnterior}"
-                                Style="{StaticResource CatalogCompactPaginationButton}" />
-                        <ScrollView Grid.Column="1"
-                                    Orientation="Horizontal"
-                                    HorizontalOptions="Center"
-                                    MaximumWidthRequest="120"
-                                    HorizontalScrollBarVisibility="Never">
-                            <HorizontalStackLayout BindableLayout.ItemsSource="{Binding PaginasVisibles}"
-                                                   Spacing="4">
-                                <BindableLayout.ItemTemplate>
-                                    <DataTemplate x:DataType="{x:Null}">
-                                        <Button Text="{Binding .}"
-                                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.IrPaginaCommand}"
-                                                CommandParameter="{Binding .}"
-                                                Style="{StaticResource CatalogCompactPaginationButton}" />
-                                    </DataTemplate>
-                                </BindableLayout.ItemTemplate>
-                            </HorizontalStackLayout>
-                        </ScrollView>
-                        <Button Grid.Column="2"
-                                Text="›"
-                                Command="{Binding PaginaSiguienteCommand}"
-                                IsEnabled="{Binding PuedeSiguiente}"
-                                Style="{StaticResource CatalogCompactPaginationButton}" />
-                    </Grid>
+                           Style="{StaticResource CatalogPageTitle}"
+                           FontSize="22" />
                 </Grid>
 
                 <ScrollView Grid.Row="1" Orientation="Horizontal" HorizontalScrollBarVisibility="Never">
                     <HorizontalStackLayout BindableLayout.ItemsSource="{Binding Catalogos}" Spacing="8">
                         <BindableLayout.ItemTemplate>
                             <DataTemplate x:DataType="model:CatalogoMaster">
-                                <Border Padding="16,9"
+                                <Border Padding="12,6"
                                         BackgroundColor="{StaticResource White}"
                                         Stroke="{StaticResource BorderColor}"
                                         StrokeThickness="1"
-                                        StrokeShape="RoundRectangle 18">
+                                        StrokeShape="RoundRectangle 14">
                                     <Border.Triggers>
                                         <DataTrigger TargetType="Border" Binding="{Binding IsSelected}" Value="True">
                                             <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
@@ -93,7 +44,7 @@
                                     </Border.GestureRecognizers>
                                     <Label Text="{Binding NombreMostrar}"
                                            FontFamily="InterSemiBold"
-                                           FontSize="12"
+                                           FontSize="11"
                                            FontAttributes="None"
                                            TextColor="{StaticResource Primary}">
                                         <Label.Triggers>
@@ -109,64 +60,64 @@
                 </ScrollView>
 
                 <Grid Grid.Row="2" ColumnDefinitions="*,*,*" ColumnSpacing="8">
-                    <Border Grid.Column="0" HeightRequest="72" Style="{StaticResource CatalogMetricCard}">
-                        <VerticalStackLayout Spacing="2" VerticalOptions="Center">
-                            <HorizontalStackLayout Spacing="6" HorizontalOptions="Center">
-                                <Border WidthRequest="30" HeightRequest="30" Padding="6"
+                    <Border Grid.Column="0" HeightRequest="56" Padding="5" Style="{StaticResource CatalogMetricCard}">
+                        <VerticalStackLayout Spacing="1" VerticalOptions="Center">
+                            <HorizontalStackLayout Spacing="4" HorizontalOptions="Center">
+                                <Border WidthRequest="24" HeightRequest="24" Padding="5"
                                         BackgroundColor="{StaticResource ErrorSurface}"
                                         StrokeThickness="0" StrokeShape="RoundRectangle 8">
-                                    <Image Source="catalog_total_items.png" WidthRequest="18" HeightRequest="18" Aspect="AspectFit" />
+                                    <Image Source="catalog_total_items.png" WidthRequest="14" HeightRequest="14" Aspect="AspectFit" />
                                 </Border>
-                                <Label Text="{Binding TotalItems}" FontFamily="InterSemiBold" FontSize="20" FontAttributes="None"
+                                <Label Text="{Binding TotalItems}" FontFamily="InterSemiBold" FontSize="17" FontAttributes="None"
                                        TextColor="{StaticResource Primary}" VerticalTextAlignment="Center" />
                             </HorizontalStackLayout>
-                            <Label Text="Total de ítems" FontFamily="InterRegular" FontSize="10"
+                            <Label Text="Total de ítems" FontFamily="InterRegular" FontSize="9"
                                    TextColor="{StaticResource TextSecondary}" HorizontalTextAlignment="Center" />
                         </VerticalStackLayout>
                     </Border>
-                    <Border Grid.Column="1" HeightRequest="72" Style="{StaticResource CatalogMetricCard}">
-                        <VerticalStackLayout Spacing="2" VerticalOptions="Center">
-                            <HorizontalStackLayout Spacing="6" HorizontalOptions="Center">
-                                <Border WidthRequest="30" HeightRequest="30" Padding="6"
+                    <Border Grid.Column="1" HeightRequest="56" Padding="5" Style="{StaticResource CatalogMetricCard}">
+                        <VerticalStackLayout Spacing="1" VerticalOptions="Center">
+                            <HorizontalStackLayout Spacing="4" HorizontalOptions="Center">
+                                <Border WidthRequest="24" HeightRequest="24" Padding="5"
                                         BackgroundColor="{StaticResource SuccessSurface}"
                                         StrokeThickness="0" StrokeShape="RoundRectangle 8">
-                                    <Image Source="catalog_active.png" WidthRequest="18" HeightRequest="18" Aspect="AspectFit" />
+                                    <Image Source="catalog_active.png" WidthRequest="14" HeightRequest="14" Aspect="AspectFit" />
                                 </Border>
-                                <Label Text="{Binding TotalActivos}" FontFamily="InterSemiBold" FontSize="20" FontAttributes="None"
+                                <Label Text="{Binding TotalActivos}" FontFamily="InterSemiBold" FontSize="17" FontAttributes="None"
                                        TextColor="{StaticResource Primary}" VerticalTextAlignment="Center" />
                             </HorizontalStackLayout>
-                            <Label Text="Activos" FontFamily="InterRegular" FontSize="10"
+                            <Label Text="Activos" FontFamily="InterRegular" FontSize="9"
                                    TextColor="{StaticResource Accent}" HorizontalTextAlignment="Center" />
                         </VerticalStackLayout>
                     </Border>
-                    <Border Grid.Column="2" HeightRequest="72" Style="{StaticResource CatalogMetricCard}">
-                        <VerticalStackLayout Spacing="2" VerticalOptions="Center">
-                            <HorizontalStackLayout Spacing="6" HorizontalOptions="Center">
-                                <Border WidthRequest="30" HeightRequest="30" Padding="6"
+                    <Border Grid.Column="2" HeightRequest="56" Padding="5" Style="{StaticResource CatalogMetricCard}">
+                        <VerticalStackLayout Spacing="1" VerticalOptions="Center">
+                            <HorizontalStackLayout Spacing="4" HorizontalOptions="Center">
+                                <Border WidthRequest="24" HeightRequest="24" Padding="5"
                                         BackgroundColor="{StaticResource Secondary}"
                                         StrokeThickness="0" StrokeShape="RoundRectangle 8">
-                                    <Image Source="catalog_inactive.png" WidthRequest="18" HeightRequest="18" Aspect="AspectFit" />
+                                    <Image Source="catalog_inactive.png" WidthRequest="14" HeightRequest="14" Aspect="AspectFit" />
                                 </Border>
-                                <Label Text="{Binding TotalInactivos}" FontFamily="InterSemiBold" FontSize="20" FontAttributes="None"
+                                <Label Text="{Binding TotalInactivos}" FontFamily="InterSemiBold" FontSize="17" FontAttributes="None"
                                        TextColor="{StaticResource Primary}" VerticalTextAlignment="Center" />
                             </HorizontalStackLayout>
-                            <Label Text="Inactivos" FontFamily="InterRegular" FontSize="10"
+                            <Label Text="Inactivos" FontFamily="InterRegular" FontSize="9"
                                    TextColor="{StaticResource Error}" HorizontalTextAlignment="Center" />
                         </VerticalStackLayout>
                     </Border>
                 </Grid>
 
                 <Grid Grid.Row="3" ColumnDefinitions="*,Auto,Auto" ColumnSpacing="5">
-                    <Border Grid.Column="0" HeightRequest="36" Style="{StaticResource CatalogInputBorder}" Padding="7,0">
+                    <Border Grid.Column="0" HeightRequest="32" Style="{StaticResource CatalogInputBorder}" Padding="6,0">
                         <Grid ColumnDefinitions="Auto,*" ColumnSpacing="5">
-                            <Label Grid.Column="0" Text="⌕" FontFamily="InterRegular" FontSize="17"
+                            <Label Grid.Column="0" Text="⌕" FontFamily="InterRegular" FontSize="15"
                                    TextColor="{StaticResource TextLight}" VerticalTextAlignment="Center" />
                             <Entry Grid.Column="1"
                                    Text="{Binding Busqueda}"
                                    Placeholder="Buscar..."
-                                   HeightRequest="34"
-                                   MinimumHeightRequest="34"
-                                   FontSize="11"
+                                   HeightRequest="30"
+                                   MinimumHeightRequest="30"
+                                   FontSize="10"
                                    Style="{StaticResource CatalogInput}" />
                         </Grid>
                     </Border>
@@ -178,10 +129,10 @@
                             StrokeThickness="1"
                             StrokeShape="RoundRectangle 9">
                         <Picker SelectedItem="{Binding FiltroEstado, Mode=TwoWay}"
-                                WidthRequest="82"
-                                HeightRequest="36"
-                                MinimumHeightRequest="36"
-                                FontSize="10"
+                                WidthRequest="74"
+                                HeightRequest="32"
+                                MinimumHeightRequest="32"
+                                FontSize="9"
                                 Style="{StaticResource CatalogFilterPicker}">
                             <Picker.Items>
                                 <x:String>Todos</x:String>
@@ -192,8 +143,8 @@
                     </Border>
 
                     <Button Grid.Column="2" Text="+ Nuevo" Command="{Binding NuevoCommand}"
-                            WidthRequest="70" HeightRequest="36" MinimumHeightRequest="36"
-                            Padding="4,0" FontSize="11"
+                            WidthRequest="64" HeightRequest="32" MinimumHeightRequest="32"
+                            Padding="3,0" FontSize="10"
                             Style="{StaticResource PrimaryButton}" />
                 </Grid>
 
@@ -212,36 +163,36 @@
                     </CollectionView.EmptyView>
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="model:CatalogoDetalle">
-                            <Border Margin="0,0,0,8" Padding="0" Style="{StaticResource CatalogCard}">
+                            <Border Margin="0,0,0,6" Padding="0" Style="{StaticResource CatalogCard}">
                                 <Border.GestureRecognizers>
                                     <TapGestureRecognizer
                                         Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.AbrirDetalleCommand}"
                                         CommandParameter="{Binding .}" />
                                 </Border.GestureRecognizers>
-                                <Grid RowDefinitions="4,Auto">
+                                <Grid RowDefinitions="3,Auto">
                                     <BoxView Grid.Row="0" Color="{Binding ColorEstado}" />
                                     <Grid Grid.Row="1"
-                                          Padding="14,11"
+                                          Padding="12,7"
                                           RowDefinitions="Auto,Auto,Auto"
                                           ColumnDefinitions="*,Auto"
-                                          RowSpacing="6">
-                                        <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="2">
-                                            <Label Text="CÓDIGO" Style="{StaticResource CatalogFieldLabel}" />
-                                            <Label Text="{Binding CodigoValor}" Style="{StaticResource CatalogFieldValueStrong}" />
+                                          RowSpacing="3">
+                                        <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="1">
+                                            <Label Text="CÓDIGO" Style="{StaticResource CatalogFieldLabel}" FontSize="9" />
+                                            <Label Text="{Binding CodigoValor}" Style="{StaticResource CatalogFieldValueStrong}" FontSize="12" />
                                         </VerticalStackLayout>
                                         <Label Grid.Row="0" Grid.Column="1" Text="›" FontFamily="InterRegular" FontSize="24"
                                                TextColor="{StaticResource TextLight}" VerticalTextAlignment="Center" />
-                                        <VerticalStackLayout Grid.Row="1" Grid.ColumnSpan="2" Spacing="2">
-                                            <Label Text="VALOR / NOMBRE" Style="{StaticResource CatalogFieldLabel}" />
-                                            <Label Text="{Binding Valor}" Style="{StaticResource CatalogFieldValue}"
+                                        <VerticalStackLayout Grid.Row="1" Grid.ColumnSpan="2" Spacing="1">
+                                            <Label Text="VALOR / NOMBRE" Style="{StaticResource CatalogFieldLabel}" FontSize="9" />
+                                            <Label Text="{Binding Valor}" Style="{StaticResource CatalogFieldValue}" FontSize="12"
                                                    MaxLines="1" LineBreakMode="TailTruncation" />
                                         </VerticalStackLayout>
                                         <VerticalStackLayout Grid.Row="2" Grid.ColumnSpan="2"
-                                                             IsVisible="{Binding TieneDescripcion}" Spacing="2">
-                                            <Label Text="DESCRIPCIÓN" Style="{StaticResource CatalogFieldLabel}" />
-                                            <Label Text="{Binding Descripcion}" FontFamily="InterRegular" FontSize="12"
+                                                             IsVisible="{Binding TieneDescripcion}" Spacing="1">
+                                            <Label Text="DESCRIPCIÓN" Style="{StaticResource CatalogFieldLabel}" FontSize="9" />
+                                            <Label Text="{Binding Descripcion}" FontFamily="InterRegular" FontSize="10"
                                                    TextColor="{StaticResource TextMuted}"
-                                                   MaxLines="2" LineBreakMode="TailTruncation" />
+                                                   MaxLines="1" LineBreakMode="TailTruncation" />
                                         </VerticalStackLayout>
                                     </Grid>
                                 </Grid>

@@ -1,20 +1,29 @@
 using tmr_mobile.ViewModels;
 using tmr_mobile.Views.Dashboard.Models;
+using tmr_mobile.Views.TimeReport;
 
 
 namespace tmr_mobile.Views.Dashboard;
 
 public partial class DashboardPage : ContentPage
 {
-    public DashboardPage(DashboardViewModel viewModel)
+    private readonly NotificacionesPage _notificacionesPage;
+
+    public DashboardPage(
+        DashboardViewModel viewModel,
+        NotificacionesPage notificacionesPage)
     {
         InitializeComponent();
         BindingContext = viewModel;
+        _notificacionesPage = notificacionesPage;
     }
 
     protected override void OnAppearing()
     {
         base.OnAppearing();
+        if (tmr_mobile.Views.Shared.OverlayNavigationState.ConsumePreservation(this))
+            return;
+
         if (BindingContext is DashboardViewModel vm)
         {
             vm.CargarDashboardCommand.Execute(null);
@@ -33,16 +42,9 @@ public partial class DashboardPage : ContentPage
         Shell.Current.FlyoutIsPresented = !Shell.Current.FlyoutIsPresented;
     }
 
-    [Obsolete]
     private async void OnNotificationsTapped(object? sender, TappedEventArgs e)
     {
-        if (BindingContext is DashboardViewModel vm && !vm.TieneNotificaciones)
-        {
-            await DisplayAlert("Notificaciones", "✅ Estás al día con tus horas", "Aceptar");
-            return;
-        }
-
-        // TODO: navegar a la pantalla de notificaciones cuando exista.
+        await Navigation.PushModalAsync(_notificacionesPage);
     }
 
     [Obsolete]
