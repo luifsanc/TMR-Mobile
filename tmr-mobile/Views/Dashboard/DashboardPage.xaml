@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:components="clr-namespace:tmr_mobile.Views.Components"
              xmlns:conv="clr-namespace:tmr_mobile.Views.Dashboard.Converters"
              xmlns:models="clr-namespace:tmr_mobile.Views.Dashboard.Models"
              xmlns:vm="clr-namespace:tmr_mobile.ViewModels"
@@ -418,5 +419,13 @@
     </ScrollView>
 
         <shared:BottomNavBar Grid.Row="1" VerticalOptions="End" />
+        
+        <!-- namespace: xmlns:components="clr-namespace:tmr_mobile.Views.Components" -->
+        <components:OptionsPopover
+            Grid.RowSpan="99"
+            IsVisible="{Binding IsRangoSelectorVisible}"
+            ItemsSource="{Binding OpcionesRango}"
+            SelectedCommand="{Binding SeleccionarRangoCommand}"
+            DismissCommand="{Binding CerrarSelectorRangoCommand}"/>
     </Grid>
 </ContentPage>
