@@ -76,6 +76,7 @@
                             <Label Grid.Column="0" Text="⌕" FontFamily="InterRegular" FontSize="15"
                                    TextColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}" VerticalTextAlignment="Center" />
                             <Entry Grid.Column="1"
+                                   StyleId="BorderlessCatalogSearch"
                                    Text="{Binding Busqueda}"
                                    Placeholder="Buscar..."
                                    HeightRequest="30"

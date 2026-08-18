@@ -81,6 +81,7 @@
                             </Border.StrokeShape>
 
                             <Entry
+                                StyleId="BorderlessAuthEntry"
                                 Text="{Binding User}"
                                 Placeholder="Correo electrónico"
                                 PlaceholderColor="{StaticResource TextLight}"
@@ -106,16 +107,40 @@
                                 <RoundRectangle CornerRadius="8" />
                             </Border.StrokeShape>
 
-                            <Entry
-                                Text="{Binding Password}"
-                                Placeholder="Contraseña"
-                                PlaceholderColor="{StaticResource TextLight}"
-                                TextColor="{StaticResource TextMain}"
-                                IsPassword="True"
-                                FontSize="14"
-                                BackgroundColor="Transparent"
-                                Margin="0"
-                                VerticalOptions="Center" />
+                            <Grid ColumnDefinitions="*,Auto">
+                                <Entry
+                                    StyleId="BorderlessAuthEntry"
+                                    Text="{Binding Password}"
+                                    Placeholder="Contraseña"
+                                    PlaceholderColor="{StaticResource TextLight}"
+                                    TextColor="{StaticResource TextMain}"
+                                    IsPassword="{Binding IsPasswordHidden}"
+                                    FontSize="14"
+                                    BackgroundColor="Transparent"
+                                    Margin="0"
+                                    VerticalOptions="Center">
+                                    <Entry.Triggers>
+                                        <MultiTrigger TargetType="Entry">
+                                            <MultiTrigger.Conditions>
+                                                <BindingCondition Binding="{Binding IsPasswordHidden}"
+                                                                  Value="True" />
+                                                <BindingCondition Binding="{Binding Password, Converter={StaticResource IsStringNotNullOrEmptyConverter}}"
+                                                                  Value="True" />
+                                            </MultiTrigger.Conditions>
+                                            <Setter Property="FontSize" Value="11" />
+                                        </MultiTrigger>
+                                    </Entry.Triggers>
+                                </Entry>
+
+                                <ImageButton
+                                    Grid.Column="1"
+                                    Source="{Binding PasswordToggleIcon}"
+                                    Command="{Binding TogglePasswordVisibilityCommand}"
+                                    WidthRequest="46"
+                                    HeightRequest="50"
+                                    Padding="11"
+                                    BackgroundColor="Transparent" />
+                            </Grid>
 
                         </Border>
 
@@ -147,7 +172,7 @@
                             IsEnabled="{Binding IsNotBusy}"
                             HeightRequest="50"
                             CornerRadius="8"
-                            BackgroundColor="{StaticResource TextLight}"
+                            BackgroundColor="{StaticResource Primary}"
                             TextColor="{StaticResource White}"
                             FontSize="15"
                             FontAttributes="Bold"

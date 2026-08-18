@@ -14,11 +14,26 @@ public partial class LoginViewModel : BaseViewModel
     [ObservableProperty]
     public partial string Password { get; set; } = string.Empty;
 
+    [ObservableProperty]
+    public partial bool IsPasswordHidden { get; set; } = true;
+
+    [ObservableProperty]
+    public partial string PasswordToggleIcon { get; set; } = "password_eye.png";
+
     public LoginViewModel(IAuthService authService)
     {
         _authService = authService;
 
         Title = "Iniciar Sesión";
+    }
+
+    [RelayCommand]
+    private void TogglePasswordVisibility()
+    {
+        IsPasswordHidden = !IsPasswordHidden;
+        PasswordToggleIcon = IsPasswordHidden
+            ? "password_eye.png"
+            : "password_eye_off.png";
     }
 
     [RelayCommand]

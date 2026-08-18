@@ -8,6 +8,13 @@
              BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkBackgroundLight}}"
              x:DataType="vm:HomeViewModel">
 
+    <ContentPage.Resources>
+        <x:Double x:Key="ModuleCardWidth">140</x:Double>
+        <x:Double x:Key="ModuleCardHeight">110</x:Double>
+        <x:Double x:Key="ModuleIconSize">32</x:Double>
+        <x:Double x:Key="ModuleTextSize">14</x:Double>
+    </ContentPage.Resources>
+
     <Grid RowDefinitions="Auto,*">
         <!-- Modal menu header -->
         <Border Grid.Row="0"
@@ -45,38 +52,58 @@
         </Border>
 
         <!-- Modules Grid -->
-        <CollectionView Grid.Row="1"
-                        ItemsSource="{Binding Modulos}"
-                        Margin="20,8,20,24"
-                        HorizontalOptions="Fill"
-                        SelectionMode="None"
-                        VerticalScrollBarVisibility="Never">
-            <CollectionView.ItemsLayout>
-                <GridItemsLayout Orientation="Vertical" Span="2" VerticalItemSpacing="15" HorizontalItemSpacing="15" />
-            </CollectionView.ItemsLayout>
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="vm:ModuloItem">
-                    <Border StrokeShape="RoundRectangle 16"
-                            Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}"
-                            BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryLight}, Dark={StaticResource DarkSurfaceElevated}}"
-                            HeightRequest="110"
-                            Padding="10"
-                            HorizontalOptions="Fill">
-                        <Border.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HomeViewModel}}, Path=NavigateCommand}" CommandParameter="{Binding Ruta}" />
-                        </Border.GestureRecognizers>
-                        <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="12">
-                             <Grid WidthRequest="32" HeightRequest="32" HorizontalOptions="Center">
-                                 <Image Source="{Binding Icono}" WidthRequest="32" HeightRequest="32"
-                                        IsVisible="{AppThemeBinding Light=True, Dark=False}" />
-                                 <Image Source="{Binding IconoOscuro}" WidthRequest="32" HeightRequest="32"
-                                        IsVisible="{AppThemeBinding Light=False, Dark=True}" />
-                             </Grid>
-                             <Label Text="{Binding Nombre}" FontSize="14" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource TextMain}, Dark={StaticResource DarkTextMain}}" HorizontalOptions="Center" HorizontalTextAlignment="Center" LineBreakMode="WordWrap" />
-                        </VerticalStackLayout>
-                    </Border>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+        <ScrollView Grid.Row="1"
+                    Margin="20,8,20,24"
+                    Orientation="Vertical"
+                    VerticalScrollBarVisibility="Never">
+            <FlexLayout x:Name="ModulesLayout"
+                        BindableLayout.ItemsSource="{Binding Modulos}"
+                        Direction="Row"
+                        Wrap="Wrap"
+                        AlignItems="Start"
+                        AlignContent="Start"
+                        JustifyContent="SpaceBetween"
+                        SizeChanged="OnModulesLayoutSizeChanged">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="vm:ModuloItem">
+                        <Border WidthRequest="{DynamicResource ModuleCardWidth}"
+                                HeightRequest="{DynamicResource ModuleCardHeight}"
+                                Margin="0,0,0,12"
+                                Padding="10"
+                                StrokeShape="RoundRectangle 16"
+                                Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryLight}, Dark={StaticResource DarkSurfaceElevated}}">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HomeViewModel}}, Path=NavigateCommand}"
+                                                      CommandParameter="{Binding Ruta}" />
+                            </Border.GestureRecognizers>
+                            <VerticalStackLayout VerticalOptions="Center"
+                                                 HorizontalOptions="Center"
+                                                 Spacing="10">
+                                <Grid WidthRequest="{DynamicResource ModuleIconSize}"
+                                      HeightRequest="{DynamicResource ModuleIconSize}"
+                                      HorizontalOptions="Center">
+                                    <Image Source="{Binding Icono}"
+                                           WidthRequest="{DynamicResource ModuleIconSize}"
+                                           HeightRequest="{DynamicResource ModuleIconSize}"
+                                           IsVisible="{AppThemeBinding Light=True, Dark=False}" />
+                                    <Image Source="{Binding IconoOscuro}"
+                                           WidthRequest="{DynamicResource ModuleIconSize}"
+                                           HeightRequest="{DynamicResource ModuleIconSize}"
+                                           IsVisible="{AppThemeBinding Light=False, Dark=True}" />
+                                </Grid>
+                                <Label Text="{Binding Nombre}"
+                                       FontSize="{DynamicResource ModuleTextSize}"
+                                       FontAttributes="Bold"
+                                       TextColor="{AppThemeBinding Light={StaticResource TextMain}, Dark={StaticResource DarkTextMain}}"
+                                       HorizontalOptions="Center"
+                                       HorizontalTextAlignment="Center"
+                                       LineBreakMode="WordWrap" />
+                            </VerticalStackLayout>
+                        </Border>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </FlexLayout>
+        </ScrollView>
     </Grid>
 </ContentPage>

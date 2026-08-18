@@ -210,6 +210,28 @@ public static class MauiProgram
                         Microsoft.UI.Colors.Transparent
                     );
 
+                if (view is Microsoft.Maui.Controls.Entry entry &&
+                    entry.StyleId is "BorderlessCatalogSearch" or "BorderlessAuthEntry")
+                {
+                    var transparentBrush =
+                        new Microsoft.UI.Xaml.Media.SolidColorBrush(
+                            Microsoft.UI.Colors.Transparent
+                        );
+                    var zeroThickness =
+                        new Microsoft.UI.Xaml.Thickness(0);
+
+                    handler.PlatformView.Resources["TextControlBorderBrush"] =
+                        transparentBrush;
+                    handler.PlatformView.Resources["TextControlBorderBrushPointerOver"] =
+                        transparentBrush;
+                    handler.PlatformView.Resources["TextControlBorderBrushFocused"] =
+                        transparentBrush;
+                    handler.PlatformView.Resources["TextControlBorderThemeThickness"] =
+                        zeroThickness;
+                    handler.PlatformView.Resources["TextControlBorderThemeThicknessFocused"] =
+                        zeroThickness;
+                }
+
 #endif
             });
 

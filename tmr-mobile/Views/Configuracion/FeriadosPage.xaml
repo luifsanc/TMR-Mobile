@@ -133,18 +133,21 @@
 
                     <VerticalStackLayout Spacing="14">
                         <!-- NAVEGACIÓN DE MES -->
-                        <Grid ColumnDefinitions="*,Auto" VerticalOptions="Center">
+                        <Grid RowDefinitions="Auto,Auto" RowSpacing="10">
                             <Label
-                                Grid.Column="0"
+                                Grid.Row="0"
                                 Text="{Binding MesActualTexto}"
-                                FontSize="18"
+                                FontSize="20"
                                 FontAttributes="Bold"
                                 FontFamily="InterSemiBold"
                                 TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}"
-                                VerticalOptions="Center" />
+                                HorizontalOptions="Center"
+                                HorizontalTextAlignment="Center"
+                                LineBreakMode="NoWrap" />
 
-                            <HorizontalStackLayout Grid.Column="1" Spacing="6" VerticalOptions="Center">
+                            <Grid Grid.Row="1" ColumnDefinitions="*,Auto,*" ColumnSpacing="8">
                                 <Button
+                                    Grid.Column="0"
                                     Text="‹ Anterior"
                                     Command="{Binding NavegarMesAnteriorCommand}"
                                     BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource DarkBackgroundLight}}"
@@ -154,9 +157,10 @@
                                     CornerRadius="8"
                                     FontSize="11"
                                     FontFamily="InterRegular"
-                                    HeightRequest="34"
+                                    HeightRequest="38"
                                     Padding="10,0" />
                                 <Button
+                                    Grid.Column="1"
                                     Text="Hoy"
                                     Command="{Binding IrAHoyCommand}"
                                     BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource DarkBackgroundLight}}"
@@ -166,9 +170,10 @@
                                     CornerRadius="8"
                                     FontSize="11"
                                     FontFamily="InterRegular"
-                                    HeightRequest="34"
-                                    Padding="10,0" />
+                                    HeightRequest="38"
+                                    Padding="14,0" />
                                 <Button
+                                    Grid.Column="2"
                                     Text="Siguiente ›"
                                     Command="{Binding NavegarMesSiguienteCommand}"
                                     BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource DarkBackgroundLight}}"
@@ -178,9 +183,9 @@
                                     CornerRadius="8"
                                     FontSize="11"
                                     FontFamily="InterRegular"
-                                    HeightRequest="34"
+                                    HeightRequest="38"
                                     Padding="10,0" />
-                            </HorizontalStackLayout>
+                            </Grid>
                         </Grid>
 
                         <!-- DÍAS DE LA SEMANA HEADER -->
@@ -213,7 +218,7 @@
                                         Padding="2">
                                         <Border.StrokeShape><RoundRectangle CornerRadius="6" /></Border.StrokeShape>
                                         
-                                        <Grid RowDefinitions="Auto,*">
+                                        <Grid RowDefinitions="18,*">
                                             <!-- Número de día -->
                                             <Label
                                                 Grid.Row="0"
@@ -221,8 +226,21 @@
                                                 FontSize="11"
                                                 FontAttributes="Bold"
                                                 FontFamily="InterSemiBold"
-                                                TextColor="{Binding ColorNumeroDia}"
-                                                HorizontalOptions="Center" />
+                                                TextColor="{AppThemeBinding Light=#000000, Dark=#FFFFFF}"
+                                                HeightRequest="18"
+                                                HorizontalOptions="Center"
+                                                HorizontalTextAlignment="Center"
+                                                VerticalTextAlignment="Center"
+                                                ZIndex="2">
+                                                <Label.Triggers>
+                                                    <DataTrigger TargetType="Label"
+                                                                 Binding="{Binding EsMesActual}"
+                                                                 Value="False">
+                                                        <Setter Property="TextColor"
+                                                                Value="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" />
+                                                    </DataTrigger>
+                                                </Label.Triggers>
+                                            </Label>
 
                                             <!-- Badge Feriado en el día -->
                                             <Border
@@ -233,7 +251,10 @@
                                                 StrokeThickness="1"
                                                 Padding="2,1"
                                                 VerticalOptions="End"
-                                                Margin="1">
+                                                HorizontalOptions="Center"
+                                                MaximumWidthRequest="42"
+                                                Margin="0,1"
+                                                ZIndex="1">
                                                 <Border.StrokeShape><RoundRectangle CornerRadius="4" /></Border.StrokeShape>
                                                 <Border.GestureRecognizers>
                                                     <TapGestureRecognizer
