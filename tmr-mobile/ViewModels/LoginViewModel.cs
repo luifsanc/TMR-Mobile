@@ -7,6 +7,7 @@ namespace tmr_mobile.ViewModels;
 public partial class LoginViewModel : BaseViewModel
 {
     private readonly IAuthService _authService;
+    private readonly IUserModuleAccessService _moduleAccessService;
 
     [ObservableProperty]
     public partial string User { get; set; } = string.Empty;
@@ -20,9 +21,12 @@ public partial class LoginViewModel : BaseViewModel
     [ObservableProperty]
     public partial string PasswordToggleIcon { get; set; } = "password_eye.png";
 
-    public LoginViewModel(IAuthService authService)
+    public LoginViewModel(
+        IAuthService authService,
+        IUserModuleAccessService moduleAccessService)
     {
         _authService = authService;
+        _moduleAccessService = moduleAccessService;
 
         Title = "Iniciar Sesión";
     }
@@ -61,9 +65,14 @@ public partial class LoginViewModel : BaseViewModel
 
             if (success)
             {
-                await Shell.Current.GoToAsync(
-                    "//DashboardPage"
-                );
+                var modulos = await _moduleAccessService.ObtenerModulosAsync();
+                var rutaInicial = modulos.Contains("Dashboard")
+                    ? "DashboardPage"
+                    : modulos.Contains("Actividades") || modulos.Contains("Time Report")
+                        ? "TimeReportPage"
+                        : "HomePage";
+
+                await Shell.Current.GoToAsync($"//{rutaInicial}");
 
                 return;
             }

@@ -46,6 +46,7 @@ public static class MauiProgram
 
         builder.Services.AddSingleton<ApiService>();
         builder.Services.AddSingleton<IAuthService, AuthService>();
+        builder.Services.AddSingleton<IUserModuleAccessService, UserModuleAccessService>();
         builder.Services.AddSingleton<IConfirmDialogService, ConfirmDialogService>();
         builder.Services.AddSingleton<ICatalogosService, CatalogosService>();
         builder.Services.AddSingleton<IClientesService, ClientesService>();

@@ -1,5 +1,6 @@
 using System;
 using Microsoft.Maui.Controls;
+using tmr_mobile.Services;
 using tmr_mobile.Views.Home;
 
 namespace tmr_mobile.Views.Shared;
@@ -13,10 +14,35 @@ public partial class BottomNavBar : ContentView
         InitializeComponent();
     }
 
+    private async void OnDashboardButtonLoaded(object? sender, EventArgs e)
+    {
+        try
+        {
+            var accessService = Handler?.MauiContext?.Services
+                .GetService(typeof(IUserModuleAccessService)) as IUserModuleAccessService;
+
+            var modulos = accessService is null
+                ? new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+                : await accessService.ObtenerModulosAsync();
+
+            DashboardButton.IsVisible = modulos.Contains("Dashboard");
+        }
+        catch (Exception ex)
+        {
+            DashboardButton.IsVisible = false;
+            System.Diagnostics.Debug.WriteLine($"No se pudo validar el acceso al Dashboard: {ex.Message}");
+        }
+    }
+
     private async void OnNavigate(object? sender, TappedEventArgs e)
     {
         if (e.Parameter is string route)
         {
+            if (route == "DashboardPage" && !DashboardButton.IsVisible)
+            {
+                return;
+            }
+
             if (route == nameof(HomePage))
             {
                 if (_isOpeningMenu)

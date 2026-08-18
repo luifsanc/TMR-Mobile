@@ -19,13 +19,14 @@ public class ConfiguracionModuloItem
 
 public partial class ConfiguracionViewModel : ObservableObject
 {
-    private readonly ApiService _apiService;
+    private readonly IUserModuleAccessService _moduleAccessService;
+    private HashSet<string> _modulosPermitidos = new(StringComparer.OrdinalIgnoreCase);
 
     public ObservableCollection<ConfiguracionModuloItem> Modulos { get; } = new();
 
-    public ConfiguracionViewModel(ApiService apiService)
+    public ConfiguracionViewModel(IUserModuleAccessService moduleAccessService)
     {
-        _apiService = apiService;
+        _moduleAccessService = moduleAccessService;
         _ = CargarModulosAsync();
     }
 
@@ -33,28 +34,42 @@ public partial class ConfiguracionViewModel : ObservableObject
     {
         try
         {
-            var response = await _apiService.GetAsync<List<ConfiguracionModuloItem>>("api/configuracion/modulos");
-            if (response != null && response.Count > 0)
-            {
-                Modulos.Clear();
-                foreach (var item in response) Modulos.Add(item);
-                return;
-            }
+            _modulosPermitidos = await _moduleAccessService.ObtenerModulosAsync();
         }
-        catch { /* Ignorar error de red y usar fallback */ }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"No se pudieron cargar los módulos de configuración: {ex.Message}");
+            return;
+        }
 
-        // Fallback local si la API falla o no está encendida
         Modulos.Clear();
-        Modulos.Add(new ConfiguracionModuloItem { Nombre = "Usuarios", Icono = "user_profile.png", Ruta = "UsuariosPage" });
-        Modulos.Add(new ConfiguracionModuloItem { Nombre = "Roles", Icono = "rol.png", Ruta = "RolesPage" });
-        Modulos.Add(new ConfiguracionModuloItem { Nombre = "Feriados", Icono = "feriado.png", Ruta = "FeriadosPage" });
-        Modulos.Add(new ConfiguracionModuloItem { Nombre = "Catálogos", Icono = "catalogo.png", Ruta = "CatalogosPage" });
+        AgregarSiPermitido("Usuarios", "Usuarios", "user_profile.png", "UsuariosPage");
+        AgregarSiPermitido("Roles", "Roles", "rol.png", "RolesPage");
+        AgregarSiPermitido("Dias Festivos", "Feriados", "feriado.png", "FeriadosPage");
+        AgregarSiPermitido("Configuracion", "Catálogos", "catalogo.png", "CatalogosPage");
+    }
+
+    private void AgregarSiPermitido(string permiso, string nombre, string icono, string ruta)
+    {
+        if (_modulosPermitidos.Contains(permiso))
+        {
+            Modulos.Add(new ConfiguracionModuloItem { Nombre = nombre, Icono = icono, Ruta = ruta });
+        }
     }
 
     [RelayCommand]
     private async Task NavigateAsync(string route)
     {
-        if (!string.IsNullOrEmpty(route))
+        var permitido = route switch
+        {
+            "UsuariosPage" => _modulosPermitidos.Contains("Usuarios"),
+            "RolesPage" => _modulosPermitidos.Contains("Roles"),
+            "FeriadosPage" => _modulosPermitidos.Contains("Dias Festivos"),
+            "CatalogosPage" => _modulosPermitidos.Contains("Configuracion"),
+            _ => false
+        };
+
+        if (!string.IsNullOrEmpty(route) && permitido)
         {
             await Shell.Current.GoToAsync($"//{route}");
         }
