@@ -8,9 +8,9 @@ public class HorasIncompletasResponse
     public List<DiaIncompletoResponse>? DiasIncompletos { get; set; }
 }
 
-// El array vino vacío en la prueba, así que no conozco aún sus campos.
-// Cuando encuentres un caso con datos (un colaborador con horas
-// pendientes), pásame el JSON y completo esta clase.
 public class DiaIncompletoResponse
 {
+    public DateOnly Fecha { get; set; }
+    public decimal HorasRegistradas { get; set; }
+    public decimal HorasFaltantes { get; set; }
 }

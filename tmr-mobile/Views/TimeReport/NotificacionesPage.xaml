@@ -50,6 +50,21 @@
                         
                         <!-- Lista de Notificaciones -->
                         <CollectionView ItemsSource="{Binding Notificaciones}" SelectionMode="None">
+                            <CollectionView.EmptyView>
+                                <VerticalStackLayout Padding="24,32"
+                                                     Spacing="8"
+                                                     HorizontalOptions="Center">
+                                    <Label Text="No tienes notificaciones pendientes."
+                                           FontSize="14"
+                                           HorizontalTextAlignment="Center"
+                                           TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}" />
+                                    <Label Text="{Binding ErrorMessage}"
+                                           FontSize="12"
+                                           HorizontalTextAlignment="Center"
+                                           TextColor="{StaticResource Error}"
+                                           IsVisible="{Binding ErrorMessage, Converter={StaticResource IsStringNotNullOrEmptyConverter}}" />
+                                </VerticalStackLayout>
+                            </CollectionView.EmptyView>
                             <CollectionView.ItemTemplate>
                                 <DataTemplate x:DataType="vm:NotificacionItemViewModel">
                                     <Grid ColumnDefinitions="Auto,*" Padding="16" ColumnSpacing="12">
