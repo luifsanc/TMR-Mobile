@@ -70,6 +70,9 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(nameof(FeriadoFormPage), typeof(FeriadoFormPage));
         Routing.RegisterRoute(nameof(CatalogosPage), typeof(CatalogosPage));
         Routing.RegisterRoute(nameof(ChangePasswordPage), typeof(ChangePasswordPage));
+        Routing.RegisterRoute(nameof(PersonalDataPage), typeof(PersonalDataPage));
+        Routing.RegisterRoute(nameof(AppPreferencesPage), typeof(AppPreferencesPage));
+        Routing.RegisterRoute(nameof(AboutTmrPage), typeof(AboutTmrPage));
         Routing.RegisterRoute(nameof(SeguimientoDetallePage), typeof(SeguimientoDetallePage));
     }
 }

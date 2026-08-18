@@ -6,7 +6,7 @@
     x:Class="tmr_mobile.Views.Configuracion.CatalogoFormPage"
     x:DataType="vm:CatalogoFormViewModel"
     Title="{Binding TituloFormulario}"
-    BackgroundColor="{StaticResource BackgroundLight}">
+    BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource DarkBackgroundLight}}">
 
     <Grid RowDefinitions="*,Auto">
         <ScrollView Grid.Row="0">
@@ -76,16 +76,16 @@
 
                         <Border IsVisible="{Binding EsEdicion}"
                                 Padding="14,10"
-                                BackgroundColor="{StaticResource PrimaryLight}"
-                                Stroke="{StaticResource BorderColor}"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryLight}, Dark={StaticResource DarkPrimaryLight}}"
+                                Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}"
                                 StrokeThickness="1"
                                 StrokeShape="RoundRectangle 8">
                             <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
                                 <VerticalStackLayout Grid.Column="0" Spacing="2">
                                     <Label Text="Estado" Style="{StaticResource CatalogHeadingText}" FontSize="13"
-                                           TextColor="{StaticResource TextMain}" />
+                                           TextColor="{AppThemeBinding Light={StaticResource TextMain}, Dark={StaticResource DarkTextMain}}" />
                                     <Label Text="Activar o desactivar el registro" FontFamily="InterRegular" FontSize="11"
-                                           TextColor="{StaticResource TextSecondary}" />
+                                           TextColor="{AppThemeBinding Light={StaticResource TextSecondary}, Dark={StaticResource DarkTextSecondary}}" />
                                 </VerticalStackLayout>
                                 <Switch Grid.Column="1" IsToggled="{Binding Activo}"
                                         OnColor="{StaticResource Accent}" VerticalOptions="Center" />
@@ -101,13 +101,13 @@
             </VerticalStackLayout>
         </ScrollView>
 
-        <Grid Grid.Row="1" Padding="18,12,18,18" BackgroundColor="{StaticResource BackgroundLight}">
+        <Grid Grid.Row="1" Padding="18,12,18,18" BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource DarkBackgroundLight}}">
             <Button Text="{Binding TextoBoton}" Command="{Binding GuardarCommand}"
                     Style="{StaticResource PrimaryButton}" />
         </Grid>
 
-        <Grid Grid.RowSpan="2" IsVisible="{Binding IsBusy}" BackgroundColor="{StaticResource WhiteTranslucent}">
-            <ActivityIndicator IsRunning="{Binding IsBusy}" Color="{StaticResource Primary}"
+        <Grid Grid.RowSpan="2" IsVisible="{Binding IsBusy}" BackgroundColor="{AppThemeBinding Light={StaticResource WhiteTranslucent}, Dark={StaticResource DarkWhiteTranslucent}}">
+            <ActivityIndicator IsRunning="{Binding IsBusy}" Color="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}"
                                HorizontalOptions="Center" VerticalOptions="Center" />
         </Grid>
     </Grid>

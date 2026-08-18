@@ -23,6 +23,11 @@ public partial class ProyectosViewModel : BaseViewModel
     private List<ProyectoResponse> _listaCompleta = new();
     private string _filtroEstado = "Todos";
 
+    // Caché con timestamp para evitar solicitudes repetidas
+    private List<ProyectoResponse>? _cachedProyectos;
+    private DateTime _cacheTimestamp = DateTime.MinValue;
+    private const int CacheDurationMinutes = 5;
+
     public ProyectosViewModel(ApiService apiService)
     {
         _apiService = apiService;
@@ -36,30 +41,49 @@ public partial class ProyectosViewModel : BaseViewModel
         ErrorMessage = string.Empty;
         try
         {
+            // Verificar si el caché es válido (menos de 5 minutos)
+            if (_cachedProyectos != null &&
+                (DateTime.UtcNow - _cacheTimestamp).TotalMinutes < CacheDurationMinutes)
+            {
+                Console.WriteLine($"[ProyectosViewModel] Usando caché (edad: {(DateTime.UtcNow - _cacheTimestamp).TotalSeconds:F1}s)");
+                _listaCompleta = new List<ProyectoResponse>(_cachedProyectos);
+                Proyectos.Clear();
+                foreach (var p in _listaCompleta)
+                    Proyectos.Add(p);
+
+                if (_listaCompleta.Count == 0)
+                    ErrorMessage = "No hay proyectos disponibles.";
+
+                return;
+            }
+
+            // Cargar desde la API directamente (sin Task.Run para evitar latencia)
             var lista = await _apiService.GetAsync<List<ProyectoResponse>>("proyectos");
             _listaCompleta = lista ?? new();
+            _cachedProyectos = new List<ProyectoResponse>(_listaCompleta);
+            _cacheTimestamp = DateTime.UtcNow;
+
+            Console.WriteLine($"[ProyectosViewModel] GET /api/proyectos -> {_listaCompleta.Count} items (desde API)");
+
             Proyectos.Clear();
-            Console.WriteLine($"[ProyectosViewModel] GET /api/proyectos -> {(lista == null ? "null" : lista.Count.ToString())} items");
-            if (lista != null)
+            if (_listaCompleta.Count == 0)
             {
-                foreach (var p in lista)
-                    Proyectos.Add(p);
-                if (lista.Count == 0)
-                {
-                    ErrorMessage = "No hay proyectos disponibles.";
-                    Console.WriteLine("[ProyectosViewModel] Lista vacía (count=0)");
-                }
+                ErrorMessage = "No hay proyectos disponibles.";
+                Console.WriteLine("[ProyectosViewModel] Lista vacía (count=0)");
+                return;
             }
-            else
-            {
-                // Mostrar mensaje informativo cuando la respuesta viene vacía
-                ErrorMessage = "No se recibieron proyectos del servidor.";
-                Console.WriteLine("[ProyectosViewModel] No se recibieron proyectos del servidor (null)");
-            }
+
+            foreach (var p in _listaCompleta)
+                Proyectos.Add(p);
+        }
+        catch (InvalidOperationException ex)
+        {
+            ErrorMessage = ex.Message;
+            Console.WriteLine($"[ProyectosViewModel] Sesión inválida cargando proyectos: {ex}");
         }
         catch (Exception ex)
         {
-            ErrorMessage = $"Error al cargar proyectos: {ex.Message}";
+            ErrorMessage = "No se pudo cargar la información de proyectos. Revisa tu conexión o vuelve a iniciar sesión.";
             Console.WriteLine($"[ProyectosViewModel] Error cargando proyectos: {ex}");
         }
         finally
@@ -155,6 +179,7 @@ public partial class ProyectosViewModel : BaseViewModel
     [RelayCommand]
     private async Task NuevoAsync()
     {
+        InvalidarCache();
         await Shell.Current.GoToAsync(nameof(ProyectosFormPage));
     }
 
@@ -163,6 +188,7 @@ public partial class ProyectosViewModel : BaseViewModel
     {
         if (proyecto == null) return;
 
+        InvalidarCache();
         var parametros = new Dictionary<string, object>
         {
             ["IdProyecto"] = proyecto.Id
@@ -185,8 +211,8 @@ public partial class ProyectosViewModel : BaseViewModel
 
             if (eliminado)
             {
-                // Refrescar lista
-                CargarProyectosCommand.Execute(null);
+                InvalidarCache();
+                await CargarProyectosAsync();
             }
             else
             {
@@ -207,6 +233,8 @@ public partial class ProyectosViewModel : BaseViewModel
     public void AbrirEditar(ProyectoItem proyecto)
     {
         if (proyecto is null) return;
+
+        InvalidarCache();
         _ = Shell.Current.GoToAsync(nameof(ProyectosFormPage), new Dictionary<string, object>
         {
             ["IdProyecto"] = proyecto.Id
@@ -215,4 +243,10 @@ public partial class ProyectosViewModel : BaseViewModel
 
     public Task InactivarProyectoAsync(ProyectoItem proyecto) =>
         proyecto is null ? Task.CompletedTask : InactivarProyectoAsync(proyecto.Id);
+
+    private void InvalidarCache()
+    {
+        _cachedProyectos = null;
+        _cacheTimestamp = DateTime.MinValue;
+    }
 }

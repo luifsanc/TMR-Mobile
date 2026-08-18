@@ -52,7 +52,7 @@
 
                         <!-- Logo -->
                         <Image
-                            Source="logo_isc.png"
+                            Source="logo_isc1.png"
                             HeightRequest="90"
                             Aspect="AspectFit"
                             HorizontalOptions="Center"

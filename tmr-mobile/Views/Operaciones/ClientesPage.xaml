@@ -9,7 +9,7 @@
     x:DataType="vm:ClientesViewModel"
     Title="Clientes"
     Shell.NavBarIsVisible="False"
-    BackgroundColor="{StaticResource BackgroundLight}">
+    BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource DarkBackgroundLight}}">
 
     <Grid RowDefinitions="*,36">
         <!-- Contenido principal y Botón Flotante en la fila superior -->
@@ -23,7 +23,7 @@
                     FontSize="28"
                     FontAttributes="Bold"
                     FontFamily="InterSemiBold"
-                    TextColor="{StaticResource Primary}"
+                    TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}"
                     Margin="0,4,0,4" />
 
                 <!-- BARRA DE BÚSQUEDA Y BOTONES DE FILTRO Y DESCARGA -->
@@ -32,8 +32,8 @@
                     <Border
                         Grid.Column="0"
                         HeightRequest="44"
-                        BackgroundColor="{StaticResource White}"
-                        Stroke="{StaticResource BorderColor}"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}"
+                        Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}"
                         StrokeThickness="1"
                         Padding="12,0">
                         <Border.StrokeShape>
@@ -42,7 +42,7 @@
                         <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8" VerticalOptions="Center">
                             <Image
                                 Grid.Column="0"
-                                Source="buscar_icon.png"
+                                Source="{AppThemeBinding Light=buscar_icon.png, Dark=buscar_icon_dark.png}"
                                 WidthRequest="18"
                                 HeightRequest="18"
                                 VerticalOptions="Center" />
@@ -50,8 +50,8 @@
                                 Grid.Column="1"
                                 Text="{Binding Busqueda}"
                                 Placeholder="Buscar por nombre, identificador..."
-                                PlaceholderColor="{StaticResource TextLight}"
-                                TextColor="{StaticResource TextPrimary}"
+                                PlaceholderColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}"
+                                TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}"
                                 FontSize="13"
                                 FontFamily="InterRegular"
                                 BackgroundColor="Transparent"
@@ -64,14 +64,14 @@
                         Grid.Column="1"
                         WidthRequest="44"
                         HeightRequest="44"
-                        BackgroundColor="{StaticResource White}"
-                        Stroke="{StaticResource BorderColor}"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}"
+                        Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}"
                         StrokeThickness="1">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="10" />
                         </Border.StrokeShape>
                         <ImageButton
-                            Source="filtro_icon.png"
+                            Source="{AppThemeBinding Light=filtro_icon.png, Dark=filtro_icon_dark.png}"
                             Command="{Binding CambiarFiltroEstadoCommand}"
                             Padding="11"
                             BackgroundColor="Transparent"
@@ -83,14 +83,14 @@
                         Grid.Column="2"
                         WidthRequest="44"
                         HeightRequest="44"
-                        BackgroundColor="{StaticResource White}"
-                        Stroke="{StaticResource BorderColor}"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}"
+                        Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}"
                         StrokeThickness="1">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="10" />
                         </Border.StrokeShape>
                         <ImageButton
-                            Source="descargar_icon.png"
+                            Source="{AppThemeBinding Light=descargar_icon.png, Dark=descargar_icon_dark.png}"
                             Command="{Binding DescargarCommand}"
                             Padding="11"
                             BackgroundColor="Transparent" />
@@ -103,21 +103,21 @@
                     <Border
                         Grid.Row="0"
                         Grid.Column="0"
-                        BackgroundColor="{StaticResource White}"
-                        Stroke="{StaticResource BorderColor}"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}"
+                        Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}"
                         StrokeThickness="1"
                         Padding="14,14">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="16" />
                         </Border.StrokeShape>
                         <Border.Shadow>
-                            <Shadow Brush="{StaticResource TextPrimary}" Offset="0,2" Radius="6" Opacity="0.04" />
+                            <Shadow Brush="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" Offset="0,2" Radius="6" Opacity="0.04" />
                         </Border.Shadow>
                         <HorizontalStackLayout Spacing="12" VerticalOptions="Center">
                             <Border
                                 WidthRequest="42"
                                 HeightRequest="42"
-                                BackgroundColor="{StaticResource PrimaryLight}"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryLight}, Dark={StaticResource DarkPrimaryLight}}"
                                 StrokeThickness="0"
                                 VerticalOptions="Center">
                                 <Border.StrokeShape>
@@ -136,12 +136,12 @@
                                     FontSize="24"
                                     FontAttributes="Bold"
                                     FontFamily="InterSemiBold"
-                                    TextColor="{StaticResource Primary}" />
+                                    TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />
                                 <Label
                                     Text="Total clientes"
                                     FontSize="12"
                                     FontFamily="InterRegular"
-                                    TextColor="{StaticResource TextSecondary}" />
+                                    TextColor="{AppThemeBinding Light={StaticResource TextSecondary}, Dark={StaticResource DarkTextSecondary}}" />
                             </VerticalStackLayout>
                         </HorizontalStackLayout>
                     </Border>
@@ -150,21 +150,21 @@
                     <Border
                         Grid.Row="0"
                         Grid.Column="1"
-                        BackgroundColor="{StaticResource White}"
-                        Stroke="{StaticResource BorderColor}"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}"
+                        Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}"
                         StrokeThickness="1"
                         Padding="14,14">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="16" />
                         </Border.StrokeShape>
                         <Border.Shadow>
-                            <Shadow Brush="{StaticResource TextPrimary}" Offset="0,2" Radius="6" Opacity="0.04" />
+                            <Shadow Brush="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" Offset="0,2" Radius="6" Opacity="0.04" />
                         </Border.Shadow>
                         <HorizontalStackLayout Spacing="12" VerticalOptions="Center">
                             <Border
                                 WidthRequest="42"
                                 HeightRequest="42"
-                                BackgroundColor="{StaticResource SuccessSurface}"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource SuccessSurface}, Dark={StaticResource DarkSuccessSurface}}"
                                 StrokeThickness="0"
                                 VerticalOptions="Center">
                                 <Border.StrokeShape>
@@ -183,12 +183,12 @@
                                     FontSize="24"
                                     FontAttributes="Bold"
                                     FontFamily="InterSemiBold"
-                                    TextColor="{StaticResource Primary}" />
+                                    TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />
                                 <Label
                                     Text="Activos"
                                     FontSize="12"
                                     FontFamily="InterRegular"
-                                    TextColor="{StaticResource TextSecondary}" />
+                                    TextColor="{AppThemeBinding Light={StaticResource TextSecondary}, Dark={StaticResource DarkTextSecondary}}" />
                             </VerticalStackLayout>
                         </HorizontalStackLayout>
                     </Border>
@@ -197,21 +197,21 @@
                     <Border
                         Grid.Row="1"
                         Grid.Column="0"
-                        BackgroundColor="{StaticResource White}"
-                        Stroke="{StaticResource BorderColor}"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}"
+                        Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}"
                         StrokeThickness="1"
                         Padding="14,14">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="16" />
                         </Border.StrokeShape>
                         <Border.Shadow>
-                            <Shadow Brush="{StaticResource TextPrimary}" Offset="0,2" Radius="6" Opacity="0.04" />
+                            <Shadow Brush="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" Offset="0,2" Radius="6" Opacity="0.04" />
                         </Border.Shadow>
                         <HorizontalStackLayout Spacing="12" VerticalOptions="Center">
                             <Border
                                 WidthRequest="42"
                                 HeightRequest="42"
-                                BackgroundColor="{StaticResource Secondary}"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource Secondary}, Dark={StaticResource DarkSecondary}}"
                                 StrokeThickness="0"
                                 VerticalOptions="Center">
                                 <Border.StrokeShape>
@@ -230,12 +230,12 @@
                                     FontSize="24"
                                     FontAttributes="Bold"
                                     FontFamily="InterSemiBold"
-                                    TextColor="{StaticResource Primary}" />
+                                    TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />
                                 <Label
                                     Text="Inactivos"
                                     FontSize="12"
                                     FontFamily="InterRegular"
-                                    TextColor="{StaticResource TextSecondary}" />
+                                    TextColor="{AppThemeBinding Light={StaticResource TextSecondary}, Dark={StaticResource DarkTextSecondary}}" />
                             </VerticalStackLayout>
                         </HorizontalStackLayout>
                     </Border>
@@ -252,7 +252,7 @@
                         <VerticalStackLayout Padding="40" HorizontalOptions="Center" VerticalOptions="Center">
                             <Label
                                 Text="No se encontraron clientes."
-                                TextColor="{StaticResource TextSecondary}"
+                                TextColor="{AppThemeBinding Light={StaticResource TextSecondary}, Dark={StaticResource DarkTextSecondary}}"
                                 FontSize="14"
                                 FontFamily="InterRegular"
                                 HorizontalTextAlignment="Center" />
@@ -264,14 +264,14 @@
                             <Border
                                 Margin="0,0,0,12"
                                 Padding="14,14"
-                                BackgroundColor="{StaticResource White}"
-                                Stroke="{StaticResource BorderColor}"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}"
+                                Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}"
                                 StrokeThickness="1">
                                 <Border.StrokeShape>
                                     <RoundRectangle CornerRadius="14" />
                                 </Border.StrokeShape>
                                 <Border.Shadow>
-                                    <Shadow Brush="{StaticResource TextPrimary}" Offset="0,2" Radius="6" Opacity="0.04" />
+                                    <Shadow Brush="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" Offset="0,2" Radius="6" Opacity="0.04" />
                                 </Border.Shadow>
                                 <Border.GestureRecognizers>
                                     <TapGestureRecognizer
@@ -285,7 +285,7 @@
                                         Grid.Column="0"
                                         WidthRequest="44"
                                         HeightRequest="44"
-                                        BackgroundColor="{StaticResource PrimaryLight}"
+                                        BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryLight}, Dark={StaticResource DarkPrimaryLight}}"
                                         StrokeThickness="0"
                                         VerticalOptions="Center">
                                         <Border.StrokeShape>
@@ -296,7 +296,7 @@
                                             FontSize="14"
                                             FontAttributes="Bold"
                                             FontFamily="InterSemiBold"
-                                            TextColor="{StaticResource Primary}"
+                                            TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}"
                                             HorizontalTextAlignment="Center"
                                             VerticalTextAlignment="Center" />
                                     </Border>
@@ -308,19 +308,19 @@
                                             FontSize="14"
                                             FontAttributes="Bold"
                                             FontFamily="InterSemiBold"
-                                            TextColor="{StaticResource Primary}"
+                                            TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}"
                                             MaxLines="1"
                                             LineBreakMode="TailTruncation" />
                                         <Label
                                             Text="{Binding RucFormateado}"
                                             FontSize="12"
                                             FontFamily="InterRegular"
-                                            TextColor="{StaticResource TextSecondary}" />
+                                            TextColor="{AppThemeBinding Light={StaticResource TextSecondary}, Dark={StaticResource DarkTextSecondary}}" />
                                         <Label
                                             Text="{Binding Email}"
                                             FontSize="12"
                                             FontFamily="InterRegular"
-                                            TextColor="{StaticResource TextSecondary}"
+                                            TextColor="{AppThemeBinding Light={StaticResource TextSecondary}, Dark={StaticResource DarkTextSecondary}}"
                                             MaxLines="1"
                                             LineBreakMode="TailTruncation" />
                                     </VerticalStackLayout>
@@ -367,7 +367,7 @@
                 WidthRequest="52"
                 HeightRequest="52"
                 CornerRadius="26"
-                BackgroundColor="{StaticResource Primary}"
+                BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}"
                 TextColor="{StaticResource White}"
                 FontSize="24"
                 FontAttributes="Bold"
@@ -377,7 +377,7 @@
                 Margin="20"
                 Padding="0">
                 <Button.Shadow>
-                    <Shadow Brush="{StaticResource TextPrimary}" Offset="0,4" Radius="6" Opacity="0.2" />
+                    <Shadow Brush="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" Offset="0,4" Radius="6" Opacity="0.2" />
                 </Button.Shadow>
             </Button>
         </Grid>
@@ -390,7 +390,7 @@
             Grid.RowSpan="2"
             IsVisible="{Binding IsBusy}"
             IsRunning="{Binding IsBusy}"
-            Color="{StaticResource Primary}"
+            Color="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}"
             HorizontalOptions="Center"
             VerticalOptions="Center" />
     </Grid>

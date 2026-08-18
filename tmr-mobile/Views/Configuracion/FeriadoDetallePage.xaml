@@ -7,7 +7,7 @@
     x:DataType="vm:FeriadoDetalleViewModel"
     Title="Detalle de Feriado"
     Shell.NavBarIsVisible="False"
-    BackgroundColor="#F8FAFC">
+    BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource DarkBackgroundLight}}">
 
     <Grid>
         <!-- CONTENIDO SCROLLABLE -->
@@ -21,7 +21,7 @@
                         Text="‹"
                         Command="{Binding RegresarCommand}"
                         BackgroundColor="Transparent"
-                        TextColor="#163572"
+                        TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}"
                         FontSize="28"
                         FontAttributes="Bold"
                         FontFamily="InterSemiBold"
@@ -31,8 +31,8 @@
                         VerticalOptions="Center" />
                     
                     <VerticalStackLayout Grid.Column="1" Spacing="1" VerticalOptions="Center">
-                        <Label Text="{Binding NombreMostrado}" FontSize="20" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#163572" MaxLines="2" LineBreakMode="TailTruncation" />
-                        <Label Text="Detalle del feriado configurado." FontSize="11" FontFamily="InterRegular" TextColor="#6B7280" />
+                        <Label Text="{Binding NombreMostrado}" FontSize="20" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" MaxLines="2" LineBreakMode="TailTruncation" />
+                        <Label Text="Detalle del feriado configurado." FontSize="11" FontFamily="InterRegular" TextColor="{AppThemeBinding Light={StaticResource TextSecondary}, Dark={StaticResource DarkTextSecondary}}" />
                     </VerticalStackLayout>
                         
                     <!-- BADGE DE ESTADO CON PUNTO (•) -->
@@ -52,8 +52,8 @@
 
                 <!-- CARD DE INFORMACIÓN DEL FERIADO -->
                 <Border
-                    BackgroundColor="White"
-                    Stroke="#E5E7EB"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}"
+                    Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}"
                     StrokeThickness="1"
                     Padding="18">
                     <Border.StrokeShape><RoundRectangle CornerRadius="14" /></Border.StrokeShape>
@@ -62,7 +62,7 @@
                     <VerticalStackLayout Spacing="16">
                         <!-- Tipo de feriado -->
                         <VerticalStackLayout Spacing="4">
-                            <Label Text="Tipo de feriado *" FontSize="12" FontFamily="InterRegular" TextColor="#6B7280" />
+                            <Label Text="Tipo de feriado *" FontSize="12" FontFamily="InterRegular" TextColor="{AppThemeBinding Light={StaticResource TextSecondary}, Dark={StaticResource DarkTextSecondary}}" />
                             <Border BackgroundColor="{Binding Feriado.TipoBadgeFondo}" StrokeThickness="0" Padding="10,4" HorizontalOptions="Start">
                                 <Border.StrokeShape><RoundRectangle CornerRadius="8" /></Border.StrokeShape>
                                 <Label Text="{Binding Feriado.TipoFeriado}" FontSize="12" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="{Binding Feriado.TipoBadgeTexto}" />
@@ -73,21 +73,21 @@
                         <Grid ColumnDefinitions="*,*" RowDefinitions="Auto" RowSpacing="12" ColumnSpacing="12">
                             <!-- Nombre del feriado -->
                             <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="2">
-                                <Label Text="Nombre del feriado *" FontSize="12" FontFamily="InterRegular" TextColor="#6B7280" />
-                                <Label Text="{Binding Feriado.NombreFeriado}" FontSize="14" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#163572" />
+                                <Label Text="Nombre del feriado *" FontSize="12" FontFamily="InterRegular" TextColor="{AppThemeBinding Light={StaticResource TextSecondary}, Dark={StaticResource DarkTextSecondary}}" />
+                                <Label Text="{Binding Feriado.NombreFeriado}" FontSize="14" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />
                             </VerticalStackLayout>
 
                             <!-- Fecha -->
                             <VerticalStackLayout Grid.Row="0" Grid.Column="1" Spacing="2">
-                                <Label Text="Fecha *" FontSize="12" FontFamily="InterRegular" TextColor="#6B7280" />
-                                <Label Text="{Binding Feriado.FechaTextoFormat}" FontSize="14" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#163572" />
+                                <Label Text="Fecha *" FontSize="12" FontFamily="InterRegular" TextColor="{AppThemeBinding Light={StaticResource TextSecondary}, Dark={StaticResource DarkTextSecondary}}" />
+                                <Label Text="{Binding Feriado.FechaTextoFormat}" FontSize="14" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />
                             </VerticalStackLayout>
                         </Grid>
 
                         <!-- Descripción -->
                         <VerticalStackLayout Spacing="2">
-                            <Label Text="Descripción (opcional)" FontSize="12" FontFamily="InterRegular" TextColor="#6B7280" />
-                            <Label Text="{Binding Feriado.Descripcion}" FontSize="13" FontFamily="InterRegular" TextColor="#1A1A2E" LineBreakMode="WordWrap" />
+                            <Label Text="Descripción (opcional)" FontSize="12" FontFamily="InterRegular" TextColor="{AppThemeBinding Light={StaticResource TextSecondary}, Dark={StaticResource DarkTextSecondary}}" />
+                            <Label Text="{Binding Feriado.Descripcion}" FontSize="13" FontFamily="InterRegular" TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" LineBreakMode="WordWrap" />
                         </VerticalStackLayout>
 
                         <!-- Recurrencia y Estado -->
@@ -95,14 +95,14 @@
                             <!-- Recurrencia -->
                             <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="4">
                                 <HorizontalStackLayout Spacing="6" VerticalOptions="Center">
-                                    <Label Text="{Binding Feriado.RecurrenciaIcono}" FontSize="14" TextColor="#163572" VerticalOptions="Center" />
-                                    <Label Text="{Binding Feriado.RecurrenciaTexto}" FontSize="12" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="#163572" VerticalOptions="Center" />
+                                    <Label Text="{Binding Feriado.RecurrenciaIcono}" FontSize="14" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" VerticalOptions="Center" />
+                                    <Label Text="{Binding Feriado.RecurrenciaTexto}" FontSize="12" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" VerticalOptions="Center" />
                                 </HorizontalStackLayout>
                             </VerticalStackLayout>
 
                             <!-- Estado -->
                             <VerticalStackLayout Grid.Row="0" Grid.Column="1" Spacing="4">
-                                <Label Text="Estado *" FontSize="12" FontFamily="InterRegular" TextColor="#6B7280" />
+                                <Label Text="Estado *" FontSize="12" FontFamily="InterRegular" TextColor="{AppThemeBinding Light={StaticResource TextSecondary}, Dark={StaticResource DarkTextSecondary}}" />
                                 <Border BackgroundColor="{Binding Feriado.ColorFondoEstado}" StrokeThickness="0" Padding="8,3" HorizontalOptions="Start">
                                     <Border.StrokeShape><RoundRectangle CornerRadius="8" /></Border.StrokeShape>
                                     <Label Text="{Binding Feriado.EstadoTexto}" FontSize="12" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="{Binding Feriado.ColorTextoEstado}" />
@@ -119,8 +119,8 @@
                         Grid.Column="0"
                         Text="Editar"
                         Command="{Binding EditarCommand}"
-                        BackgroundColor="#163572"
-                        TextColor="White"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}"
+                        TextColor="{StaticResource OnPrimary}"
                         CornerRadius="8"
                         HeightRequest="48"
                         FontSize="14"
@@ -132,8 +132,8 @@
                         Grid.Column="1"
                         Text="Eliminar"
                         Command="{Binding EliminarCommand}"
-                        BackgroundColor="#DC2626"
-                        TextColor="White"
+                        BackgroundColor="{StaticResource Error}"
+                        TextColor="{StaticResource OnPrimary}"
                         CornerRadius="8"
                         HeightRequest="48"
                         FontSize="14"
@@ -147,7 +147,7 @@
         <ActivityIndicator
             IsVisible="{Binding IsBusy}"
             IsRunning="{Binding IsBusy}"
-            Color="#163572"
+            Color="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}"
             HorizontalOptions="Center"
             VerticalOptions="Center" />
             
@@ -160,15 +160,15 @@
             Padding="32">
             <Label
                 Text="{Binding ErrorMessage}"
-                TextColor="#DC2626"
+                TextColor="{StaticResource Error}"
                 FontSize="14"
                 FontFamily="InterRegular"
                 HorizontalTextAlignment="Center" />
             <Button
                 Text="Regresar"
                 Command="{Binding RegresarCommand}"
-                BackgroundColor="#163572"
-                TextColor="White"
+                BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}"
+                TextColor="{StaticResource OnPrimary}"
                 CornerRadius="8"
                 FontFamily="InterSemiBold" />
         </VerticalStackLayout>

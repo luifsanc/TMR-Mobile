@@ -6,6 +6,7 @@ using Microsoft.Maui.Controls;
 using tmr_mobile.Services;
 using System.Collections.Generic;
 using System.Linq;
+using tmr_mobile.Resources.Styles;
 
 namespace tmr_mobile.ViewModels;
 
@@ -13,6 +14,7 @@ public class ModuloItem
 {
     public string Nombre { get; set; } = string.Empty;
     public string Icono { get; set; } = string.Empty;
+    public string IconoOscuro => ThemeImages.DarkVariant(Icono);
     public string Ruta { get; set; } = string.Empty;
 }
 

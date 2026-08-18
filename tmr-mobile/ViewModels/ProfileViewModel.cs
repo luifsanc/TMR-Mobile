@@ -46,6 +46,18 @@ public partial class ProfileViewModel : BaseViewModel
     }
 
     [RelayCommand]
+    private Task OpenPersonalDataAsync() =>
+        Shell.Current.GoToAsync(nameof(PersonalDataPage));
+
+    [RelayCommand]
+    private Task OpenPreferencesAsync() =>
+        Shell.Current.GoToAsync(nameof(AppPreferencesPage));
+
+    [RelayCommand]
+    private Task OpenAboutAsync() =>
+        Shell.Current.GoToAsync(nameof(AboutTmrPage));
+
+    [RelayCommand]
     private async Task ChangePasswordAsync()
     {
         if (IsBusy)

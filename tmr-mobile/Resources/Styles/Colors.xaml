@@ -3,7 +3,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
-    <!-- Sistema de diseño TMR: colores de marca y roles semánticos. -->
+    <!-- Sistema de diseño TMR: los roles semánticos reaccionan al tema activo. -->
     <Color x:Key="Primary">#163572</Color>
     <Color x:Key="PrimaryDark">#162056</Color>
     <Color x:Key="PrimaryLight">#EEF4FF</Color>
@@ -20,17 +20,20 @@
     <Color x:Key="TextLight">#94A3B8</Color>
     <Color x:Key="BorderColor">#E5E7EB</Color>
     <Color x:Key="BackgroundLight">#F8FAFC</Color>
+    <Color x:Key="SurfaceColor">#FFFFFF</Color>
+    <Color x:Key="SurfaceElevated">#FFFFFF</Color>
+    <Color x:Key="OnPrimary">#FFFFFF</Color>
     <Color x:Key="White">#FFFFFF</Color>
     <Color x:Key="Black">#162056</Color>
     <Color x:Key="Transparent">Transparent</Color>
 
     <!-- Estados construidos exclusivamente con la paleta TMR. -->
     <Color x:Key="SuccessText">#4CAF50</Color>
-    <Color x:Key="SuccessSurface">#F5F5F5</Color>
+    <Color x:Key="SuccessSurface">#E6FDEE</Color>
     <Color x:Key="WarningText">#FF9800</Color>
-    <Color x:Key="WarningSurface">#F5F5F5</Color>
+    <Color x:Key="WarningSurface">#FFEDD5</Color>
     <Color x:Key="ErrorText">#F44336</Color>
-    <Color x:Key="ErrorSurface">#F5F5F5</Color>
+    <Color x:Key="ErrorSurface">#FEECEC</Color>
     <Color x:Key="InfoText">#163572</Color>
     <Color x:Key="InfoSurface">#EEF4FF</Color>
     <Color x:Key="Overlay">#162056</Color>
@@ -38,6 +41,36 @@
     <Color x:Key="WhiteTranslucent">#FFFFFF</Color>
     <Color x:Key="ShadowColor">#14000000</Color>
     <Color x:Key="ShadowColorSoft">#14000000</Color>
+    <Color x:Key="PurpleSurface">#F3E8FF</Color>
+    <Color x:Key="LinkColor">#3B82F6</Color>
+    <Color x:Key="Scrim">#80000000</Color>
+
+    <!-- Contrapartes oscuras usadas por AppThemeBinding. -->
+    <Color x:Key="DarkPrimary">#5B8DEF</Color>
+    <Color x:Key="DarkPrimaryDark">#4776CC</Color>
+    <Color x:Key="DarkPrimaryLight">#263A59</Color>
+    <Color x:Key="DarkSecondary">#3A3B3C</Color>
+    <Color x:Key="DarkTextPrimary">#F5F6F7</Color>
+    <Color x:Key="DarkTextMain">#E4E6EB</Color>
+    <Color x:Key="DarkTextSecondary">#C8CCD2</Color>
+    <Color x:Key="DarkTextMuted">#B0B3B8</Color>
+    <Color x:Key="DarkTextLight">#8A8D91</Color>
+    <Color x:Key="DarkBorderColor">#3E4042</Color>
+    <Color x:Key="DarkBackgroundLight">#18191A</Color>
+    <Color x:Key="DarkSurfaceColor">#242526</Color>
+    <Color x:Key="DarkSurfaceElevated">#303031</Color>
+    <Color x:Key="DarkSuccessSurface">#193A2A</Color>
+    <Color x:Key="DarkWarningSurface">#44331C</Color>
+    <Color x:Key="DarkErrorSurface">#46252A</Color>
+    <Color x:Key="DarkInfoText">#74A4FF</Color>
+    <Color x:Key="DarkInfoSurface">#263A59</Color>
+    <Color x:Key="DarkOverlay">#101112</Color>
+    <Color x:Key="DarkOverlaySoft">#18191A</Color>
+    <Color x:Key="DarkWhiteTranslucent">#303031</Color>
+    <Color x:Key="DarkShadowColor">#99000000</Color>
+    <Color x:Key="DarkShadowColorSoft">#70000000</Color>
+    <Color x:Key="DarkPurpleSurface">#392B45</Color>
+    <Color x:Key="DarkLinkColor">#74A4FF</Color>
 
     <!-- Alias de compatibilidad usados por los estilos base de MAUI. -->
     <Color x:Key="PrimaryDarkText">#1A1A2E</Color>
@@ -56,16 +89,16 @@
     <Color x:Key="Gray900">#1E293B</Color>
     <Color x:Key="Gray950">#1A1A2E</Color>
 
-    <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource Primary}"/>
-    <SolidColorBrush x:Key="SecondaryBrush" Color="{StaticResource Secondary}"/>
+    <SolidColorBrush x:Key="PrimaryBrush" Color="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}"/>
+    <SolidColorBrush x:Key="SecondaryBrush" Color="{AppThemeBinding Light={StaticResource Secondary}, Dark={StaticResource DarkSecondary}}"/>
     <SolidColorBrush x:Key="TertiaryBrush" Color="{StaticResource Tertiary}"/>
-    <SolidColorBrush x:Key="PrimaryLightBrush" Color="{StaticResource PrimaryLight}"/>
+    <SolidColorBrush x:Key="PrimaryLightBrush" Color="{AppThemeBinding Light={StaticResource PrimaryLight}, Dark={StaticResource DarkPrimaryLight}}"/>
     <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource Accent}"/>
     <SolidColorBrush x:Key="WarningBrush" Color="{StaticResource Warning}"/>
     <SolidColorBrush x:Key="ErrorBrush" Color="{StaticResource Error}"/>
-    <SolidColorBrush x:Key="TextPrimaryBrush" Color="{StaticResource TextPrimary}"/>
-    <SolidColorBrush x:Key="TextSecondaryBrush" Color="{StaticResource TextSecondary}"/>
-    <SolidColorBrush x:Key="BorderBrush" Color="{StaticResource BorderColor}"/>
+    <SolidColorBrush x:Key="TextPrimaryBrush" Color="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}"/>
+    <SolidColorBrush x:Key="TextSecondaryBrush" Color="{AppThemeBinding Light={StaticResource TextSecondary}, Dark={StaticResource DarkTextSecondary}}"/>
+    <SolidColorBrush x:Key="BorderBrush" Color="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}"/>
     <SolidColorBrush x:Key="WhiteBrush" Color="{StaticResource White}"/>
     <SolidColorBrush x:Key="BlackBrush" Color="{StaticResource Black}"/>
 

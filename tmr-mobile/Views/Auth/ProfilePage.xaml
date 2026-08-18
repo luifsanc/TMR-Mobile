@@ -1,187 +1,97 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:vm="clr-namespace:tmr_mobile.ViewModels"
-             xmlns:shared="clr-namespace:tmr_mobile.Views.Shared"
-             x:Class="tmr_mobile.Views.Auth.ProfilePage"
-             x:DataType="vm:ProfileViewModel"
-             Shell.NavBarIsVisible="False"
-             BackgroundColor="{StaticResource BackgroundLight}"
-             Title="Perfil">
-
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:tmr_mobile.ViewModels" xmlns:shared="clr-namespace:tmr_mobile.Views.Shared"
+             x:Class="tmr_mobile.Views.Auth.ProfilePage" x:DataType="vm:ProfileViewModel"
+             Shell.NavBarIsVisible="False" BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource DarkBackgroundLight}}" Title="Perfil">
+    <ContentPage.Resources>
+        <Style x:Key="MenuCard" TargetType="Border">
+            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource DarkSurfaceColor}}" />
+            <Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" />
+            <Setter Property="StrokeThickness" Value="1" /><Setter Property="StrokeShape" Value="RoundRectangle 16" /><Setter Property="Padding" Value="14" />
+        </Style>
+        <Style x:Key="MenuTitle" TargetType="Label">
+            <Setter Property="FontFamily" Value="InterSemiBold" /><Setter Property="FontSize" Value="15" />
+            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkTextPrimary}}" />
+        </Style>
+        <Style x:Key="MenuSubtitle" TargetType="Label">
+            <Setter Property="FontFamily" Value="InterRegular" /><Setter Property="FontSize" Value="12" />
+            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextLight}}" />
+        </Style>
+        <Style x:Key="Chevron" TargetType="Label">
+            <Setter Property="Text" Value="›" /><Setter Property="FontFamily" Value="InterRegular" /><Setter Property="FontSize" Value="28" />
+            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}" /><Setter Property="VerticalOptions" Value="Center" />
+        </Style>
+    </ContentPage.Resources>
     <Grid RowDefinitions="Auto,*,36">
-        <!-- Fixed header -->
         <Grid Grid.Row="0" Padding="24,16,24,8" ColumnDefinitions="*,Auto" ColumnSpacing="12">
             <VerticalStackLayout Spacing="6">
-                <Label Text="Mi perfil"
-                       FontFamily="InterSemiBold"
-                       FontSize="28"
-                       TextColor="{StaticResource Primary}" />
-                <Label Text="Administra la seguridad de tu cuenta"
-                       FontFamily="InterRegular"
-                       FontSize="14"
-                       TextColor="{StaticResource TextMuted}" />
+                <Label Text="Mi perfil" FontFamily="InterSemiBold" FontSize="28" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkTextPrimary}}" />
+                <Label Text="Administra tu cuenta y preferencias" FontFamily="InterRegular" FontSize="14" TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextLight}}" />
             </VerticalStackLayout>
-
-            <Grid Grid.Column="1"
-                  WidthRequest="26"
-                  HeightRequest="26"
-                  Margin="0,3,0,0"
-                  HorizontalOptions="End"
-                  VerticalOptions="Start"
-                  SemanticProperties.Description="Notificaciones">
-                <Grid.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="OnNotificationsTapped" />
-                </Grid.GestureRecognizers>
-                <Image Source="notification_bell_alarm.png"
-                       WidthRequest="16"
-                       HeightRequest="16"
-                       HorizontalOptions="Center"
-                       VerticalOptions="Center" />
-                <Border WidthRequest="7"
-                        HeightRequest="7"
-                        Padding="0"
-                        Margin="0,1,1,0"
-                        HorizontalOptions="End"
-                        VerticalOptions="Start"
-                        BackgroundColor="#EF4444"
-                        Stroke="White"
-                        StrokeThickness="1"
-                        StrokeShape="RoundRectangle 3.5"
-                        IsVisible="{Binding TieneNotificaciones}" />
+            <Grid Grid.Column="1" WidthRequest="26" HeightRequest="26" Margin="0,3,0,0" HorizontalOptions="End" VerticalOptions="Start" SemanticProperties.Description="Notificaciones">
+                <Grid.GestureRecognizers><TapGestureRecognizer Tapped="OnNotificationsTapped" /></Grid.GestureRecognizers>
+                <Image Source="{AppThemeBinding Light=notification_bell_alarm.png, Dark=notification_bell_alarm_dark.png}" WidthRequest="16" HeightRequest="16" />
+                <Border WidthRequest="7" HeightRequest="7" Padding="0" Margin="0,1,1,0" HorizontalOptions="End" VerticalOptions="Start"
+                        BackgroundColor="{StaticResource Error}" Stroke="{StaticResource OnPrimary}" StrokeThickness="1" StrokeShape="RoundRectangle 3.5" IsVisible="{Binding TieneNotificaciones}" />
             </Grid>
         </Grid>
-
         <ScrollView Grid.Row="1" VerticalScrollBarVisibility="Never">
-            <VerticalStackLayout Padding="24,12,24,32" Spacing="24">
-
-                <Border BackgroundColor="{StaticResource White}"
-                        Stroke="{StaticResource PrimaryLight}"
-                        StrokeThickness="1"
-                        StrokeShape="RoundRectangle 20"
-                        Padding="22">
-                    <Border.Shadow>
-                        <Shadow Brush="{StaticResource Primary}" Opacity="0.08" Radius="18" Offset="0,6" />
-                    </Border.Shadow>
-                    <Grid ColumnDefinitions="64,*" ColumnSpacing="16">
-                        <Border WidthRequest="64"
-                                HeightRequest="64"
-                                BackgroundColor="{StaticResource PrimaryLight}"
-                                StrokeThickness="0"
-                                StrokeShape="RoundRectangle 32">
-                            <Image Source="user_profile.png"
-                                   WidthRequest="28"
-                                   HeightRequest="28"
-                                   HorizontalOptions="Center"
-                                   VerticalOptions="Center" />
+            <VerticalStackLayout Padding="24,12,24,32" Spacing="22">
+                <Border BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource DarkSurfaceColor}}" Stroke="{AppThemeBinding Light={StaticResource PrimaryLight}, Dark={StaticResource DarkBorderColor}}"
+                        StrokeThickness="1" StrokeShape="RoundRectangle 20" Padding="22">
+                    <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding OpenPersonalDataCommand}" /></Border.GestureRecognizers>
+                    <Border.Shadow><Shadow Brush="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" Opacity="0.08" Radius="18" Offset="0,6" /></Border.Shadow>
+                    <Grid ColumnDefinitions="64,*,Auto" ColumnSpacing="16">
+                        <Border WidthRequest="64" HeightRequest="64" BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryLight}, Dark={StaticResource DarkPrimaryLight}}" StrokeThickness="0" StrokeShape="RoundRectangle 32">
+                            <Image Source="{AppThemeBinding Light=user_profile.png, Dark=user_profile_dark.png}" WidthRequest="28" HeightRequest="28" />
                         </Border>
-                        <VerticalStackLayout Grid.Column="1"
-                                             VerticalOptions="Center"
-                                             Spacing="4">
-                            <Label Text="{Binding UserName}"
-                                   FontFamily="InterSemiBold"
-                                   FontSize="20"
-                                   TextColor="{StaticResource Primary}"
-                                   LineBreakMode="TailTruncation" />
-                            <Label Text="{Binding Email}"
-                                   FontFamily="InterRegular"
-                                   FontSize="13"
-                                   TextColor="{StaticResource TextMuted}"
-                                   LineBreakMode="TailTruncation" />
+                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="4">
+                            <Label Text="{Binding UserName}" FontFamily="InterSemiBold" FontSize="20" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkTextPrimary}}" LineBreakMode="TailTruncation" />
+                            <Label Text="{Binding Email}" FontFamily="InterRegular" FontSize="13" TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextLight}}" LineBreakMode="TailTruncation" />
                         </VerticalStackLayout>
+                        <Label Grid.Column="2" Style="{StaticResource Chevron}" />
                     </Grid>
                 </Border>
-
                 <VerticalStackLayout Spacing="10">
-                    <Label Text="SEGURIDAD"
-                           FontFamily="InterSemiBold"
-                           FontSize="12"
-                           CharacterSpacing="1.2"
-                           TextColor="{StaticResource TextMuted}"
-                           Margin="4,0,0,2" />
-
-                    <Border BackgroundColor="{StaticResource White}"
-                            Stroke="{StaticResource BorderColor}"
-                            StrokeThickness="1"
-                            StrokeShape="RoundRectangle 16"
-                            Padding="16">
-                        <Border.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding ChangePasswordCommand}" />
-                        </Border.GestureRecognizers>
+                    <Border Style="{StaticResource MenuCard}">
+                        <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding OpenPreferencesCommand}" /></Border.GestureRecognizers>
                         <Grid ColumnDefinitions="46,*,Auto" ColumnSpacing="14">
-                            <Border WidthRequest="46"
-                                    HeightRequest="46"
-                                    BackgroundColor="{StaticResource PrimaryLight}"
-                                    StrokeThickness="0"
-                                    StrokeShape="RoundRectangle 13">
-                                <Image Source="key_icon.png"
-                                       WidthRequest="22"
-                                       HeightRequest="22"
-                                       HorizontalOptions="Center"
-                                       VerticalOptions="Center" />
-                            </Border>
-                            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
-                                <Label Text="Cambiar contraseña"
-                                       FontFamily="InterSemiBold"
-                                       FontSize="15"
-                                       TextColor="{StaticResource Primary}" />
-                                <Label Text="Actualiza tu clave de acceso"
-                                       FontFamily="InterRegular"
-                                       FontSize="12"
-                                       TextColor="{StaticResource TextMuted}" />
-                            </VerticalStackLayout>
-                            <Label Grid.Column="2"
-                                   Text="›"
-                                   FontFamily="InterRegular"
-                                   FontSize="28"
-                                   TextColor="{StaticResource TextLight}"
-                                   VerticalOptions="Center" />
-                        </Grid>
-                    </Border>
-
-                    <Border BackgroundColor="{StaticResource White}"
-                            Stroke="{StaticResource ErrorSurface}"
-                            StrokeThickness="1"
-                            StrokeShape="RoundRectangle 16"
-                            Padding="16">
-                        <Border.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding LogoutCommand}" />
-                        </Border.GestureRecognizers>
-                        <Grid ColumnDefinitions="46,*,Auto" ColumnSpacing="14">
-                            <Border WidthRequest="46"
-                                    HeightRequest="46"
-                                    BackgroundColor="{StaticResource ErrorSurface}"
-                                    StrokeThickness="0"
-                                    StrokeShape="RoundRectangle 13">
-                                <Image Source="logout_icon.png"
-                                       WidthRequest="22"
-                                       HeightRequest="22"
-                                       HorizontalOptions="Center"
-                                       VerticalOptions="Center" />
-                            </Border>
-                            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
-                                <Label Text="Cerrar sesión"
-                                       FontFamily="InterSemiBold"
-                                       FontSize="15"
-                                       TextColor="{StaticResource ErrorText}" />
-                                <Label Text="Salir de este dispositivo"
-                                       FontFamily="InterRegular"
-                                       FontSize="12"
-                                       TextColor="{StaticResource TextMuted}" />
-                            </VerticalStackLayout>
-                            <ActivityIndicator Grid.Column="2"
-                                               IsVisible="{Binding IsBusy}"
-                                               IsRunning="{Binding IsBusy}"
-                                               Color="{StaticResource ErrorText}"
-                                               WidthRequest="22"
-                                               HeightRequest="22"
-                                               VerticalOptions="Center" />
+                            <Border WidthRequest="46" HeightRequest="46" BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryLight}, Dark={StaticResource DarkPrimaryLight}}" StrokeThickness="0" StrokeShape="RoundRectangle 13"><Image Source="{AppThemeBinding Light=configura.png, Dark=configura_dark.png}" WidthRequest="22" HeightRequest="22" /></Border>
+                            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2"><Label Text="Configuración" Style="{StaticResource MenuTitle}" /><Label Text="Tema, avisos y formatos" Style="{StaticResource MenuSubtitle}" /></VerticalStackLayout>
+                            <Label Grid.Column="2" Style="{StaticResource Chevron}" />
                         </Grid>
                     </Border>
                 </VerticalStackLayout>
+                <VerticalStackLayout Spacing="10">
+                    <Border Style="{StaticResource MenuCard}">
+                        <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding ChangePasswordCommand}" /></Border.GestureRecognizers>
+                        <Grid ColumnDefinitions="46,*,Auto" ColumnSpacing="14">
+                            <Border WidthRequest="46" HeightRequest="46" BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryLight}, Dark={StaticResource DarkPrimaryLight}}" StrokeThickness="0" StrokeShape="RoundRectangle 13"><Image Source="{AppThemeBinding Light=key_icon.png, Dark=key_icon_dark.png}" WidthRequest="22" HeightRequest="22" /></Border>
+                            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2"><Label Text="Cambiar contraseña" Style="{StaticResource MenuTitle}" /><Label Text="Actualiza tu clave de acceso" Style="{StaticResource MenuSubtitle}" /></VerticalStackLayout>
+                            <Label Grid.Column="2" Style="{StaticResource Chevron}" />
+                        </Grid>
+                    </Border>
+                </VerticalStackLayout>
+                <VerticalStackLayout Spacing="10">
+                    <Border Style="{StaticResource MenuCard}">
+                        <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding OpenAboutCommand}" /></Border.GestureRecognizers>
+                        <Grid ColumnDefinitions="46,*,Auto" ColumnSpacing="14">
+                            <Border WidthRequest="46" HeightRequest="46" BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryLight}, Dark={StaticResource DarkPrimaryLight}}" StrokeThickness="0" StrokeShape="RoundRectangle 13"><Image Source="{AppThemeBinding Light=isotipo1.png, Dark=isotipo2.png}" WidthRequest="25" HeightRequest="25" /></Border>
+                            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2"><Label Text="Acerca de TMR" Style="{StaticResource MenuTitle}" /><Label Text="Versión e información de la aplicación" Style="{StaticResource MenuSubtitle}" /></VerticalStackLayout>
+                            <Label Grid.Column="2" Style="{StaticResource Chevron}" />
+                        </Grid>
+                    </Border>
+                </VerticalStackLayout>
+                <Border BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource DarkSurfaceColor}}" Stroke="{AppThemeBinding Light={StaticResource ErrorSurface}, Dark={StaticResource DarkErrorSurface}}" StrokeThickness="1" StrokeShape="RoundRectangle 16" Padding="14">
+                    <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding LogoutCommand}" /></Border.GestureRecognizers>
+                    <Grid ColumnDefinitions="46,*,Auto" ColumnSpacing="14">
+                        <Border WidthRequest="46" HeightRequest="46" BackgroundColor="{AppThemeBinding Light={StaticResource ErrorSurface}, Dark={StaticResource DarkErrorSurface}}" StrokeThickness="0" StrokeShape="RoundRectangle 13"><Image Source="{AppThemeBinding Light=logout_icon.png, Dark=logout_icon_dark.png}" WidthRequest="22" HeightRequest="22" /></Border>
+                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2"><Label Text="Cerrar sesión" FontFamily="InterSemiBold" FontSize="15" TextColor="{StaticResource ErrorText}" /><Label Text="Salir de este dispositivo" Style="{StaticResource MenuSubtitle}" /></VerticalStackLayout>
+                        <ActivityIndicator Grid.Column="2" IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}" Color="{StaticResource ErrorText}" WidthRequest="22" HeightRequest="22" VerticalOptions="Center" />
+                    </Grid>
+                </Border>
             </VerticalStackLayout>
         </ScrollView>
-
         <shared:BottomNavBar Grid.Row="2" />
     </Grid>
 </ContentPage>

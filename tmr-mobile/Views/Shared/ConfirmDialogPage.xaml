@@ -4,20 +4,20 @@
              x:Class="tmr_mobile.Views.Shared.ConfirmDialogPage"
              Shell.NavBarIsVisible="False"
              Shell.TabBarIsVisible="False"
-             BackgroundColor="{StaticResource OverlaySoft}">
+             BackgroundColor="{AppThemeBinding Light={StaticResource OverlaySoft}, Dark={StaticResource DarkOverlaySoft}}">
 
     <Grid Padding="20,32">
         <Border x:Name="DialogCard"
                 MaximumWidthRequest="420"
                 HorizontalOptions="Fill"
                 VerticalOptions="Center"
-                BackgroundColor="{StaticResource White}"
-                Stroke="{StaticResource PrimaryLight}"
+                BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}"
+                Stroke="{AppThemeBinding Light={StaticResource PrimaryLight}, Dark={StaticResource DarkPrimaryLight}}"
                 StrokeThickness="1"
                 StrokeShape="RoundRectangle 22"
                 Padding="24,26,24,22">
             <Border.Shadow>
-                <Shadow Brush="{StaticResource TextPrimary}"
+                <Shadow Brush="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}"
                         Opacity="0.24"
                         Radius="28"
                         Offset="0,12" />
@@ -27,8 +27,8 @@
                 <Border WidthRequest="52"
                         HeightRequest="52"
                         HorizontalOptions="Start"
-                        BackgroundColor="{StaticResource ErrorSurface}"
-                        Stroke="{StaticResource ErrorSurface}"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource ErrorSurface}, Dark={StaticResource DarkErrorSurface}}"
+                        Stroke="{AppThemeBinding Light={StaticResource ErrorSurface}, Dark={StaticResource DarkErrorSurface}}"
                         StrokeThickness="1"
                         StrokeShape="RoundRectangle 16">
                     <Label x:Name="IconLabel"
@@ -43,19 +43,19 @@
                        Margin="0,18,0,0"
                        FontFamily="InterSemiBold"
                        FontSize="21"
-                       TextColor="{StaticResource Primary}"
+                       TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}"
                        LineHeight="1.15" />
 
                 <Label x:Name="MessageLabel"
                        Margin="0,9,0,0"
                        FontFamily="InterRegular"
                        FontSize="14"
-                       TextColor="{StaticResource TextMuted}"
+                       TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}"
                        LineHeight="1.35" />
 
                 <BoxView Margin="0,24,0,20"
                          HeightRequest="1"
-                         Color="{StaticResource PrimaryLight}" />
+                         Color="{AppThemeBinding Light={StaticResource PrimaryLight}, Dark={StaticResource DarkPrimaryLight}}" />
 
                 <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
                     <Button x:Name="CancelButton"
@@ -66,10 +66,10 @@
                             Padding="12,0"
                             FontFamily="InterSemiBold"
                             FontSize="14"
-                            BackgroundColor="{StaticResource White}"
-                            BorderColor="{StaticResource BorderColor}"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}"
+                            BorderColor="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}"
                             BorderWidth="1"
-                            TextColor="{StaticResource TextMain}" />
+                            TextColor="{AppThemeBinding Light={StaticResource TextMain}, Dark={StaticResource DarkTextMain}}" />
 
                     <Button x:Name="ConfirmButton"
                             Grid.Column="1"
@@ -79,7 +79,7 @@
                             Padding="12,0"
                             FontFamily="InterSemiBold"
                             FontSize="14"
-                            BackgroundColor="{StaticResource Primary}"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}"
                             TextColor="{StaticResource White}" />
                 </Grid>
             </VerticalStackLayout>

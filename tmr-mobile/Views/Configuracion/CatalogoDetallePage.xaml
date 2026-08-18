@@ -6,7 +6,7 @@
     x:Class="tmr_mobile.Views.Configuracion.CatalogoDetallePage"
     x:DataType="vm:CatalogoDetalleViewModel"
     Title="Detalle"
-    BackgroundColor="{StaticResource BackgroundLight}">
+    BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource DarkBackgroundLight}}">
 
     <Grid RowDefinitions="*,Auto">
         <ScrollView Grid.Row="0">
@@ -69,14 +69,14 @@
                                 <Label Text="ESTADO" Style="{StaticResource CatalogFieldLabel}" />
                                 <Border HorizontalOptions="Start"
                                         Padding="11,6"
-                                        BackgroundColor="{StaticResource Secondary}"
+                                        BackgroundColor="{AppThemeBinding Light={StaticResource Secondary}, Dark={StaticResource DarkSecondary}}"
                                         StrokeThickness="0"
                                         StrokeShape="RoundRectangle 16">
                                     <HorizontalStackLayout Spacing="7">
                                         <BoxView WidthRequest="8" HeightRequest="8" CornerRadius="4"
                                                  Color="{Binding EstadoColor}" VerticalOptions="Center" />
                                         <Label Text="{Binding EstadoTexto}" FontFamily="InterSemiBold" FontSize="12" FontAttributes="None"
-                                               TextColor="{StaticResource TextMain}"
+                                               TextColor="{AppThemeBinding Light={StaticResource TextMain}, Dark={StaticResource DarkTextMain}}"
                                                VerticalTextAlignment="Center" />
                                     </HorizontalStackLayout>
                                 </Border>
@@ -88,15 +88,15 @@
         </ScrollView>
 
         <Grid Grid.Row="1" ColumnDefinitions="*,*" ColumnSpacing="12"
-              Padding="18,12,18,18" BackgroundColor="{StaticResource BackgroundLight}">
+              Padding="18,12,18,18" BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource DarkBackgroundLight}}">
             <Button Grid.Column="0" Text="Editar" Command="{Binding EditarCommand}"
                     Style="{StaticResource PrimaryButton}" />
             <Button Grid.Column="1" Text="Eliminar" Command="{Binding EliminarCommand}"
                     Style="{StaticResource DangerButton}" />
         </Grid>
 
-        <Grid Grid.RowSpan="2" IsVisible="{Binding IsBusy}" BackgroundColor="{StaticResource WhiteTranslucent}">
-            <ActivityIndicator IsRunning="{Binding IsBusy}" Color="{StaticResource Primary}"
+        <Grid Grid.RowSpan="2" IsVisible="{Binding IsBusy}" BackgroundColor="{AppThemeBinding Light={StaticResource WhiteTranslucent}, Dark={StaticResource DarkWhiteTranslucent}}">
+            <ActivityIndicator IsRunning="{Binding IsBusy}" Color="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}"
                                HorizontalOptions="Center" VerticalOptions="Center" />
         </Grid>
     </Grid>

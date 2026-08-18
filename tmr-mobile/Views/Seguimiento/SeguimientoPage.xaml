@@ -13,7 +13,7 @@
     <Grid RowDefinitions="*,36">
         <!-- Contenido principal -->
         <Grid Grid.Row="0">
-            <Grid RowDefinitions="Auto,Auto,*" Padding="16" RowSpacing="14">
+            <Grid RowDefinitions="Auto,Auto,Auto,*" Padding="16" RowSpacing="14">
 
                 <!-- TÍTULO Y NAVBAR SIMULADO (Se usa titulo y menu por default del Shell si aplica, pero aquí ponemos el label) -->
                 <Label
@@ -60,7 +60,7 @@
                             Date="{Binding FechaDesde}" 
                             Format="dd/MM/yyyy"
                             FontSize="13" 
-                            TextColor="#334155" 
+                            TextColor="#334155"
                             BackgroundColor="Transparent" />
                     </Border>
                     <Border
@@ -73,18 +73,24 @@
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="10" />
                         </Border.StrokeShape>
-                        <DatePicker 
-                            Date="{Binding FechaHasta}" 
+                        <DatePicker
+                            Date="{Binding FechaHasta}"
                             Format="dd/MM/yyyy"
-                            FontSize="13" 
-                            TextColor="#334155" 
+                            FontSize="13"
+                            TextColor="#334155"
                             BackgroundColor="Transparent" />
                     </Border>
                 </Grid>
 
+                <!-- BOTONES DE EXPORTACIÓN -->
+                <Grid Grid.Row="2" ColumnDefinitions="*,*" ColumnSpacing="10">
+                    <Button Grid.Column="0" Text="Exportar" Command="{Binding ExportarTodosCommand}" BackgroundColor="#163572" TextColor="White" CornerRadius="8" FontSize="13" FontAttributes="Bold" HeightRequest="40" />
+                    <Button Grid.Column="1" Text="Descargar" Command="{Binding DescargarSeleccionadosCommand}" BackgroundColor="#10B981" TextColor="White" CornerRadius="8" FontSize="13" FontAttributes="Bold" HeightRequest="40" />
+                </Grid>
+
                 <!-- LISTA DE COLABORADORES CON TARJETAS EN EL HEADER -->
                 <CollectionView
-                    Grid.Row="2"
+                    Grid.Row="3"
                     ItemsSource="{Binding ColaboradoresFiltrados}"
                     SelectionMode="None">
                     
@@ -175,11 +181,14 @@
                                         <RoundRectangle CornerRadius="12" />
                                     </Border.StrokeShape>
 
-                                    <Grid ColumnDefinitions="*, Auto" RowDefinitions="Auto,Auto">
-                                        <Label Grid.Row="0" Grid.Column="0" Text="{Binding Nombre}" FontSize="15" FontAttributes="Bold" TextColor="#1E293B" LineBreakMode="TailTruncation" />
-                                        <Label Grid.Row="0" Grid.Column="1" Text="&gt;" FontSize="18" TextColor="#94A3B8" VerticalOptions="Center" />
+                                    <Grid ColumnDefinitions="Auto,*, Auto" RowDefinitions="Auto,Auto" ColumnSpacing="10">
+                                        <!-- CheckBox para selección -->
+                                        <CheckBox Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" IsChecked="{Binding IsSelected}" VerticalOptions="Center" Color="#163572" />
+
+                                        <Label Grid.Row="0" Grid.Column="1" Text="{Binding Nombre}" FontSize="15" FontAttributes="Bold" TextColor="#1E293B" LineBreakMode="TailTruncation" />
+                                        <Label Grid.Row="0" Grid.Column="2" Text="&gt;" FontSize="18" TextColor="#94A3B8" VerticalOptions="Center" />
                                         
-                                        <Label Grid.Row="1" Grid.Column="0" FontSize="12" TextColor="#64748B" Margin="0,4,0,0" LineBreakMode="TailTruncation">
+                                        <Label Grid.Row="1" Grid.Column="1" FontSize="12" TextColor="#64748B" Margin="0,4,0,0" LineBreakMode="TailTruncation">
                                             <Label.FormattedText>
                                                 <FormattedString>
                                                     <Span Text="{Binding Proyecto}" />
@@ -190,7 +199,7 @@
                                                 </FormattedString>
                                             </Label.FormattedText>
                                         </Label>
-                                        <Label Grid.Row="1" Grid.Column="1" Text="Ver todos los detalles" FontSize="10" TextColor="#3B82F6" VerticalOptions="End" />
+                                        <Label Grid.Row="1" Grid.Column="2" Text="Ver todos los detalles" FontSize="10" TextColor="#3B82F6" VerticalOptions="End" />
                                     </Grid>
                                 </Border>
                             </Grid>

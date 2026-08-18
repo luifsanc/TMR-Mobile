@@ -1,4 +1,5 @@
 using System.Globalization;
+using tmr_mobile.Resources.Styles;
 
 namespace tmr_mobile.Converters;
 
@@ -21,7 +22,7 @@ public class BoolToColorConverter : IValueConverter
 
                 try
                 {
-                    return Color.FromArgb(colorString.Trim());
+                    return Color.FromArgb(DesignColors.ResolveLiteral(colorString));
                 }
                 catch
                 {

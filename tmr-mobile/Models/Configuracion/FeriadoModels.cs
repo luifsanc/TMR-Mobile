@@ -1,3 +1,5 @@
+using tmr_mobile.Resources.Styles;
+
 namespace tmr_mobile.Models.Configuracion;
 
 public class FeriadoItem
@@ -29,26 +31,26 @@ public class FeriadoItem
     public bool Activo { get; set; } = true;
 
     public string EstadoTexto => Activo ? "Activo" : "Inactivo";
-    public string ColorFondoEstado => Activo ? "#E6FDEE" : "#F3F4F6";
-    public string ColorTextoEstado => Activo ? "#16A34A" : "#6B7280";
+    public string ColorFondoEstado => Activo ? DesignColors.SuccessSurface : DesignColors.Secondary;
+    public string ColorTextoEstado => Activo ? DesignColors.SuccessText : DesignColors.TextMuted;
 
     public string RecurrenciaTexto => EsRecurrente ? "Se repite cada año" : "No es recurrente";
     public string RecurrenciaIcono => EsRecurrente ? "🔁" : "⇄";
 
     public string TipoBadgeFondo => TipoFeriado switch
     {
-        "Nacional" => "#EEF4FF",
-        "Local" => "#FEF3C7",
-        "Religioso" => "#F3E8FF",
-        _ => "#F3F4F6"
+        "Nacional" => DesignColors.PrimaryLight,
+        "Local" => DesignColors.WarningSurface,
+        "Religioso" => DesignColors.PurpleSurface,
+        _ => DesignColors.Secondary
     };
 
     public string TipoBadgeTexto => TipoFeriado switch
     {
-        "Nacional" => "#163572",
-        "Local" => "#D97706",
-        "Religioso" => "#9333EA",
-        _ => "#374151"
+        "Nacional" => DesignColors.Primary,
+        "Local" => DesignColors.WarningText,
+        "Religioso" => DesignColors.PurpleText,
+        _ => DesignColors.TextMain
     };
 
     public string FechaTextoFormat => FechaFeriado.ToString("dd/MM/yyyy");
@@ -68,9 +70,9 @@ public class DiaCalendarioItem
     {
         get
         {
-            if (EsHoy) return "#163572";
-            if (!EsMesActual) return "#D1D5DB";
-            return "#374151";
+            if (EsHoy) return DesignColors.Primary;
+            if (!EsMesActual) return DesignColors.Border;
+            return DesignColors.TextMain;
         }
     }
 
@@ -78,9 +80,9 @@ public class DiaCalendarioItem
     {
         get
         {
-            if (TieneFeriados) return "#E6FDEE";
-            if (EsHoy) return "#F0F4FF";
-            return "White";
+            if (TieneFeriados) return DesignColors.SuccessSurface;
+            if (EsHoy) return DesignColors.PrimaryLight;
+            return DesignColors.Surface;
         }
     }
 
@@ -88,9 +90,9 @@ public class DiaCalendarioItem
     {
         get
         {
-            if (EsHoy) return "#163572";
-            if (TieneFeriados) return "#86EFAC";
-            return "#E5E7EB";
+            if (EsHoy) return DesignColors.Primary;
+            if (TieneFeriados) return DesignColors.SuccessText;
+            return DesignColors.Border;
         }
     }
 }
