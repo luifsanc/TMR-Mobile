@@ -202,40 +202,81 @@ public partial class CargaActividadesViewModel : BaseViewModel
     [ObservableProperty]
     public partial string OrdenTexto { get; set; } = "Más recientes";
 
-    [RelayCommand]
-    [Obsolete]
-    private async Task AbrirFiltrosAsync()
+
+
+// ===== Filtro (Colaborador / Proyecto / Cliente) =====
+[ObservableProperty]
+public partial bool IsFiltroSelectorVisible { get; set; } = false;
+
+[RelayCommand]
+private void AbrirFiltros()
+{
+    IsFiltroSelectorVisible = true;
+}
+
+[RelayCommand]
+private void CerrarFiltroSelector()
+{
+    IsFiltroSelectorVisible = false;
+}
+
+[RelayCommand]
+private void SeleccionarFiltro(string opcion)
+{
+    IsFiltroSelectorVisible = false;
+
+    if (string.IsNullOrEmpty(opcion))
+        return;
+
+    CampoFiltro = opcion; // ya dispara OnCampoFiltroChanged -> AplicarFiltro
+}
+
+
+// ===== Ordenar =====
+[ObservableProperty]
+public partial bool IsOrdenSelectorVisible { get; set; } = false;
+
+public List<string> OpcionesOrdenDisponibles { get; } = new()
+{
+    "Fecha (más recientes)", "Fecha (más antiguas)", "Colaborador (A-Z)", "Horas (mayor a menor)"
+};
+
+[RelayCommand]
+private void AbrirOrden()
+{
+    IsOrdenSelectorVisible = true;
+}
+
+[RelayCommand]
+private void CerrarOrdenSelector()
+{
+    IsOrdenSelectorVisible = false;
+}
+
+[RelayCommand]
+private void SeleccionarOrden(string opcion)
+{
+    IsOrdenSelectorVisible = false;
+
+    if (string.IsNullOrEmpty(opcion))
+        return;
+
+    _criterioOrden = opcion switch
     {
-        var opcion = await Shell.Current.DisplayActionSheet(
-            "Filtrar por", "Cancelar", null, "Colaborador", "Proyecto", "Cliente");
+        "Fecha (más antiguas)" => CriterioOrden.FechaAsc,
+        "Colaborador (A-Z)" => CriterioOrden.ColaboradorAsc,
+        "Horas (mayor a menor)" => CriterioOrden.HorasDesc,
+        _ => CriterioOrden.FechaDesc,
+    };
 
-        if (string.IsNullOrEmpty(opcion) || opcion == "Cancelar") return;
+    OrdenTexto = opcion;
+    PaginaActual = 1;
+    AplicarFiltro();
+}
 
-        CampoFiltro = opcion; // ya dispara OnCampoFiltroChanged -> AplicarFiltro
-    }
 
-    [RelayCommand]
-    [Obsolete]
-    private async Task OrdenarAsync()
-    {
-        var opcion = await Shell.Current.DisplayActionSheet(
-            "Ordenar por", "Cancelar", null,
-            "Fecha (más recientes)", "Fecha (más antiguas)", "Colaborador (A-Z)", "Horas (mayor a menor)");
 
-        if (string.IsNullOrEmpty(opcion) || opcion == "Cancelar") return;
 
-        _criterioOrden = opcion switch
-        {
-            "Fecha (más antiguas)" => CriterioOrden.FechaAsc,
-            "Colaborador (A-Z)" => CriterioOrden.ColaboradorAsc,
-            "Horas (mayor a menor)" => CriterioOrden.HorasDesc,
-            _ => CriterioOrden.FechaDesc,
-        };
-
-        OrdenTexto = opcion;
-        PaginaActual = 1;
-        AplicarFiltro();
-    }
 
     private void AplicarFiltro()
     {
@@ -484,6 +525,7 @@ public partial class CargaActividadesViewModel : BaseViewModel
 
 
     [RelayCommand]
+    [Obsolete]
     private async Task DescargarAsync()
     {
         ErrorMessage = string.Empty;

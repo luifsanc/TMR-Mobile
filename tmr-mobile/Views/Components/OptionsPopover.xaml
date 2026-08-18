@@ -1,0 +1,46 @@
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="tmr_mobile.Views.Components.OptionsPopover"
+             x:Name="Root">
+
+    <Grid BackgroundColor="{StaticResource Scrim}">
+        <Grid.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding DismissCommand, Source={x:Reference Root}}"/>
+        </Grid.GestureRecognizers>
+
+        <Border StrokeShape="RoundRectangle 16"
+                Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}"
+                BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource DarkBackgroundLight}}"
+                Padding="0"
+                MaximumWidthRequest="260"
+                VerticalOptions="Center"
+                HorizontalOptions="Center">
+
+            <!-- Evita que el tap en el card se propague al Grid y cierre el popover -->
+            <Border.GestureRecognizers>
+                <TapGestureRecognizer/>
+            </Border.GestureRecognizers>
+
+            <CollectionView ItemsSource="{Binding ItemsSource, Source={x:Reference Root}}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Padding="16,12">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    Command="{Binding SelectedCommand, Source={x:Reference Root}}"
+                                    CommandParameter="{Binding .}"/>
+                            </Grid.GestureRecognizers>
+                            <Label Text="{Binding .}"
+                                   FontSize="14"
+                                   TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}"/>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="0"/>
+                </CollectionView.ItemsLayout>
+            </CollectionView>
+        </Border>
+    </Grid>
+</ContentView>

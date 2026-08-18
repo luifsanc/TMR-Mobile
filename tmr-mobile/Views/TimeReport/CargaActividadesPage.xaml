@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:components="clr-namespace:tmr_mobile.Views.Components"
              xmlns:vm="clr-namespace:tmr_mobile.ViewModels"
              xmlns:models="clr-namespace:tmr_mobile.Models"
              xmlns:shared="clr-namespace:tmr_mobile.Views.Shared"
@@ -110,7 +111,7 @@
                                 FontSize="13"
                                 Padding="12,6"
                                 CornerRadius="8"
-                                BackgroundColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkPrimary}}"
                                 TextColor="{StaticResource White}"/>
                     </Grid>
                 </Grid>
@@ -206,7 +207,7 @@
                      Padding="12,0"
                      HeightRequest="40">
               <Border.GestureRecognizers>
-                     <TapGestureRecognizer Command="{Binding OrdenarCommand}"/>
+                     <TapGestureRecognizer Command="{Binding AbrirOrdenCommand}"/>
               </Border.GestureRecognizers>
                      <HorizontalStackLayout Spacing="6" VerticalOptions="Center">
                             <Path Data="M4,7 L20,7 M7,12 L17,12 M10,17 L14,17"
@@ -379,5 +380,19 @@
         </ScrollView>
 
         <shared:BottomNavBar VerticalOptions="End" />
+
+        <components:OptionsPopover
+            Grid.RowSpan="99"
+            IsVisible="{Binding IsFiltroSelectorVisible}"
+            ItemsSource="{Binding CamposFiltroDisponibles}"
+            SelectedCommand="{Binding SeleccionarFiltroCommand}"
+            DismissCommand="{Binding CerrarFiltroSelectorCommand}"/>
+
+        <components:OptionsPopover
+            Grid.RowSpan="99"
+            IsVisible="{Binding IsOrdenSelectorVisible}"
+            ItemsSource="{Binding OpcionesOrdenDisponibles}"
+            SelectedCommand="{Binding SeleccionarOrdenCommand}"
+            DismissCommand="{Binding CerrarOrdenSelectorCommand}"/>
     </Grid>
 </ContentPage>

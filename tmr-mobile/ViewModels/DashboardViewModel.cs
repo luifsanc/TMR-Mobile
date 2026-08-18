@@ -292,6 +292,9 @@ public partial class DashboardViewModel : BaseViewModel
     }
 
     [ObservableProperty]
+    public partial bool IsRangoSelectorVisible { get; set; }
+
+    [ObservableProperty]
     public partial string RangoSeleccionado { get; set; } = "mes";
 
     [ObservableProperty]
@@ -299,24 +302,32 @@ public partial class DashboardViewModel : BaseViewModel
 
     private static readonly (string Valor, string Texto)[] RangosDisponibles =
     {
-    ("mes", "Este mes"),
-    ("trimestre", "Este trimestre"),
-    ("anio", "Este año")
-};
+        ("mes", "Este mes"),
+        ("trimestre", "Este trimestre"),
+        ("anio", "Este año")
+    };
+
+    public IReadOnlyList<string> OpcionesRango { get; } =
+        RangosDisponibles.Select(r => r.Texto).ToArray();
 
     [RelayCommand]
-    [Obsolete]
-    private async Task ToggleSelectorRangoAsync()
+    private void ToggleSelectorRango()
     {
-        var opciones = RangosDisponibles.Select(r => r.Texto).ToArray();
+        IsRangoSelectorVisible = !IsRangoSelectorVisible;
+    }
 
-        string seleccion = await Application.Current!.MainPage!.DisplayActionSheet(
-            "Selecciona un rango",
-            "Cancelar",
-            null,
-            opciones);
+    [RelayCommand]
+    private void CerrarSelectorRango()
+    {
+        IsRangoSelectorVisible = false;
+    }
 
-        if (string.IsNullOrEmpty(seleccion) || seleccion == "Cancelar")
+    [RelayCommand]
+    private async Task SeleccionarRangoAsync(string seleccion)
+    {
+        IsRangoSelectorVisible = false;
+
+        if (string.IsNullOrEmpty(seleccion))
             return;
 
         var rango = RangosDisponibles.FirstOrDefault(r => r.Texto == seleccion);
