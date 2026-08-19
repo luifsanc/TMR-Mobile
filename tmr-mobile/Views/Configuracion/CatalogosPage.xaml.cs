@@ -1,4 +1,5 @@
 using tmr_mobile.ViewModels;
+using tmr_mobile.Models.Configuracion;
 
 namespace tmr_mobile.Views.Configuracion;
 
@@ -24,5 +25,16 @@ public partial class CatalogosPage : ContentPage
             return;
 
         await _viewModel.InicializarAsync();
+    }
+
+    private async void OnTipoCatalogoChanged(object? sender, EventArgs e)
+    {
+        if (sender is not Picker { SelectedItem: CatalogoMaster catalogo } ||
+            _viewModel.CatalogoSeleccionado?.Id == catalogo.Id)
+        {
+            return;
+        }
+
+        await _viewModel.SeleccionarCatalogoCommand.ExecuteAsync(catalogo);
     }
 }

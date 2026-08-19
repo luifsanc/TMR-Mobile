@@ -35,27 +35,35 @@
                 </Border>
                 <Label Text="NOTIFICACIONES" Style="{StaticResource Section}" Margin="4,10,0,0" />
                 <Border Style="{StaticResource Card}">
-                    <Grid ColumnDefinitions="*,Auto"
-                          ColumnSpacing="20"
-                          MinimumHeightRequest="64"
-                          HorizontalOptions="Fill">
-                        <VerticalStackLayout Grid.Column="0"
-                                             Spacing="5"
-                                             HorizontalOptions="Fill"
-                                             VerticalOptions="Center">
-                            <Label Text="Notificaciones"
-                                   Style="{StaticResource Title}"
-                                   LineBreakMode="NoWrap" />
-                            <Label Text="Recibe avisos importantes de TMR"
-                                   Style="{StaticResource Caption}"
-                                   MaxLines="2"
-                                   LineBreakMode="WordWrap" />
-                        </VerticalStackLayout>
-                        <Switch Grid.Column="1"
-                                IsToggled="{Binding NotificationsEnabled}"
-                                Style="{StaticResource NotificationSwitch}"
-                                HorizontalOptions="End"
-                                VerticalOptions="Center" />
+                    <Grid ColumnDefinitions="*,72"
+                          RowDefinitions="Auto,Auto"
+                          ColumnSpacing="12"
+                          RowSpacing="5"
+                          MinimumHeightRequest="72"
+                          HorizontalOptions="FillAndExpand">
+                        <Label Grid.Row="0"
+                               Grid.Column="0"
+                               Text="Notificaciones"
+                               Style="{StaticResource Title}"
+                               LineBreakMode="TailTruncation" />
+                        <Label Grid.Row="1"
+                               Grid.Column="0"
+                               Text="Recibe avisos importantes de TMR"
+                               Style="{StaticResource Caption}"
+                               MaxLines="2"
+                               LineBreakMode="WordWrap" />
+                        <Grid Grid.RowSpan="2"
+                              Grid.Column="1"
+                              WidthRequest="72"
+                              HorizontalOptions="End"
+                              VerticalOptions="Fill">
+                            <Switch IsToggled="{Binding NotificationsEnabled}"
+                                    Style="{StaticResource NotificationSwitch}"
+                                    WidthRequest="54"
+                                    HorizontalOptions="End"
+                                    VerticalOptions="Center"
+                                    SemanticProperties.Description="Activar o desactivar notificaciones" />
+                        </Grid>
                     </Grid>
                 </Border>
                 <Label Text="REGIÓN Y FORMATO" Style="{StaticResource Section}" Margin="4,10,0,0" />

@@ -4,33 +4,33 @@
              x:Class="tmr_mobile.Views.Shared.BottomNavBar">
 
     <Grid BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}"
-          ColumnDefinitions="*,46,60,46,*"
-          HeightRequest="36"
+          ColumnDefinitions="*,64,88,64,*"
+          HeightRequest="56"
           VerticalOptions="End">
          <!-- Top shadow / border -->
          <BoxView HeightRequest="1" Color="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" VerticalOptions="Start" Grid.ColumnSpan="5" />
          
          <!-- Home -->
-         <VerticalStackLayout x:Name="DashboardButton"
-                              Grid.Column="1"
-                              VerticalOptions="Center"
-                              HorizontalOptions="Center"
-                              Spacing="2"
-                              Loaded="OnDashboardButtonLoaded">
-             <VerticalStackLayout.GestureRecognizers>
-                 <TapGestureRecognizer Tapped="OnNavigate" CommandParameter="DashboardPage" />
-             </VerticalStackLayout.GestureRecognizers>
+         <Grid x:Name="DashboardButton"
+               Grid.Column="1"
+               WidthRequest="64"
+               HeightRequest="56"
+               Loaded="OnDashboardButtonLoaded">
              <Image Source="{AppThemeBinding Light=homes.png, Dark=homes_dark.png}"
                     WidthRequest="18" HeightRequest="18" Aspect="AspectFit"
-                    HorizontalOptions="Center" VerticalOptions="Center" />
-         </VerticalStackLayout>
+                    HorizontalOptions="Center" VerticalOptions="Center"
+                    InputTransparent="True" />
+             <Button BackgroundColor="Transparent"
+                     BorderWidth="0"
+                     Padding="0"
+                     CommandParameter="DashboardPage"
+                     Clicked="OnNavigationButtonClicked"
+                     SemanticProperties.Description="Ir al inicio" />
+         </Grid>
          
          <!-- Center FAB -->
-         <Grid Grid.Column="2" WidthRequest="54" HeightRequest="54" VerticalOptions="End" Margin="0,0,0,7">
-              <Grid.GestureRecognizers>
-                  <TapGestureRecognizer Tapped="OnNavigate" CommandParameter="HomePage" />
-              </Grid.GestureRecognizers>
-              <Border StrokeShape="RoundRectangle 27" BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}" Stroke="{AppThemeBinding Light={StaticResource PrimaryLight}, Dark={StaticResource DarkPrimaryLight}}" StrokeThickness="3" WidthRequest="54" HeightRequest="54" HorizontalOptions="Center" VerticalOptions="Center">
+         <Grid Grid.Column="2" WidthRequest="72" HeightRequest="56" VerticalOptions="Center">
+              <Border StrokeShape="RoundRectangle 27" BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}" Stroke="{AppThemeBinding Light={StaticResource PrimaryLight}, Dark={StaticResource DarkPrimaryLight}}" StrokeThickness="3" WidthRequest="54" HeightRequest="54" HorizontalOptions="Center" VerticalOptions="Center" InputTransparent="True">
                    <Border StrokeShape="RoundRectangle 21" BackgroundColor="Transparent" WidthRequest="42" HeightRequest="42" HorizontalOptions="Center" VerticalOptions="Center" Stroke="Transparent">
                         <Image Source="{AppThemeBinding Light=isotipo1.png, Dark=isotipo2.png}"
                                WidthRequest="34"
@@ -38,19 +38,29 @@
                                Aspect="AspectFit"
                                HorizontalOptions="Center"
                                VerticalOptions="Center"
+                               InputTransparent="True"
                                SemanticProperties.Description="Integrity Solutions" />
                    </Border>
               </Border>
+              <Button BackgroundColor="Transparent"
+                      BorderWidth="0"
+                      Padding="0"
+                      Clicked="OnMenuButtonClicked"
+                      SemanticProperties.Description="Abrir menÃº principal" />
          </Grid>
 
          <!-- Profile -->
-         <VerticalStackLayout Grid.Column="3" VerticalOptions="Center" HorizontalOptions="Center" Spacing="2">
-             <VerticalStackLayout.GestureRecognizers>
-                 <TapGestureRecognizer Tapped="OnNavigate" CommandParameter="ProfilePage" />
-             </VerticalStackLayout.GestureRecognizers>
+         <Grid Grid.Column="3" WidthRequest="64" HeightRequest="56">
              <Image Source="{AppThemeBinding Light=user_profile.png, Dark=user_profile_dark.png}"
                     WidthRequest="18" HeightRequest="18" Aspect="AspectFit"
-                    HorizontalOptions="Center" VerticalOptions="Center" />
-         </VerticalStackLayout>
+                    HorizontalOptions="Center" VerticalOptions="Center"
+                    InputTransparent="True" />
+             <Button BackgroundColor="Transparent"
+                     BorderWidth="0"
+                     Padding="0"
+                     CommandParameter="ProfilePage"
+                     Clicked="OnNavigationButtonClicked"
+                     SemanticProperties.Description="Abrir perfil" />
+         </Grid>
     </Grid>
 </ContentView>

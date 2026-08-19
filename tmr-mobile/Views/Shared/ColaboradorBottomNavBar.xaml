@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="tmr_mobile.Views.Shared.ColaboradorBottomNavBar">
     <Grid BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}"
-          HeightRequest="36"
+          HeightRequest="56"
           VerticalOptions="End">
         <BoxView HeightRequest="1"
                  Color="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}"
@@ -11,9 +11,9 @@
 
         <Grid WidthRequest="54"
               HeightRequest="54"
-              VerticalOptions="End"
+              VerticalOptions="Center"
               HorizontalOptions="Center"
-              Margin="0,0,0,7">
+              Margin="0">
             <Border StrokeShape="RoundRectangle 27"
                     BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}"
                     Stroke="{AppThemeBinding Light={StaticResource PrimaryLight}, Dark={StaticResource DarkPrimaryLight}}"

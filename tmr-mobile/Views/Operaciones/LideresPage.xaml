@@ -11,7 +11,7 @@
     Shell.NavBarIsVisible="False"
     BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource DarkBackgroundLight}}">
 
-    <Grid RowDefinitions="*,36">
+    <Grid RowDefinitions="*,56">
         <!-- Contenido principal y Botón Flotante en la fila superior -->
         <Grid Grid.Row="0">
             <Grid RowDefinitions="Auto,*" Padding="16,16,16,0" RowSpacing="14">

@@ -19,7 +19,9 @@
         <conv:SelectedTextColorConverter x:Key="SelectedText"/>
     </ContentPage.Resources>
 
-    <Grid RowDefinitions="Auto,*">
+    <Grid RowDefinitions="Auto,*"
+          SafeAreaEdges="Container"
+          BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource DarkBackgroundLight}}">
         <!-- Fixed header -->
         <Grid Grid.Row="0"
               Padding="16,12,16,8"
@@ -65,7 +67,7 @@
             </Grid>
         </Grid>
 
-        <ScrollView Grid.Row="1" Margin="0,0,0,36">
+        <ScrollView Grid.Row="1" Margin="0,0,0,56">
             <VerticalStackLayout Spacing="14"
                                  Padding="16,4,16,32">
 

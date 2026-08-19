@@ -1,11 +1,22 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
+using tmr_mobile.Services;
+
 namespace tmr_mobile;
 
 public partial class App : Application
 {
-	public App()
+	private readonly IAuthService _authService;
+	private readonly IUserModuleAccessService _moduleAccessService;
+	private int _sessionRestored;
+
+	public App(
+		IAuthService authService,
+		IUserModuleAccessService moduleAccessService)
 	{
+		_authService = authService;
+		_moduleAccessService = moduleAccessService;
+
 		AppDomain.CurrentDomain.UnhandledException += (s, e) =>
 			{
 				var ex = (Exception)e.ExceptionObject; System.Diagnostics.Debug.WriteLine($"[UNHANDLED] {ex}");
@@ -23,6 +34,7 @@ public partial class App : Application
 	protected override Window CreateWindow(IActivationState? activationState)
 	{
 		var window = new Window(new AppShell());
+		window.Created += OnWindowCreated;
 
 #if WINDOWS
 		window.HandlerChanged += (_, _) => UpdateWindowsTitleBar(window);
@@ -31,6 +43,39 @@ public partial class App : Application
 #endif
 
 		return window;
+	}
+
+	private async void OnWindowCreated(object? sender, EventArgs e)
+	{
+		if (Interlocked.Exchange(ref _sessionRestored, 1) != 0)
+			return;
+
+		try
+		{
+			if (!await _authService.IsAuthenticatedAsync())
+				return;
+
+			string route;
+			if (await _moduleAccessService.EsColaboradorAsync())
+			{
+				route = "ColaboradorDashboardPage";
+			}
+			else
+			{
+				var modules = await _moduleAccessService.ObtenerModulosAsync();
+				route = modules.Contains("Dashboard")
+					? "DashboardPage"
+					: modules.Contains("Actividades") || modules.Contains("Time Report")
+						? "TimeReportPage"
+						: "HomePage";
+			}
+
+			await Shell.Current.GoToAsync($"//{route}", false);
+		}
+		catch (Exception ex)
+		{
+			System.Diagnostics.Debug.WriteLine($"[SESSION RESTORE] {ex.Message}");
+		}
 	}
 
 #if WINDOWS

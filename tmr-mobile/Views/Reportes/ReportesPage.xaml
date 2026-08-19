@@ -10,7 +10,7 @@
     Shell.NavBarIsVisible="False"
     BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource DarkBackgroundLight}}">
 
-    <Grid RowDefinitions="*,36">
+    <Grid RowDefinitions="*,56">
         <!-- Contenido principal -->
         <ScrollView Grid.Row="0">
             <VerticalStackLayout Padding="16" Spacing="16">

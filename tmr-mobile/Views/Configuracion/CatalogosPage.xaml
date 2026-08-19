@@ -8,8 +8,11 @@
     x:DataType="vm:CatalogosConfigViewModel"
     Title="Catálogos"
     BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource DarkBackgroundLight}}">
-    <Grid RowDefinitions="*,36">
-        <ContentView Grid.Row="0">
+    <Grid RowDefinitions="*,56"
+          SafeAreaEdges="Container"
+          BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource DarkBackgroundLight}}">
+        <ContentView Grid.Row="0"
+                     BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource DarkBackgroundLight}}">
             <Grid
                 RowDefinitions="Auto,Auto,Auto,Auto,*"
                 Padding="12"
@@ -23,7 +26,17 @@
                 </Grid>
 
                 <Grid Grid.Row="1" ColumnDefinitions="*,*,*" ColumnSpacing="8">
-                    <Border Grid.Column="0" HeightRequest="56" Padding="5" Style="{StaticResource CatalogMetricCard}">
+                    <Border Grid.Column="0" HeightRequest="56" Padding="5" Style="{StaticResource CatalogMetricCard}"
+                            SemanticProperties.Description="Mostrar todos los Ã­tems">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding MostrarTodosCommand}" />
+                        </Border.GestureRecognizers>
+                        <Border.Triggers>
+                            <DataTrigger TargetType="Border" Binding="{Binding FiltroEstado}" Value="Todos">
+                                <Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />
+                                <Setter Property="StrokeThickness" Value="2" />
+                            </DataTrigger>
+                        </Border.Triggers>
                         <VerticalStackLayout Spacing="1" VerticalOptions="Center">
                             <HorizontalStackLayout Spacing="4" HorizontalOptions="Center">
                                 <Border WidthRequest="24" HeightRequest="24" Padding="5"
@@ -38,7 +51,17 @@
                                    TextColor="{AppThemeBinding Light={StaticResource TextSecondary}, Dark={StaticResource DarkTextSecondary}}" HorizontalTextAlignment="Center" />
                         </VerticalStackLayout>
                     </Border>
-                    <Border Grid.Column="1" HeightRequest="56" Padding="5" Style="{StaticResource CatalogMetricCard}">
+                    <Border Grid.Column="1" HeightRequest="56" Padding="5" Style="{StaticResource CatalogMetricCard}"
+                            SemanticProperties.Description="Mostrar Ã­tems activos">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding MostrarActivosCommand}" />
+                        </Border.GestureRecognizers>
+                        <Border.Triggers>
+                            <DataTrigger TargetType="Border" Binding="{Binding FiltroEstado}" Value="Activos">
+                                <Setter Property="Stroke" Value="{StaticResource Accent}" />
+                                <Setter Property="StrokeThickness" Value="2" />
+                            </DataTrigger>
+                        </Border.Triggers>
                         <VerticalStackLayout Spacing="1" VerticalOptions="Center">
                             <HorizontalStackLayout Spacing="4" HorizontalOptions="Center">
                                 <Border WidthRequest="24" HeightRequest="24" Padding="5"
@@ -53,7 +76,17 @@
                                    TextColor="{StaticResource Accent}" HorizontalTextAlignment="Center" />
                         </VerticalStackLayout>
                     </Border>
-                    <Border Grid.Column="2" HeightRequest="56" Padding="5" Style="{StaticResource CatalogMetricCard}">
+                    <Border Grid.Column="2" HeightRequest="56" Padding="5" Style="{StaticResource CatalogMetricCard}"
+                            SemanticProperties.Description="Mostrar Ã­tems inactivos">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding MostrarInactivosCommand}" />
+                        </Border.GestureRecognizers>
+                        <Border.Triggers>
+                            <DataTrigger TargetType="Border" Binding="{Binding FiltroEstado}" Value="Inactivos">
+                                <Setter Property="Stroke" Value="{StaticResource Error}" />
+                                <Setter Property="StrokeThickness" Value="2" />
+                            </DataTrigger>
+                        </Border.Triggers>
                         <VerticalStackLayout Spacing="1" VerticalOptions="Center">
                             <HorizontalStackLayout Spacing="4" HorizontalOptions="Center">
                                 <Border WidthRequest="24" HeightRequest="24" Padding="5"
@@ -87,7 +120,7 @@
                     </Border>
 
                     <Button Grid.Column="1"
-                            Text="Filtro ⌄"
+                            Text="Tipo ⌄"
                             Command="{Binding AlternarFiltrosCommand}"
                             WidthRequest="78"
                             HeightRequest="32"
@@ -115,8 +148,24 @@
                         StrokeThickness="1"
                         StrokeShape="RoundRectangle 10">
                     <VerticalStackLayout Spacing="8">
+                        <Border Style="{StaticResource CatalogInputBorder}"
+                                HeightRequest="46"
+                                Padding="12,0">
+                            <Picker x:Name="TipoCatalogoPicker"
+                                    Title="Selecciona un tipo"
+                                    ItemsSource="{Binding Catalogos}"
+                                    ItemDisplayBinding="{Binding NombreMostrar}"
+                                    SelectedItem="{Binding CatalogoSeleccionado, Mode=OneWay}"
+                                    SelectedIndexChanged="OnTipoCatalogoChanged"
+                                    FontFamily="InterSemiBold"
+                                    FontSize="12"
+                                    TextColor="{AppThemeBinding Light={StaticResource TextMain}, Dark={StaticResource DarkTextPrimary}}"
+                                    TitleColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}"
+                                    BackgroundColor="Transparent"
+                                    HorizontalOptions="Fill" />
+                        </Border>
                         <!-- Primera fila: filtro por estado -->
-                        <HorizontalStackLayout Spacing="8">
+                        <HorizontalStackLayout Spacing="8" IsVisible="False">
                             <Border Padding="12,6"
                                     BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}"
                                     Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}"
@@ -197,7 +246,9 @@
                         </HorizontalStackLayout>
 
                         <!-- Segunda fila: conserva el desplazamiento horizontal de catálogos -->
-                        <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Never">
+                        <ScrollView Orientation="Horizontal"
+                                    HorizontalScrollBarVisibility="Never"
+                                    IsVisible="False">
                             <HorizontalStackLayout BindableLayout.ItemsSource="{Binding Catalogos}" Spacing="8">
                                 <BindableLayout.ItemTemplate>
                                     <DataTemplate x:DataType="model:CatalogoMaster">
@@ -288,10 +339,12 @@
                     </CollectionView.ItemTemplate>
                 </CollectionView>
 
-                <Grid Grid.RowSpan="5" IsVisible="{Binding IsBusy}" BackgroundColor="{AppThemeBinding Light={StaticResource WhiteTranslucent}, Dark={StaticResource DarkWhiteTranslucent}}">
-                    <ActivityIndicator IsRunning="{Binding IsBusy}" Color="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}"
-                                       HorizontalOptions="Center" VerticalOptions="Center" />
-                </Grid>
+                <ActivityIndicator Grid.Row="0"
+                                   HorizontalOptions="End"
+                                   VerticalOptions="Center"
+                                   IsVisible="{Binding IsBusy}"
+                                   IsRunning="{Binding IsBusy}"
+                                   Color="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />
             </Grid>
         </ContentView>
         <shared:UserBottomNavBar Grid.Row="1" />

@@ -10,7 +10,7 @@
              x:DataType="vm:ConfiguracionViewModel">
 
     <!-- Principal Grid: Scrollable Content + Fixed Bottom Nav -->
-    <Grid RowDefinitions="*,36">
+    <Grid RowDefinitions="*,56">
         
         <!-- Modules Grid -->
         <CollectionView Grid.Row="0" ItemsSource="{Binding Modulos}" Margin="20,20,20,30" HorizontalOptions="Center">

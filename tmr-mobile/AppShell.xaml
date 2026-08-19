@@ -12,6 +12,7 @@
     xmlns:cfg="clr-namespace:tmr_mobile.Views.Configuracion"
     xmlns:seg="clr-namespace:tmr_mobile.Views.Seguimiento"
     Title="TMR Móvil"
+    BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource DarkBackgroundLight}}"
     Shell.NavBarIsVisible="False"
     FlyoutBehavior="Disabled">
 

@@ -34,41 +34,43 @@ public partial class BottomNavBar : ContentView
         }
     }
 
-    private async void OnNavigate(object? sender, TappedEventArgs e)
+    private async void OnNavigationButtonClicked(object? sender, EventArgs e)
     {
-        if (e.Parameter is string route)
-        {
-            if (route == "DashboardPage" && !DashboardButton.IsVisible)
-            {
-                return;
-            }
+        if (sender is Button { CommandParameter: string route })
+            await NavigateAsync(route);
+    }
 
-            if (route == nameof(HomePage))
+    private async void OnMenuButtonClicked(object? sender, EventArgs e) =>
+        await NavigateAsync(nameof(HomePage));
+
+    private async Task NavigateAsync(string route)
+    {
+        if (route == "DashboardPage" && !DashboardButton.IsVisible)
+            return;
+
+        if (route == nameof(HomePage))
+        {
+            if (_isOpeningMenu)
+                return;
+
+            _isOpeningMenu = true;
+            try
             {
-                if (_isOpeningMenu)
+                var menuPage = Handler?.MauiContext?.Services.GetService(typeof(HomePage)) as HomePage;
+                if (menuPage is not null)
                 {
+                    menuPage.OriginPage = FindContainingPage();
+                    await Navigation.PushModalAsync(menuPage);
                     return;
                 }
-
-                _isOpeningMenu = true;
-                try
-                {
-                    var menuPage = Handler?.MauiContext?.Services.GetService(typeof(HomePage)) as HomePage;
-                    if (menuPage is not null)
-                    {
-                        menuPage.OriginPage = FindContainingPage();
-                        await Navigation.PushModalAsync(menuPage);
-                        return;
-                    }
-                }
-                finally
-                {
-                    _isOpeningMenu = false;
-                }
             }
-
-            await Shell.Current.GoToAsync($"//{route}");
+            finally
+            {
+                _isOpeningMenu = false;
+            }
         }
+
+        await Shell.Current.GoToAsync($"//{route}");
     }
 
     private Page? FindContainingPage()

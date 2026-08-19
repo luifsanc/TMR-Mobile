@@ -20,7 +20,7 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <Grid RowDefinitions="*,36">
+    <Grid RowDefinitions="*,56">
         <!-- Contenido principal y Botón Flotante en la fila superior -->
         <Grid Grid.Row="0">
             <Grid RowDefinitions="Auto,Auto,*" Padding="16" RowSpacing="14">

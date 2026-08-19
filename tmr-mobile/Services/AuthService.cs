@@ -1,3 +1,5 @@
+using System.Text;
+using System.Text.Json;
 using tmr_shared.DTOs.Auth;
 
 namespace tmr_mobile.Services;
@@ -74,8 +76,10 @@ public interface IAuthService
 public class AuthService : IAuthService
 {
     private const string TokenKey = "auth_token";
+    private const string CurrentUserKey = "auth_current_user";
 
     private readonly ApiService _apiService;
+    private readonly SemaphoreSlim _refreshLock = new(1, 1);
 
     public UserResponse? CurrentUser { get; private set; }
 
@@ -108,30 +112,7 @@ public class AuthService : IAuthService
 
             if (response?.Data?.AccessToken is not null)
             {
-                await SecureStorage.Default.SetAsync(
-                    TokenKey,
-                    response.Data.AccessToken
-                );
-
-                await SecureStorage.Default.SetAsync(
-                    ApiService.RefreshTokenKey,
-                    response.Data.RefreshToken
-                );
-
-                await SecureStorage.Default.SetAsync(
-                    ApiService.TokenFamilyKey,
-                    response.Data.TokenFamilyId.ToString()
-                );
-
-                CurrentUser = new UserResponse(
-                    response.Data.User.Id,
-                    response.Data.User.Email,
-                    response.Data.User.Name,
-                    response.Data.User.CreatedAt,
-                    response.Data.User.IdEmpleado > 0
-                        ? response.Data.User.IdEmpleado
-                        : null
-                );
+                await SaveSessionAsync(response.Data);
 
                 return true;
             }
@@ -227,6 +208,7 @@ public class AuthService : IAuthService
         SecureStorage.Default.Remove(ApiService.TokenKey);
         SecureStorage.Default.Remove(ApiService.RefreshTokenKey);
         SecureStorage.Default.Remove(ApiService.TokenFamilyKey);
+        SecureStorage.Default.Remove(CurrentUserKey);
 
         CurrentUser = null;
 
@@ -270,10 +252,15 @@ public class AuthService : IAuthService
 
     public async Task<bool> IsAuthenticatedAsync()
     {
-        var token =
-            await SecureStorage.Default.GetAsync(TokenKey);
+        var token = await SecureStorage.Default.GetAsync(TokenKey);
 
-        return !string.IsNullOrEmpty(token);
+        if (IsAccessTokenUsable(token))
+        {
+            await RestoreCurrentUserAsync();
+            return true;
+        }
+
+        return await RefreshTokenAsync();
     }
 
     public async Task<string?> GetTokenAsync()
@@ -283,8 +270,19 @@ public class AuthService : IAuthService
 
     private async Task<bool> RefreshTokenAsync()
     {
+        var tokenBeforeRefresh = await SecureStorage.Default.GetAsync(TokenKey);
+        await _refreshLock.WaitAsync();
+
         try
         {
+            var currentToken = await SecureStorage.Default.GetAsync(TokenKey);
+            if (!string.Equals(currentToken, tokenBeforeRefresh, StringComparison.Ordinal) &&
+                IsAccessTokenUsable(currentToken))
+            {
+                await RestoreCurrentUserAsync();
+                return true;
+            }
+
             var refreshToken = await SecureStorage.Default.GetAsync(
                 ApiService.RefreshTokenKey);
 
@@ -298,30 +296,82 @@ public class AuthService : IAuthService
             if (response?.Data?.AccessToken is null)
                 return false;
 
-            await SecureStorage.Default.SetAsync(
-                ApiService.TokenKey,
-                response.Data.AccessToken);
-            await SecureStorage.Default.SetAsync(
-                ApiService.RefreshTokenKey,
-                response.Data.RefreshToken);
-            await SecureStorage.Default.SetAsync(
-                ApiService.TokenFamilyKey,
-                response.Data.TokenFamilyId.ToString());
-
-            CurrentUser = new UserResponse(
-                response.Data.User.Id,
-                response.Data.User.Email,
-                response.Data.User.Name,
-                response.Data.User.CreatedAt,
-                response.Data.User.IdEmpleado > 0
-                    ? response.Data.User.IdEmpleado
-                    : null);
+            await SaveSessionAsync(response.Data);
 
             return true;
         }
         catch (Exception ex)
         {
             System.Diagnostics.Debug.WriteLine($"Refresh Token Error: {ex.Message}");
+            return false;
+        }
+        finally
+        {
+            _refreshLock.Release();
+        }
+    }
+
+    private async Task SaveSessionAsync(AuthResponse session)
+    {
+        await SecureStorage.Default.SetAsync(ApiService.TokenKey, session.AccessToken);
+        await SecureStorage.Default.SetAsync(ApiService.RefreshTokenKey, session.RefreshToken);
+        await SecureStorage.Default.SetAsync(ApiService.TokenFamilyKey, session.TokenFamilyId.ToString());
+
+        CurrentUser = new UserResponse(
+            session.User.Id,
+            session.User.Email,
+            session.User.Name,
+            session.User.CreatedAt,
+            session.User.IdEmpleado > 0 ? session.User.IdEmpleado : null);
+
+        await SecureStorage.Default.SetAsync(
+            CurrentUserKey,
+            JsonSerializer.Serialize(CurrentUser));
+    }
+
+    private async Task RestoreCurrentUserAsync()
+    {
+        if (CurrentUser is not null)
+            return;
+
+        try
+        {
+            var serializedUser = await SecureStorage.Default.GetAsync(CurrentUserKey);
+            if (!string.IsNullOrWhiteSpace(serializedUser))
+                CurrentUser = JsonSerializer.Deserialize<UserResponse>(serializedUser);
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"Restore User Error: {ex.Message}");
+        }
+    }
+
+    private static bool IsAccessTokenUsable(string? token)
+    {
+        if (string.IsNullOrWhiteSpace(token))
+            return false;
+
+        try
+        {
+            var parts = token.Split('.');
+            if (parts.Length < 2)
+                return false;
+
+            var payload = parts[1].Replace('-', '+').Replace('_', '/');
+            payload = payload.PadRight(payload.Length + ((4 - payload.Length % 4) % 4), '=');
+
+            using var document = JsonDocument.Parse(
+                Encoding.UTF8.GetString(Convert.FromBase64String(payload)));
+
+            if (!document.RootElement.TryGetProperty("exp", out var expiration) ||
+                !expiration.TryGetInt64(out var expirationSeconds))
+                return false;
+
+            var expiresAt = DateTimeOffset.FromUnixTimeSeconds(expirationSeconds);
+            return expiresAt > DateTimeOffset.UtcNow.AddMinutes(1);
+        }
+        catch
+        {
             return false;
         }
     }

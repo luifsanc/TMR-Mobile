@@ -22,7 +22,7 @@
             <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}" /><Setter Property="VerticalOptions" Value="Center" />
         </Style>
     </ContentPage.Resources>
-    <Grid RowDefinitions="Auto,*,36">
+    <Grid RowDefinitions="Auto,*,56">
         <Grid Grid.Row="0" Padding="24,16,24,8" ColumnDefinitions="*,Auto" ColumnSpacing="12">
             <VerticalStackLayout Spacing="6">
                 <Label Text="Mi perfil" FontFamily="InterSemiBold" FontSize="28" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkTextPrimary}}" />

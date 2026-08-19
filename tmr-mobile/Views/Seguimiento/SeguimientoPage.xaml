@@ -10,7 +10,7 @@
     Title="Seguimiento de Colaboradores"
     BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource DarkBackgroundLight}}">
 
-    <Grid RowDefinitions="*,36">
+    <Grid RowDefinitions="*,56">
         <!-- Contenido principal -->
         <Grid Grid.Row="0">
             <Grid RowDefinitions="Auto,Auto,Auto,*" Padding="16" RowSpacing="14">
