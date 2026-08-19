@@ -124,14 +124,34 @@ public partial class UsuariosConfigViewModel : BaseViewModel
     [RelayCommand]
     private async Task CambiarFiltroEstadoAsync()
     {
-        var siguiente = FiltroEstado switch
-        {
-            "Todos" => "Activos",
-            "Activos" => "Inactivos",
-            _ => "Todos",
-        };
+        var opcion = await Shell.Current.DisplayActionSheetAsync(
+            "Filtrar por estado",
+            "Cancelar",
+            null,
+            "Todos",
+            "Activos",
+            "Inactivos");
 
-        FiltroEstado = siguiente;
+        if (string.IsNullOrEmpty(opcion) || opcion == "Cancelar") return;
+
+        FiltroEstado = opcion;
         await CargarUsuariosAsync();
+    }
+
+    [RelayCommand]
+    private async Task DescargarAsync()
+    {
+        var encabezados = new[] { "Usuario", "Nombre", "Correo", "Rol", "Estado" };
+        var filas = Usuarios.Select(u => new[]
+        {
+            u.NombreUsuario,
+            u.NombreCompleto,
+            u.Email,
+            u.RolesTexto,
+            u.EstadoTexto
+        }).ToList();
+
+        await ReportService.SeleccionarYExportarAsync(
+            "Reporte de Usuarios", encabezados, filas, "Usuarios");
     }
 }

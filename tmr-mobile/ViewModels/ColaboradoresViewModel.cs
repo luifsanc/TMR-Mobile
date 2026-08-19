@@ -112,25 +112,33 @@ public partial class ColaboradoresViewModel : BaseViewModel
     [RelayCommand]
     private async Task CambiarFiltroEstadoAsync()
     {
-        // Alternar entre Todos -> Activos -> Inactivos -> Todos
-        if (_filtroActivo == null)
-        {
-            _filtroActivo = true;
-            FiltroEstadoTexto = "Activos";
-        }
-        else if (_filtroActivo == true)
-        {
-            _filtroActivo = false;
-            FiltroEstadoTexto = "Inactivos";
-        }
-        else
+        var opcion = await Shell.Current.DisplayActionSheetAsync(
+            "Filtrar por estado",
+            "Cancelar",
+            null,
+            "Todos",
+            "Activos",
+            "Inactivos");
+
+        if (string.IsNullOrEmpty(opcion) || opcion == "Cancelar") return;
+
+        if (opcion == "Todos")
         {
             _filtroActivo = null;
             FiltroEstadoTexto = "Todos";
         }
+        else if (opcion == "Activos")
+        {
+            _filtroActivo = true;
+            FiltroEstadoTexto = "Activos";
+        }
+        else if (opcion == "Inactivos")
+        {
+            _filtroActivo = false;
+            FiltroEstadoTexto = "Inactivos";
+        }
 
         AplicarFiltroLocal();
-        await Task.CompletedTask;
     }
 
     [RelayCommand]

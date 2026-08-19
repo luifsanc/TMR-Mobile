@@ -111,14 +111,17 @@ public partial class RolesConfigViewModel : BaseViewModel
     [RelayCommand]
     private async Task CambiarFiltroEstadoAsync()
     {
-        var siguiente = FiltroEstado switch
-        {
-            "Todos" => "Activos",
-            "Activos" => "Inactivos",
-            _ => "Todos",
-        };
+        var opcion = await Shell.Current.DisplayActionSheetAsync(
+            "Filtrar por estado",
+            "Cancelar",
+            null,
+            "Todos",
+            "Activos",
+            "Inactivos");
 
-        FiltroEstado = siguiente;
+        if (string.IsNullOrEmpty(opcion) || opcion == "Cancelar") return;
+
+        FiltroEstado = opcion;
         await CargarRolesAsync();
     }
 }

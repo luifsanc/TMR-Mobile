@@ -26,9 +26,9 @@ public class ColaboradorModel
         }
     }
 
-    public string EstadoTexto => Activo ? "ACTIVO" : "INACTIVO";
-    public string ColorEstado => Activo ? "#43A047" : "#E53935";
-    public string ColorFondoEstado => Activo ? "#E8F5E9" : "#FFEBEE";
+    public string EstadoTexto => Activo ? "Activo" : "Inactivo";
+    public string ColorEstado => Activo ? "#16A34A" : "#6B7280";
+    public string ColorFondoEstado => Activo ? "#DCFCE7" : "#F3F4F6";
 
     public string IdentificacionTexto => !string.IsNullOrWhiteSpace(NumeroIdentificacion) ? NumeroIdentificacion : "Sin identificación";
     public string EmailTexto => !string.IsNullOrWhiteSpace(Email) ? Email : "Sin correo";

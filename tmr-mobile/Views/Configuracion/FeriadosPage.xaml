@@ -44,15 +44,15 @@
                         <!-- Total Feriados -->
                         <Border Grid.Column="0" BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}" Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" StrokeThickness="1" Padding="12">
                             <Border.StrokeShape><RoundRectangle CornerRadius="14" /></Border.StrokeShape>
-                            <Border.Shadow><Shadow Brush="Black" Offset="0,2" Radius="6" Opacity="0.04" /></Border.Shadow>
+                            <Border.Shadow><Shadow Brush="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" Offset="0,2" Radius="6" Opacity="0.04" /></Border.Shadow>
                             <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
-                                <Border WidthRequest="34" HeightRequest="34" BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryLight}, Dark={StaticResource DarkPrimaryLight}}" StrokeThickness="0">
+                                <Border WidthRequest="34" HeightRequest="34" BackgroundColor="{AppThemeBinding Light=#FEF3C7, Dark=#4A3B1B}" StrokeThickness="0">
                                     <Border.StrokeShape><RoundRectangle CornerRadius="10" /></Border.StrokeShape>
-                                    <Label Text="📅" FontSize="14" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                                    <Image Source="feriados_total.png" WidthRequest="18" HeightRequest="18" HorizontalOptions="Center" VerticalOptions="Center" />
                                 </Border>
                                 <VerticalStackLayout Spacing="0" VerticalOptions="Center">
                                     <Label Text="{Binding TotalFeriados}" FontSize="18" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />
-                                    <Label Text="Total Feriados" FontSize="11" FontFamily="InterRegular" TextColor="{AppThemeBinding Light={StaticResource TextSecondary}, Dark={StaticResource DarkTextSecondary}}" />
+                                    <Label Text="Total feriados" FontSize="11" FontFamily="InterRegular" TextColor="{AppThemeBinding Light={StaticResource TextSecondary}, Dark={StaticResource DarkTextSecondary}}" />
                                 </VerticalStackLayout>
                             </HorizontalStackLayout>
                         </Border>
@@ -60,11 +60,11 @@
                         <!-- Activos -->
                         <Border Grid.Column="1" BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}" Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" StrokeThickness="1" Padding="12">
                             <Border.StrokeShape><RoundRectangle CornerRadius="14" /></Border.StrokeShape>
-                            <Border.Shadow><Shadow Brush="Black" Offset="0,2" Radius="6" Opacity="0.04" /></Border.Shadow>
+                            <Border.Shadow><Shadow Brush="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" Offset="0,2" Radius="6" Opacity="0.04" /></Border.Shadow>
                             <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
-                                <Border WidthRequest="34" HeightRequest="34" BackgroundColor="{AppThemeBinding Light={StaticResource SuccessSurface}, Dark={StaticResource DarkSuccessSurface}}" StrokeThickness="0">
+                                <Border WidthRequest="34" HeightRequest="34" BackgroundColor="{AppThemeBinding Light=#E6FDEE, Dark=#1B3B2B}" StrokeThickness="0">
                                     <Border.StrokeShape><RoundRectangle CornerRadius="10" /></Border.StrokeShape>
-                                    <Label Text="✔" FontSize="14" TextColor="{StaticResource Accent}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                                    <Image Source="feriados_activo.png" WidthRequest="18" HeightRequest="18" HorizontalOptions="Center" VerticalOptions="Center" />
                                 </Border>
                                 <VerticalStackLayout Spacing="0" VerticalOptions="Center">
                                     <Label Text="{Binding TotalActivos}" FontSize="18" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />
@@ -79,11 +79,11 @@
                         <!-- Nacionales -->
                         <Border Grid.Column="0" BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}" Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" StrokeThickness="1" Padding="6,8">
                             <Border.StrokeShape><RoundRectangle CornerRadius="14" /></Border.StrokeShape>
-                            <Border.Shadow><Shadow Brush="Black" Offset="0,2" Radius="6" Opacity="0.04" /></Border.Shadow>
+                            <Border.Shadow><Shadow Brush="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" Offset="0,2" Radius="6" Opacity="0.04" /></Border.Shadow>
                             <HorizontalStackLayout Spacing="6" VerticalOptions="Center" HorizontalOptions="Center">
-                                <Border WidthRequest="28" HeightRequest="28" BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryLight}, Dark={StaticResource DarkPrimaryLight}}" StrokeThickness="0">
+                                <Border WidthRequest="28" HeightRequest="28" BackgroundColor="{AppThemeBinding Light=#DBEAFE, Dark=#1B2B4A}" StrokeThickness="0">
                                     <Border.StrokeShape><RoundRectangle CornerRadius="8" /></Border.StrokeShape>
-                                    <Label Text="🌐" FontSize="12" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                                    <Image Source="feriados_nacionales.png" WidthRequest="16" HeightRequest="16" HorizontalOptions="Center" VerticalOptions="Center" />
                                 </Border>
                                 <VerticalStackLayout Spacing="0" VerticalOptions="Center">
                                     <Label Text="{Binding TotalNacionales}" FontSize="16" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />
@@ -95,11 +95,11 @@
                         <!-- Locales -->
                         <Border Grid.Column="1" BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}" Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" StrokeThickness="1" Padding="6,8">
                             <Border.StrokeShape><RoundRectangle CornerRadius="14" /></Border.StrokeShape>
-                            <Border.Shadow><Shadow Brush="Black" Offset="0,2" Radius="6" Opacity="0.04" /></Border.Shadow>
+                            <Border.Shadow><Shadow Brush="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" Offset="0,2" Radius="6" Opacity="0.04" /></Border.Shadow>
                             <HorizontalStackLayout Spacing="6" VerticalOptions="Center" HorizontalOptions="Center">
-                                <Border WidthRequest="28" HeightRequest="28" BackgroundColor="{AppThemeBinding Light={StaticResource WarningSurface}, Dark={StaticResource DarkWarningSurface}}" StrokeThickness="0">
+                                <Border WidthRequest="28" HeightRequest="28" BackgroundColor="{AppThemeBinding Light=#FFEDD5, Dark=#44331C}" StrokeThickness="0">
                                     <Border.StrokeShape><RoundRectangle CornerRadius="8" /></Border.StrokeShape>
-                                    <Label Text="📍" FontSize="12" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                                    <Image Source="feriados_locales.png" WidthRequest="16" HeightRequest="16" HorizontalOptions="Center" VerticalOptions="Center" />
                                 </Border>
                                 <VerticalStackLayout Spacing="0" VerticalOptions="Center">
                                     <Label Text="{Binding TotalLocales}" FontSize="16" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />
@@ -111,11 +111,11 @@
                         <!-- Religiosos -->
                         <Border Grid.Column="2" BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}" Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" StrokeThickness="1" Padding="6,8">
                             <Border.StrokeShape><RoundRectangle CornerRadius="14" /></Border.StrokeShape>
-                            <Border.Shadow><Shadow Brush="Black" Offset="0,2" Radius="6" Opacity="0.04" /></Border.Shadow>
+                            <Border.Shadow><Shadow Brush="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" Offset="0,2" Radius="6" Opacity="0.04" /></Border.Shadow>
                             <HorizontalStackLayout Spacing="6" VerticalOptions="Center" HorizontalOptions="Center">
-                                <Border WidthRequest="28" HeightRequest="28" BackgroundColor="{AppThemeBinding Light={StaticResource PurpleSurface}, Dark={StaticResource DarkPurpleSurface}}" StrokeThickness="0">
+                                <Border WidthRequest="28" HeightRequest="28" BackgroundColor="{AppThemeBinding Light=#EDE9FE, Dark=#3B1B4A}" StrokeThickness="0">
                                     <Border.StrokeShape><RoundRectangle CornerRadius="8" /></Border.StrokeShape>
-                                    <Label Text="🎉" FontSize="12" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                                    <Image Source="feriados_religiosos.png" WidthRequest="16" HeightRequest="16" HorizontalOptions="Center" VerticalOptions="Center" />
                                 </Border>
                                 <VerticalStackLayout Spacing="0" VerticalOptions="Center">
                                     <Label Text="{Binding TotalReligiosos}" FontSize="16" FontAttributes="Bold" FontFamily="InterSemiBold" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />

@@ -91,6 +91,7 @@
                         </Border.StrokeShape>
                         <ImageButton
                             Source="{AppThemeBinding Light=descargar_icon.png, Dark=descargar_icon_dark.png}"
+                            Command="{Binding DescargarCommand}"
                             Padding="11"
                             BackgroundColor="Transparent" />
                     </Border>
@@ -109,20 +110,20 @@
                             <RoundRectangle CornerRadius="14" />
                         </Border.StrokeShape>
                         <Border.Shadow>
-                            <Shadow Brush="Black" Offset="0,2" Radius="6" Opacity="0.04" />
+                            <Shadow Brush="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" Offset="0,2" Radius="6" Opacity="0.04" />
                         </Border.Shadow>
                         <HorizontalStackLayout Spacing="8" VerticalOptions="Center" HorizontalOptions="Center">
                             <Border
                                 WidthRequest="34"
                                 HeightRequest="34"
-                                BackgroundColor="{AppThemeBinding Light={StaticResource PurpleSurface}, Dark={StaticResource DarkPurpleSurface}}"
+                                BackgroundColor="{AppThemeBinding Light=#FFEDD5, Dark=#44331C}"
                                 StrokeThickness="0"
                                 VerticalOptions="Center">
                                 <Border.StrokeShape>
                                     <RoundRectangle CornerRadius="8" />
                                 </Border.StrokeShape>
                                 <Image
-                                    Source="total_clientes.png"
+                                    Source="usuarios_total.png"
                                     WidthRequest="18"
                                     HeightRequest="18"
                                     HorizontalOptions="Center"
@@ -155,20 +156,20 @@
                             <RoundRectangle CornerRadius="14" />
                         </Border.StrokeShape>
                         <Border.Shadow>
-                            <Shadow Brush="Black" Offset="0,2" Radius="6" Opacity="0.04" />
+                            <Shadow Brush="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" Offset="0,2" Radius="6" Opacity="0.04" />
                         </Border.Shadow>
                         <HorizontalStackLayout Spacing="8" VerticalOptions="Center" HorizontalOptions="Center">
                             <Border
                                 WidthRequest="34"
                                 HeightRequest="34"
-                                BackgroundColor="{AppThemeBinding Light={StaticResource SuccessSurface}, Dark={StaticResource DarkSuccessSurface}}"
+                                BackgroundColor="{AppThemeBinding Light=#E6FDEE, Dark=#1B3B2B}"
                                 StrokeThickness="0"
                                 VerticalOptions="Center">
                                 <Border.StrokeShape>
                                     <RoundRectangle CornerRadius="8" />
                                 </Border.StrokeShape>
                                 <Image
-                                    Source="cliente_activos.png"
+                                    Source="usuario_activo.png"
                                     WidthRequest="18"
                                     HeightRequest="18"
                                     HorizontalOptions="Center"
@@ -201,20 +202,20 @@
                             <RoundRectangle CornerRadius="14" />
                         </Border.StrokeShape>
                         <Border.Shadow>
-                            <Shadow Brush="Black" Offset="0,2" Radius="6" Opacity="0.04" />
+                            <Shadow Brush="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" Offset="0,2" Radius="6" Opacity="0.04" />
                         </Border.Shadow>
                         <HorizontalStackLayout Spacing="8" VerticalOptions="Center" HorizontalOptions="Center">
                             <Border
                                 WidthRequest="34"
                                 HeightRequest="34"
-                                BackgroundColor="{AppThemeBinding Light={StaticResource Secondary}, Dark={StaticResource DarkSecondary}}"
+                                BackgroundColor="{AppThemeBinding Light=#F3F4F6, Dark=#3A3B3C}"
                                 StrokeThickness="0"
                                 VerticalOptions="Center">
                                 <Border.StrokeShape>
                                     <RoundRectangle CornerRadius="8" />
                                 </Border.StrokeShape>
                                 <Image
-                                    Source="cliente_inactivos.png"
+                                    Source="usuario_inactivo.png"
                                     WidthRequest="18"
                                     HeightRequest="18"
                                     HorizontalOptions="Center"

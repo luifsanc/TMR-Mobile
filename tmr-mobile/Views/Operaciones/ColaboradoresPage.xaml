@@ -39,15 +39,24 @@
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="10" />
                         </Border.StrokeShape>
-                        <Entry
-                            Text="{Binding Busqueda}"
-                            Placeholder="Buscar por nombre o identificación"
-                            PlaceholderColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}"
-                            TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}"
-                            FontSize="13"
-                            FontFamily="InterRegular"
-                            BackgroundColor="Transparent"
-                            VerticalOptions="Center" />
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8" VerticalOptions="Center">
+                            <Image
+                                Grid.Column="0"
+                                Source="{AppThemeBinding Light=buscar_icon.png, Dark=buscar_icon_dark.png}"
+                                WidthRequest="18"
+                                HeightRequest="18"
+                                VerticalOptions="Center" />
+                            <Entry
+                                Grid.Column="1"
+                                Text="{Binding Busqueda}"
+                                Placeholder="Buscar por nombre o identificación..."
+                                PlaceholderColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}"
+                                TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}"
+                                FontSize="13"
+                                FontFamily="InterRegular"
+                                BackgroundColor="Transparent"
+                                VerticalOptions="Center" />
+                        </Grid>
                     </Border>
 
                     <!-- Botón Filtro de Estado -->
@@ -61,13 +70,11 @@
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="10" />
                         </Border.StrokeShape>
-                        <Button
-                            Text="⚙"
+                        <ImageButton
+                            Source="{AppThemeBinding Light=filtro_icon.png, Dark=filtro_icon_dark.png}"
                             Command="{Binding CambiarFiltroEstadoCommand}"
+                            Padding="11"
                             BackgroundColor="Transparent"
-                            TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}"
-                            FontSize="18"
-                            Padding="0"
                             ToolTipProperties.Text="{Binding FiltroEstadoTexto}" />
                     </Border>
 
@@ -82,79 +89,267 @@
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="10" />
                         </Border.StrokeShape>
-                        <Button
-                            Text="⤓"
+                        <ImageButton
+                            Source="{AppThemeBinding Light=descargar_icon.png, Dark=descargar_icon_dark.png}"
                             Command="{Binding DescargarCommand}"
-                            BackgroundColor="Transparent"
-                            TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}"
-                            FontSize="18"
-                            Padding="0" />
+                            Padding="11"
+                            BackgroundColor="Transparent" />
                     </Border>
                 </Grid>
 
-                <!-- CARDS DE RESUMEN (Estadísticas) -->
-                <Grid Grid.Row="2" ColumnDefinitions="*,*,*" ColumnSpacing="8">
-                    <!-- Total -->
-                    <Border
-                        Grid.Column="0"
-                        BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}"
-                        Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}"
-                        StrokeThickness="1"
-                        Padding="10">
-                        <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="10" />
-                        </Border.StrokeShape>
-                        <VerticalStackLayout Spacing="2">
-                            <Label Text="Total" FontSize="11" TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}" HorizontalTextAlignment="Center" />
-                            <Label Text="{Binding TotalColaboradores}" FontSize="18" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" HorizontalTextAlignment="Center" />
-                        </VerticalStackLayout>
-                    </Border>
+                <!-- CARDS DE RESUMEN METRICAS (2 FILAS RESPONSIVAS) -->
+                <Grid Grid.Row="2" RowDefinitions="Auto,Auto" RowSpacing="8">
+                    <!-- Fila 1: Total colab. (33%) | Activos (33%) | Inactivos (33%) -->
+                    <Grid Grid.Row="0" ColumnDefinitions="*,*,*" ColumnSpacing="8">
+                        <!-- Total colaboradores -->
+                        <Border
+                            Grid.Column="0"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}"
+                            Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}"
+                            StrokeThickness="1"
+                            Padding="8,10">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="14" />
+                            </Border.StrokeShape>
+                            <Border.Shadow>
+                                <Shadow Brush="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" Offset="0,2" Radius="6" Opacity="0.04" />
+                            </Border.Shadow>
+                            <HorizontalStackLayout Spacing="6" VerticalOptions="Center" HorizontalOptions="Center">
+                                <Border
+                                    WidthRequest="32"
+                                    HeightRequest="32"
+                                    BackgroundColor="{AppThemeBinding Light=#FFEDD5, Dark=#44331C}"
+                                    StrokeThickness="0"
+                                    VerticalOptions="Center">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="8" />
+                                    </Border.StrokeShape>
+                                    <Image
+                                        Source="total_colab.png"
+                                        WidthRequest="18"
+                                        HeightRequest="18"
+                                        HorizontalOptions="Center"
+                                        VerticalOptions="Center" />
+                                </Border>
+                                <VerticalStackLayout VerticalOptions="Center" Spacing="0">
+                                    <Label
+                                        Text="{Binding TotalColaboradores}"
+                                        FontSize="16"
+                                        FontAttributes="Bold"
+                                        FontFamily="InterSemiBold"
+                                        TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />
+                                    <Label
+                                        Text="Total colab."
+                                        FontSize="9"
+                                        FontFamily="InterRegular"
+                                        TextColor="{AppThemeBinding Light={StaticResource TextSecondary}, Dark={StaticResource DarkTextSecondary}}" />
+                                </VerticalStackLayout>
+                            </HorizontalStackLayout>
+                        </Border>
 
-                    <!-- Activos -->
-                    <Border
-                        Grid.Column="1"
-                        BackgroundColor="{AppThemeBinding Light={StaticResource SuccessSurface}, Dark={StaticResource DarkSuccessSurface}}"
-                        Stroke="{AppThemeBinding Light={StaticResource SuccessSurface}, Dark={StaticResource DarkSuccessSurface}}"
-                        StrokeThickness="1"
-                        Padding="10">
-                        <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="10" />
-                        </Border.StrokeShape>
-                        <VerticalStackLayout Spacing="2">
-                            <Label Text="Activos" FontSize="11" TextColor="{StaticResource SuccessText}" HorizontalTextAlignment="Center" />
-                            <Label Text="{Binding TotalActivos}" FontSize="18" FontAttributes="Bold" TextColor="{StaticResource SuccessText}" HorizontalTextAlignment="Center" />
-                        </VerticalStackLayout>
-                    </Border>
+                        <!-- Activos -->
+                        <Border
+                            Grid.Column="1"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}"
+                            Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}"
+                            StrokeThickness="1"
+                            Padding="8,10">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="14" />
+                            </Border.StrokeShape>
+                            <Border.Shadow>
+                                <Shadow Brush="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" Offset="0,2" Radius="6" Opacity="0.04" />
+                            </Border.Shadow>
+                            <HorizontalStackLayout Spacing="6" VerticalOptions="Center" HorizontalOptions="Center">
+                                <Border
+                                    WidthRequest="32"
+                                    HeightRequest="32"
+                                    BackgroundColor="{AppThemeBinding Light={StaticResource SuccessSurface}, Dark={StaticResource DarkSuccessSurface}}"
+                                    StrokeThickness="0"
+                                    VerticalOptions="Center">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="8" />
+                                    </Border.StrokeShape>
+                                    <Image
+                                        Source="colab_activos.png"
+                                        WidthRequest="18"
+                                        HeightRequest="18"
+                                        HorizontalOptions="Center"
+                                        VerticalOptions="Center" />
+                                </Border>
+                                <VerticalStackLayout VerticalOptions="Center" Spacing="0">
+                                    <Label
+                                        Text="{Binding TotalActivos}"
+                                        FontSize="16"
+                                        FontAttributes="Bold"
+                                        FontFamily="InterSemiBold"
+                                        TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />
+                                    <Label
+                                        Text="Activos"
+                                        FontSize="9"
+                                        FontFamily="InterRegular"
+                                        TextColor="{AppThemeBinding Light={StaticResource TextSecondary}, Dark={StaticResource DarkTextSecondary}}" />
+                                </VerticalStackLayout>
+                            </HorizontalStackLayout>
+                        </Border>
 
-                    <!-- Inactivos -->
-                    <Border
-                        Grid.Column="2"
-                        BackgroundColor="{AppThemeBinding Light={StaticResource ErrorSurface}, Dark={StaticResource DarkErrorSurface}}"
-                        Stroke="{AppThemeBinding Light={StaticResource ErrorSurface}, Dark={StaticResource DarkErrorSurface}}"
-                        StrokeThickness="1"
-                        Padding="10">
-                        <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="10" />
-                        </Border.StrokeShape>
-                        <VerticalStackLayout Spacing="2">
-                            <Label Text="Inactivos" FontSize="11" TextColor="{StaticResource ErrorText}" HorizontalTextAlignment="Center" />
-                            <Label Text="{Binding TotalInactivos}" FontSize="18" FontAttributes="Bold" TextColor="{StaticResource ErrorText}" HorizontalTextAlignment="Center" />
-                        </VerticalStackLayout>
-                    </Border>
+                        <!-- Inactivos -->
+                        <Border
+                            Grid.Column="2"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}"
+                            Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}"
+                            StrokeThickness="1"
+                            Padding="8,10">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="14" />
+                            </Border.StrokeShape>
+                            <Border.Shadow>
+                                <Shadow Brush="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" Offset="0,2" Radius="6" Opacity="0.04" />
+                            </Border.Shadow>
+                            <HorizontalStackLayout Spacing="6" VerticalOptions="Center" HorizontalOptions="Center">
+                                <Border
+                                    WidthRequest="32"
+                                    HeightRequest="32"
+                                    BackgroundColor="{AppThemeBinding Light=#F3F4F6, Dark=#3A3B3C}"
+                                    StrokeThickness="0"
+                                    VerticalOptions="Center">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="8" />
+                                    </Border.StrokeShape>
+                                    <Image
+                                        Source="colab_inactivos.png"
+                                        WidthRequest="18"
+                                        HeightRequest="18"
+                                        HorizontalOptions="Center"
+                                        VerticalOptions="Center" />
+                                </Border>
+                                <VerticalStackLayout VerticalOptions="Center" Spacing="0">
+                                    <Label
+                                        Text="{Binding TotalInactivos}"
+                                        FontSize="16"
+                                        FontAttributes="Bold"
+                                        FontFamily="InterSemiBold"
+                                        TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />
+                                    <Label
+                                        Text="Inactivos"
+                                        FontSize="9"
+                                        FontFamily="InterRegular"
+                                        TextColor="{AppThemeBinding Light={StaticResource TextSecondary}, Dark={StaticResource DarkTextSecondary}}" />
+                                </VerticalStackLayout>
+                            </HorizontalStackLayout>
+                        </Border>
+                    </Grid>
+
+                    <!-- Fila 2: Asignados (50%) | No asignados (50%) -->
+                    <Grid Grid.Row="1" ColumnDefinitions="*,*" ColumnSpacing="8">
+                        <!-- Asignados -->
+                        <Border
+                            Grid.Column="0"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}"
+                            Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}"
+                            StrokeThickness="1"
+                            Padding="10,10">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="14" />
+                            </Border.StrokeShape>
+                            <Border.Shadow>
+                                <Shadow Brush="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" Offset="0,2" Radius="6" Opacity="0.04" />
+                            </Border.Shadow>
+                            <HorizontalStackLayout Spacing="8" VerticalOptions="Center" HorizontalOptions="Center">
+                                <Border
+                                    WidthRequest="32"
+                                    HeightRequest="32"
+                                    BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryLight}, Dark={StaticResource DarkPrimaryLight}}"
+                                    StrokeThickness="0"
+                                    VerticalOptions="Center">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="8" />
+                                    </Border.StrokeShape>
+                                    <Image
+                                        Source="colab_asignados.png"
+                                        WidthRequest="18"
+                                        HeightRequest="18"
+                                        HorizontalOptions="Center"
+                                        VerticalOptions="Center" />
+                                </Border>
+                                <VerticalStackLayout VerticalOptions="Center" Spacing="0">
+                                    <Label
+                                        Text="{Binding TotalAsignados}"
+                                        FontSize="16"
+                                        FontAttributes="Bold"
+                                        FontFamily="InterSemiBold"
+                                        TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />
+                                    <Label
+                                        Text="Asignados"
+                                        FontSize="10"
+                                        FontFamily="InterRegular"
+                                        TextColor="{AppThemeBinding Light={StaticResource TextSecondary}, Dark={StaticResource DarkTextSecondary}}" />
+                                </VerticalStackLayout>
+                            </HorizontalStackLayout>
+                        </Border>
+
+                        <!-- No asignados -->
+                        <Border
+                            Grid.Column="1"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}"
+                            Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}"
+                            StrokeThickness="1"
+                            Padding="10,10">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="14" />
+                            </Border.StrokeShape>
+                            <Border.Shadow>
+                                <Shadow Brush="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" Offset="0,2" Radius="6" Opacity="0.04" />
+                            </Border.Shadow>
+                            <HorizontalStackLayout Spacing="8" VerticalOptions="Center" HorizontalOptions="Center">
+                                <Border
+                                    WidthRequest="32"
+                                    HeightRequest="32"
+                                    BackgroundColor="{AppThemeBinding Light=#F3F4F6, Dark=#3A3B3C}"
+                                    StrokeThickness="0"
+                                    VerticalOptions="Center">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="8" />
+                                    </Border.StrokeShape>
+                                    <Image
+                                        Source="colab_no_asignados.png"
+                                        WidthRequest="18"
+                                        HeightRequest="18"
+                                        HorizontalOptions="Center"
+                                        VerticalOptions="Center" />
+                                </Border>
+                                <VerticalStackLayout VerticalOptions="Center" Spacing="0">
+                                    <Label
+                                        Text="{Binding TotalNoAsignados}"
+                                        FontSize="16"
+                                        FontAttributes="Bold"
+                                        FontFamily="InterSemiBold"
+                                        TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />
+                                    <Label
+                                        Text="No asignados"
+                                        FontSize="10"
+                                        FontFamily="InterRegular"
+                                        TextColor="{AppThemeBinding Light={StaticResource TextSecondary}, Dark={StaticResource DarkTextSecondary}}" />
+                                </VerticalStackLayout>
+                            </HorizontalStackLayout>
+                        </Border>
+                    </Grid>
                 </Grid>
 
                 <!-- LISTA DE COLABORADORES -->
                 <CollectionView
                     Grid.Row="3"
                     ItemsSource="{Binding Colaboradores}"
-                    SelectionMode="None">
+                    SelectionMode="None"
+                    VerticalScrollBarVisibility="Never">
 
                     <CollectionView.EmptyView>
                         <VerticalStackLayout Padding="40" HorizontalOptions="Center" VerticalOptions="Center">
                             <Label
                                 Text="No se encontraron colaboradores."
-                                TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}"
+                                TextColor="{AppThemeBinding Light={StaticResource TextSecondary}, Dark={StaticResource DarkTextSecondary}}"
                                 FontSize="14"
+                                FontFamily="InterRegular"
                                 HorizontalTextAlignment="Center" />
                         </VerticalStackLayout>
                     </CollectionView.EmptyView>
@@ -162,14 +357,17 @@
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="model:ColaboradorModel">
                             <Border
-                                Margin="0,0,0,10"
-                                Padding="14"
+                                Margin="0,0,0,12"
+                                Padding="14,14"
                                 BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}"
                                 Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}"
                                 StrokeThickness="1">
                                 <Border.StrokeShape>
-                                    <RoundRectangle CornerRadius="12" />
+                                    <RoundRectangle CornerRadius="14" />
                                 </Border.StrokeShape>
+                                <Border.Shadow>
+                                    <Shadow Brush="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" Offset="0,2" Radius="6" Opacity="0.04" />
+                                </Border.Shadow>
                                 <Border.GestureRecognizers>
                                     <TapGestureRecognizer
                                         Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.AbrirDetalleCommand}"
@@ -180,18 +378,19 @@
                                     <!-- Avatar Iniciales -->
                                     <Border
                                         Grid.Column="0"
-                                        WidthRequest="42"
-                                        HeightRequest="42"
+                                        WidthRequest="44"
+                                        HeightRequest="44"
                                         BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryLight}, Dark={StaticResource DarkPrimaryLight}}"
                                         StrokeThickness="0"
                                         VerticalOptions="Center">
                                         <Border.StrokeShape>
-                                            <RoundRectangle CornerRadius="21" />
+                                            <RoundRectangle CornerRadius="22" />
                                         </Border.StrokeShape>
                                         <Label
                                             Text="{Binding Iniciales}"
                                             FontSize="14"
                                             FontAttributes="Bold"
+                                            FontFamily="InterSemiBold"
                                             TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}"
                                             HorizontalTextAlignment="Center"
                                             VerticalTextAlignment="Center" />
@@ -203,60 +402,63 @@
                                             Text="{Binding NombreCompleto}"
                                             FontSize="14"
                                             FontAttributes="Bold"
+                                            FontFamily="InterSemiBold"
                                             TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}"
                                             MaxLines="1"
                                             LineBreakMode="TailTruncation" />
 
-                                        <!-- Cédula -->
-                                        <HorizontalStackLayout Spacing="4" VerticalOptions="Center">
-                                            <Label Text="🆔" FontSize="11" VerticalOptions="Center" />
-                                            <Label
-                                                Text="{Binding IdentificacionTexto, StringFormat='C.I.: {0}'}"
-                                                FontSize="12"
-                                                TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}"
-                                                MaxLines="1"
-                                                LineBreakMode="TailTruncation" />
-                                        </HorizontalStackLayout>
+                                        <Label
+                                            Text="{Binding IdentificacionTexto, StringFormat='C.I.: {0}'}"
+                                            FontSize="12"
+                                            FontFamily="InterRegular"
+                                            TextColor="{AppThemeBinding Light={StaticResource TextSecondary}, Dark={StaticResource DarkTextSecondary}}"
+                                            MaxLines="1"
+                                            LineBreakMode="TailTruncation" />
 
-                                        <!-- Correo -->
-                                        <HorizontalStackLayout Spacing="4" VerticalOptions="Center">
-                                            <Label Text="✉" FontSize="11" TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}" VerticalOptions="Center" />
-                                            <Label
-                                                Text="{Binding EmailTexto}"
-                                                FontSize="11"
-                                                TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}"
-                                                MaxLines="1"
-                                                LineBreakMode="TailTruncation" />
-                                        </HorizontalStackLayout>
+                                        <Label
+                                            Text="{Binding EmailTexto}"
+                                            FontSize="12"
+                                            FontFamily="InterRegular"
+                                            TextColor="{AppThemeBinding Light={StaticResource TextSecondary}, Dark={StaticResource DarkTextSecondary}}"
+                                            MaxLines="1"
+                                            LineBreakMode="TailTruncation" />
 
-                                        <!-- Cargo -->
-                                        <HorizontalStackLayout Spacing="4" VerticalOptions="Center">
-                                            <Label Text="💼" FontSize="11" VerticalOptions="Center" />
-                                            <Label
-                                                Text="{Binding CargoTexto}"
-                                                FontSize="11"
-                                                FontAttributes="Bold"
-                                                TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}"
-                                                MaxLines="1"
-                                                LineBreakMode="TailTruncation" />
-                                        </HorizontalStackLayout>
+                                        <Label
+                                            Text="{Binding CargoTexto}"
+                                            FontSize="11"
+                                            FontAttributes="Bold"
+                                            FontFamily="InterSemiBold"
+                                            TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}"
+                                            MaxLines="1"
+                                            LineBreakMode="TailTruncation" />
                                     </VerticalStackLayout>
 
-                                    <!-- Estado Badge -->
+                                    <!-- Status Badge Pill de Clientes con Punto Indicador (•) -->
                                     <Border
                                         Grid.Column="2"
                                         BackgroundColor="{Binding ColorFondoEstado}"
-                                        Stroke="Transparent"
-                                        Padding="8,4"
-                                        VerticalOptions="Center">
+                                        StrokeThickness="0"
+                                        Padding="10,4"
+                                        VerticalOptions="Start"
+                                        Margin="0,2,0,0">
                                         <Border.StrokeShape>
-                                            <RoundRectangle CornerRadius="6" />
+                                            <RoundRectangle CornerRadius="12" />
                                         </Border.StrokeShape>
-                                        <Label
-                                            Text="{Binding EstadoTexto}"
-                                            FontSize="11"
-                                            FontAttributes="Bold"
-                                            TextColor="{Binding ColorEstado}" />
+                                        <HorizontalStackLayout Spacing="4" VerticalOptions="Center">
+                                            <Label
+                                                Text="•"
+                                                FontSize="14"
+                                                FontAttributes="Bold"
+                                                TextColor="{Binding ColorEstado}"
+                                                VerticalOptions="Center" />
+                                            <Label
+                                                Text="{Binding EstadoTexto}"
+                                                FontSize="11"
+                                                FontAttributes="Bold"
+                                                FontFamily="InterSemiBold"
+                                                TextColor="{Binding ColorEstado}"
+                                                VerticalOptions="Center" />
+                                        </HorizontalStackLayout>
                                     </Border>
                                 </Grid>
                             </Border>
