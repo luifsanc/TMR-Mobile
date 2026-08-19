@@ -203,8 +203,30 @@
                     </VerticalStackLayout>
                 </ScrollView>
 
-                <!-- Botón Guardar -->
-                <Button Grid.Row="2" Text="Guardar" Command="{Binding GuardarActividadCommand}" BackgroundColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}" TextColor="{StaticResource White}" FontAttributes="Bold" FontSize="16" CornerRadius="16" HeightRequest="56" />
+                <!-- Botones -->
+                <Grid Grid.Row="2" ColumnDefinitions="*,*" ColumnSpacing="12">
+                    <Button Grid.Column="0" 
+                            Grid.ColumnSpan="2"
+                            Text="Guardar" 
+                            Command="{Binding GuardarActividadCommand}" 
+                            IsVisible="{Binding IsEditing, Converter={x:StaticResource InvertedBoolConverter}}"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}" 
+                            TextColor="{StaticResource White}" FontAttributes="Bold" FontSize="16" CornerRadius="16" HeightRequest="56" />
+                            
+                    <Button Grid.Column="0" 
+                            Text="Actualizar" 
+                            Command="{Binding GuardarActividadCommand}" 
+                            IsVisible="{Binding IsEditing}"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}" 
+                            TextColor="{StaticResource White}" FontAttributes="Bold" FontSize="16" CornerRadius="16" HeightRequest="56" />
+
+                    <Button Grid.Column="1" 
+                            Text="Eliminar" 
+                            Command="{Binding EliminarActividadCommand}" 
+                            IsVisible="{Binding IsEditing}"
+                            BackgroundColor="{StaticResource Error}" 
+                            TextColor="{StaticResource White}" FontAttributes="Bold" FontSize="16" CornerRadius="16" HeightRequest="56" />
+                </Grid>
 
             </Grid>
         </Border>
