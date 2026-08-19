@@ -418,7 +418,7 @@
         </VerticalStackLayout>
     </ScrollView>
 
-        <shared:BottomNavBar Grid.Row="1" VerticalOptions="End" />
+        <shared:UserBottomNavBar Grid.Row="1" VerticalOptions="End" />
         
         <!-- namespace: xmlns:components="clr-namespace:tmr_mobile.Views.Components" -->
         <components:OptionsPopover

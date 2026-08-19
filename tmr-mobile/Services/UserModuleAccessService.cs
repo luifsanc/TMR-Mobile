@@ -7,6 +7,7 @@ namespace tmr_mobile.Services;
 public interface IUserModuleAccessService
 {
     Task<HashSet<string>> ObtenerModulosAsync(CancellationToken ct = default);
+    Task<bool> EsColaboradorAsync();
 }
 
 public sealed class UserModuleAccessService : IUserModuleAccessService
@@ -51,6 +52,12 @@ public sealed class UserModuleAccessService : IUserModuleAccessService
         }
 
         return modulos;
+    }
+
+    public async Task<bool> EsColaboradorAsync()
+    {
+        var roles = await ObtenerRolesTokenAsync();
+        return roles.Contains("COLABORADOR");
     }
 
     private static async Task<HashSet<string>> ObtenerRolesTokenAsync()

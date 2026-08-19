@@ -98,6 +98,6 @@
             </VerticalStackLayout>
         </ScrollView>
 
-        <shared:BottomNavBar VerticalOptions="End" />
+        <shared:UserBottomNavBar VerticalOptions="End" />
     </Grid>
 </ContentPage>

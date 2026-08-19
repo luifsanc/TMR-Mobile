@@ -27,6 +27,10 @@
         <ShellContent ContentTemplate="{DataTemplate dash:DashboardPage}" />
     </ShellItem>
 
+    <ShellItem Route="ColaboradorDashboardPage">
+        <ShellContent ContentTemplate="{DataTemplate dash:ColaboradorDashboardPage}" />
+    </ShellItem>
+
     <ShellItem Route="HomePage">
         <ShellContent ContentTemplate="{DataTemplate home:HomePage}" />
     </ShellItem>

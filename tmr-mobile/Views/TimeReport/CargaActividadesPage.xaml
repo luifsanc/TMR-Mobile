@@ -379,7 +379,7 @@
         
         </ScrollView>
 
-        <shared:BottomNavBar VerticalOptions="End" />
+        <shared:UserBottomNavBar VerticalOptions="End" />
 
         <components:OptionsPopover
             Grid.RowSpan="99"

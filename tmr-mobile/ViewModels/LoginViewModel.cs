@@ -65,6 +65,12 @@ public partial class LoginViewModel : BaseViewModel
 
             if (success)
             {
+                if (await _moduleAccessService.EsColaboradorAsync())
+                {
+                    await Shell.Current.GoToAsync("//ColaboradorDashboardPage");
+                    return;
+                }
+
                 var modulos = await _moduleAccessService.ObtenerModulosAsync();
                 var rutaInicial = modulos.Contains("Dashboard")
                     ? "DashboardPage"

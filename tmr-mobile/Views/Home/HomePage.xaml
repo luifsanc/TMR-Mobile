@@ -5,7 +5,7 @@
              x:Class="tmr_mobile.Views.Home.HomePage"
              Title="Módulos"
              Shell.NavBarIsVisible="False"
-             BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkBackgroundLight}}"
+             BackgroundColor="Transparent"
              x:DataType="vm:HomeViewModel">
 
     <ContentPage.Resources>
@@ -15,9 +15,34 @@
         <x:Double x:Key="ModuleTextSize">14</x:Double>
     </ContentPage.Resources>
 
-    <Grid RowDefinitions="Auto,*">
+    <Grid>
+        <BoxView IsVisible="{Binding EsColaborador}"
+                 BackgroundColor="Transparent">
+            <BoxView.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnBackdropTapped" />
+            </BoxView.GestureRecognizers>
+        </BoxView>
+
+    <Grid x:Name="MenuPanel"
+          RowDefinitions="Auto,*">
+        <Grid.Style>
+            <Style TargetType="Grid">
+                <Setter Property="VerticalOptions" Value="Fill" />
+                <Setter Property="Margin" Value="0" />
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkBackgroundLight}}" />
+                <Style.Triggers>
+                    <DataTrigger TargetType="Grid" Binding="{Binding EsColaborador}" Value="True">
+                        <Setter Property="VerticalOptions" Value="End" />
+                        <Setter Property="HeightRequest" Value="130" />
+                        <Setter Property="Margin" Value="24,0,24,48" />
+                        <Setter Property="BackgroundColor" Value="Transparent" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </Grid.Style>
         <!-- Modal menu header -->
         <Border Grid.Row="0"
+                IsVisible="{Binding MostrarEncabezado}"
                 Margin="20,16,20,8"
                 Padding="14,9,8,9"
                 BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}"
@@ -53,7 +78,7 @@
 
         <!-- Modules Grid -->
         <ScrollView Grid.Row="1"
-                    Margin="20,8,20,24"
+                    Margin="20,8,20,12"
                     Orientation="Vertical"
                     VerticalScrollBarVisibility="Never">
             <FlexLayout x:Name="ModulesLayout"
@@ -73,6 +98,18 @@
                                 StrokeShape="RoundRectangle 16"
                                 Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}"
                                 BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryLight}, Dark={StaticResource DarkSurfaceElevated}}">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Opacity" Value="1" />
+                                    <Style.Triggers>
+                                        <DataTrigger TargetType="Border"
+                                                     Binding="{Binding Source={RelativeSource AncestorType={x:Type vm:HomeViewModel}}, Path=EsColaborador}"
+                                                     Value="True">
+                                            <Setter Property="Opacity" Value="0.82" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HomeViewModel}}, Path=NavigateCommand}"
                                                       CommandParameter="{Binding Ruta}" />
@@ -105,5 +142,6 @@
                 </BindableLayout.ItemTemplate>
             </FlexLayout>
         </ScrollView>
+    </Grid>
     </Grid>
 </ContentPage>

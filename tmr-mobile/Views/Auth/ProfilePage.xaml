@@ -92,6 +92,6 @@
                 </Border>
             </VerticalStackLayout>
         </ScrollView>
-        <shared:BottomNavBar Grid.Row="2" />
+        <shared:UserBottomNavBar Grid.Row="2" />
     </Grid>
 </ContentPage>

@@ -213,7 +213,7 @@
         <!-- NAVBAR INFERIOR (si es necesario) -->
         <!-- <shared:BottomNavBar Grid.Row="1" /> -->
         <!-- Como pidieron que sea parecido a los otros, lo pongo: -->
-        <shared:BottomNavBar Grid.Row="1" />
+        <shared:UserBottomNavBar Grid.Row="1" />
     </Grid>
 
 </ContentPage>

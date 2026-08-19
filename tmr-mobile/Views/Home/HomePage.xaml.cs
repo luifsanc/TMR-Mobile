@@ -16,6 +16,14 @@ public partial class HomePage : ContentPage
     {
         InitializeComponent();
         BindingContext = viewModel;
+        viewModel.PropertyChanged += (_, args) =>
+        {
+            if (args.PropertyName == nameof(HomeViewModel.EsColaborador))
+            {
+                _lastLayoutWidth = 0;
+                Dispatcher.Dispatch(UpdateModuleCardSize);
+            }
+        };
     }
 
     private void OnModulesLayoutSizeChanged(object? sender, EventArgs e)
@@ -44,7 +52,8 @@ public partial class HomePage : ContentPage
 
         _lastLayoutWidth = availableWidth;
 
-        var columns = availableWidth switch
+        var esColaborador = BindingContext is HomeViewModel { EsColaborador: true };
+        var columns = esColaborador ? 2 : availableWidth switch
         {
             < 240 => 1,
             < 600 => 2,
@@ -53,12 +62,14 @@ public partial class HomePage : ContentPage
         };
 
         var cardWidth = Math.Floor((availableWidth - (CardGap * (columns - 1))) / columns);
-        var cardHeight = Math.Clamp(cardWidth * 0.72, 96, 132);
+        var cardHeight = esColaborador
+            ? 88
+            : Math.Clamp(cardWidth * 0.72, 96, 132);
 
         Resources["ModuleCardWidth"] = cardWidth;
         Resources["ModuleCardHeight"] = cardHeight;
-        Resources["ModuleIconSize"] = Math.Clamp(cardWidth * 0.2, 26, 36);
-        Resources["ModuleTextSize"] = cardWidth < 125 ? 12d : 14d;
+        Resources["ModuleIconSize"] = esColaborador ? 24d : Math.Clamp(cardWidth * 0.2, 26, 36);
+        Resources["ModuleTextSize"] = esColaborador ? 12d : cardWidth < 125 ? 12d : 14d;
     }
 
     private async void OnCloseTapped(object? sender, TappedEventArgs e)
@@ -75,5 +86,16 @@ public partial class HomePage : ContentPage
         }
 
         await Shell.Current.GoToAsync("//DashboardPage");
+    }
+
+    private async void OnBackdropTapped(object? sender, TappedEventArgs e)
+    {
+        if (!Navigation.ModalStack.Contains(this))
+            return;
+
+        if (OriginPage is not null)
+            OverlayNavigationState.PreserveOnNextAppearing(OriginPage);
+
+        await Navigation.PopModalAsync();
     }
 }

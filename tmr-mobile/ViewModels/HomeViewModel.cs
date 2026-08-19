@@ -41,6 +41,16 @@ public partial class HomeViewModel : ObservableObject
 
     public ObservableCollection<ModuloItem> Modulos { get; } = new();
 
+    [ObservableProperty]
+    public partial bool EsColaborador { get; set; }
+
+    public bool MostrarEncabezado => !EsColaborador;
+
+    partial void OnEsColaboradorChanged(bool value)
+    {
+        OnPropertyChanged(nameof(MostrarEncabezado));
+    }
+
     public HomeViewModel(IUserModuleAccessService moduleAccessService)
     {
         _moduleAccessService = moduleAccessService;
@@ -53,6 +63,7 @@ public partial class HomeViewModel : ObservableObject
 
         try
         {
+            EsColaborador = await _moduleAccessService.EsColaboradorAsync();
             _modulosPermitidos = await _moduleAccessService.ObtenerModulosAsync();
 
             foreach (var modulo in CatalogoModulos)

@@ -294,6 +294,6 @@
                 </Grid>
             </Grid>
         </ContentView>
-        <shared:BottomNavBar Grid.Row="1" />
+        <shared:UserBottomNavBar Grid.Row="1" />
     </Grid>
 </ContentPage>
