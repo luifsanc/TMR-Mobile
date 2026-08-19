@@ -27,7 +27,7 @@
                     Margin="0,4,0,4" />
 
                 <!-- BARRA DE BÚSQUEDA Y BOTONES DE FILTRO Y DESCARGA -->
-                <Grid Grid.Row="1" ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
+                <Grid Grid.Row="1" ColumnDefinitions="*,Auto" ColumnSpacing="8">
                     <!-- Input de Búsqueda -->
                     <Border
                         Grid.Column="0"
@@ -77,23 +77,6 @@
                             BackgroundColor="Transparent"
                             ToolTipProperties.Text="{Binding FiltroEstado}" />
                     </Border>
-
-                    <!-- Botón de Descargar / Exportar -->
-                    <Border
-                        Grid.Column="2"
-                        WidthRequest="44"
-                        HeightRequest="44"
-                        BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}"
-                        Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}"
-                        StrokeThickness="1">
-                        <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="10" />
-                        </Border.StrokeShape>
-                        <ImageButton
-                            Source="{AppThemeBinding Light=descargar_icon.png, Dark=descargar_icon_dark.png}"
-                            Padding="11"
-                            BackgroundColor="Transparent" />
-                    </Border>
                 </Grid>
 
                 <!-- CARDS ESTADÍSTICAS (Total Roles, Activos, Inactivos) -->
@@ -109,25 +92,24 @@
                             <RoundRectangle CornerRadius="14" />
                         </Border.StrokeShape>
                         <Border.Shadow>
-                            <Shadow Brush="Black" Offset="0,2" Radius="6" Opacity="0.04" />
+                            <Shadow Brush="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" Offset="0,2" Radius="6" Opacity="0.04" />
                         </Border.Shadow>
                         <HorizontalStackLayout Spacing="8" VerticalOptions="Center" HorizontalOptions="Center">
                             <Border
                                 WidthRequest="34"
                                 HeightRequest="34"
-                                BackgroundColor="{AppThemeBinding Light={StaticResource PurpleSurface}, Dark={StaticResource DarkPurpleSurface}}"
+                                BackgroundColor="{AppThemeBinding Light=#FFEFEF, Dark=#4A2424}"
                                 StrokeThickness="0"
                                 VerticalOptions="Center">
                                 <Border.StrokeShape>
                                     <RoundRectangle CornerRadius="8" />
                                 </Border.StrokeShape>
-                                <Label
-                                    Text="☆"
-                                    FontSize="16"
-                                    FontAttributes="Bold"
-                                    TextColor="#A855F7"
-                                    HorizontalTextAlignment="Center"
-                                    VerticalTextAlignment="Center" />
+                                <Image
+                                    Source="roles_total.png"
+                                    WidthRequest="18"
+                                    HeightRequest="18"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center" />
                             </Border>
                             <VerticalStackLayout VerticalOptions="Center" Spacing="0">
                                 <Label
@@ -156,25 +138,24 @@
                             <RoundRectangle CornerRadius="14" />
                         </Border.StrokeShape>
                         <Border.Shadow>
-                            <Shadow Brush="Black" Offset="0,2" Radius="6" Opacity="0.04" />
+                            <Shadow Brush="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" Offset="0,2" Radius="6" Opacity="0.04" />
                         </Border.Shadow>
                         <HorizontalStackLayout Spacing="8" VerticalOptions="Center" HorizontalOptions="Center">
                             <Border
                                 WidthRequest="34"
                                 HeightRequest="34"
-                                BackgroundColor="{AppThemeBinding Light={StaticResource SuccessSurface}, Dark={StaticResource DarkSuccessSurface}}"
+                                BackgroundColor="{AppThemeBinding Light=#E6FDEE, Dark=#1B3B2B}"
                                 StrokeThickness="0"
                                 VerticalOptions="Center">
                                 <Border.StrokeShape>
                                     <RoundRectangle CornerRadius="8" />
                                 </Border.StrokeShape>
-                                <Label
-                                    Text="☆"
-                                    FontSize="16"
-                                    FontAttributes="Bold"
-                                    TextColor="{StaticResource Accent}"
-                                    HorizontalTextAlignment="Center"
-                                    VerticalTextAlignment="Center" />
+                                <Image
+                                    Source="roles_activo.png"
+                                    WidthRequest="18"
+                                    HeightRequest="18"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center" />
                             </Border>
                             <VerticalStackLayout VerticalOptions="Center" Spacing="0">
                                 <Label
@@ -203,25 +184,24 @@
                             <RoundRectangle CornerRadius="14" />
                         </Border.StrokeShape>
                         <Border.Shadow>
-                            <Shadow Brush="Black" Offset="0,2" Radius="6" Opacity="0.04" />
+                            <Shadow Brush="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" Offset="0,2" Radius="6" Opacity="0.04" />
                         </Border.Shadow>
                         <HorizontalStackLayout Spacing="8" VerticalOptions="Center" HorizontalOptions="Center">
                             <Border
                                 WidthRequest="34"
                                 HeightRequest="34"
-                                BackgroundColor="{AppThemeBinding Light={StaticResource Secondary}, Dark={StaticResource DarkSecondary}}"
+                                BackgroundColor="{AppThemeBinding Light=#F3F4F6, Dark=#3A3B3C}"
                                 StrokeThickness="0"
                                 VerticalOptions="Center">
                                 <Border.StrokeShape>
                                     <RoundRectangle CornerRadius="8" />
                                 </Border.StrokeShape>
-                                <Label
-                                    Text="☆"
-                                    FontSize="16"
-                                    FontAttributes="Bold"
-                                    TextColor="{AppThemeBinding Light={StaticResource TextSecondary}, Dark={StaticResource DarkTextSecondary}}"
-                                    HorizontalTextAlignment="Center"
-                                    VerticalTextAlignment="Center" />
+                                <Image
+                                    Source="roles_inactivo.png"
+                                    WidthRequest="18"
+                                    HeightRequest="18"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center" />
                             </Border>
                             <VerticalStackLayout VerticalOptions="Center" Spacing="0">
                                 <Label
@@ -279,7 +259,7 @@
                                 </Border.GestureRecognizers>
 
                                 <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="12" VerticalOptions="Center">
-                                    <!-- Icono Avatar de Rol -->
+                                    <!-- Avatar Iniciales del Rol (igual que Clientes y Colaboradores) -->
                                     <Border
                                         Grid.Column="0"
                                         WidthRequest="44"
@@ -291,8 +271,10 @@
                                             <RoundRectangle CornerRadius="22" />
                                         </Border.StrokeShape>
                                         <Label
-                                            Text="🛡"
-                                            FontSize="18"
+                                            Text="{Binding Iniciales}"
+                                            FontSize="14"
+                                            FontAttributes="Bold"
+                                            FontFamily="InterSemiBold"
                                             TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}"
                                             HorizontalTextAlignment="Center"
                                             VerticalTextAlignment="Center" />
@@ -324,13 +306,29 @@
                                                     <RoundRectangle CornerRadius="6" />
                                                 </Border.StrokeShape>
                                                 <Label
-                                                    Text="{Binding ModulosTexto}"
+                                                    Text="{Binding PrimerosModulosTexto}"
                                                     FontSize="10"
                                                     FontAttributes="Bold"
                                                     FontFamily="InterSemiBold"
                                                     TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}"
                                                     MaxLines="1"
                                                     LineBreakMode="TailTruncation" />
+                                            </Border>
+                                            <!-- Chip +X más -->
+                                            <Border
+                                                IsVisible="{Binding TieneModulosRestantes}"
+                                                BackgroundColor="{AppThemeBinding Light=#F3F4F6, Dark=#3A3B3C}"
+                                                StrokeThickness="0"
+                                                Padding="6,2">
+                                                <Border.StrokeShape>
+                                                    <RoundRectangle CornerRadius="6" />
+                                                </Border.StrokeShape>
+                                                <Label
+                                                    Text="{Binding ModulosRestantesTexto}"
+                                                    FontSize="10"
+                                                    FontAttributes="Bold"
+                                                    FontFamily="InterSemiBold"
+                                                    TextColor="{AppThemeBinding Light={StaticResource TextSecondary}, Dark={StaticResource DarkTextSecondary}}" />
                                             </Border>
                                         </HorizontalStackLayout>
                                     </VerticalStackLayout>

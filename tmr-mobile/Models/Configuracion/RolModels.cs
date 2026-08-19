@@ -25,6 +25,20 @@ public class RolListaItem
     public string ColorFondoEstado => Activo ? DesignColors.SuccessSurface : DesignColors.Secondary;
     public string ColorTextoEstado => Activo ? DesignColors.SuccessText : DesignColors.TextMuted;
 
+    public string Iniciales
+    {
+        get
+        {
+            if (string.IsNullOrWhiteSpace(Nombre)) return "RO";
+            var partes = Nombre.Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            if (partes.Length >= 2)
+            {
+                return $"{partes[0][0]}{partes[1][0]}".ToUpper();
+            }
+            return partes[0].Length >= 2 ? partes[0].Substring(0, 2).ToUpper() : partes[0].ToUpper();
+        }
+    }
+
     public List<string> ModulosNombres
     {
         get
@@ -36,6 +50,10 @@ public class RolListaItem
     }
 
     public string ModulosTexto => ModulosNombres.Count == 0 ? "Sin módulos" : string.Join(", ", ModulosNombres);
+    public string PrimerosModulosTexto => ModulosNombres.Count == 0 ? "Sin módulos" : string.Join(", ", ModulosNombres.Take(3));
+    public int ModulosRestantesCount => Math.Max(0, ModulosNombres.Count - 3);
+    public bool TieneModulosRestantes => ModulosRestantesCount > 0;
+    public string ModulosRestantesTexto => $"+{ModulosRestantesCount} más";
 }
 
 public class RolListadoEnvelope
