@@ -15,6 +15,9 @@ public partial class CrearActividadViewModel : BaseViewModel, IQueryAttributable
     private int? _actividadId;
 
     [ObservableProperty]
+    private bool _isEditing;
+
+    [ObservableProperty]
     private DateTime _fechaActividad = DateTime.Today;
 
     [ObservableProperty]
@@ -124,9 +127,14 @@ public partial class CrearActividadViewModel : BaseViewModel, IQueryAttributable
             CodigoRequerimiento = actividad.CodigoRequerimiento;
             EsBillable = actividad.EsBillable ?? true;
             Title = "Editar Actividad";
+            IsEditing = true;
             
             _tempProyectoId = actividad.IdProyecto;
             _tempTipoActividadId = actividad.IdTipoActividad;
+        }
+        else
+        {
+            IsEditing = false;
         }
     }
 
@@ -227,8 +235,8 @@ public partial class CrearActividadViewModel : BaseViewModel, IQueryAttributable
                         Notas: string.IsNullOrWhiteSpace(Notas) ? null : Notas,
                         EsBillable: EsBillable
                     );
-                    var result = await _apiService.PostAsync<CrearActividadDto, CalendarioActividadDto>("api/time-report/actividades", req);
-                    if (result != null) count++;
+                    var result = await _apiService.PostForResultAsync("api/time-report/actividades", req);
+                    if (result.Success) count++;
                 }
 
                 if (count > 0)
@@ -242,27 +250,56 @@ public partial class CrearActividadViewModel : BaseViewModel, IQueryAttributable
             }
             else
             {
-                var req = new CrearActividadDto(
-                    IdEmpleado: idEmpleado.Value,
-                    IdProyecto: ProyectoSeleccionado?.Id,
-                    IdTipoActividad: TipoActividadSeleccionada.Id,
-                    CodigoRequerimiento: string.IsNullOrWhiteSpace(CodigoRequerimiento) ? null : CodigoRequerimiento,
-                    CantidadHoras: CantidadHoras,
-                    FechaActividad: DateOnly.FromDateTime(FechaActividad),
-                    DescripcionActividad: DescripcionActividad,
-                    Notas: string.IsNullOrWhiteSpace(Notas) ? null : Notas,
-                    EsBillable: EsBillable
-                );
-
-                var result = await _apiService.PostAsync<CrearActividadDto, CalendarioActividadDto>("api/time-report/actividades", req);
-                
-                if (result != null)
+                if (ActividadId.HasValue)
                 {
-                    await Shell.Current.GoToAsync("..");
+                    // EDITAR ACTIVIDAD EXISTENTE
+                    var reqPut = new ActualizarActividadDto(
+                        IdProyecto: ProyectoSeleccionado?.Id,
+                        IdTipoActividad: TipoActividadSeleccionada.Id,
+                        CodigoRequerimiento: string.IsNullOrWhiteSpace(CodigoRequerimiento) ? null : CodigoRequerimiento,
+                        CantidadHoras: CantidadHoras,
+                        FechaActividad: DateOnly.FromDateTime(FechaActividad),
+                        DescripcionActividad: DescripcionActividad,
+                        Notas: string.IsNullOrWhiteSpace(Notas) ? null : Notas,
+                        EsBillable: EsBillable
+                    );
+
+                    var resultPut = await _apiService.PutForResultAsync($"api/time-report/actividades/{ActividadId.Value}", reqPut);
+
+                    if (resultPut.Success)
+                    {
+                        await Shell.Current.GoToAsync("..");
+                    }
+                    else
+                    {
+                        await Shell.Current.DisplayAlertAsync("Error", resultPut.Message, "OK");
+                    }
                 }
                 else
                 {
-                    await Shell.Current.DisplayAlertAsync("Error", "No se pudo registrar la actividad.", "OK");
+                    // NUEVA ACTIVIDAD
+                    var req = new CrearActividadDto(
+                        IdEmpleado: idEmpleado.Value,
+                        IdProyecto: ProyectoSeleccionado?.Id,
+                        IdTipoActividad: TipoActividadSeleccionada.Id,
+                        CodigoRequerimiento: string.IsNullOrWhiteSpace(CodigoRequerimiento) ? null : CodigoRequerimiento,
+                        CantidadHoras: CantidadHoras,
+                        FechaActividad: DateOnly.FromDateTime(FechaActividad),
+                        DescripcionActividad: DescripcionActividad,
+                        Notas: string.IsNullOrWhiteSpace(Notas) ? null : Notas,
+                        EsBillable: EsBillable
+                    );
+
+                    var result = await _apiService.PostForResultAsync("api/time-report/actividades", req);
+                    
+                    if (result.Success)
+                    {
+                        await Shell.Current.GoToAsync("..");
+                    }
+                    else
+                    {
+                        await Shell.Current.DisplayAlertAsync("Error", result.Message, "OK");
+                    }
                 }
             }
         }
@@ -280,5 +317,36 @@ public partial class CrearActividadViewModel : BaseViewModel, IQueryAttributable
     private async Task CancelarAsync()
     {
         await Shell.Current.GoToAsync("..");
+    }
+
+    [RelayCommand]
+    private async Task EliminarActividadAsync()
+    {
+        if (!ActividadId.HasValue) return;
+
+        bool answer = await Shell.Current.DisplayAlert("Confirmar", $"¿Estás seguro de eliminar esta actividad?", "Sí", "No");
+        if (!answer) return;
+
+        IsBusy = true;
+        try
+        {
+            var result = await _apiService.DeleteForResultAsync($"api/time-report/actividades/{ActividadId.Value}");
+            if (result.Success)
+            {
+                await Shell.Current.GoToAsync("..");
+            }
+            else
+            {
+                await Shell.Current.DisplayAlert("Error", result.Message, "OK");
+            }
+        }
+        catch (Exception ex)
+        {
+            await Shell.Current.DisplayAlert("Error", $"Ocurrió un problema: {ex.Message}", "OK");
+        }
+        finally
+        {
+            IsBusy = false;
+        }
     }
 }

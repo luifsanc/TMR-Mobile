@@ -188,6 +188,75 @@ public class ApiService
         return ApiOperationResult.Fail(ExtractErrorMessage(content), response.StatusCode);
     }
 
+    public async Task<ApiOperationResult> PutForResultAsync<TRequest>(
+        string endpoint,
+        TRequest data,
+        CancellationToken ct = default)
+    {
+        await AddAuthHeaderAsync();
+        endpoint = NormalizeEndpoint(endpoint);
+        using var response = await _httpClient.PutAsJsonAsync(endpoint, data, JsonOptions, ct);
+
+        if (response.StatusCode == HttpStatusCode.Unauthorized && _refreshTokenFunc != null)
+        {
+            Log($"[ApiService] 401 en PUT {endpoint} — intentando refresh...");
+            var refreshed = await _refreshTokenFunc();
+
+            if (refreshed)
+            {
+                await AddAuthHeaderAsync();
+                using var retry = await _httpClient.PutAsJsonAsync(endpoint, data, JsonOptions, ct);
+                var retryContent = await retry.Content.ReadAsStringAsync(ct);
+
+                return retry.IsSuccessStatusCode
+                    ? ApiOperationResult.Ok()
+                    : ApiOperationResult.Fail(ExtractErrorMessage(retryContent), retry.StatusCode);
+            }
+        }
+
+        var content = await response.Content.ReadAsStringAsync(ct);
+
+        if (response.IsSuccessStatusCode)
+            return ApiOperationResult.Ok();
+
+        Log($"[ApiService] Error {(int)response.StatusCode} en PUT {endpoint}: {content}");
+        return ApiOperationResult.Fail(ExtractErrorMessage(content), response.StatusCode);
+    }
+
+    public async Task<ApiOperationResult> DeleteForResultAsync(
+        string endpoint,
+        CancellationToken ct = default)
+    {
+        await AddAuthHeaderAsync();
+        endpoint = NormalizeEndpoint(endpoint);
+        using var response = await _httpClient.DeleteAsync(endpoint, ct);
+
+        if (response.StatusCode == HttpStatusCode.Unauthorized && _refreshTokenFunc != null)
+        {
+            Log($"[ApiService] 401 en DELETE {endpoint} — intentando refresh...");
+            var refreshed = await _refreshTokenFunc();
+
+            if (refreshed)
+            {
+                await AddAuthHeaderAsync();
+                using var retry = await _httpClient.DeleteAsync(endpoint, ct);
+                var retryContent = await retry.Content.ReadAsStringAsync(ct);
+
+                return retry.IsSuccessStatusCode
+                    ? ApiOperationResult.Ok()
+                    : ApiOperationResult.Fail(ExtractErrorMessage(retryContent), retry.StatusCode);
+            }
+        }
+
+        var content = await response.Content.ReadAsStringAsync(ct);
+
+        if (response.IsSuccessStatusCode)
+            return ApiOperationResult.Ok();
+
+        Log($"[ApiService] Error {(int)response.StatusCode} en DELETE {endpoint}: {content}");
+        return ApiOperationResult.Fail(ExtractErrorMessage(content), response.StatusCode);
+    }
+
     public async Task<TResponse?> PostFileAsync<TResponse>(string endpoint, byte[] fileBytes, string fileName,
         CancellationToken ct = default)
     {
