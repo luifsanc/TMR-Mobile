@@ -5,7 +5,6 @@ using TMR.Shared.DTOs.CargaActividades;
 using tmr_mobile.Models;
 using tmr_mobile.Services;
 using tmr_shared.DTOs.CargaActividades;
-using tmr_shared.DTOs.Dashboard;
 
 namespace tmr_mobile.ViewModels;
 
@@ -95,7 +94,7 @@ public partial class CargaActividadesViewModel : BaseViewModel
         Title = "Carga Masiva de Actividades";
 
         CargarActividadesCommand.Execute(null);
-        CargarHorasIncompletasCommand.Execute(null);
+        //CargarHorasIncompletasCommand.Execute(null);
     }
 
     partial void OnPaginaActualChanged(int value)
@@ -147,28 +146,6 @@ public partial class CargaActividadesViewModel : BaseViewModel
         }
     }
 
-    [RelayCommand]
-    private async Task CargarHorasIncompletasAsync()
-    {
-        try
-        {
-            var response = await _apiService.GetAsync<HorasIncompletasResponse>("dashboard/mis-horas-incompletas?rango=mes");
-            if (response != null)
-            {
-                TieneHorasFaltantes = response.TieneFaltantes;
-                HorasFaltantesTexto = response.TieneFaltantes
-                    ? $"{response.HorasFaltantes:0.#} h"
-                    : "Estás al día";
-            }
-        }
-        catch (Exception ex)
-        {
-            HorasFaltantesTexto = "—";
-            System.Diagnostics.Debug.WriteLine($"[HorasIncompletas] {ex.Message}");
-        }
-    }
-
-
     private enum CriterioOrden { FechaDesc, FechaAsc, ColaboradorAsc, HorasDesc }
     private CriterioOrden _criterioOrden = CriterioOrden.FechaDesc;
 
@@ -204,79 +181,75 @@ public partial class CargaActividadesViewModel : BaseViewModel
 
 
 
-// ===== Filtro (Colaborador / Proyecto / Cliente) =====
-[ObservableProperty]
-public partial bool IsFiltroSelectorVisible { get; set; } = false;
+    // ===== Filtro (Colaborador / Proyecto / Cliente) =====
+    [ObservableProperty]
+    public partial bool IsFiltroSelectorVisible { get; set; } = false;
 
-[RelayCommand]
-private void AbrirFiltros()
-{
-    IsFiltroSelectorVisible = true;
-}
-
-[RelayCommand]
-private void CerrarFiltroSelector()
-{
-    IsFiltroSelectorVisible = false;
-}
-
-[RelayCommand]
-private void SeleccionarFiltro(string opcion)
-{
-    IsFiltroSelectorVisible = false;
-
-    if (string.IsNullOrEmpty(opcion))
-        return;
-
-    CampoFiltro = opcion; // ya dispara OnCampoFiltroChanged -> AplicarFiltro
-}
-
-
-// ===== Ordenar =====
-[ObservableProperty]
-public partial bool IsOrdenSelectorVisible { get; set; } = false;
-
-public List<string> OpcionesOrdenDisponibles { get; } = new()
-{
-    "Fecha (más recientes)", "Fecha (más antiguas)", "Colaborador (A-Z)", "Horas (mayor a menor)"
-};
-
-[RelayCommand]
-private void AbrirOrden()
-{
-    IsOrdenSelectorVisible = true;
-}
-
-[RelayCommand]
-private void CerrarOrdenSelector()
-{
-    IsOrdenSelectorVisible = false;
-}
-
-[RelayCommand]
-private void SeleccionarOrden(string opcion)
-{
-    IsOrdenSelectorVisible = false;
-
-    if (string.IsNullOrEmpty(opcion))
-        return;
-
-    _criterioOrden = opcion switch
+    [RelayCommand]
+    private void AbrirFiltros()
     {
-        "Fecha (más antiguas)" => CriterioOrden.FechaAsc,
-        "Colaborador (A-Z)" => CriterioOrden.ColaboradorAsc,
-        "Horas (mayor a menor)" => CriterioOrden.HorasDesc,
-        _ => CriterioOrden.FechaDesc,
+        IsFiltroSelectorVisible = true;
+    }
+
+    [RelayCommand]
+    private void CerrarFiltroSelector()
+    {
+        IsFiltroSelectorVisible = false;
+    }
+
+    [RelayCommand]
+    private void SeleccionarFiltro(string opcion)
+    {
+        IsFiltroSelectorVisible = false;
+
+        if (string.IsNullOrEmpty(opcion))
+            return;
+
+        CampoFiltro = opcion; // ya dispara OnCampoFiltroChanged -> AplicarFiltro
+    }
+
+
+    // ===== Ordenar =====
+    [ObservableProperty]
+    public partial bool IsOrdenSelectorVisible { get; set; } = false;
+
+    public List<string> OpcionesOrdenDisponibles { get; } = new()
+    {
+        "Fecha (más recientes)", "Fecha (más antiguas)", "Colaborador (A-Z)", "Horas (mayor a menor)"
     };
 
-    OrdenTexto = opcion;
-    PaginaActual = 1;
-    AplicarFiltro();
-}
+    [RelayCommand]
+    private void AbrirOrden()
+    {
+        IsOrdenSelectorVisible = true;
+    }
 
+    [RelayCommand]
+    private void CerrarOrdenSelector()
+    {
+        IsOrdenSelectorVisible = false;
+    }
 
+    [RelayCommand]
+    private void SeleccionarOrden(string opcion)
+    {
+        IsOrdenSelectorVisible = false;
 
+        if (string.IsNullOrEmpty(opcion))
+            return;
 
+        _criterioOrden = opcion switch
+        {
+            "Fecha (más antiguas)" => CriterioOrden.FechaAsc,
+            "Colaborador (A-Z)" => CriterioOrden.ColaboradorAsc,
+            "Horas (mayor a menor)" => CriterioOrden.HorasDesc,
+            _ => CriterioOrden.FechaDesc,
+        };
+
+        OrdenTexto = opcion;
+        PaginaActual = 1;
+        AplicarFiltro();
+    }
 
     private void AplicarFiltro()
     {
