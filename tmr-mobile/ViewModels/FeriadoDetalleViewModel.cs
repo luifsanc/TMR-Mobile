@@ -99,9 +99,9 @@ public partial class FeriadoDetalleViewModel : BaseViewModel, IQueryAttributable
         try
         {
             IsBusy = true;
-            var success = await _feriadosService.EliminarFeriadoAsync(Feriado.Id);
+            var resultado = await _feriadosService.EliminarFeriadoAsync(Feriado.Id);
 
-            if (success)
+            if (resultado.Success)
             {
                 await Shell.Current.DisplayAlertAsync(
                     "Feriado eliminado",
@@ -111,7 +111,7 @@ public partial class FeriadoDetalleViewModel : BaseViewModel, IQueryAttributable
             }
             else
             {
-                ErrorMessage = "No se pudo eliminar el feriado.";
+                ErrorMessage = resultado.Message;
             }
         }
         catch (Exception ex)

@@ -59,25 +59,24 @@ public class FeriadosService : IFeriadosService
         return todos.FirstOrDefault(f => f.Id == id);
     }
 
-    public async Task<FeriadoItem?> CrearFeriadoAsync(CreateFeriadoRequest request)
+    public async Task<ApiOperationResult> CrearFeriadoAsync(CreateFeriadoRequest request)
     {
         var endpoint = "configuracion/dias-festivos";
         System.Diagnostics.Debug.WriteLine($"[FERIADOS] Endpoint: {endpoint}");
-        return await _apiService.PostAsync<CreateFeriadoRequest, FeriadoItem>(endpoint, request);
+        return await _apiService.PostForResultAsync(endpoint, request);
     }
 
-    public async Task<bool> ActualizarFeriadoAsync(int id, UpdateFeriadoRequest request)
+    public async Task<ApiOperationResult> ActualizarFeriadoAsync(int id, UpdateFeriadoRequest request)
     {
         var endpoint = $"configuracion/dias-festivos/{id}";
         System.Diagnostics.Debug.WriteLine($"[FERIADOS] Endpoint: {endpoint}");
-        var result = await _apiService.PutAsync<UpdateFeriadoRequest, object>(endpoint, request);
-        return result is not null;
+        return await _apiService.PutForResultAsync(endpoint, request);
     }
 
-    public async Task<bool> EliminarFeriadoAsync(int id)
+    public async Task<ApiOperationResult> EliminarFeriadoAsync(int id)
     {
         var endpoint = $"configuracion/dias-festivos/{id}";
         System.Diagnostics.Debug.WriteLine($"[FERIADOS] Endpoint: {endpoint}");
-        return await _apiService.DeleteAsync(endpoint);
+        return await _apiService.DeleteForResultAsync(endpoint);
     }
 }

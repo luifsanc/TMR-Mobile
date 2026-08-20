@@ -297,7 +297,6 @@ public class ApiService
         return response.IsSuccessStatusCode;
     }
 
-
     public async Task<bool> DeleteAsync(string endpoint,
         CancellationToken ct = default)
     {

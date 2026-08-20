@@ -59,6 +59,12 @@ public partial class FeriadoFormViewModel : BaseViewModel, IQueryAttributable
             return;
         }
 
+        if (query.TryGetValue("FechaPrecargada", out var fechaObj) && fechaObj is DateTime fecha)
+        {
+            FechaFeriado = fecha;
+        }
+
+
         if (query.TryGetValue("IdFeriado", out var idObj))
         {
             if (idObj is int id) IdFeriado = id;
@@ -127,22 +133,24 @@ public partial class FeriadoFormViewModel : BaseViewModel, IQueryAttributable
             IsBusy = true;
             ErrorMessage = string.Empty;
 
+            var fechaStr = FechaFeriado.ToString("yyyy-MM-dd");
+
             if (EsEdicion)
             {
                 var update = new UpdateFeriadoRequest
                 {
                     NombreFeriado = NombreFeriado.Trim(),
-                    FechaFeriado = FechaFeriado.Date,
+                    FechaFeriado = fechaStr,
                     TipoFeriado = TipoFeriado,
                     EsRecurrente = EsRecurrente,
                     Descripcion = string.IsNullOrWhiteSpace(Descripcion) ? null : Descripcion.Trim(),
                     Activo = Activo
                 };
 
-                var success = await _feriadosService.ActualizarFeriadoAsync(IdFeriado!.Value, update);
-                if (!success)
+                var resultado = await _feriadosService.ActualizarFeriadoAsync(IdFeriado!.Value, update);
+                if (!resultado.Success)
                 {
-                    ErrorMessage = "No se pudo actualizar el feriado.";
+                    ErrorMessage = resultado.Message;
                     return;
                 }
             }
@@ -151,16 +159,16 @@ public partial class FeriadoFormViewModel : BaseViewModel, IQueryAttributable
                 var create = new CreateFeriadoRequest
                 {
                     NombreFeriado = NombreFeriado.Trim(),
-                    FechaFeriado = FechaFeriado.Date,
+                    FechaFeriado = fechaStr,
                     TipoFeriado = TipoFeriado,
                     EsRecurrente = EsRecurrente,
                     Descripcion = string.IsNullOrWhiteSpace(Descripcion) ? null : Descripcion.Trim()
                 };
 
-                var result = await _feriadosService.CrearFeriadoAsync(create);
-                if (result is null)
+                var resultado = await _feriadosService.CrearFeriadoAsync(create);
+                if (!resultado.Success)
                 {
-                    ErrorMessage = "No se pudo crear el feriado.";
+                    ErrorMessage = resultado.Message;
                     return;
                 }
             }
