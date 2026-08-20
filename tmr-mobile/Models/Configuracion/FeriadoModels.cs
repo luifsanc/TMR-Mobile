@@ -100,7 +100,7 @@ public class DiaCalendarioItem
 public class CreateFeriadoRequest
 {
     public string NombreFeriado { get; set; } = string.Empty;
-    public DateTime FechaFeriado { get; set; } = DateTime.Today;
+    public string FechaFeriado { get; set; } = string.Empty;
     public string TipoFeriado { get; set; } = "Nacional";
     public bool EsRecurrente { get; set; }
     public string? Descripcion { get; set; }
@@ -109,7 +109,7 @@ public class CreateFeriadoRequest
 public class UpdateFeriadoRequest
 {
     public string NombreFeriado { get; set; } = string.Empty;
-    public DateTime FechaFeriado { get; set; } = DateTime.Today;
+    public string FechaFeriado { get; set; } = string.Empty;
     public string TipoFeriado { get; set; } = "Nacional";
     public bool EsRecurrente { get; set; }
     public string? Descripcion { get; set; }

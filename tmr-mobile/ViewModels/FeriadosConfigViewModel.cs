@@ -166,6 +166,19 @@ public partial class FeriadosConfigViewModel : BaseViewModel
     }
 
     [RelayCommand]
+    private async Task CrearFeriadoEnFechaAsync(DiaCalendarioItem dia)
+    {
+        if (dia is null || !dia.EsMesActual) return;
+        
+        var parametros = new Dictionary<string, object>
+        {
+            ["FechaPrecargada"] = dia.Fecha
+        };
+
+        await Shell.Current.GoToAsync(nameof(FeriadoFormPage), parametros);
+    }
+
+    [RelayCommand]
     private async Task AbrirDetalleAsync(FeriadoItem feriado)
     {
         if (feriado is null) return;
@@ -210,10 +223,14 @@ public partial class FeriadosConfigViewModel : BaseViewModel
             var confirm = await Shell.Current.DisplayAlertAsync("Confirmar eliminación", $"¿Deseas eliminar el feriado '{feriado.NombreFeriado}'?", "Sí", "No");
             if (confirm)
             {
-                var success = await _feriadosService.EliminarFeriadoAsync(feriado.Id);
-                if (success)
+                var resultado = await _feriadosService.EliminarFeriadoAsync(feriado.Id);
+                if (resultado.Success)
                 {
                     await CargarFeriadosAsync();
+                }
+                else
+                {
+                    await Shell.Current.DisplayAlertAsync("Error", resultado.Message, "Aceptar");
                 }
             }
         }
