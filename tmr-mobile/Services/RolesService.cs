@@ -59,7 +59,31 @@ public class RolesService : IRolesService
     {
         var endpoint = $"configuracion/roles/{id}";
         System.Diagnostics.Debug.WriteLine($"[ROLES] Endpoint: {endpoint}");
-        return await _apiService.GetAsync<RolListaItem>(endpoint);
+        
+        try
+        {
+            var result = await _apiService.GetAsync<RolListaItem>(endpoint);
+            if (result is not null)
+                return result;
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"[ROLES] Error GET {endpoint}: {ex.Message}");
+        }
+
+        // Fallback: Buscar en el listado completo de roles
+        try
+        {
+            var todos = await ObtenerRolesAsync();
+            var encontrado = todos.FirstOrDefault(r => r.Id == id);
+            if (encontrado is not null)
+            {
+                return encontrado;
+            }
+        }
+        catch { }
+
+        return null;
     }
 
     public async Task<List<RolModuloItem>> ObtenerModulosDisponiblesAsync()

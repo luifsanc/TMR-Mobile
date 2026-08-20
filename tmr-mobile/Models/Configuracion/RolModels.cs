@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using tmr_mobile.Resources.Styles;
 
 namespace tmr_mobile.Models.Configuracion;
@@ -85,5 +86,6 @@ public class UpdateRolRequest
 
 public class CambiarEstadoRolRequest
 {
+    [JsonPropertyName("activo")]
     public bool Activo { get; set; }
 }
