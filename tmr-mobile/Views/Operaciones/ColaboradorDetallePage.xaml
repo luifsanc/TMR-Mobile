@@ -214,8 +214,8 @@
                     </VerticalStackLayout>
                 </Border>
 
-                <!-- CARD: DATOS DE SALIDA (Si aplica) -->
-                <Border BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}" Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" StrokeThickness="1" Padding="16" IsVisible="{Binding Colaborador.TieneSalidaInfo}">
+                <!-- CARD: DATOS DE SALIDA (Si está Inactivo y tiene registro de salida) -->
+                <Border BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}" Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" StrokeThickness="1" Padding="16" IsVisible="{Binding MostrarSalidaInfo}">
                     <Border.StrokeShape><RoundRectangle CornerRadius="12" /></Border.StrokeShape>
                     <VerticalStackLayout Spacing="12">
                         <Label Text="▼ Datos de salida" FontSize="15" FontAttributes="Bold" TextColor="{StaticResource Error}" />
@@ -288,11 +288,12 @@
 
                 <!-- BOTONES DE ACCIÓN AL PIE -->
                 <Grid ColumnDefinitions="*,*" ColumnSpacing="12" Margin="0,8,0,24">
-                    <!-- EDITAR (Siempre visible) -->
+                    <!-- EDITAR (Solo si está ACTIVO) -->
                     <Button
                         Grid.Column="0"
                         Text="Editar"
                         Command="{Binding EditarCommand}"
+                        IsVisible="{Binding EsActivo}"
                         BackgroundColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}"
                         TextColor="{StaticResource White}"
                         CornerRadius="8"
@@ -313,10 +314,11 @@
                         FontSize="14"
                         FontAttributes="Bold" />
 
-                    <!-- ACTIVAR (Solo si está INACTIVO) -->
+                    <!-- ACTIVAR (Solo si está INACTIVO - Ocupa todo el ancho) -->
                     <Button
-                        Grid.Column="1"
-                        Text="Activar"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Text="Activar Colaborador"
                         Command="{Binding ActivarCommand}"
                         IsVisible="{Binding EsInactivo}"
                         BackgroundColor="{StaticResource Accent}"

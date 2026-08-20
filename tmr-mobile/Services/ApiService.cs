@@ -297,6 +297,41 @@ public class ApiService
         return response.IsSuccessStatusCode;
     }
 
+    public async Task<ApiOperationResult> PutForResultAsync<TRequest>(
+        string endpoint,
+        TRequest data,
+        CancellationToken ct = default)
+    {
+        await AddAuthHeaderAsync();
+        endpoint = NormalizeEndpoint(endpoint);
+        using var response = await _httpClient.PutAsJsonAsync(endpoint, data, JsonOptions, ct);
+
+        if (response.StatusCode == HttpStatusCode.Unauthorized && _refreshTokenFunc != null)
+        {
+            Log($"[ApiService] 401 en PUT {endpoint} — intentando refresh...");
+            var refreshed = await _refreshTokenFunc();
+
+            if (refreshed)
+            {
+                await AddAuthHeaderAsync();
+                using var retry = await _httpClient.PutAsJsonAsync(endpoint, data, JsonOptions, ct);
+                var retryContent = await retry.Content.ReadAsStringAsync(ct);
+
+                return retry.IsSuccessStatusCode
+                    ? ApiOperationResult.Ok()
+                    : ApiOperationResult.Fail(ExtractErrorMessage(retryContent), retry.StatusCode);
+            }
+        }
+
+        var content = await response.Content.ReadAsStringAsync(ct);
+
+        if (response.IsSuccessStatusCode)
+            return ApiOperationResult.Ok();
+
+        Log($"[ApiService] Error {(int)response.StatusCode} en PUT {endpoint}: {content}");
+        return ApiOperationResult.Fail(ExtractErrorMessage(content), response.StatusCode);
+    }
+
     public async Task<bool> DeleteAsync(string endpoint,
         CancellationToken ct = default)
     {
@@ -481,26 +516,42 @@ public class ApiService
             using var document = JsonDocument.Parse(content);
             var root = document.RootElement;
 
-            foreach (var propertyName in new[] { "detail", "message", "mensaje", "title" })
-            {
-                if (root.TryGetProperty(propertyName, out var property) &&
-                    property.ValueKind == JsonValueKind.String &&
-                    !string.IsNullOrWhiteSpace(property.GetString()))
-                    return property.GetString()!;
-            }
-
+            // 1. Revisar primero si el JSON contiene un arreglo de "errors" con mensajes específicos
             if (root.TryGetProperty("errors", out var errors) &&
                 errors.ValueKind == JsonValueKind.Array)
             {
                 foreach (var error in errors.EnumerateArray())
                 {
-                    if (error.ValueKind == JsonValueKind.String)
+                    if (error.ValueKind == JsonValueKind.String && !string.IsNullOrWhiteSpace(error.GetString()))
                         return error.GetString()!;
 
-                    if (error.ValueKind == JsonValueKind.Object &&
-                        error.TryGetProperty("message", out var message) &&
-                        message.ValueKind == JsonValueKind.String)
-                        return message.GetString()!;
+                    if (error.ValueKind == JsonValueKind.Object)
+                    {
+                        foreach (var propName in new[] { "message", "errorMessage", "detail" })
+                        {
+                            if (error.TryGetProperty(propName, out var msg) &&
+                                msg.ValueKind == JsonValueKind.String &&
+                                !string.IsNullOrWhiteSpace(msg.GetString()))
+                            {
+                                var txt = msg.GetString()!;
+                                if (!txt.Equals("Ocurrió un error inesperado", StringComparison.OrdinalIgnoreCase))
+                                    return CleanTechnicalMessage(txt);
+                            }
+                        }
+                    }
+                }
+            }
+
+            // 2. Si no hay errors o eran genéricos, revisar propiedades principales (detail, message, etc.)
+            foreach (var propertyName in new[] { "detail", "message", "mensaje", "title" })
+            {
+                if (root.TryGetProperty(propertyName, out var property) &&
+                    property.ValueKind == JsonValueKind.String &&
+                    !string.IsNullOrWhiteSpace(property.GetString()))
+                {
+                    var val = property.GetString()!;
+                    if (!val.Equals("Ocurrió un error inesperado", StringComparison.OrdinalIgnoreCase))
+                        return CleanTechnicalMessage(val);
                 }
             }
         }
@@ -509,7 +560,25 @@ public class ApiService
             // Algunos proxies devuelven texto plano; se muestra tal cual.
         }
 
-        return content.Trim('"', ' ', '\r', '\n');
+        return CleanTechnicalMessage(content.Trim('"', ' ', '\r', '\n'));
+    }
+
+    private static string CleanTechnicalMessage(string message)
+    {
+        if (string.IsNullOrWhiteSpace(message))
+            return "No se pudo completar la solicitud.";
+
+        if (message.Contains("pk_administracion_cliente") || message.Contains("duplicate key value violates unique constraint"))
+        {
+            return "El servidor rechazó el registro debido a un desfasaje en la secuencia de IDs de la base de datos (clave duplicada 'pk_administracion_cliente'). Se requiere resincronizar la secuencia 'tbl_administracion_cliente_id_seq' en el servidor.";
+        }
+
+        if (message.Contains("DbUpdateException") || message.Contains("PostgresException"))
+        {
+            return "Ocurrió un error en la base de datos del servidor al guardar los cambios.";
+        }
+
+        return message;
     }
 }
 

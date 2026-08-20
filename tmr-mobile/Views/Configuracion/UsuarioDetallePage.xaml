@@ -153,11 +153,12 @@
                 
                 <!-- ACCIONES (Botones abajo) -->
                 <Grid ColumnDefinitions="*,*" ColumnSpacing="12" Margin="0,8,0,24">
-                    <!-- Botón Editar -->
+                    <!-- Botón Editar (Solo visible cuando está Activo) -->
                     <Button
                         Grid.Column="0"
                         Text="Editar"
                         Command="{Binding EditarCommand}"
+                        IsVisible="{Binding EsActivo}"
                         BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}"
                         TextColor="{StaticResource OnPrimary}"
                         CornerRadius="8"
@@ -181,6 +182,8 @@
                         <Button.Triggers>
                             <DataTrigger TargetType="Button" Binding="{Binding EsInactivo}" Value="True">
                                 <Setter Property="BackgroundColor" Value="{StaticResource Accent}" />
+                                <Setter Property="Grid.Column" Value="0" />
+                                <Setter Property="Grid.ColumnSpan" Value="2" />
                             </DataTrigger>
                         </Button.Triggers>
                     </Button>

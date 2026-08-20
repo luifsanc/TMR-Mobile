@@ -3,6 +3,7 @@ namespace tmr_mobile.Models.Operaciones;
 public class ColaboradorModel
 {
     public int Id { get; set; }
+    public int? IdPersona { get; set; }
     public string CodigoEmpleado { get; set; } = string.Empty;
     public string NumeroIdentificacion { get; set; } = string.Empty;
     public string Asociacion { get; set; } = string.Empty;
@@ -57,7 +58,6 @@ public class ColaboradorDetalleModel : ColaboradorModel
     public string Modalidad { get; set; } = string.Empty;
     public string Categoria { get; set; } = string.Empty;
 
-    public int IdPersona { get; set; }
     public string Nombres { get; set; } = string.Empty;
     public string Apellidos { get; set; } = string.Empty;
     public string? FechaNacimiento { get; set; }
@@ -171,6 +171,7 @@ public class CreateColaboradorRequest
     public int? AniosExperiencia { get; set; }
 
     public string? FechaContratacion { get; set; }
+    public string? FechaIngreso { get; set; }
     public string? FechaNacimiento { get; set; }
     public int? IdGenero { get; set; }
     public int? IdNacionalidad { get; set; }

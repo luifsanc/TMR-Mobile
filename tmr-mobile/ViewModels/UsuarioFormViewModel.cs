@@ -304,19 +304,30 @@ public partial class UsuarioFormViewModel : BaseViewModel, IQueryAttributable
 
             var emailFinal = EmailFinal;
 
+            int? idPersonaFinal = null;
+            if (EsInterno && ColaboradorSeleccionado is not null)
+            {
+                idPersonaFinal = ColaboradorSeleccionado.IdPersona;
+                if (!idPersonaFinal.HasValue || idPersonaFinal <= 0)
+                {
+                    var detalleCol = await _colaboradoresService.ObtenerColaboradorAsync(ColaboradorSeleccionado.Id);
+                    idPersonaFinal = detalleCol?.IdPersona ?? ColaboradorSeleccionado.Id;
+                }
+            }
+
             if (EsEdicion && IdUsuario.HasValue)
             {
                 var updateRequest = new UpdateUsuarioRequest
                 {
-                    IdPersona = EsInterno ? ColaboradorSeleccionado?.Id : null,
+                    IdPersona = idPersonaFinal,
                     Email = emailFinal,
                     Rolesids = RolSeleccionado is not null ? new List<int> { RolSeleccionado.Id } : new List<int>(),
                     DebeCambiarPassword = DebeCambiarPassword,
                     Password = string.IsNullOrWhiteSpace(Password) ? null : Password.Trim()
                 };
 
-                var success = await _usuariosService.ActualizarUsuarioAsync(IdUsuario.Value, updateRequest);
-                if (success)
+                var resultado = await _usuariosService.ActualizarUsuarioAsync(IdUsuario.Value, updateRequest);
+                if (resultado.Success)
                 {
                     await Shell.Current.DisplayAlertAsync(
                         "Usuario actualizado",
@@ -326,22 +337,22 @@ public partial class UsuarioFormViewModel : BaseViewModel, IQueryAttributable
                 }
                 else
                 {
-                    ErrorMessage = "No se pudo actualizar el usuario.";
+                    ErrorMessage = resultado.Message;
                 }
             }
             else
             {
                 var createRequest = new CreateUsuarioRequest
                 {
-                    IdPersona = EsInterno ? ColaboradorSeleccionado?.Id : null,
+                    IdPersona = idPersonaFinal,
                     Email = emailFinal,
                     Password = Password,
                     Rolesids = RolSeleccionado is not null ? new List<int> { RolSeleccionado.Id } : new List<int>(),
                     DebeCambiarPassword = DebeCambiarPassword
                 };
 
-                var nuevoUsuario = await _usuariosService.CrearUsuarioAsync(createRequest);
-                if (nuevoUsuario is not null)
+                var resultado = await _usuariosService.CrearUsuarioAsync(createRequest);
+                if (resultado.Success)
                 {
                     await Shell.Current.DisplayAlertAsync(
                         "Usuario creado",
@@ -351,7 +362,7 @@ public partial class UsuarioFormViewModel : BaseViewModel, IQueryAttributable
                 }
                 else
                 {
-                    ErrorMessage = "No se pudo crear el usuario.";
+                    ErrorMessage = resultado.Message;
                 }
             }
         }
