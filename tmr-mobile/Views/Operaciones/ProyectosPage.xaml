@@ -35,7 +35,7 @@
                     Margin="0,4,0,4" />
 
                 <!-- BARRA DE BÚSQUEDA Y BOTONES DE FILTRO Y DESCARGA -->
-                <Grid Grid.Row="1" ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
+                <Grid Grid.Row="1" ColumnDefinitions="*,92,44" ColumnSpacing="8">
                     <!-- Input de Búsqueda -->
                     <Border
                         Grid.Column="0"
@@ -66,39 +66,49 @@
                         </Grid>
                     </Border>
 
-                    <!-- Botón de Filtro de Estado -->
-                    <Button
+                    <!-- Combobox de filtro de estado -->
+                    <Border
                         Grid.Column="1"
-                        Text="🔽"
-                        FontSize="18"
-                        Padding="11"
-                        WidthRequest="44"
                         HeightRequest="44"
                         BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}"
-                        TextColor="{AppThemeBinding Light={StaticResource TextSecondary}, Dark={StaticResource DarkTextSecondary}}"
-                        BorderWidth="1"
-                        BorderColor="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}"
-                        CornerRadius="10"
-                        Command="{Binding FiltrarEstadoCommand}" />
+                        Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}"
+                        StrokeThickness="1">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10" />
+                        </Border.StrokeShape>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnFilterComboTapped" />
+                        </Border.GestureRecognizers>
+                        <Grid ColumnDefinitions="*,Auto" Padding="8,0">
+                                <Label Text="Estados" FontSize="12" TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}" VerticalOptions="Center" HorizontalTextAlignment="Center" />
+                            <Label Grid.Column="1" Text="⌄" FontSize="15" TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}" VerticalOptions="Center" />
+                        </Grid>
+                    </Border>
 
                     <!-- Botón de Descargar / Exportar -->
-                    <Button
+                    <Border
                         Grid.Column="2"
-                        Text="⬇️"
-                        FontSize="18"
-                        Padding="11"
                         WidthRequest="44"
                         HeightRequest="44"
                         BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}"
-                        TextColor="{AppThemeBinding Light={StaticResource TextSecondary}, Dark={StaticResource DarkTextSecondary}}"
-                        BorderWidth="1"
-                        BorderColor="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}"
-                        CornerRadius="10"
-                        Command="{Binding DescargarCommand}" />
+                        Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}"
+                        StrokeThickness="1">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10" />
+                        </Border.StrokeShape>
+                        <Button
+                            Text="⤓"
+                            Command="{Binding DescargarCommand}"
+                            BackgroundColor="Transparent"
+                            TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}"
+                            FontSize="18"
+                            Padding="0" />
+                    </Border>
                 </Grid>
 
                 <!-- CARDS DE PROYECTOS -->
                 <CollectionView
+                    x:Name="ProyectosCollection"
                     Grid.Row="2"
                     ItemsSource="{Binding Proyectos}"
                     SelectionMode="None"
@@ -226,19 +236,6 @@
                                             </HorizontalStackLayout>
                                         </Border>
 
-                                        <Button
-                                            Text="⋮"
-                                            FontSize="26"
-                                            WidthRequest="36"
-                                            HeightRequest="36"
-                                            Padding="0"
-                                            CornerRadius="18"
-                                            BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource DarkBackgroundLight}}"
-                                            TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}"
-                                            FontAttributes="Bold"
-                                            HorizontalOptions="End"
-                                            Clicked="OnMoreOptionsClicked"
-                                            CommandParameter="{Binding .}" />
                                     </VerticalStackLayout>
                                 </Grid>
 
@@ -250,6 +247,39 @@
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
+
+                <Grid
+                    x:Name="EstadoFilterOverlay"
+                    Grid.Row="0"
+                    Grid.RowSpan="3"
+                    IsVisible="False"
+                    BackgroundColor="Transparent"
+                    Padding="20,62,20,20"
+                    ZIndex="10"
+                    VerticalOptions="Fill"
+                    HorizontalOptions="Fill">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnCloseFilterTapped" />
+                    </Grid.GestureRecognizers>
+                    <Border
+                        WidthRequest="220"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}"
+                        Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}"
+                        StrokeThickness="1"
+                        Padding="12"
+                        HorizontalOptions="End"
+                        VerticalOptions="Start">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="14" />
+                        </Border.StrokeShape>
+                        <VerticalStackLayout Spacing="8">
+                            <Label Text="Filtrar por estado" FontSize="14" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" Margin="4,0,4,4" />
+                            <Button Text="Todos" CommandParameter="Todos" Clicked="OnFilterOptionClicked" BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryLight}, Dark={StaticResource DarkPrimaryLight}}" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" CornerRadius="8" HeightRequest="40" />
+                            <Button Text="Activos" CommandParameter="Activos" Clicked="OnFilterOptionClicked" BackgroundColor="{AppThemeBinding Light={StaticResource SuccessSurface}, Dark={StaticResource DarkSuccessSurface}}" TextColor="{StaticResource SuccessText}" CornerRadius="8" HeightRequest="40" />
+                            <Button Text="Inactivos" CommandParameter="Inactivos" Clicked="OnFilterOptionClicked" BackgroundColor="{AppThemeBinding Light={StaticResource ErrorSurface}, Dark={StaticResource DarkErrorSurface}}" TextColor="{StaticResource ErrorText}" CornerRadius="8" HeightRequest="40" />
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
 
                 <Grid
                     x:Name="ContextMenuOverlay"

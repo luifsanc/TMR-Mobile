@@ -1,10 +1,63 @@
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using tmr_mobile.Services;
 using tmr_shared.DTOs.Proyectos;
 
 namespace tmr_mobile.ViewModels;
+
+public class ProyectoLiderFormItem
+{
+    public ObservableCollection<LookupItem> LideresDisponibles { get; } = new();
+    public LookupItem? LiderSeleccionado { get; set; }
+    public ObservableCollection<ProyectoRecursoFormItem> RecursosAsignados { get; } = new();
+    public ICommand AgregarRecursoCommand { get; }
+    public ICommand EliminarRecursoCommand { get; }
+
+    public ProyectoLiderFormItem(IEnumerable<LookupItem> recursos)
+    {
+        foreach (var recurso in recursos)
+            RecursosDisponibles.Add(recurso);
+
+        AgregarRecursoCommand = new Command(AgregarRecurso);
+        EliminarRecursoCommand = new Command<ProyectoRecursoFormItem>(EliminarRecurso);
+        AgregarRecurso();
+    }
+
+    private ObservableCollection<LookupItem> RecursosDisponibles { get; } = new();
+
+    private void AgregarRecurso()
+    {
+        RecursosAsignados.Add(new ProyectoRecursoFormItem(RecursosDisponibles, EliminarRecurso));
+    }
+
+    public void EliminarRecurso(ProyectoRecursoFormItem recurso)
+    {
+        if (RecursosAsignados.Count > 1)
+            RecursosAsignados.Remove(recurso);
+    }
+}
+
+public class ProyectoRecursoFormItem
+{
+    public ObservableCollection<LookupItem> Opciones { get; } = new();
+    public LookupItem? Seleccionado { get; set; }
+
+    public ICommand EliminarCommand { get; }
+
+    public ProyectoRecursoFormItem(IEnumerable<LookupItem> opciones, Action<ProyectoRecursoFormItem> eliminar)
+    {
+        foreach (var opcion in opciones)
+            Opciones.Add(opcion);
+
+        EliminarCommand = new Command(() => eliminar(this));
+    }
+
+    public int Id { get; init; }
+    public string Nombre { get; init; } = string.Empty;
+    public string Departamento { get; init; } = string.Empty;
+}
 
 public partial class ProyectosFormViewModel : BaseViewModel, IQueryAttributable
 {
@@ -13,9 +66,11 @@ public partial class ProyectosFormViewModel : BaseViewModel, IQueryAttributable
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(EsEdicion))]
+    [NotifyPropertyChangedFor(nameof(EsNuevo))]
     public partial int? IdProyecto { get; set; }
 
     public bool EsEdicion => IdProyecto.HasValue && IdProyecto.Value > 0;
+    public bool EsNuevo => !EsEdicion;
 
     [ObservableProperty]
     public partial string TituloPagina { get; set; } = "Nuevo Proyecto";
@@ -27,7 +82,10 @@ public partial class ProyectosFormViewModel : BaseViewModel, IQueryAttributable
     public partial string Cliente { get; set; } = string.Empty;
 
     [ObservableProperty]
-    public partial string Estado { get; set; } = "Activo";
+    public partial LookupItem? ClienteSeleccionado { get; set; }
+
+    [ObservableProperty]
+    public partial string Estado { get; set; } = string.Empty;
 
     [ObservableProperty]
     public partial string LiderAsignado { get; set; } = string.Empty;
@@ -44,11 +102,23 @@ public partial class ProyectosFormViewModel : BaseViewModel, IQueryAttributable
     // Catálogos
     public ObservableCollection<string> Estados { get; } = new()
     {
+        "Planificación",
+        "En progreso",
+        "En riesgo",
+        "Pendiente",
+        "Pausado",
+        "Completado",
+        "Cancelado",
         "Activo",
         "Inactivo"
     };
 
     public ObservableCollection<string> Lideres { get; } = new();
+
+    public ObservableCollection<LookupItem> LideresDisponibles { get; } = new();
+    public ObservableCollection<LookupItem> ClientesDisponibles { get; } = new();
+    public ObservableCollection<LookupItem> RecursosDisponibles { get; } = new();
+    public ObservableCollection<ProyectoLiderFormItem> LideresAsignados { get; } = new();
 
     public ProyectosFormViewModel(ApiService apiService)
     {
@@ -76,6 +146,23 @@ public partial class ProyectosFormViewModel : BaseViewModel, IQueryAttributable
             IsBusy = true;
             ErrorMessage = string.Empty;
 
+            var lookups = await _apiService.GetAsync<ProyectoLookupsResponse>("proyectos/lookups");
+            if (lookups != null)
+            {
+                LideresDisponibles.Clear();
+                ClientesDisponibles.Clear();
+                RecursosDisponibles.Clear();
+
+                foreach (var lider in lookups.Lideres)
+                    LideresDisponibles.Add(lider);
+
+                foreach (var cliente in lookups.Clientes)
+                    ClientesDisponibles.Add(cliente);
+
+                foreach (var recurso in lookups.Empleados)
+                    RecursosDisponibles.Add(recurso);
+            }
+
             // Si es edición, cargar datos del proyecto
             if (EsEdicion && IdProyecto.HasValue)
             {
@@ -85,16 +172,51 @@ public partial class ProyectosFormViewModel : BaseViewModel, IQueryAttributable
                     _proyectoOriginal = proyecto;
                     Nombre = proyecto.Nombre;
                     Cliente = proyecto.Cliente;
+                    ClienteSeleccionado = lookups?.Clientes.FirstOrDefault(c => c.Nombre.Equals(proyecto.Cliente, StringComparison.OrdinalIgnoreCase));
                     Estado = proyecto.Estado;
                     LiderAsignado = proyecto.LiderAsignado;
                     Recursos = proyecto.NumeroRecursos;
                     FechaInicio = proyecto.FechaInicio?.ToDateTime(TimeOnly.MinValue);
                     FechaFin = proyecto.FechaFin?.ToDateTime(TimeOnly.MinValue);
+
+                    LideresAsignados.Clear();
+                    foreach (var lider in proyecto.Lideres)
+                    {
+                        var item = new ProyectoLiderFormItem(RecursosDisponibles)
+                        {
+                            LiderSeleccionado = LideresDisponibles.FirstOrDefault(l => l.Id == lider.IdLider)
+                        };
+
+                        CopiarRecursosDisponibles(item);
+
+                        foreach (var recurso in lider.Recursos)
+                        {
+                            var lookup = RecursosDisponibles.FirstOrDefault(r => r.Id == recurso.IdEmpleado);
+                            if (lookup != null)
+                            {
+                                var recursoItem = item.RecursosAsignados.LastOrDefault();
+                                if (recursoItem != null)
+                                    recursoItem.Seleccionado = lookup;
+                            }
+
+                            if (recurso != lider.Recursos.Last())
+                                item.RecursosAsignados.Add(new ProyectoRecursoFormItem(RecursosDisponibles, item.EliminarRecurso));
+                        }
+
+                        LideresAsignados.Add(item);
+                    }
+
+                    if (LideresAsignados.Count == 0)
+                        AgregarLider();
                 }
                 else
                 {
                     ErrorMessage = "No se encontró el proyecto.";
                 }
+            }
+            else if (LideresAsignados.Count == 0)
+            {
+                AgregarLider();
             }
         }
         catch (Exception ex)
@@ -123,8 +245,8 @@ public partial class ProyectosFormViewModel : BaseViewModel, IQueryAttributable
                 Codigo = _proyectoOriginal?.Codigo,
                 Nombre = Nombre.Trim(),
                 Descripcion = _proyectoOriginal?.Descripcion,
-                IdCliente = _proyectoOriginal?.IdCliente,
-                Cliente = Cliente.Trim(),
+                IdCliente = ClienteSeleccionado?.Id ?? _proyectoOriginal?.IdCliente,
+                Cliente = ClienteSeleccionado?.Nombre ?? Cliente.Trim(),
                 IdTipoProyecto = _proyectoOriginal?.IdTipoProyecto,
                 Tipo = _proyectoOriginal?.Tipo,
                 Observacion = _proyectoOriginal?.Observacion,
@@ -132,9 +254,9 @@ public partial class ProyectosFormViewModel : BaseViewModel, IQueryAttributable
                 FechaFinReal = _proyectoOriginal?.FechaFinReal,
                 FechaInicioEspera = _proyectoOriginal?.FechaInicioEspera,
                 FechaFinEspera = _proyectoOriginal?.FechaFinEspera,
-                IdLider = _proyectoOriginal?.IdLider,
+                IdLider = LideresAsignados.First(l => l.LiderSeleccionado != null).LiderSeleccionado!.Id,
                 Estado = Estado,
-                Lider = LiderAsignado.Trim(),
+                Lider = LideresAsignados.First(l => l.LiderSeleccionado != null).LiderSeleccionado!.Nombre,
                 IdEstadoProyecto = _proyectoOriginal?.IdEstadoProyecto,
                 FechaInicio = FechaInicio.HasValue ? DateOnly.FromDateTime(FechaInicio.Value) : (DateOnly?)null,
                 FechaFin = FechaFin.HasValue ? DateOnly.FromDateTime(FechaFin.Value) : (DateOnly?)null,
@@ -142,24 +264,24 @@ public partial class ProyectosFormViewModel : BaseViewModel, IQueryAttributable
                 Horas = _proyectoOriginal?.Horas,
                 LiderCosto = _proyectoOriginal?.CostoHoraLider,
                 LiderHoras = _proyectoOriginal?.HorasLider,
-                Lideres = _proyectoOriginal?.Lideres.Select(l => new
+                Lideres = LideresAsignados
+                    .Where(l => l.LiderSeleccionado != null)
+                    .Select(l => new
                 {
-                    IdLider = string.Equals(l.Lider, LiderAsignado, StringComparison.OrdinalIgnoreCase)
-                        ? l.IdLider
-                        : null,
-                    Lider = l == _proyectoOriginal.Lideres.First() ? LiderAsignado.Trim() : l.Lider,
-                    LiderCosto = l.CostoHoraLider,
-                    LiderHoras = l.HorasLider,
-                    Recursos = l.Recursos.Select(r => new
+                    IdLider = l.LiderSeleccionado!.Id,
+                    Lider = l.LiderSeleccionado.Nombre,
+                    LiderCosto = (decimal?)null,
+                    LiderHoras = (decimal?)null,
+                    Recursos = l.RecursosAsignados.Where(r => r.Seleccionado != null).Select(r => new
                     {
-                        r.IdEmpleado,
-                        r.Tipo,
-                        r.Nombre,
-                        r.Rol,
-                        r.Entrada,
-                        r.Salida,
-                        r.CostoHora,
-                        r.Horas
+                        IdEmpleado = (int?)r.Seleccionado!.Id,
+                        Tipo = string.Empty,
+                        Nombre = r.Seleccionado.Nombre,
+                        Rol = string.Empty,
+                        Entrada = (DateOnly?)null,
+                        Salida = (DateOnly?)null,
+                        CostoHora = (decimal?)null,
+                        Horas = (decimal?)null
                     }).ToList()
                 }).ToList()
             };
@@ -228,12 +350,6 @@ public partial class ProyectosFormViewModel : BaseViewModel, IQueryAttributable
             return false;
         }
 
-        if (string.IsNullOrWhiteSpace(LiderAsignado))
-        {
-            ErrorMessage = "El líder asignado es requerido.";
-            return false;
-        }
-
         if (FechaInicio == null)
         {
             ErrorMessage = "La fecha de inicio es requerida.";
@@ -252,7 +368,37 @@ public partial class ProyectosFormViewModel : BaseViewModel, IQueryAttributable
             return false;
         }
 
+        if (LideresAsignados.Count == 0 || LideresAsignados.Any(l => l.LiderSeleccionado == null))
+        {
+            ErrorMessage = "Debe asignar al menos un líder.";
+            return false;
+        }
+
         return true;
+    }
+
+    [RelayCommand]
+    private void AgregarLider()
+    {
+        var item = new ProyectoLiderFormItem(RecursosDisponibles);
+        CopiarRecursosDisponibles(item);
+        LideresAsignados.Add(item);
+    }
+
+    [RelayCommand]
+    private void EliminarLider(ProyectoLiderFormItem item)
+    {
+        if (item != null && LideresAsignados.Count > 1)
+            LideresAsignados.Remove(item);
+    }
+
+    private void CopiarRecursosDisponibles(ProyectoLiderFormItem item)
+    {
+        item.LideresDisponibles.Clear();
+        foreach (var lider in LideresDisponibles)
+            item.LideresDisponibles.Add(lider);
+
+        // Las opciones se copian al crear cada fila de recurso.
     }
 
     [RelayCommand]

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:tmr_mobile.ViewModels"
+    xmlns:conv="clr-namespace:tmr_mobile.Views.Dashboard.Converters"
+    xmlns:dto="clr-namespace:tmr_shared.DTOs.Proyectos;assembly=tmr-shared"
+    x:Class="tmr_mobile.Views.Operaciones.ProyectosDetallePage"
+    x:DataType="vm:ProyectosDetalleViewModel"
+    Title="Detalle del Proyecto"
+    BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource DarkBackgroundLight}}">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <conv:StatusToBackgroundColorConverter x:Key="StatusToBackgroundColorConverter" />
+            <conv:StatusToTextColorConverter x:Key="StatusToTextColorConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid>
+        <ScrollView IsVisible="{Binding TieneProyecto}">
+            <VerticalStackLayout Padding="16" Spacing="16">
+                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                    <Button
+                        Grid.Column="0"
+                        Text="‹"
+                        Command="{Binding RegresarCommand}"
+                        BackgroundColor="Transparent"
+                        TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}"
+                        FontSize="24"
+                        FontAttributes="Bold"
+                        Padding="0"
+                        WidthRequest="36"
+                        HeightRequest="36" />
+                    <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                        <Label Text="Detalle del proyecto" FontSize="12" TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}" />
+                        <Label Text="{Binding Proyecto.Nombre}" FontSize="18" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" MaxLines="2" LineBreakMode="TailTruncation" />
+                    </VerticalStackLayout>
+                    <Border Grid.Column="2" BackgroundColor="{Binding Proyecto.Estado, Converter={StaticResource StatusToBackgroundColorConverter}}" Stroke="Transparent" Padding="10,6" VerticalOptions="Center">
+                        <Border.StrokeShape><RoundRectangle CornerRadius="8" /></Border.StrokeShape>
+                        <Label Text="{Binding Proyecto.Estado}" FontSize="11" FontAttributes="Bold" TextColor="{Binding Proyecto.Estado, Converter={StaticResource StatusToTextColorConverter}}" />
+                    </Border>
+                </Grid>
+
+                <Border BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}" Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" StrokeThickness="1" Padding="16">
+                    <Border.StrokeShape><RoundRectangle CornerRadius="12" /></Border.StrokeShape>
+                    <VerticalStackLayout Spacing="14">
+                        <Label Text="Información del proyecto" FontSize="15" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />
+                        <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto,Auto" RowSpacing="12" ColumnSpacing="12">
+                            <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="2">
+                                <Label Text="Código" FontSize="11" TextColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}" />
+                                <Label Text="{Binding Proyecto.Codigo}" FontSize="13" TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Row="0" Grid.Column="1" Spacing="2">
+                                <Label Text="Cliente" FontSize="11" TextColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}" />
+                                <Label Text="{Binding Proyecto.Cliente}" FontSize="13" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Row="1" Grid.Column="0" Spacing="2">
+                                <Label Text="Líder" FontSize="11" TextColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}" />
+                                <Label Text="{Binding Proyecto.LiderAsignado}" FontSize="13" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Row="1" Grid.Column="1" Spacing="2">
+                                <Label Text="Recursos" FontSize="11" TextColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}" />
+                                <Label Text="{Binding Proyecto.NumeroRecursos}" FontSize="13" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Row="2" Grid.Column="0" Spacing="2">
+                                <Label Text="Fecha de inicio" FontSize="11" TextColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}" />
+                                <Label Text="{Binding Proyecto.FechaInicio, StringFormat='{}{0:dd/MM/yyyy}'}" FontSize="13" TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Row="2" Grid.Column="1" Spacing="2">
+                                <Label Text="Fecha de fin" FontSize="11" TextColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}" />
+                                <Label Text="{Binding Proyecto.FechaFin, StringFormat='{}{0:dd/MM/yyyy}'}" FontSize="13" TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Spacing="2">
+                                <Label Text="Descripción" FontSize="11" TextColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}" />
+                                <Label Text="{Binding Proyecto.Descripcion}" FontSize="13" TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
+                            </VerticalStackLayout>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}" Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" StrokeThickness="1" Padding="16">
+                    <Border.StrokeShape><RoundRectangle CornerRadius="12" /></Border.StrokeShape>
+                    <VerticalStackLayout Spacing="12">
+                        <HorizontalStackLayout Spacing="8">
+                            <Label Text="Recursos asignados" FontSize="15" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />
+                            <Label Text="{Binding Proyecto.NumeroRecursos, StringFormat='({0})'}" FontSize="13" TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}" />
+                        </HorizontalStackLayout>
+                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding Proyecto.Recursos}" Spacing="8">
+                            <BindableLayout.EmptyViewTemplate>
+                                <DataTemplate>
+                                    <Label Text="No hay recursos asignados." FontSize="12" TextColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}" />
+                                </DataTemplate>
+                            </BindableLayout.EmptyViewTemplate>
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="dto:ProyectoRecursoResponse">
+                                    <Border BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource DarkBackgroundLight}}" Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" StrokeThickness="1" Padding="10">
+                                        <Border.StrokeShape><RoundRectangle CornerRadius="8" /></Border.StrokeShape>
+                                        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+                                            <Border WidthRequest="32" HeightRequest="32" BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryLight}, Dark={StaticResource DarkPrimaryLight}}" StrokeThickness="0" StrokeShape="RoundRectangle 16">
+                                                <Label Text="👤" FontSize="14" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                                            </Border>
+                                            <VerticalStackLayout Grid.Column="1" Spacing="1" VerticalOptions="Center">
+                                                <Label Text="{Binding Nombre}" FontSize="13" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
+                                                <Label Text="{Binding Rol}" FontSize="11" TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}" IsVisible="{Binding Rol, Converter={StaticResource IsStringNotNullOrEmptyConverter}}" />
+                                            </VerticalStackLayout>
+                                            <Label Grid.Column="2" Text="{Binding Tipo}" FontSize="10" TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}" VerticalOptions="Center" />
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="12" Margin="0,8,0,24">
+                    <Button Grid.Column="0" Text="Editar" Command="{Binding EditarCommand}" BackgroundColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource DarkTextLight}}" TextColor="{StaticResource White}" CornerRadius="8" HeightRequest="48" FontAttributes="Bold" />
+                    <Button Grid.Column="1" Text="Inactivar" Command="{Binding InactivarCommand}" BackgroundColor="{StaticResource Error}" TextColor="{StaticResource White}" CornerRadius="8" HeightRequest="48" FontAttributes="Bold" IsVisible="{Binding Proyecto.Activo}" />
+                </Grid>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" HorizontalOptions="Center" VerticalOptions="Center" />
+    </Grid>
+</ContentPage>
