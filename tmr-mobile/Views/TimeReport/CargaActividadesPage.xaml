@@ -31,7 +31,7 @@
 
                 <Grid ColumnDefinitions="*,Auto">
                     <VerticalStackLayout Grid.Column="0" Spacing="4" VerticalOptions="Center">
-                        <Label Text="Horas por registrar" FontSize="14" TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}"/>
+                        <Label Text="Horas registradas" FontSize="14" TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}"/>
                         <Label Text="{Binding HorasPorRegistrarTexto}" FontSize="28" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}"/>
                     </VerticalStackLayout>
 
@@ -182,7 +182,8 @@
                     <Grid IsVisible="{Binding FiltroFechaActivo}"
                           ColumnDefinitions="*,*"
                           ColumnSpacing="8"
-                          Margin="0,0,0,8">
+                          Margin="8,0,0,8" 
+                          VerticalOptions="Center">
                         <VerticalStackLayout Grid.Column="0" Spacing="4">
                             <Label Text="Desde" VerticalOptions="Center" />
                             <DatePicker Date="{Binding FechaDesde}"

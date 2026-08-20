@@ -110,7 +110,7 @@
                             </Label.FormattedText>
                         </Label>
 
-                        <Label Text="Aquí tienes un resumen claro de tu actividad y tus métricas clave del mes."
+                        <Label Text="Aquí tienes un resumen de la actividad y las métricas clave del mes."
                                TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}"
                                FontSize="14"
                                LineBreakMode="WordWrap"/>
