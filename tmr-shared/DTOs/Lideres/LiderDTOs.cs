@@ -47,6 +47,25 @@ public class LiderResponse
         : "Sin proyectos";
 }
 
+public class TipoLiderResponse
+{
+    public int Id { get; set; }
+    public string Codigovalor { get; set; } = string.Empty;
+    public string Valor { get; set; } = string.Empty;
+    public string? Descripcion { get; set; }
+}
+
+public class PersonaDisponibleResponse
+{
+    public int Id { get; set; }
+    public string Nombres { get; set; } = string.Empty;
+    public string Apellidos { get; set; } = string.Empty;
+    public string? Email { get; set; }
+    public string? Telefono { get; set; }
+
+    public string NombreCompleto => $"{Nombres} {Apellidos}".Trim();
+}
+
 public class ContadoresLiderResponse
 {
     public int Internos { get; set; }
@@ -57,13 +76,15 @@ public class ContadoresLiderResponse
 
 public class CrearLiderRequest
 {
+    public int? Idpersona { get; set; }
+    public int Idtipo { get; set; }
     public string Nombres { get; set; } = string.Empty;
     public string Apellidos { get; set; } = string.Empty;
     public string? Email { get; set; }
     public string? Telefono { get; set; }
-    public string Tipopersona { get; set; } = "I";
-    public int? Idtipo { get; set; }
-    public string NumeroIdentificacion { get; set; } = string.Empty;
+    public string? NumeroIdentificacion { get; set; }
+    public string Usuariocreacion { get; set; } = "mobile";
+    public string Ipcreacion { get; set; } = "127.0.0.1";
 }
 
 public class ActualizarLiderRequest
@@ -72,8 +93,9 @@ public class ActualizarLiderRequest
     public string Apellidos { get; set; } = string.Empty;
     public string? Email { get; set; }
     public string? Telefono { get; set; }
-    public string Tipopersona { get; set; } = "I";
     public int? Idtipo { get; set; }
-    public string NumeroIdentificacion { get; set; } = string.Empty;
     public bool Activo { get; set; }
+    public string? NumeroIdentificacion { get; set; }
+    public string Usuariomodificacion { get; set; } = "mobile";
+    public string Ipmodificacion { get; set; } = "127.0.0.1";
 }

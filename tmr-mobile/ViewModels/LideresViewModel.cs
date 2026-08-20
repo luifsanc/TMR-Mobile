@@ -279,16 +279,31 @@ public partial class LideresViewModel : BaseViewModel
                 Apellidos = lider.Apellidos,
                 Email = lider.Email,
                 Telefono = lider.Telefono,
-                Tipopersona = lider.Tipopersona,
                 Idtipo = lider.Idtipo,
                 NumeroIdentificacion = lider.NumeroIdentificacion,
-                Activo = !lider.Activo
+                Activo = !lider.Activo,
+                Usuariomodificacion = "mobile",
+                Ipmodificacion = "127.0.0.1"
             };
 
+            var accion = lider.Activo ? "desactivado" : "activado";
             var ok = await _apiService.PutAsync($"lideres/{lider.Id}", updateReq);
             if (ok)
             {
+                await Shell.Current.DisplayAlert(
+                    "Estado Actualizado",
+                    $"El líder {lider.NombreCompleto} ha sido {accion} correctamente.",
+                    "Aceptar"
+                );
                 await CargarLideresAsync();
+            }
+            else
+            {
+                await Shell.Current.DisplayAlert(
+                    "Error",
+                    "No se pudo cambiar el estado del líder en el servidor.",
+                    "Aceptar"
+                );
             }
         }
     }
@@ -299,17 +314,30 @@ public partial class LideresViewModel : BaseViewModel
         if (lider == null) return;
 
         var confirm = await Shell.Current.DisplayAlert(
-            "Eliminar Líder",
-            $"¿Estás seguro de eliminar a {lider.NombreCompleto}?",
+            "¿Eliminar líder?",
+            $"Esta acción eliminará a {lider.NombreCompleto} permanentemente y lo desvinculará de los proyectos asociados.",
             "Eliminar", "Cancelar"
         );
 
         if (confirm)
         {
-            var ok = await _apiService.DeleteAsync($"lideres/{lider.Id}");
+            var ok = await _apiService.DeleteAsync($"lideres/{lider.Id}/fisico");
             if (ok)
             {
+                await Shell.Current.DisplayAlert(
+                    "Líder Eliminado",
+                    $"El líder {lider.NombreCompleto} ha sido eliminado correctamente.",
+                    "Aceptar"
+                );
                 await CargarLideresAsync();
+            }
+            else
+            {
+                await Shell.Current.DisplayAlert(
+                    "Error",
+                    "No se pudo eliminar el líder en el servidor. Intente nuevamente.",
+                    "Aceptar"
+                );
             }
         }
     }
