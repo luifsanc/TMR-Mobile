@@ -46,4 +46,14 @@ public record LookupItem
     /// Nombre o descripción del elemento
     /// </summary>
     public string Nombre { get; init; } = string.Empty;
+
+    /// <summary>
+    /// Departamento del colaborador, cuando el elemento pertenece al catálogo de empleados.
+    /// </summary>
+    public string Departamento { get; init; } = string.Empty;
+
+    public string NombreConDepartamento =>
+        string.IsNullOrWhiteSpace(Departamento)
+            ? Nombre
+            : $"{Nombre} - {Departamento}";
 }

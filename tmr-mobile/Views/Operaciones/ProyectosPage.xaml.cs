@@ -14,7 +14,7 @@ public partial class ProyectosPage : ContentPage
         BindingContext = viewModel;
     }
 
-    protected override void OnAppearing()
+    protected override async void OnAppearing()
     {
         base.OnAppearing();
         if (tmr_mobile.Views.Shared.OverlayNavigationState.ConsumePreservation(this))
@@ -22,7 +22,19 @@ public partial class ProyectosPage : ContentPage
 
         if (BindingContext is ProyectosViewModel vm)
         {
-            vm.CargarProyectosCommand.Execute(null);
+            await vm.CargarProyectosCommand.ExecuteAsync(null);
+
+            if (vm.ProyectoIdParaRestaurar is int proyectoId)
+            {
+                var indice = vm.Proyectos
+                    .Select((proyecto, index) => new { proyecto.Id, index })
+                    .FirstOrDefault(item => item.Id == proyectoId)?.index;
+
+                if (indice.HasValue)
+                {
+                    ProyectosCollection.ScrollTo(indice.Value, position: ScrollToPosition.Center, animate: false);
+                }
+            }
         }
 
         if (SearchEntry != null)
@@ -34,17 +46,41 @@ public partial class ProyectosPage : ContentPage
     protected override void OnDisappearing()
     {
         base.OnDisappearing();
+        if (BindingContext is ProyectosViewModel vm)
+        {
+            vm.InvalidarCache();
+        }
+
         if (SearchEntry != null)
         {
             SearchEntry.TextChanged -= OnSearchTextChanged;
         }
     }
 
-    private void OnSearchTextChanged(object sender, TextChangedEventArgs e)
+    private void OnSearchTextChanged(object? sender, TextChangedEventArgs e)
     {
         if (BindingContext is ProyectosViewModel vm)
         {
             vm.BuscarCommand.Execute(e.NewTextValue);
+        }
+    }
+
+    private void OnFilterComboTapped(object? sender, TappedEventArgs e)
+    {
+        EstadoFilterOverlay.IsVisible = true;
+    }
+
+    private void OnCloseFilterTapped(object? sender, TappedEventArgs e)
+    {
+        EstadoFilterOverlay.IsVisible = false;
+    }
+
+    private void OnFilterOptionClicked(object? sender, EventArgs e)
+    {
+        if (sender is Button button && button.CommandParameter is string estado && BindingContext is ProyectosViewModel vm)
+        {
+            vm.SeleccionarFiltroEstado(estado);
+            EstadoFilterOverlay.IsVisible = false;
         }
     }
 
@@ -124,7 +160,7 @@ public partial class ProyectosPage : ContentPage
     {
         if (_proyectoSeleccionado == null) return;
 
-        bool confirm = await DisplayAlert("Confirmación", $"¿Deseas inactivar el proyecto '{_proyectoSeleccionado.Nombre}'?", "Sí", "No");
+        bool confirm = await DisplayAlertAsync("Confirmación", $"¿Deseas inactivar el proyecto '{_proyectoSeleccionado.Nombre}'?", "Sí", "No");
         if (!confirm)
         {
             ContextMenuOverlay.IsVisible = false;

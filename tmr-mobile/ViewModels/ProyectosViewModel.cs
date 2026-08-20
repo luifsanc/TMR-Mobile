@@ -23,10 +23,14 @@ public partial class ProyectosViewModel : BaseViewModel
     private List<ProyectoResponse> _listaCompleta = new();
     private string _filtroEstado = "Todos";
 
+    public string FiltroEstadoTexto => _filtroEstado;
+
     // Caché con timestamp para evitar solicitudes repetidas
     private List<ProyectoResponse>? _cachedProyectos;
     private DateTime _cacheTimestamp = DateTime.MinValue;
     private const int CacheDurationMinutes = 5;
+
+    public int? ProyectoIdParaRestaurar { get; private set; }
 
     public ProyectosViewModel(ApiService apiService)
     {
@@ -99,20 +103,12 @@ public partial class ProyectosViewModel : BaseViewModel
         FiltrarProyectos();
     }
 
-    [RelayCommand]
-    private async Task FiltrarEstadoAsync()
+    public void SeleccionarFiltroEstado(string estado)
     {
-        var opcion = await Shell.Current.DisplayActionSheetAsync(
-            "Filtrar por estado",
-            "Cancelar",
-            null,
-            "Todos",
-            "Activos",
-            "Inactivos");
+        if (estado is not ("Todos" or "Activos" or "Inactivos")) return;
 
-        if (string.IsNullOrWhiteSpace(opcion) || opcion == "Cancelar") return;
-
-        _filtroEstado = opcion;
+        _filtroEstado = estado;
+        OnPropertyChanged(nameof(FiltroEstadoTexto));
         FiltrarProyectos();
     }
 
@@ -188,13 +184,14 @@ public partial class ProyectosViewModel : BaseViewModel
     {
         if (proyecto == null) return;
 
-        InvalidarCache();
+        ProyectoIdParaRestaurar = proyecto.Id;
+
         var parametros = new Dictionary<string, object>
         {
-            ["IdProyecto"] = proyecto.Id
+            ["Proyecto"] = proyecto
         };
 
-        await Shell.Current.GoToAsync(nameof(ProyectosFormPage), parametros);
+        await Shell.Current.GoToAsync(nameof(ProyectosDetallePage), parametros);
     }
 
     public async Task InactivarProyectoAsync(int id)
@@ -244,7 +241,7 @@ public partial class ProyectosViewModel : BaseViewModel
     public Task InactivarProyectoAsync(ProyectoItem proyecto) =>
         proyecto is null ? Task.CompletedTask : InactivarProyectoAsync(proyecto.Id);
 
-    private void InvalidarCache()
+    public void InvalidarCache()
     {
         _cachedProyectos = null;
         _cacheTimestamp = DateTime.MinValue;

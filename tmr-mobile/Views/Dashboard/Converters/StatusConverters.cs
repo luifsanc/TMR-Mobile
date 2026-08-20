@@ -13,10 +13,13 @@ public class StatusToBackgroundColorConverter : IValueConverter
         var estado = value as string ?? string.Empty;
         return estado switch
         {
+            "Planificación" or "Planificacion" => Color.FromArgb(DesignColors.PrimaryLight),
             "Completado" => Color.FromArgb(DesignColors.SuccessSurface),
             "En progreso" => Color.FromArgb(DesignColors.PrimaryLight),
             "En riesgo" => Color.FromArgb(DesignColors.ErrorSurface),
             "Pendiente" => Color.FromArgb(DesignColors.WarningSurface),
+            "Pausado" or "En pausa" => Color.FromArgb(DesignColors.WarningSurface),
+            "Cancelado" => Color.FromArgb(DesignColors.ErrorSurface),
             "Activo" => Color.FromArgb(DesignColors.SuccessSurface),
             _ => Color.FromArgb(DesignColors.Secondary)
         };
@@ -36,10 +39,13 @@ public class StatusToTextColorConverter : IValueConverter
         var estado = value as string ?? string.Empty;
         return estado switch
         {
+            "Planificación" or "Planificacion" => Color.FromArgb(DesignColors.Primary),
             "Completado" => Color.FromArgb(DesignColors.SuccessText),
             "En progreso" => Color.FromArgb(DesignColors.Primary),
             "En riesgo" => Color.FromArgb(DesignColors.ErrorText),
             "Pendiente" => Color.FromArgb(DesignColors.WarningText),
+            "Pausado" or "En pausa" => Color.FromArgb(DesignColors.WarningText),
+            "Cancelado" => Color.FromArgb(DesignColors.ErrorText),
             "Activo" => Color.FromArgb(DesignColors.SuccessText),
             _ => Color.FromArgb(DesignColors.TextSecondary)
         };
