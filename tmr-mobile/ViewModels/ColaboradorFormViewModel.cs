@@ -74,6 +74,8 @@ public partial class ColaboradorFormViewModel : BaseViewModel, IQueryAttributabl
         _ = CargarDatosInicialesAsync();
     }
 
+    private bool _isPrecargando = false;
+
     private async Task CargarDatosInicialesAsync()
     {
         if (IsBusy) return;
@@ -81,6 +83,7 @@ public partial class ColaboradorFormViewModel : BaseViewModel, IQueryAttributabl
         try
         {
             IsBusy = true;
+            _isPrecargando = true;
             ErrorMessage = string.Empty;
 
             // Cargar catálogos
@@ -206,12 +209,15 @@ public partial class ColaboradorFormViewModel : BaseViewModel, IQueryAttributabl
         }
         finally
         {
+            _isPrecargando = false;
             IsBusy = false;
         }
     }
 
     partial void OnDepartamentoSeleccionadoChanged(ColaboradorCatalogoItem? value)
     {
+        if (_isPrecargando) return;
+
         if (value != null)
         {
             _ = CargarCargosPorDepartamentoAsync(value.Id);
@@ -240,6 +246,8 @@ public partial class ColaboradorFormViewModel : BaseViewModel, IQueryAttributabl
             IsBusy = true;
             ErrorMessage = string.Empty;
 
+            var fechaContratacionStr = FechaContratacion.ToString("yyyy-MM-dd");
+
             if (EsEdicion)
             {
                 var request = new UpdateColaboradorRequest
@@ -259,7 +267,8 @@ public partial class ColaboradorFormViewModel : BaseViewModel, IQueryAttributabl
                     IdModoTrabajo = ModalidadSeleccionada?.Id,
                     IdCategoriaEmpleado = CategoriaSeleccionada?.Id,
                     AniosExperiencia = AniosExperiencia,
-                    FechaContratacion = FechaContratacion.ToString("yyyy-MM-dd"),
+                    FechaContratacion = fechaContratacionStr,
+                    FechaIngreso = fechaContratacionStr,
                     FechaNacimiento = FechaNacimiento?.ToString("yyyy-MM-dd"),
                     IdGenero = GeneroSeleccionado?.Id,
                     IdNacionalidad = NacionalidadSeleccionada?.Id,
@@ -289,7 +298,8 @@ public partial class ColaboradorFormViewModel : BaseViewModel, IQueryAttributabl
                     IdModoTrabajo = ModalidadSeleccionada?.Id,
                     IdCategoriaEmpleado = CategoriaSeleccionada?.Id,
                     AniosExperiencia = AniosExperiencia,
-                    FechaContratacion = FechaContratacion.ToString("yyyy-MM-dd"),
+                    FechaContratacion = fechaContratacionStr,
+                    FechaIngreso = fechaContratacionStr,
                     FechaNacimiento = FechaNacimiento?.ToString("yyyy-MM-dd"),
                     IdGenero = GeneroSeleccionado?.Id,
                     IdNacionalidad = NacionalidadSeleccionada?.Id,

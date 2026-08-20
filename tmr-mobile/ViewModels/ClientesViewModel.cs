@@ -65,7 +65,7 @@ public partial class ClientesViewModel : BaseViewModel
             var lista = await _clientesService.ObtenerClientesAsync(Busqueda);
             
             _todosClientes.Clear();
-            _todosClientes.AddRange(lista);
+            _todosClientes.AddRange(lista.OrderByDescending(c => c.Id));
 
             ActualizarListadoYResumen();
         }

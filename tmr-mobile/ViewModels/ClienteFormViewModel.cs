@@ -92,6 +92,14 @@ public partial class ClienteFormViewModel : BaseViewModel, IQueryAttributable
                     );
                 }
             }
+            else
+            {
+                // Si es nuevo cliente, seleccionar el primer tipo de identificación por defecto
+                if (TiposIdentificacion.Count > 0 && TipoIdentificacionSeleccionado == null)
+                {
+                    TipoIdentificacionSeleccionado = TiposIdentificacion.FirstOrDefault();
+                }
+            }
         }
         catch (Exception ex)
         {
@@ -129,10 +137,16 @@ public partial class ClienteFormViewModel : BaseViewModel, IQueryAttributable
                     Activo = Activo
                 };
 
-                var exito = await _clientesService.ActualizarClienteAsync(IdCliente!.Value, request);
-                if (exito)
+                var resultado = await _clientesService.ActualizarClienteAsync(IdCliente!.Value, request);
+                if (resultado.Success)
                 {
                     await Shell.Current.GoToAsync("..");
+                }
+                else
+                {
+                    ErrorMessage = string.IsNullOrWhiteSpace(resultado.Message)
+                        ? "Error al actualizar el cliente."
+                        : resultado.Message;
                 }
             }
             else
@@ -149,15 +163,16 @@ public partial class ClienteFormViewModel : BaseViewModel, IQueryAttributable
                     Direccion = Direccion.Trim()
                 };
 
-                var clienteCreado = await _clientesService.CrearClienteAsync(request);
-                if (clienteCreado != null)
+                var resultado = await _clientesService.CrearClienteAsync(request);
+                if (resultado.Success)
                 {
-                    // Regresar tras crear
                     await Shell.Current.GoToAsync("..");
                 }
                 else
                 {
-                    ErrorMessage = "Error al crear el cliente.";
+                    ErrorMessage = string.IsNullOrWhiteSpace(resultado.Message)
+                        ? "Error al crear el cliente."
+                        : resultado.Message;
                 }
             }
         }
@@ -181,16 +196,45 @@ public partial class ClienteFormViewModel : BaseViewModel, IQueryAttributable
             return false;
         }
 
-        if (string.IsNullOrWhiteSpace(NumeroIdentificacion))
+        var numId = (NumeroIdentificacion ?? "").Trim();
+
+        if (string.IsNullOrWhiteSpace(numId))
         {
             ErrorMessage = "El número de identificación es requerido.";
             return false;
         }
         
-        if (NumeroIdentificacion.Length > 20)
+        if (numId.Length > 20)
         {
             ErrorMessage = "El número de identificación no puede superar los 20 caracteres.";
             return false;
+        }
+
+        var tipoTexto = (TipoIdentificacionSeleccionado.Valor ?? "").Trim().ToLowerInvariant();
+
+        if (tipoTexto.Contains("ced") || tipoTexto.Contains("céd"))
+        {
+            if (numId.Length != 10 || !numId.All(char.IsDigit))
+            {
+                ErrorMessage = "La cédula debe contener exactamente 10 dígitos numéricos.";
+                return false;
+            }
+        }
+        else if (tipoTexto.Contains("ruc"))
+        {
+            if (numId.Length != 13 || !numId.All(char.IsDigit))
+            {
+                ErrorMessage = "El RUC debe contener exactamente 13 dígitos numéricos.";
+                return false;
+            }
+        }
+        else if (tipoTexto.Contains("pasaporte") || tipoTexto.Contains("otro"))
+        {
+            if (!numId.All(char.IsLetterOrDigit))
+            {
+                ErrorMessage = "El número de identificación debe ser alfanumérico.";
+                return false;
+            }
         }
 
         if (string.IsNullOrWhiteSpace(NombreComercial))
@@ -217,9 +261,9 @@ public partial class ClienteFormViewModel : BaseViewModel, IQueryAttributable
             return false;
         }
 
-        if (string.IsNullOrWhiteSpace(Email) || !Email.Contains("@"))
+        if (string.IsNullOrWhiteSpace(Email) || !System.Text.RegularExpressions.Regex.IsMatch(Email.Trim(), @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
         {
-            ErrorMessage = "El correo electrónico es requerido y debe ser válido.";
+            ErrorMessage = "El correo electrónico es requerido y debe tener un formato válido (ej: usuario@dominio.com).";
             return false;
         }
         

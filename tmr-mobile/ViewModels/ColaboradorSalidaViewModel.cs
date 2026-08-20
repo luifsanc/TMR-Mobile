@@ -49,11 +49,11 @@ public partial class ColaboradorSalidaViewModel : BaseViewModel, IQueryAttributa
             Colaborador = await _colaboradoresService.ObtenerColaboradorAsync(_idColaborador);
 
             // 2. Catálogos de salida
-            var tipos = await _colaboradoresService.ObtenerCatalogoAsync("TSA");
+            var tipos = await _colaboradoresService.ObtenerCatalogoAsync("TOS");
             TiposSalida.Clear();
             foreach (var t in tipos) TiposSalida.Add(t);
 
-            var causas = await _colaboradoresService.ObtenerCatalogoAsync("CSA");
+            var causas = await _colaboradoresService.ObtenerCatalogoAsync("CAS");
             CausasSalida.Clear();
             foreach (var c in causas) CausasSalida.Add(c);
         }

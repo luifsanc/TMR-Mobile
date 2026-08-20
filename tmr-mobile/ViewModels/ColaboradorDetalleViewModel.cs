@@ -16,12 +16,14 @@ public partial class ColaboradorDetalleViewModel : BaseViewModel, IQueryAttribut
     [NotifyPropertyChangedFor(nameof(EsInactivo))]
     [NotifyPropertyChangedFor(nameof(TieneColaborador))]
     [NotifyPropertyChangedFor(nameof(TieneProyectos))]
+    [NotifyPropertyChangedFor(nameof(MostrarSalidaInfo))]
     public partial ColaboradorDetalleModel? Colaborador { get; set; }
 
     public bool EsActivo => Colaborador?.Activo == true;
     public bool EsInactivo => Colaborador != null && !Colaborador.Activo;
     public bool TieneColaborador => Colaborador != null;
     public bool TieneProyectos => Colaborador?.Proyectos.Any() == true;
+    public bool MostrarSalidaInfo => Colaborador != null && !Colaborador.Activo && Colaborador.TieneSalidaInfo;
 
     public ColaboradorDetalleViewModel(IColaboradoresService colaboradoresService)
     {

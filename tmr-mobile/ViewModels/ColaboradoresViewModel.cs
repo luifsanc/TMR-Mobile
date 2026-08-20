@@ -52,7 +52,7 @@ public partial class ColaboradoresViewModel : BaseViewModel
             var lista = await _colaboradoresService.ObtenerColaboradoresAsync();
             
             _todosColaboradores.Clear();
-            _todosColaboradores.AddRange(lista);
+            _todosColaboradores.AddRange(lista.OrderByDescending(c => c.Id));
 
             ActualizarListadoYResumen();
         }

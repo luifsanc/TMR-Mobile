@@ -137,12 +137,17 @@ public partial class ClienteDetalleViewModel : BaseViewModel, IQueryAttributable
 
             request.IdTipoIdentificacion = tipoSeleccionado?.Id ?? 1; // Fallback al primero
 
-            var exito = await _clientesService.ActualizarClienteAsync(Cliente.Id, request);
+            var resultado = await _clientesService.ActualizarClienteAsync(Cliente.Id, request);
             
-            if (exito)
+            if (resultado.Success)
             {
                 // Recargar el detalle
                 await CargarDetalleAsync();
+            }
+            else
+            {
+                var msg = string.IsNullOrWhiteSpace(resultado.Message) ? "No se pudo cambiar el estado." : resultado.Message;
+                await Shell.Current.CurrentPage.DisplayAlert("Error", msg, "OK");
             }
         }
         catch (Exception ex)

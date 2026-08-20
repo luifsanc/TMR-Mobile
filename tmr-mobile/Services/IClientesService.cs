@@ -8,9 +8,9 @@ public interface IClientesService
     
     Task<ClienteDetalleModel?> ObtenerClienteAsync(int id);
     
-    Task<ClienteModel?> CrearClienteAsync(CreateClienteRequest request);
+    Task<ApiOperationResult> CrearClienteAsync(CreateClienteRequest request);
     
-    Task<bool> ActualizarClienteAsync(int id, UpdateClienteRequest request);
+    Task<ApiOperationResult> ActualizarClienteAsync(int id, UpdateClienteRequest request);
     
     Task<List<TipoIdentificacionModel>> ObtenerTiposIdentificacionAsync();
 }

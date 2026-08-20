@@ -7,8 +7,8 @@ public interface IUsuariosService
     Task<List<UsuarioListaItem>> ObtenerUsuariosAsync(string busqueda = "", bool? activo = null);
     Task<UsuarioDetalleItem?> ObtenerUsuarioAsync(int id);
     Task<List<RolItem>> ObtenerRolesAsync();
-    Task<UsuarioListaItem?> CrearUsuarioAsync(CreateUsuarioRequest request);
-    Task<bool> ActualizarUsuarioAsync(int id, UpdateUsuarioRequest request);
+    Task<ApiOperationResult> CrearUsuarioAsync(CreateUsuarioRequest request);
+    Task<ApiOperationResult> ActualizarUsuarioAsync(int id, UpdateUsuarioRequest request);
     Task<bool> CambiarEstadoAsync(int id, bool activo);
 }
 
@@ -127,19 +127,18 @@ public class UsuariosService : IUsuariosService
         return new List<RolItem>();
     }
 
-    public async Task<UsuarioListaItem?> CrearUsuarioAsync(CreateUsuarioRequest request)
+    public async Task<ApiOperationResult> CrearUsuarioAsync(CreateUsuarioRequest request)
     {
         var endpoint = "configuracion/usuarios";
         System.Diagnostics.Debug.WriteLine($"[USUARIOS] Endpoint: {endpoint}");
-        return await _apiService.PostAsync<CreateUsuarioRequest, UsuarioListaItem>(endpoint, request);
+        return await _apiService.PostForResultAsync(endpoint, request);
     }
 
-    public async Task<bool> ActualizarUsuarioAsync(int id, UpdateUsuarioRequest request)
+    public async Task<ApiOperationResult> ActualizarUsuarioAsync(int id, UpdateUsuarioRequest request)
     {
         var endpoint = $"configuracion/usuarios/{id}";
         System.Diagnostics.Debug.WriteLine($"[USUARIOS] Endpoint: {endpoint}");
-        var result = await _apiService.PutAsync<UpdateUsuarioRequest, object>(endpoint, request);
-        return result is not null;
+        return await _apiService.PutForResultAsync(endpoint, request);
     }
 
     public async Task<bool> CambiarEstadoAsync(int id, bool activo)
