@@ -2,24 +2,41 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="tmr_mobile.Views.Shared.ColaboradorBottomNavBar">
-    <Grid BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}"
-          HeightRequest="56"
-          VerticalOptions="End">
-        <BoxView HeightRequest="1"
-                 Color="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}"
-                 VerticalOptions="Start" />
 
-        <Grid WidthRequest="54"
-              HeightRequest="54"
+    <Grid HeightRequest="56"
+          VerticalOptions="End">
+
+        <!-- Fondo visual de la navbar -->
+        <BoxView HeightRequest="36"
+                 VerticalOptions="End"
+                 HorizontalOptions="Fill"
+                 Color="{AppThemeBinding Light={StaticResource SurfaceColor},
+                                         Dark={StaticResource DarkSurfaceColor}}" />
+
+        <!-- Borde superior de la barra blanca -->
+        <BoxView HeightRequest="1"
+                 VerticalOptions="End"
+                 HorizontalOptions="Fill"
+                 Margin="0,0,0,35"
+                 Color="{AppThemeBinding Light={StaticResource BorderColor},
+                                         Dark={StaticResource DarkBorderColor}}" />
+
+        <!-- Botón central -->
+        <Grid WidthRequest="72"
+              HeightRequest="56"
               VerticalOptions="Center"
               HorizontalOptions="Center"
-              Margin="0">
+        >
+
             <Border StrokeShape="RoundRectangle 27"
-                    BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}"
-                    Stroke="{AppThemeBinding Light={StaticResource PrimaryLight}, Dark={StaticResource DarkPrimaryLight}}"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor},
+                                                     Dark={StaticResource DarkSurfaceColor}}"
+                    Stroke="{AppThemeBinding Light={StaticResource PrimaryLight},
+                                            Dark={StaticResource DarkPrimaryLight}}"
                     StrokeThickness="3"
                     WidthRequest="54"
                     HeightRequest="54">
+
                 <Image Source="{AppThemeBinding Light=isotipo1.png, Dark=isotipo2.png}"
                        WidthRequest="34"
                        HeightRequest="34"
@@ -27,12 +44,16 @@
                        HorizontalOptions="Center"
                        VerticalOptions="Center"
                        SemanticProperties.Description="Menú principal" />
+
             </Border>
+
             <Button BackgroundColor="Transparent"
                     Padding="0"
                     Pressed="OnMainButtonPressed"
                     Released="OnMainButtonReleased"
                     SemanticProperties.Description="Ir al inicio. Mantener presionado para abrir el menú" />
+
         </Grid>
+
     </Grid>
 </ContentView>

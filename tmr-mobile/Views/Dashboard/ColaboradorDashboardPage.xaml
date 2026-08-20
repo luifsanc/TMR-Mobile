@@ -9,11 +9,13 @@
              BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource DarkBackgroundLight}}">
 
     <Grid RowDefinitions="Auto,*">
+
+        <!-- HEADER -->
         <Grid Grid.Row="0"
               Padding="16,12,16,8"
               VerticalOptions="Center">
-            <Image
-                   Source="{AppThemeBinding Light=letras1.png, Dark=letras2.png}"
+
+            <Image Source="{AppThemeBinding Light=letras1.png, Dark=letras2.png}"
                    WidthRequest="124"
                    HeightRequest="40"
                    Aspect="AspectFit"
@@ -24,134 +26,363 @@
             <HorizontalStackLayout Spacing="8"
                                    HorizontalOptions="End"
                                    VerticalOptions="Center">
-                <Grid WidthRequest="26" HeightRequest="26" SemanticProperties.Description="Abrir perfil">
-                    <Grid.GestureRecognizers><TapGestureRecognizer Tapped="OnProfileTapped" /></Grid.GestureRecognizers>
+
+                <!-- Perfil -->
+                <Grid WidthRequest="26"
+                      HeightRequest="26"
+                      SemanticProperties.Description="Abrir perfil">
+
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnProfileTapped" />
+                    </Grid.GestureRecognizers>
+
                     <Image Source="{AppThemeBinding Light=user_profile.png, Dark=user_profile_dark.png}"
-                           WidthRequest="16" HeightRequest="16" HorizontalOptions="Center" VerticalOptions="Center" />
+                           WidthRequest="16"
+                           HeightRequest="16"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center" />
                 </Grid>
-                <Grid WidthRequest="26" HeightRequest="26" SemanticProperties.Description="Abrir notificaciones">
-                    <Grid.GestureRecognizers><TapGestureRecognizer Tapped="OnNotificationsTapped" /></Grid.GestureRecognizers>
+
+                <!-- Notificaciones -->
+                <Grid WidthRequest="26"
+                      HeightRequest="26"
+                      SemanticProperties.Description="Abrir notificaciones">
+
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnNotificationsTapped" />
+                    </Grid.GestureRecognizers>
+
                     <Image Source="{AppThemeBinding Light=notification_bell_alarm.png, Dark=notification_bell_alarm_dark.png}"
-                           WidthRequest="16" HeightRequest="16" HorizontalOptions="Center" VerticalOptions="Center" />
+                           WidthRequest="16"
+                           HeightRequest="16"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center" />
                 </Grid>
+
             </HorizontalStackLayout>
+
         </Grid>
 
-        <ScrollView Grid.Row="1" Margin="0,0,0,56" VerticalScrollBarVisibility="Never">
-            <VerticalStackLayout Padding="16,4,16,44" Spacing="14">
-                <Border StrokeShape="RoundRectangle 26" Stroke="Transparent" Padding="18">
+        <!-- CONTENIDO -->
+        <ScrollView Grid.Row="1"
+                    Margin="0,0,0,56"
+                    VerticalScrollBarVisibility="Never">
+
+            <VerticalStackLayout Padding="16,4,16,44"
+                                 Spacing="14">
+
+                <!-- TARJETA DE BIENVENIDA -->
+                <Border StrokeShape="RoundRectangle 26"
+                        Stroke="Transparent"
+                        Padding="18">
+
                     <Border.Background>
                         <LinearGradientBrush EndPoint="1,1">
-                            <GradientStop Color="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource DarkBackgroundLight}}" Offset="0" />
-                            <GradientStop Color="{AppThemeBinding Light={StaticResource PrimaryLight}, Dark={StaticResource DarkPrimaryLight}}" Offset="1" />
+
+                            <GradientStop
+                                Color="{AppThemeBinding Light={StaticResource BackgroundLight},
+                                                        Dark={StaticResource DarkBackgroundLight}}"
+                                Offset="0" />
+
+                            <GradientStop
+                                Color="{AppThemeBinding Light={StaticResource PrimaryLight},
+                                                        Dark={StaticResource DarkPrimaryLight}}"
+                                Offset="1" />
+
                         </LinearGradientBrush>
                     </Border.Background>
-                    <Grid ColumnDefinitions="*,64" ColumnSpacing="16">
-                        <VerticalStackLayout VerticalOptions="Center" Spacing="5">
-                            <Label Text="Bienvenido de nuevo" FontSize="12" FontAttributes="Bold"
-                                   TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />
-                            <Label FontSize="24" FontAttributes="Bold"
-                                   TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}">
-                                <Label.FormattedText><FormattedString><Span Text="Hola, " /><Span Text="{Binding NombreUsuario}" /></FormattedString></Label.FormattedText>
+
+                    <Grid ColumnDefinitions="*,64"
+                          ColumnSpacing="16">
+
+                        <VerticalStackLayout VerticalOptions="Center"
+                                             Spacing="5">
+
+                            <Label Text="Bienvenido de nuevo"
+                                   FontSize="12"
+                                   FontAttributes="Bold"
+                                   TextColor="{AppThemeBinding Light={StaticResource Primary},
+                                                               Dark={StaticResource DarkPrimary}}" />
+
+                            <Label FontSize="24"
+                                   FontAttributes="Bold"
+                                   TextColor="{AppThemeBinding Light={StaticResource TextPrimary},
+                                                               Dark={StaticResource DarkTextPrimary}}">
+
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Hola, " />
+                                        <Span Text="{Binding NombreUsuario}" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+
                             </Label>
-                            <Label Text="Este es el resumen de tu jornada." FontSize="13"
-                                   TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}" />
+
+                            <Label Text="Este es el resumen de tu jornada."
+                                   FontSize="13"
+                                   TextColor="{AppThemeBinding Light={StaticResource TextMuted},
+                                                               Dark={StaticResource DarkTextMuted}}" />
+
                         </VerticalStackLayout>
-                        <Border Grid.Column="1" WidthRequest="60" HeightRequest="60" Stroke="Transparent"
+
+                        <Border Grid.Column="1"
+                                WidthRequest="60"
+                                HeightRequest="60"
+                                Stroke="Transparent"
                                 StrokeShape="RoundRectangle 30"
-                                BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}">
-                            <Label Text="👤" FontSize="29" HorizontalOptions="Center" VerticalOptions="Center"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor},
+                                                                  Dark={StaticResource DarkSurfaceColor}}">
+
+                            <Label Text="👤"
+                                   FontSize="29"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"
                                    SemanticProperties.Description="Avatar provisional" />
+
                         </Border>
+
                     </Grid>
+
                 </Border>
 
-                <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}"
-                                   Color="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkPrimary}}" />
-                <Label Text="{Binding ErrorMessage}" FontSize="12"
-                       TextColor="{StaticResource ErrorText}" HorizontalTextAlignment="Center" />
+                <!-- ESTADO DE CARGA -->
+                <ActivityIndicator IsRunning="{Binding IsBusy}"
+                                   IsVisible="{Binding IsBusy}"
+                                   Color="{AppThemeBinding Light={StaticResource Primary},
+                                                           Dark={StaticResource DarkPrimary}}" />
 
-                <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
-                    <Border Padding="15" StrokeShape="RoundRectangle 18"
-                            BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}"
-                            Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}">
-                        <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding AbrirActividadesCommand}" /></Border.GestureRecognizers>
+                <Label Text="{Binding ErrorMessage}"
+                       FontSize="12"
+                       TextColor="{StaticResource ErrorText}"
+                       HorizontalTextAlignment="Center" />
+
+                <!-- RESUMEN -->
+                <Grid ColumnDefinitions="*,*"
+                      ColumnSpacing="10">
+
+                    <!-- HOY -->
+                    <Border Padding="15"
+                            StrokeShape="RoundRectangle 18"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor},
+                                                              Dark={StaticResource DarkSurfaceColor}}"
+                            Stroke="{AppThemeBinding Light={StaticResource BorderColor},
+                                                     Dark={StaticResource DarkBorderColor}}">
+
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding AbrirActividadesCommand}" />
+                        </Border.GestureRecognizers>
+
                         <VerticalStackLayout Spacing="7">
-                            <Label Text="HOY" FontSize="10" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkLinkColor}}" />
-                            <Label Text="{Binding HorasHoyTexto}" FontSize="21" FontAttributes="Bold"
-                                   TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
-                            <Label Text="{Binding EstadoHoy}" FontSize="12"
-                                   TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}" />
-                            <Label Text="Ver mis actividades →" FontSize="10" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkLinkColor}}" />
+
+                            <Label Text="HOY"
+                                   FontSize="10"
+                                   FontAttributes="Bold"
+                                   TextColor="{AppThemeBinding Light={StaticResource Primary},
+                                                               Dark={StaticResource DarkLinkColor}}" />
+
+                            <Label Text="{Binding HorasHoyTexto}"
+                                   FontSize="21"
+                                   FontAttributes="Bold"
+                                   TextColor="{AppThemeBinding Light={StaticResource TextPrimary},
+                                                               Dark={StaticResource DarkTextPrimary}}" />
+
+                            <ProgressBar Progress="{Binding ProgresoHoy}"
+                                         HeightRequest="6"
+                                         ProgressColor="{AppThemeBinding Light={StaticResource Primary},
+                                                                         Dark={StaticResource DarkLinkColor}}" />
+
+                            <Label Text="{Binding EstadoHoy}"
+                                   FontSize="12"
+                                   TextColor="{AppThemeBinding Light={StaticResource TextMuted},
+                                                               Dark={StaticResource DarkTextMuted}}" />
+
                         </VerticalStackLayout>
+
                     </Border>
 
-                    <Border Grid.Column="1" Padding="15" StrokeShape="RoundRectangle 18"
-                            BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}"
-                            Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}">
-                        <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding AbrirActividadesCommand}" /></Border.GestureRecognizers>
+                    <!-- DÍAS SIN REGISTRAR -->
+                    <Border Grid.Column="1"
+                            Padding="15"
+                            StrokeShape="RoundRectangle 18"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor},
+                                                              Dark={StaticResource DarkSurfaceColor}}"
+                            Stroke="{AppThemeBinding Light={StaticResource BorderColor},
+                                                     Dark={StaticResource DarkBorderColor}}">
+
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding AbrirActividadesCommand}" />
+                        </Border.GestureRecognizers>
+
                         <VerticalStackLayout Spacing="7">
-                            <Label Text="ESTA SEMANA" FontSize="10" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkLinkColor}}" />
-                            <Label Text="{Binding HorasSemanaTexto}" FontSize="21" FontAttributes="Bold"
-                                   TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
-                            <ProgressBar Progress="{Binding ProgresoSemana}" HeightRequest="6" ProgressColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkLinkColor}}" />
-                            <Label Text="{Binding DiasSemanaTexto}" FontSize="10"
-                                   TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}" />
+
+                            <Label Text="SIN REGISTRAR"
+                                   FontSize="10"
+                                   FontAttributes="Bold"
+                                   LineBreakMode="WordWrap"
+                                   TextColor="{AppThemeBinding Light={StaticResource Danger},
+                                                               Dark={StaticResource Danger}}" />
+
+                            <Label Text="{Binding DiasSinRegistrarTexto}"
+                                   FontSize="21"
+                                   FontAttributes="Bold"
+                                   TextColor="{AppThemeBinding Light={StaticResource TextPrimary},
+                                                               Dark={StaticResource DarkTextPrimary}}" />
+
+                            <Label Text="{Binding HorasPendientesTexto}"
+                                   FontSize="10"
+                                   TextColor="{AppThemeBinding Light={StaticResource TextMuted},
+                                                               Dark={StaticResource DarkTextMuted}}" />
+
                         </VerticalStackLayout>
+
                     </Border>
+
                 </Grid>
 
-                <Label Text="Mis proyectos" FontSize="17" FontAttributes="Bold"
-                       TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
-                <CollectionView ItemsSource="{Binding Proyectos}" HeightRequest="112" SelectionMode="None">
-                    <CollectionView.ItemsLayout><LinearItemsLayout Orientation="Horizontal" ItemSpacing="10" /></CollectionView.ItemsLayout>
-                    <CollectionView.EmptyView><Label Text="No tienes proyectos asignados." FontSize="13" TextColor="{StaticResource TextMuted}" /></CollectionView.EmptyView>
+                <!-- MIS PROYECTOS -->
+                <Label Text="Mis proyectos"
+                       FontSize="17"
+                       FontAttributes="Bold"
+                       TextColor="{AppThemeBinding Light={StaticResource TextPrimary},
+                                                   Dark={StaticResource DarkTextPrimary}}" />
+
+                <CollectionView ItemsSource="{Binding Proyectos}"
+                                HeightRequest="112"
+                                SelectionMode="None">
+
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Horizontal"
+                                           ItemSpacing="10" />
+                    </CollectionView.ItemsLayout>
+
+                    <CollectionView.EmptyView>
+                        <Label Text="No tienes proyectos asignados."
+                               FontSize="13"
+                               TextColor="{StaticResource TextMuted}" />
+                    </CollectionView.EmptyView>
+
                     <CollectionView.ItemTemplate>
+
                         <DataTemplate x:DataType="vm:ProyectoColaboradorItem">
-                            <Border WidthRequest="210" Padding="14" StrokeShape="RoundRectangle 16"
-                                    BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}"
-                                    Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}">
+
+                            <Border WidthRequest="210"
+                                    Padding="14"
+                                    StrokeShape="RoundRectangle 16"
+                                    BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor},
+                                                                      Dark={StaticResource DarkSurfaceColor}}"
+                                    Stroke="{AppThemeBinding Light={StaticResource BorderColor},
+                                                             Dark={StaticResource DarkBorderColor}}">
+
                                 <VerticalStackLayout Spacing="5">
-                                    <Label Text="{Binding Codigo}" FontSize="10" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkLinkColor}}" />
-                                    <Label Text="{Binding Nombre}" FontSize="14" FontAttributes="Bold" LineBreakMode="TailTruncation"
-                                           TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
-                                    <Label Text="{Binding HorasMes}" FontSize="11" TextColor="{StaticResource TextMuted}" />
+
+                                    <Label Text="{Binding Codigo}"
+                                           FontSize="10"
+                                           FontAttributes="Bold"
+                                           TextColor="{AppThemeBinding Light={StaticResource Primary},
+                                                                       Dark={StaticResource DarkLinkColor}}" />
+
+                                    <Label Text="{Binding Nombre}"
+                                           FontSize="14"
+                                           FontAttributes="Bold"
+                                           LineBreakMode="TailTruncation"
+                                           TextColor="{AppThemeBinding Light={StaticResource TextPrimary},
+                                                                       Dark={StaticResource DarkTextPrimary}}" />
+
+                                    <Label Text="{Binding HorasMes}"
+                                           FontSize="11"
+                                           TextColor="{StaticResource TextMuted}" />
+
                                 </VerticalStackLayout>
+
                             </Border>
+
                         </DataTemplate>
+
                     </CollectionView.ItemTemplate>
+
                 </CollectionView>
 
-                <Grid ColumnDefinitions="*,Auto">
-                    <Label Text="Últimos registros" FontSize="17" FontAttributes="Bold"
-                           TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
-                    <Label Grid.Column="1" Text="Ver actividades →" FontSize="12" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkLinkColor}}" VerticalOptions="Center">
-                        <Label.GestureRecognizers><TapGestureRecognizer Command="{Binding AbrirCargaActividadesCommand}" /></Label.GestureRecognizers>
-                    </Label>
-                </Grid>
-                <Border Padding="14" StrokeShape="RoundRectangle 18"
-                        BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor}, Dark={StaticResource DarkSurfaceColor}}"
-                        Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}">
-                    <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding AbrirCargaActividadesCommand}" /></Border.GestureRecognizers>
-                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding ActividadesRecientes}" Spacing="12">
-                        <BindableLayout.EmptyView><Label Text="Aún no tienes registros este mes." FontSize="13" TextColor="{StaticResource TextMuted}" /></BindableLayout.EmptyView>
+                <!-- ÚLTIMOS REGISTROS -->
+                <Label Text="Últimos registros"
+                       FontSize="17"
+                       FontAttributes="Bold"
+                       TextColor="{AppThemeBinding Light={StaticResource TextPrimary},
+                                                   Dark={StaticResource DarkTextPrimary}}" />
+
+                <Border Padding="14"
+                        StrokeShape="RoundRectangle 18"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceColor},
+                                                          Dark={StaticResource DarkSurfaceColor}}"
+                        Stroke="{AppThemeBinding Light={StaticResource BorderColor},
+                                                 Dark={StaticResource DarkBorderColor}}">
+
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding AbrirCargaActividadesCommand}" />
+                    </Border.GestureRecognizers>
+
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding ActividadesRecientes}"
+                                         Spacing="12">
+
+                        <BindableLayout.EmptyView>
+                            <Label Text="Aún no tienes registros este mes."
+                                   FontSize="13"
+                                   TextColor="{StaticResource TextMuted}" />
+                        </BindableLayout.EmptyView>
+
                         <BindableLayout.ItemTemplate>
+
                             <DataTemplate x:DataType="vm:ActividadRecienteItem">
-                                <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="10">
-                                    <Label Text="{Binding Proyecto}" FontSize="14" FontAttributes="Bold" LineBreakMode="TailTruncation"
-                                           TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
-                                    <Label Grid.Column="1" Text="{Binding Horas}" FontSize="13" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkLinkColor}}" />
-                                    <Label Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding Descripcion}" FontSize="12" LineBreakMode="TailTruncation"
-                                           TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextMuted}}" />
-                                    <Label Grid.Row="2" Grid.ColumnSpan="2" Text="{Binding Fecha}" FontSize="10" TextColor="{StaticResource TextLight}" />
+
+                                <Grid ColumnDefinitions="*,Auto"
+                                      RowDefinitions="Auto,Auto,Auto"
+                                      ColumnSpacing="10">
+
+                                    <Label Text="{Binding Proyecto}"
+                                           FontSize="14"
+                                           FontAttributes="Bold"
+                                           LineBreakMode="TailTruncation"
+                                           TextColor="{AppThemeBinding Light={StaticResource TextPrimary},
+                                                                       Dark={StaticResource DarkTextPrimary}}" />
+
+                                    <Label Grid.Column="1"
+                                           Text="{Binding Horas}"
+                                           FontSize="13"
+                                           FontAttributes="Bold"
+                                           TextColor="{AppThemeBinding Light={StaticResource Primary},
+                                                                       Dark={StaticResource DarkLinkColor}}" />
+
+                                    <Label Grid.Row="1"
+                                           Grid.ColumnSpan="2"
+                                           Text="{Binding Descripcion}"
+                                           FontSize="12"
+                                           LineBreakMode="TailTruncation"
+                                           TextColor="{AppThemeBinding Light={StaticResource TextMuted},
+                                                                       Dark={StaticResource DarkTextMuted}}" />
+
+                                    <Label Grid.Row="2"
+                                           Grid.ColumnSpan="2"
+                                           Text="{Binding Fecha}"
+                                           FontSize="10"
+                                           TextColor="{StaticResource TextLight}" />
+
                                 </Grid>
+
                             </DataTemplate>
+
                         </BindableLayout.ItemTemplate>
+
                     </VerticalStackLayout>
+
                 </Border>
+
             </VerticalStackLayout>
+
         </ScrollView>
 
-        <shared:UserBottomNavBar Grid.Row="1" VerticalOptions="End" />
+        <!-- NAVBAR -->
+        <shared:UserBottomNavBar Grid.Row="1"
+                                 VerticalOptions="End" />
+
     </Grid>
+
 </ContentPage>
