@@ -72,7 +72,7 @@ public interface IAuthService
         string confirmPassword
     );
 
-    Task<bool> IsAuthenticatedAsync();
+    Task<bool> IsAuthenticatedAsync(CancellationToken ct = default);
 
     Task<string?> GetTokenAsync();
 
@@ -92,7 +92,7 @@ public class AuthService : IAuthService
     public AuthService(ApiService apiService)
     {
         _apiService = apiService;
-        _apiService.SetRefreshTokenFunc(RefreshTokenAsync);
+        _apiService.SetRefreshTokenFunc(() => RefreshTokenAsync());
     }
 
     public async Task<bool> LoginAsync(
@@ -257,22 +257,19 @@ public class AuthService : IAuthService
         }
     }
 
-    public async Task<bool> IsAuthenticatedAsync()
+    public async Task<bool> IsAuthenticatedAsync(CancellationToken ct = default)
     {
+        ct.ThrowIfCancellationRequested();
         var token = await SecureStorage.Default.GetAsync(TokenKey);
+        ct.ThrowIfCancellationRequested();
 
         if (IsAccessTokenUsable(token))
         {
             await RestoreCurrentUserAsync();
-            await ConfirmPasswordChangeRequirementAsync();
             return true;
         }
 
-        var refreshed = await RefreshTokenAsync();
-        if (refreshed)
-            await ConfirmPasswordChangeRequirementAsync();
-
-        return refreshed;
+        return await RefreshTokenAsync(ct);
     }
 
     public async Task<string?> GetTokenAsync()
@@ -280,13 +277,15 @@ public class AuthService : IAuthService
         return await SecureStorage.Default.GetAsync(TokenKey);
     }
 
-    private async Task<bool> RefreshTokenAsync()
+    private async Task<bool> RefreshTokenAsync(CancellationToken ct = default)
     {
+        ct.ThrowIfCancellationRequested();
         var tokenBeforeRefresh = await SecureStorage.Default.GetAsync(TokenKey);
-        await _refreshLock.WaitAsync();
+        await _refreshLock.WaitAsync(ct);
 
         try
         {
+            ct.ThrowIfCancellationRequested();
             var currentToken = await SecureStorage.Default.GetAsync(TokenKey);
             if (!string.Equals(currentToken, tokenBeforeRefresh, StringComparison.Ordinal) &&
                 IsAccessTokenUsable(currentToken))
@@ -303,7 +302,8 @@ public class AuthService : IAuthService
 
             var response = await _apiService.PostAnonymousAsync<object, ApiLoginResponse>(
                 "auth/refresh-token",
-                new { refreshToken });
+                new { refreshToken },
+                ct);
 
             if (response?.Data?.AccessToken is null)
                 return false;
@@ -311,6 +311,10 @@ public class AuthService : IAuthService
             await SaveSessionAsync(response.Data);
 
             return true;
+        }
+        catch (OperationCanceledException)
+        {
+            throw;
         }
         catch (Exception ex)
         {

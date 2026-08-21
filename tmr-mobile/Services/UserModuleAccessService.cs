@@ -7,7 +7,7 @@ namespace tmr_mobile.Services;
 public interface IUserModuleAccessService
 {
     Task<HashSet<string>> ObtenerModulosAsync(CancellationToken ct = default);
-    Task<bool> EsColaboradorAsync();
+    Task<bool> EsColaboradorAsync(CancellationToken ct = default);
 }
 
 public sealed class UserModuleAccessService : IUserModuleAccessService
@@ -27,6 +27,10 @@ public sealed class UserModuleAccessService : IUserModuleAccessService
             response = await _apiService.GetAsync<ApiResponse<string[]>>(
                 "auth/modules",
                 ct);
+        }
+        catch (OperationCanceledException)
+        {
+            throw;
         }
         catch (Exception ex)
         {
@@ -62,9 +66,11 @@ public sealed class UserModuleAccessService : IUserModuleAccessService
         return modulos;
     }
 
-    public async Task<bool> EsColaboradorAsync()
+    public async Task<bool> EsColaboradorAsync(CancellationToken ct = default)
     {
+        ct.ThrowIfCancellationRequested();
         var roles = await ObtenerRolesTokenAsync();
+        ct.ThrowIfCancellationRequested();
         return roles.Contains("COLABORADOR");
     }
 

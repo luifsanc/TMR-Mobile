@@ -6,6 +6,7 @@ namespace tmr_mobile;
 
 public partial class App : Application
 {
+	private static readonly TimeSpan SessionRestoreTimeout = TimeSpan.FromSeconds(12);
 	private readonly IAuthService _authService;
 	private readonly IUserModuleAccessService _moduleAccessService;
 	private int _sessionRestored;
@@ -56,14 +57,17 @@ public partial class App : Application
 
 		try
 		{
-			if (!await _authService.IsAuthenticatedAsync())
+			using var restoreCancellation = new CancellationTokenSource(SessionRestoreTimeout);
+
+			if (!await _authService.IsAuthenticatedAsync(restoreCancellation.Token))
 			{
 				window.Page = new AppShell("LoginPage");
 				return;
 			}
 
-			var route = await ResolveAuthenticatedRouteAsync();
+			var route = await ResolveAuthenticatedRouteAsync(restoreCancellation.Token);
 			var shell = new AppShell(route);
+			window.Page = shell;
 
 			if (_authService.CurrentUser?.DebeCambiarPassword == true)
 			{
@@ -72,8 +76,12 @@ public partial class App : Application
 					false,
 					new Dictionary<string, object> { ["required"] = true });
 			}
-
-			window.Page = shell;
+		}
+		catch (OperationCanceledException)
+		{
+			System.Diagnostics.Debug.WriteLine(
+				$"[SESSION RESTORE] Tiempo de espera agotado ({SessionRestoreTimeout.TotalSeconds:0} s).");
+			window.Page = new AppShell("LoginPage");
 		}
 		catch (Exception ex)
 		{
@@ -82,12 +90,12 @@ public partial class App : Application
 		}
 	}
 
-	private async Task<string> ResolveAuthenticatedRouteAsync()
+	private async Task<string> ResolveAuthenticatedRouteAsync(CancellationToken cancellationToken)
 	{
-		if (await _moduleAccessService.EsColaboradorAsync())
+		if (await _moduleAccessService.EsColaboradorAsync(cancellationToken))
 			return "ColaboradorDashboardPage";
 
-		var modules = await _moduleAccessService.ObtenerModulosAsync();
+		var modules = await _moduleAccessService.ObtenerModulosAsync(cancellationToken);
 		return modules.Contains("Dashboard")
 			? "DashboardPage"
 			: modules.Contains("Actividades") || modules.Contains("Time Report")
