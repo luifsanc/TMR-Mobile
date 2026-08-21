@@ -33,7 +33,9 @@ public partial class App : Application
 
 	protected override Window CreateWindow(IActivationState? activationState)
 	{
-		var window = new Window(new AppShell());
+		// No se crea el Shell con Login como ruta provisional. Mientras se
+		// restaura la sesiÃ³n se conserva una vista neutra alineada con el splash.
+		var window = new Window(CreateSessionLoadingPage());
 		window.Created += OnWindowCreated;
 
 #if WINDOWS
@@ -49,41 +51,73 @@ public partial class App : Application
 	{
 		if (Interlocked.Exchange(ref _sessionRestored, 1) != 0)
 			return;
+		if (sender is not Window window)
+			return;
 
 		try
 		{
 			if (!await _authService.IsAuthenticatedAsync())
+			{
+				window.Page = new AppShell("LoginPage");
 				return;
+			}
+
+			var route = await ResolveAuthenticatedRouteAsync();
+			var shell = new AppShell(route);
 
 			if (_authService.CurrentUser?.DebeCambiarPassword == true)
 			{
-				await Shell.Current.GoToAsync(
+				await shell.GoToAsync(
 					nameof(Views.Auth.ChangePasswordPage),
+					false,
 					new Dictionary<string, object> { ["required"] = true });
-				return;
 			}
 
-			string route;
-			if (await _moduleAccessService.EsColaboradorAsync())
-			{
-				route = "ColaboradorDashboardPage";
-			}
-			else
-			{
-				var modules = await _moduleAccessService.ObtenerModulosAsync();
-				route = modules.Contains("Dashboard")
-					? "DashboardPage"
-					: modules.Contains("Actividades") || modules.Contains("Time Report")
-						? "TimeReportPage"
-						: "HomePage";
-			}
-
-			await Shell.Current.GoToAsync($"//{route}", false);
+			window.Page = shell;
 		}
 		catch (Exception ex)
 		{
 			System.Diagnostics.Debug.WriteLine($"[SESSION RESTORE] {ex.Message}");
+			window.Page = new AppShell("LoginPage");
 		}
+	}
+
+	private async Task<string> ResolveAuthenticatedRouteAsync()
+	{
+		if (await _moduleAccessService.EsColaboradorAsync())
+			return "ColaboradorDashboardPage";
+
+		var modules = await _moduleAccessService.ObtenerModulosAsync();
+		return modules.Contains("Dashboard")
+			? "DashboardPage"
+			: modules.Contains("Actividades") || modules.Contains("Time Report")
+				? "TimeReportPage"
+				: "HomePage";
+	}
+
+	private Page CreateSessionLoadingPage()
+	{
+		var isDark = RequestedTheme == AppTheme.Dark;
+		return new ContentPage
+		{
+			SafeAreaEdges = SafeAreaEdges.All,
+			BackgroundColor = Color.FromArgb(isDark ? "#18191A" : "#F8FAFC"),
+			Content = new Grid
+			{
+				Children =
+				{
+					new Image
+					{
+						Source = isDark ? "isotipo2.png" : "isotipo1.png",
+						WidthRequest = 96,
+						HeightRequest = 96,
+						Aspect = Aspect.AspectFit,
+						HorizontalOptions = LayoutOptions.Center,
+						VerticalOptions = LayoutOptions.Center
+					}
+				}
+			}
+		};
 	}
 
 #if WINDOWS

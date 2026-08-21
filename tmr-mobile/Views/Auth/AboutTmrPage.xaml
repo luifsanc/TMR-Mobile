@@ -18,15 +18,15 @@
                     <Label Text="{Binding Version}" FontFamily="InterRegular" FontSize="13" TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextLight}}" />
                 </VerticalStackLayout>
                 <Border BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource DarkSurfaceColor}}" Stroke="{AppThemeBinding Light={StaticResource BorderColor}, Dark={StaticResource DarkBorderColor}}" StrokeThickness="1" StrokeShape="RoundRectangle 20" Padding="22">
-                    <VerticalStackLayout Spacing="13">
+                    <VerticalStackLayout Spacing="10">
                         <Label Text="Gestión del tiempo, más simple" FontFamily="InterSemiBold" FontSize="18" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkTextPrimary}}" />
                         <Label Text="TMR centraliza el registro y seguimiento de actividades, horas y proyectos para que los equipos mantengan su trabajo organizado y visible."
                                FontFamily="InterRegular" FontSize="14" LineHeight="1.4" TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextSecondary}}" />
                     </VerticalStackLayout>
                 </Border>
-                <VerticalStackLayout HorizontalOptions="Center" Spacing="9">
+                <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
                     <Label Text="Desarrollado por" FontFamily="InterRegular" FontSize="12" TextColor="{AppThemeBinding Light={StaticResource TextMuted}, Dark={StaticResource DarkTextLight}}" HorizontalTextAlignment="Center" />
-                    <Label Text="Cristopher🥶&#10;Ah... y los demás pasantes :p"
+                    <Label Text="Pasantes 2026 🔥🥶;"
                            FontFamily="InterSemiBold"
                            FontSize="13"
                            LineHeight="1.25"

@@ -10,7 +10,7 @@ namespace tmr_mobile;
 
 public partial class AppShell : Shell
 {
-    public AppShell()
+    public AppShell(string initialRoute = "LoginPage")
     {
         InitializeComponent();
 
@@ -79,5 +79,16 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(nameof(AppPreferencesPage), typeof(AppPreferencesPage));
         Routing.RegisterRoute(nameof(AboutTmrPage), typeof(AboutTmrPage));
         Routing.RegisterRoute(nameof(SeguimientoDetallePage), typeof(SeguimientoDetallePage));
+
+        SelectInitialRoute(initialRoute);
+    }
+
+    private void SelectInitialRoute(string route)
+    {
+        var initialItem = Items.FirstOrDefault(item =>
+            string.Equals(item.Route, route, StringComparison.OrdinalIgnoreCase));
+
+        if (initialItem is not null)
+            CurrentItem = initialItem;
     }
 }

@@ -4,8 +4,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
     <!-- Evita que cualquier página invada las barras y recortes del dispositivo. -->
-    <Style TargetType="ContentPage">
-        <Setter Property="SafeAreaEdges" Value="All" />
+    <Style TargetType="ContentPage" ApplyToDerivedTypes="True">
+        <Setter Property="SafeAreaEdges" Value="Container" />
     </Style>
 
     <Style TargetType="ActivityIndicator">
