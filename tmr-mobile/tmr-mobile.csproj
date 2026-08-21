@@ -15,6 +15,12 @@
 		<OutputType>Exe</OutputType>
 		<RootNamespace>tmr_mobile</RootNamespace>
 		<UseMaui>true</UseMaui>
+		<!--
+			10.0.20 pierde los insets de SafeArea durante algunas transiciones de
+			Shell en Android. Mantener una versión corregida evita que el contenido
+			se desplace bajo la barra de estado después de navegar.
+		-->
+		<MauiVersion>10.0.71</MauiVersion>
 		<SingleProject>true</SingleProject>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
