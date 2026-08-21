@@ -65,6 +65,14 @@ public partial class LoginViewModel : BaseViewModel
 
             if (success)
             {
+                if (_authService.CurrentUser?.DebeCambiarPassword == true)
+                {
+                    await Shell.Current.GoToAsync(
+                        nameof(Views.Auth.ChangePasswordPage),
+                        new Dictionary<string, object> { ["required"] = true });
+                    return;
+                }
+
                 if (await _moduleAccessService.EsColaboradorAsync())
                 {
                     await Shell.Current.GoToAsync("//ColaboradorDashboardPage");

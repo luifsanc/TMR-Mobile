@@ -4,7 +4,7 @@ using tmr_mobile.Services;
 
 namespace tmr_mobile.ViewModels;
 
-public partial class ChangePasswordViewModel : BaseViewModel
+public partial class ChangePasswordViewModel : BaseViewModel, IQueryAttributable
 {
     private readonly IAuthService _authService;
 
@@ -29,10 +29,26 @@ public partial class ChangePasswordViewModel : BaseViewModel
     [ObservableProperty]
     public partial string SuccessMessage { get; set; } = string.Empty;
 
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(CanGoBack))]
+    public partial bool IsRequired { get; set; }
+
+    public bool CanGoBack => !IsRequired;
+
     public ChangePasswordViewModel(IAuthService authService)
     {
         _authService = authService;
         Title = "Cambiar contraseña";
+    }
+
+    public void ApplyQueryAttributes(IDictionary<string, object> query)
+    {
+        IsRequired = query.TryGetValue("required", out var value) && value switch
+        {
+            bool booleanValue => booleanValue,
+            string textValue => bool.TryParse(textValue, out var parsed) && parsed,
+            _ => false
+        };
     }
 
     [RelayCommand]
@@ -77,6 +93,13 @@ public partial class ChangePasswordViewModel : BaseViewModel
             NewPassword = string.Empty;
             ConfirmPassword = string.Empty;
             SuccessMessage = result.Message;
+
+            await Shell.Current.DisplayAlertAsync(
+                "Contraseña actualizada",
+                $"{result.Message} Debes iniciar sesión nuevamente.",
+                "Aceptar");
+
+            await _authService.LogoutAsync();
         }
         finally
         {
@@ -85,7 +108,11 @@ public partial class ChangePasswordViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    private async Task GoBackAsync() => await Shell.Current.GoToAsync("..");
+    private async Task GoBackAsync()
+    {
+        if (!IsRequired)
+            await Shell.Current.GoToAsync("..");
+    }
 
     private string Validate()
     {

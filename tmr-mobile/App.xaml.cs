@@ -55,6 +55,14 @@ public partial class App : Application
 			if (!await _authService.IsAuthenticatedAsync())
 				return;
 
+			if (_authService.CurrentUser?.DebeCambiarPassword == true)
+			{
+				await Shell.Current.GoToAsync(
+					nameof(Views.Auth.ChangePasswordPage),
+					new Dictionary<string, object> { ["required"] = true });
+				return;
+			}
+
 			string route;
 			if (await _moduleAccessService.EsColaboradorAsync())
 			{

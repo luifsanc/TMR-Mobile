@@ -9,7 +9,6 @@
     Title="Catálogos"
     BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource DarkBackgroundLight}}">
     <Grid RowDefinitions="*,56"
-          SafeAreaEdges="Container"
           BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource DarkBackgroundLight}}">
         <ContentView Grid.Row="0"
                      BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource DarkBackgroundLight}}">

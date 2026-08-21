@@ -9,4 +9,12 @@ public partial class ChangePasswordPage : ContentPage
         InitializeComponent();
         BindingContext = viewModel;
     }
+
+    protected override bool OnBackButtonPressed()
+    {
+        if (BindingContext is ChangePasswordViewModel { IsRequired: true })
+            return true;
+
+        return base.OnBackButtonPressed();
+    }
 }

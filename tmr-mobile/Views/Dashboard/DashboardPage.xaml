@@ -20,7 +20,6 @@
     </ContentPage.Resources>
 
     <Grid RowDefinitions="Auto,*"
-          SafeAreaEdges="Container"
           BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource DarkBackgroundLight}}">
         <!-- Fixed header -->
         <Grid Grid.Row="0"

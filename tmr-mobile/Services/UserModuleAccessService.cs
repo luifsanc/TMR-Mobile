@@ -41,9 +41,17 @@ public sealed class UserModuleAccessService : IUserModuleAccessService
 
         var roles = await ObtenerRolesTokenAsync();
 
-        if (roles.Any(rol => rol is "ADMINISTRADOR" or "GERENTE" or "LIDER" or "COLABORADOR"))
+        if (roles.Any(rol => rol is "ADMINISTRADOR" or "GERENTE" or "LIDER"))
         {
             modulos.Add("Carga Actividades");
+        }
+
+        // Un colaborador no puede acceder a la carga masiva, aunque un rol
+        // heredado o una respuesta antigua del servidor incluyan el módulo.
+        if (roles.Contains("COLABORADOR"))
+        {
+            modulos.Remove("Carga Actividades");
+            modulos.Remove("Actividades");
         }
 
         if (roles.Any(rol => rol is "ADMINISTRADOR" or "GERENTE" or "LIDER" or "RECURSOS HUMANOS" or "ADMINISTRATIVO"))

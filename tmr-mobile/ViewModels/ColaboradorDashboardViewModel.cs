@@ -211,7 +211,7 @@ public partial class ColaboradorDashboardViewModel : BaseViewModel
     [RelayCommand]
     private Task AbrirCargaActividadesAsync()
     {
-        return Shell.Current.GoToAsync("//CargaActividadesPage");
+        return Shell.Current.GoToAsync("//TimeReportPage");
     }
 }
 
